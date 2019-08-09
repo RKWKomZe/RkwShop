@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_shop">
+		<header/>
+		<body>
+
+		    <!-- tx_rkwshop_domain_model_order -->
+			<trans-unit id="tx_rkwshop_domain_model_order">
+				<source>Order</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.email">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.remark">
+				<source>Remark</source>
+			</trans-unit>
+
+
+            <!-- tx_rkwshop_domain_model_orderitem -->
+			<trans-unit id="tx_rkwshop_domain_model_orderitem.amount">
+				<source>Pieces</source>
+			</trans-unit>
+
+
+			<!-- tx_rkwshop_domain_model_product -->
+            <trans-unit id="tx_rkwshop_domain_model_product.subscription_only">
+                <source>Subscribe for free</source>
+            </trans-unit>
+
+
+
+            <!-- tx_rkwshop_domain_model_shippingaddress -->
+            <trans-unit id="tx_rkwshop_domain_model_shippingaddress">
+				<source>Shipping Address</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.frontend_user">
+				<source>Frontend User</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.frontend_user.pleaseSelect">
+				<source>Please Select</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender">
+				<source>Gender</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.man">
+				<source>Man</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.woman">
+				<source>Woman</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect">
+				<source>Please Select</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.title.pleaseSelect">
+				<source>Please Select</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.first_name">
+				<source>First Name</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.last_name">
+				<source>Last Name</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.company">
+				<source>Company</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.zip">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.city">
+				<source>City</source>
+			</trans-unit>
+
+			<!-- ================================================================================== -->
+
+			<!-- Controller -->
+			<trans-unit id="orderController.message.order_created_email">
+				<source>An e-mail has been send to you. Please click the link in the e-mail to confirm your request.</source>
+			</trans-unit>
+			<trans-unit id="orderController.message.order_created">
+				<source>Order successfully created.</source>
+			</trans-unit>
+			<trans-unit id="orderController.message.order_canceled">
+				<source>Order was canceled.</source>
+			</trans-unit>
+			<trans-unit id="orderController.error.order_error">
+				<source>An error occurred. Please try again.</source>
+			</trans-unit>
+			<trans-unit id="orderController.error.accept_terms">
+				<source>You have to accept our terms and conditions.</source>
+			</trans-unit>
+			<trans-unit id="orderController.error.no_valid_email">
+				<source>Please enter a valid username.</source>
+			</trans-unit>
+			<trans-unit id="orderController.error.email_already_in_use">
+				<source>The given E-mail is already used by another user.</source>
+			</trans-unit>
+
+			<!-- ================================================================================== -->
+
+			<!-- Validation -->
+			<trans-unit id="validator.notzero.zero">
+				<source>Value can't be 0</source>
+			</trans-unit>
+
+
+			<!-- ================================================================================== -->
+
+			<!-- E-Mail subjects-->
+			<trans-unit id="rkwMailService.optInRequestEvent.subject">
+				<source>Confirm your RKW order</source>
+			</trans-unit>
+			<trans-unit id="rkwMailService.confirmationUser.subject">
+				<source>Thanks for you order</source>
+			</trans-unit>
+			<trans-unit id="rkwMailService.confirmationAdmin.subject">
+				<source>A new order has arrived</source>
+			</trans-unit>
+			<trans-unit id="rkwMailService.deleteUser.subject">
+				<source>Your order has been canceled</source>
+			</trans-unit>
+			<trans-unit id="rkwMailService.deleteAdmin.subject">
+				<source>An order has been canceled</source>
+			</trans-unit>
+
+
+			<!-- Templates/Email/OptInRequest.html -->
+			<trans-unit id="templates.email.optInRequest.headline">
+				<source>Hello  %s %s,</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.headline.greet">
+				<source>Hello </source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.headline.greet.without_name">
+				<source>Hello!</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.headline.title.1">
+				<source>Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.headline.title.2">
+				<source>Prof. Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.headline.name">
+				<source>%s %s!</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.text1">
+				<source>thank you for your interest in RKW products.</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.text2">
+				<source>Please check and confirm your order below.</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.textOptIn">
+				<source>Click here to confirm your order:</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.textOptOut">
+				<source>Click here to cancel your order:</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.textOptInLinkLabel">
+				<source>Yes, execute the order</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.textOptOutLinkLabel">
+				<source>No, thank you</source>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.confirmHeadline">
+				<source>Please confirm your order</source>
+			</trans-unit>
+
+
+
+			<!-- Templates/Email/ConfirmOrderUser.html -->
+			<trans-unit id="templates.email.confirmationOrderUser.headline">
+				<source>Hello %s %s,</source>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.headline.greet">
+				<source>Hello </source>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.headline.greet.without_name">
+				<source>Hello!</source>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.headline.title.1">
+				<source>Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.headline.title.2">
+				<source>Prof. Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.headline.name">
+				<source>%s %s!</source>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.text1">
+				<source>thank you for your order.</source>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.text2">
+				<source>You will receive your order shortly.</source>
+			</trans-unit>
+
+
+
+			<!-- Templates/Email/ConfirmOrderAdmin.html -->
+			<trans-unit id="templates.email.confirmationOrderAdmin.headline">
+				<source>Hello %s,</source>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderAdmin.text1">
+				<source>a publication has been ordered. Please send the ordered publication to the address below.</source>
+			</trans-unit>
+
+
+
+			<!-- Templates/Email/DeleteOrderUser.html -->
+			<trans-unit id="templates.email.deleteOrderUser.headline">
+				<source>Hello %s %s,</source>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.headline.greet">
+				<source>Hello </source>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.headline.greet.without_name">
+				<source>Hello!</source>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.headline.title.1">
+				<source>Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.headline.title.2">
+				<source>Prof. Dr. </source>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.headline.name">
+				<source>%s %s!</source>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.text1">
+				<source>thank you for your order.</source>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.text2">
+				<source>The order below has been canceled.</source>
+			</trans-unit>
+
+
+
+			<!-- Templates/Email/DeleteOrderAdmin.html -->
+			<trans-unit id="templates.email.deleteOrderAdmin.headline">
+				<source>Hello %s,</source>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderAdmin.text1">
+				<source>a publication order has been canceled. Please do NOT send the publication to the address below.</source>
+			</trans-unit>
+
+
+			<!-- Partials/Email/Details.html -->
+			<trans-unit id="partials.email.details.orderDetails">
+				<source>Order Details</source>
+			</trans-unit>
+			<trans-unit id="partials.email.details.shippingAddress">
+				<source>Shipping Address</source>
+			</trans-unit>
+			<trans-unit id="partials.email.details.orderPerson">
+				<source>Orderer</source>
+			</trans-unit>
+			<trans-unit id="partials.email.details.completeSeries">
+				<source>Complete Series "%s"</source>
+			</trans-unit>
+			<trans-unit id="partials.email.details.singlePublication">
+				<source>Publication "%s"</source>
+			</trans-unit>
+			<trans-unit id="partials.email.details.subscribe">
+				<source>Please subscribe me for free to "%s".</source>
+			</trans-unit>
+			<trans-unit id="partials.email.details.doNotSubscribe">
+				<source>No subscription selected</source>
+			</trans-unit>
+			<trans-unit id="partials.email.details.remark">
+				<source>Remark</source>
+			</trans-unit>
+			<trans-unit id="partials.email.details.newsletter">
+				<source>Newsletter ordered</source>
+			</trans-unit>
+
+
+
+			<!-- ================================================================================== -->
+
+
+			<!-- Partials/Order/FormFields.html -->
+			<trans-unit id="partials_order_formFields.labelOptional">
+				<source>(Optional)</source>
+			</trans-unit>
+
+
+
+			<!-- Templates/Order/New.html -->
+			<trans-unit id="templates_order_new.new_order">
+				<source>New Order</source>
+			</trans-unit>
+			<trans-unit id="templates_order_new.introduction">
+				<source>Here you can order a print-version of the current publication for free.</source>
+			</trans-unit>
+			<trans-unit id="templates_order_new.introductionSeries">
+				<source>Here you can order a print-version of the current publication or the whole series the publication belongs to.</source>
+			</trans-unit>
+			<trans-unit id="templates_order_new.order_button">
+				<source>Order now</source>
+			</trans-unit>
+			<trans-unit id="templates_order_new.terms">
+				<source>I accept the terms and conditions.</source>
+			</trans-unit>
+			<trans-unit id="templates_order_new.sendSeries">
+				<source>Please send the whole series "%s".</source>
+			</trans-unit>
+			<trans-unit id="templates_order_new.subscribe">
+				<source>I want to subscribe to "%s".</source>
+			</trans-unit>
+
+
+			<!-- ================================================================================== -->
+
+			<!-- Form errors -->
+			<trans-unit id="form.error.newOrder.firstName">
+				<source>Firstname</source>
+			</trans-unit>
+			<trans-unit id="form.error.newOrder.lastName">
+				<source>Lastname</source>
+			</trans-unit>
+			<trans-unit id="form.error.newOrder.address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="form.error.newOrder.zip">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="form.error.newOrder.city">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="form.error.newOrder.email">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="form.error.newOrder.amount">
+				<source>Amount</source>
+			</trans-unit>
+			<trans-unit id="form.error.1221560718">
+				<source>Please fill out the field '%s'.</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

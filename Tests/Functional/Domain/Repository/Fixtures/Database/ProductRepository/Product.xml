@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+
+    <!-- test with enable fields -->
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <record_type>0</record_type>
+    </tx_rkwshop_domain_model_product>
+    <tx_rkwshop_domain_model_product>
+        <uid>2</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <record_type>0</record_type>
+    </tx_rkwshop_domain_model_product>
+    <tx_rkwshop_domain_model_product>
+        <uid>3</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <deleted>1</deleted>
+        <record_type>0</record_type>
+    </tx_rkwshop_domain_model_product>
+    <tx_rkwshop_domain_model_product>
+        <uid>4</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <hidden>1</hidden>
+        <record_type>0</record_type>
+    </tx_rkwshop_domain_model_product>
+
+    <!-- Test for parent product without bundleOnly-->
+    <tx_rkwshop_domain_model_product>
+        <uid>5</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+        <product_bundle>0</product_bundle>
+    </tx_rkwshop_domain_model_product>
+    <tx_rkwshop_domain_model_product>
+        <uid>6</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <record_type>0</record_type>
+        <product_bundle>5</product_bundle>
+    </tx_rkwshop_domain_model_product>
+
+    <!-- Test for parent product with bundleOnly-->
+    <tx_rkwshop_domain_model_product>
+        <uid>7</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <allow_single_order>0</allow_single_order>
+        <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+        <product_bundle>0</product_bundle>
+    </tx_rkwshop_domain_model_product>
+    <tx_rkwshop_domain_model_product>
+        <uid>8</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>100</stock>
+        <record_type>0</record_type>
+        <product_bundle>7</product_bundle>
+    </tx_rkwshop_domain_model_product>
+
+
+    <!-- Testing ignorance of storagePid for findAllSoap -->
+    <tx_rkwshop_domain_model_product>
+        <uid>10</uid>
+        <pid>100</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <allow_single_order>0</allow_single_order>
+        <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+        <product_bundle>0</product_bundle>
+    </tx_rkwshop_domain_model_product>
+
+
+</dataset>

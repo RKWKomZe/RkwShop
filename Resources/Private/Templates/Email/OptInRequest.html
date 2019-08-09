@@ -1,0 +1,51 @@
+{namespace rkwMailer=RKW\RkwMailer\ViewHelpers}
+<f:layout name="Email/{mailType}" />
+
+
+<!-- PLAINTEXT -->
+<f:section name="Plaintext"><rkwMailer:plaintextLineBreaks>
+	<rkwMailer:recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:frontend.translate key='templates.email.optInRequest.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/>\n
+	\n
+	<rkwMailer:frontend.translate key="templates.email.optInRequest.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"  />\n
+	<rkwMailer:frontend.translate key="templates.email.optInRequest.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"  />\n
+	\n
+	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: registration.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>\n
+	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: registration.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
+	\n
+	=============================================================\n
+	<rkwMailer:frontend.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/>:\n
+	=============================================================\n
+	\n
+	<rkwMailer:frontend.translate key="templates.email.optInRequest.textOptIn" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" />\n
+	<rkwMailer:frontend.link action="optIn" controller="Order" extensionName="rkwShop" pluginName="rkwShop" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_rkwshop: {token_yes: tokenYes, user: userSha1}}" section="rkw-order" />\n
+	\n
+	<rkwMailer:frontend.translate key="templates.email.optInRequest.textOptOut" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" />\n
+	<rkwMailer:frontend.link action="optIn" controller="Order" extensionName="rkwShop" pluginName="rkwShop" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_rkwshop: {token_no: tokenNo, user: userSha1}}" section="rkw-order" />
+</rkwMailer:plaintextLineBreaks></f:section>
+
+
+<!-- HTML -->
+<f:section name="Html">
+    <h1><rkwMailer:recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:frontend.translate key='templates.email.optInRequest.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/></h1>
+    <p>
+		<rkwMailer:frontend.translate key="templates.email.optInRequest.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" /><br>
+		<strong><rkwMailer:frontend.translate key="templates.email.optInRequest.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" /></strong>
+	</p>
+
+	<f:render partial="Email/ProductList" section="Html" arguments="{order: registration.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
+	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: registration.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
+
+	<h2><rkwMailer:frontend.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></h2>
+	<p>
+		<rkwMailer:frontend.translate key="templates.email.optInRequest.textOptIn" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/><br>
+		<a href="<rkwMailer:frontend.link action='optIn' controller='Order' extensionName='rkwShop' pluginName='rkwShop' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_rkwshop: {token_yes: tokenYes, user: userSha1}}' section='rkw-order' />"><rkwMailer:frontend.translate key="templates.email.optInRequest.textOptInLinkLabel" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></a>
+	</p>
+	<p>
+		<rkwMailer:frontend.translate key="templates.email.optInRequest.textOptOut" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" /><br>
+		<a href="<rkwMailer:frontend.link action='optIn' controller='Order' extensionName='rkwShop' pluginName='rkwShop' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_rkwshop: {token_no: tokenNo, user: userSha1}}' section='rkw-order' />"><rkwMailer:frontend.translate key="templates.email.optInRequest.textOptOutLinkLabel" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></a>
+	</p>
+</f:section>
+
+
+
+

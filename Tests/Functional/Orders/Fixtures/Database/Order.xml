@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_rkwshop_domain_model_order>
+        <uid>1</uid>
+        <pid>1</pid>
+        <order_item>1</order_item>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <shipping_address>1</shipping_address>
+    </tx_rkwshop_domain_model_order>
+
+    <!-- orders of feUser 3 -->
+    <tx_rkwshop_domain_model_order>
+        <uid>2</uid>
+        <pid>1</pid>
+        <order_item>2</order_item>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <shipping_address>1</shipping_address>
+        <frontend_user>3</frontend_user>
+        <status>1</status>
+    </tx_rkwshop_domain_model_order>
+    <tx_rkwshop_domain_model_order>
+        <uid>3</uid>
+        <pid>1</pid>
+        <order_item>3</order_item>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <shipping_address>1</shipping_address>
+        <frontend_user>3</frontend_user>
+        <status>0</status>
+    </tx_rkwshop_domain_model_order>
+
+    <!-- for testing normal stock calculation -->
+    <tx_rkwshop_domain_model_order>
+        <uid>4</uid>
+        <pid>1</pid>
+        <order_item>4</order_item>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <shipping_address>1</shipping_address>
+        <status>0</status>
+    </tx_rkwshop_domain_model_order>
+    <tx_rkwshop_domain_model_order>
+        <uid>5</uid>
+        <pid>1</pid>
+        <order_item>10</order_item>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <shipping_address>1</shipping_address>
+        <status>0</status>
+    </tx_rkwshop_domain_model_order>
+
+
+    <!-- for testing cleanup -->
+    <tx_rkwshop_domain_model_order>
+        <uid>6</uid>
+        <pid>1</pid>
+        <order_item>30,31,32</order_item>
+        <email>test@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <shipping_address>1</shipping_address>
+        <status>0</status>
+    </tx_rkwshop_domain_model_order>
+
+</dataset>

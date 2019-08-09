@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_shop">
+		<header/>
+		<body>
+
+			<!-- tx_rkwshop_domain_model_order -->
+			<trans-unit id="tx_rkwshop_domain_model_order">
+				<source>Order</source>
+				<target>Bestellung</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.email">
+				<source>E-Mail</source>
+				<target>E-Mail</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.remark">
+				<source>Remark</source>
+				<target>Anmerkung</target>
+			</trans-unit>
+
+
+
+            <!-- tx_rkwshop_domain_model_shippingaddress -->
+            <trans-unit id="tx_rkwshop_domain_model_shippingaddress">
+				<source>Shipping Address</source>
+				<target>Lieferaddresse</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender">
+				<source>Gender</source>
+				<target>Anrede</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.man">
+				<source>Mr.</source>
+				<target>Herr</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.woman">
+				<source>Mrs.</source>
+				<target>Frau</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect">
+				<source>Please Select</source>
+				<target>Bitte wählen</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.title">
+				<source>Title</source>
+				<target>Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.title.pleaseSelect">
+				<source>Please Select</source>
+				<target>Bitte wählen</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.firstName">
+				<source>First Name</source>
+				<target>Vorname</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.lastLame">
+				<source>Last Name</source>
+				<target>Nachname</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.company">
+				<source>Company</source>
+				<target>Firma</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.address">
+				<source>Address</source>
+				<target>Anschrift</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.zip">
+				<source>Zip</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.city">
+				<source>City</source>
+				<target>Stadt</target>
+			</trans-unit>			
+			
+
+			<!-- ================================================================================== -->
+
+			<!-- OrderManager -->
+            <trans-unit id="orderManager.error.acceptTerms">
+                <source>Please accept our terms of use in order to place an order.</source>
+                <target>Das muss leider sein: Bitte akzeptieren Sie unsere Nutzungsbedingungen, um bestellen zu können.</target>
+            </trans-unit>
+            <trans-unit id="orderManager.error.acceptPrivacy">
+                <source>The protection of your data is important to us. Therefore we ask you to agree to the storage of your personal data.</source>
+                <target>Der Schutz Ihrer Daten ist uns wichtig. Daher bitten wir Sie, der Speicherung Ihrer persönlichen Daten zuzustimmen.</target>
+            </trans-unit>
+			<trans-unit id="orderManager.error.invalidEmail">
+				<source>Oops, something went wrong. Please enter a valid e-mail address.</source>
+				<target>Upps, da ist etwas schief gelaufen. Bitte geben Sie eine gültige E-Mailadresse ein.</target>
+			</trans-unit>
+			<trans-unit id="orderManager.error.noShippingAddress">
+				<source>Oops, something went wrong. Please enter a delivery address.</source>
+				<target>Upps, da ist etwas schief gelaufen. Bitte geben Sie eine Lieferadresse an.</target>
+			</trans-unit>
+			<trans-unit id="orderManager.error.noOrderItem">
+				<source>Hm, have you possibly forgotten to indicate the order quantity?</source>
+				<target>Hm, haben Sie möglicherweise vergessen die Bestellmenge anzugeben?</target>
+			</trans-unit>
+			<trans-unit id="orderManager.error.outOfStock">
+				<source><![CDATA[Hm, unfortunately you were not fast enough - at least one of the desired products is no longer available in the desired quantity. Please adjust your order if necessary or contact us by <a href="mailto:service@rkw.de">E-Mail</a>.]]></source>
+                <target><![CDATA[Hm, da waren Sie wohl leider nicht schnell genug – mindestens eines der gewünschten Produkte ist nicht mehr in der gewünschten Menge verfügbar. Bitte passen Sie Ihre Bestellung gegebenenfalls an oder wenden Sie sich per <a href="mailto:service@rkw.de">E-Mail</a> an uns.]]></target>
+			</trans-unit>
+            <trans-unit id="orderManager.error.orderAlreadyPersisted">
+                <source><![CDATA[Oops, that shouldn't have happened. Apparently the order has already been saved.  Please contact our <a href="mailto:service@rkw.de">Support</a>.]]></source>
+                <target><![CDATA[Upps, das hätte nicht passieren dürfen. Offenbar wurde die Bestellung schon gespeichert. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
+            </trans-unit>
+            <trans-unit id="orderManager.error.frontendUserNotPersisted">
+                <source><![CDATA[Oops, that shouldn't have happened. The user account you submitted does not seem to exist. Please contact our <a href="mailto:service@rkw.de">Support</a>. ]]></source>
+                <target><![CDATA[Upps, das hätte nicht passieren dürfen. Das übergebene Nutzerkonto scheint nicht zu existieren. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
+            </trans-unit>
+			<trans-unit id="orderManager.message.created">
+				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
+				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
+			</trans-unit>
+			<trans-unit id="orderManager.message.createdOptIn">
+				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href=mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
+				<target><![CDATA[Fast geschafft! Eine E-Mail mit einem Bestätigungslink ist auf dem Weg zu Ihnen. Sollten Sie innerhalb der nächsten 2-3 Minuten keine E-Mail von uns erhalten, prüfen Sie Ihren Spam-Filter. Selbstverständlich steht Ihnen aber auch unser <a href=mailto:service@rkw.de">Support</a> bei Problemen jederzeit gerne mit Rat und Tat zur Seite.]]></target>
+			</trans-unit>
+
+
+
+            <!-- OrderController -->
+			<trans-unit id="orderController.message.orderCreated">
+				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
+				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
+			</trans-unit>
+			<trans-unit id="orderController.message.orderCanceled">
+				<source>The order process was aborted as desired. However, you can place another order at any time..</source>
+				<target>Schade! Der Bestellvorgang wurde, wie gewünscht, abgebrochen. Sie können aber jederzeit erneut eine Bestellung aufgeben.</target>
+			</trans-unit>
+			<trans-unit id="orderController.error.orderError">
+				<source>Oops, something must have gone wrong. Have you already confirmed your order?</source>
+				<target>Upps, da ist wohl etwas schief gelaufen. Haben Sie die Bestellung möglicherweise bereits bestätigt?</target>
+			</trans-unit>
+
+
+
+            <!-- ================================================================================== -->
+
+
+			<!-- Partials/Order/FormFields.html -->
+			<trans-unit id="partials.order.form.labelOptional">
+				<source>(Optional)</source>
+				<target>(Optional)</target>
+			</trans-unit>
+
+
+            <!-- Partials/Order/Form/ProductList.html -->
+            <trans-unit id="partials.order.form.productList.terms">
+                <source>I accept the terms and conditions.</source>
+                <target>Ich akzeptiere die Nutzungsbedingungen.</target>
+            </trans-unit>
+			<trans-unit id="partials.order.form.productList.orderButton">
+				<source>Order now</source>
+				<target>Jetzt bestellen</target>
+			</trans-unit>
+            <trans-unit id="partials.order.form.productList.belongsTo">
+                <source>Belongs to this series/folder:</source>
+                <target>Gehört zu dieser Reihe/Mappe:</target>
+            </trans-unit>
+
+
+            <!-- Partials/Order/Form/ProductList/Checkbox.html -->
+            <trans-unit id="partials.order.form.productList.checkbox.subscription">
+                <source>Yes, I want to subscribe for free</source>
+                <target>Ja, kostenlos abonnieren</target>
+            </trans-unit>
+
+
+            <!-- Partials/Order/Form/ProductList/Input.html -->
+            <trans-unit id="partials.order.form.productList.input.amountSingle">
+                <source>Piece (single order)</source>
+                <target>Stück (Einzelbestellung)</target>
+            </trans-unit>
+            <trans-unit id="partials.order.form.productList.input.amountBundle">
+                <source>Pieces (complete series/batch)</source>
+                <target>Stück (komplette Reihe/Mappe)</target>
+            </trans-unit>
+            <trans-unit id="partials.order.form.productList.input.outOfStockPreOrder">
+                <source>Unfortunately currently out of stock, but can be pre-ordered.</source>
+                <target>Leider derzeit vergriffen, kann aber vorbestellt werden.</target>
+            </trans-unit>
+            <trans-unit id="partials.order.form.productList.input.outOfStock">
+                <source>Unfortunately currently out of stock.</source>
+                <target>Leider derzeit vergriffen.</target>
+            </trans-unit>
+            <trans-unit id="partials.order.form.productList.input.stockLeft">
+                <source>Still %s in stock.</source>
+                <target>Noch %s auf Lager.</target>
+            </trans-unit>
+
+
+
+			<!-- ================================================================================== -->
+
+			<!-- E-Mail subjects-->
+			<trans-unit id="rkwMailService.optInRequestEvent.subject">
+				<source>Confirm your RKW order</source>
+				<target>Bitte bestätigen Sie Ihre Bestellung</target>
+			</trans-unit>
+			<trans-unit id="rkwMailService.confirmationUser.subject">
+				<source>Thanks for you order</source>
+				<target>Vielen Dank für Ihre Bestellung</target>
+			</trans-unit>
+			<trans-unit id="rkwMailService.confirmationAdmin.subject">
+				<source>A new order has arrived</source>
+				<target>Eine neue Bestellung wurde aufgegeben</target>
+			</trans-unit>
+			<trans-unit id="rkwMailService.deleteUser.subject">
+				<source>Your order has been canceled</source>
+				<target>Ihre Bestellung wurde storniert</target>
+			</trans-unit>
+			<trans-unit id="rkwMailService.deleteAdmin.subject">
+				<source>An order has been canceled</source>
+				<target>Eine Bestellung wurde storniert</target>
+			</trans-unit>
+
+
+
+			<!-- Templates/Email/OptInRequest.html -->
+			<trans-unit id="templates.email.optInRequest.headline">
+				<source>Hello</source>
+				<target>Hallo</target>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.text1">
+				<source>many thanks for ordering products from the RKW Competence Center.</source>
+				<target>vielen Dank für die Bestellung von Produkten des RKW Kompetenzzentrums.</target>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.text2">
+				<source>Please check your order for correctness and confirm it via the link below. The order is of course free of charge.</source>
+				<target>Bitte prüfen Sie Ihre Bestellung auf Richtigkeit und bestätigen Sie sie über den untenstehenden Link. Die Bestellung ist selbstverständlich kostenlos.</target>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.textOptIn">
+				<source>Please click here to confirm your order. To make future orders easier for you, a free account will automatically be created if you are not already registered as a user. You will receive your password in another e-mail.</source>
+				<target>Bitte klicken Sie hier, um die Bestellung zu bestätigen. Um Ihnen zukünftige Bestellungen zu erleichtern, wird automatisch ein kostenloser Account erstellt, falls Sie nicht schon als Nutzer registriert sind. Das Passwort erhalten Sie in einer weiteren E-Mail.</target>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.textOptOut">
+				<source>Have you changed your mind or have you not requested the order yourself? Simply click here to delete all data:</source>
+				<target>Sie haben es sich anders überlegt oder haben die Bestellung gar nicht selbst angefragt? Klicken Sie einfach hier, um alle Daten zu löschen:</target>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.textOptInLinkLabel">
+				<source>Yes, I would like to receive this order</source>
+				 <target>Ja, ich möchte diese Bestellung erhalten</target>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.textOptOutLinkLabel">
+				<source>No, I don't want to place an order</source>
+				<target>Nein, ich möchte keine Bestellung aufgeben</target>
+			</trans-unit>
+			<trans-unit id="templates.email.optInRequest.confirmHeadline">
+				<source>Please confirm your order</source>
+				<target>Bitte bestätigen Sie Ihre Bestellung</target>
+			</trans-unit>
+
+
+			<!-- Templates/Email/ConfirmOrderUser.html -->
+			<trans-unit id="templates.email.confirmationOrderUser.headline">
+				<source>Hello</source>
+				<target>Hallo</target>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.text1">
+				<source>many thanks for ordering products from the RKW Competence Center.</source>
+				<target>vielen Dank für die Bestellung von Produkten des RKW Kompetenzzentrums.</target>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderUser.text2">
+				<source>Below you will find the details of your order. We will shortly send you the desired products free of charge.</source>
+				<target>Untenstehend finden Sie die Details Ihrer Bestellung. Wir senden Ihnen die gewünschten Produkte in Kürze kostenlos zu.</target>
+			</trans-unit>
+
+
+			<!-- Templates/Email/ConfirmOrderAdmin.html -->
+			<trans-unit id="templates.email.confirmationOrderAdmin.headline">
+				<source>Hello %s,</source>
+				<target>Hallo %s,</target>
+			</trans-unit>
+			<trans-unit id="templates.email.confirmationOrderAdmin.text1">
+				<source>something was ordered via the website. Please send the order below by post. You can reply directly to this e-mail if you have any questions.</source>
+				<target>über die Website wurde etwas bestellt. Bitte senden Sie die untenstehende Bestellung per Post zu. Sie können bei etwaigen Rückfragen direkt auf diese E-Mail antworten.</target>
+			</trans-unit>
+
+
+			<!-- Templates/Email/DeleteOrderUser.html -->
+			<trans-unit id="templates.email.deleteOrderUser.headline">
+				<source>Hello</source>
+				<target>Hallo</target>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.text1">
+				<source>hereby we confirm the cancellation of your order.</source>
+				<target>hiermit bestätigen wir die Stornierung Ihrer Bestellung.</target>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderUser.text2">
+				<source>Below you will find the details of your cancelled order.</source>
+				<target>Untenstehend finden Sie die Details Ihrer stornierten Bestellung.</target>
+			</trans-unit>
+
+
+			<!-- Templates/Email/DeleteOrderAdmin.html -->
+			<trans-unit id="templates.email.deleteOrderAdmin.headline">
+				<source>Hello %s,</source>
+				<target>Hallo %s,</target>
+			</trans-unit>
+			<trans-unit id="templates.email.deleteOrderAdmin.text1">
+				<source>an order has just been cancelled. Please DO NOT send the order below and delete the subscriptions listed below if necessary. If you have any questions, you can reply directly to this e-mail.</source>
+				<target>eine Bestellung wurde soeben storniert. Bitte senden Sie die untenstehende Bestellung NICHT  zu und löschen Sie ggf. auch die unten genannten Abonnements. Sie können bei etwaigen Rückfragen direkt auf diese E-Mail antworten.</target>
+			</trans-unit>			
+			
+
+			<!-- Partials/Email/ProductList.html -->
+            <trans-unit id="partials.email.productList.orderDetails">
+                <source>Order Details</source>
+                <target>Details der Bestellung</target>
+            </trans-unit>
+            <trans-unit id="partials.email.productList.headlineProduct">
+                <source>Product</source>
+                <target>Produkt</target>
+            </trans-unit>
+            <trans-unit id="partials.email.productList.headlineAmount">
+                <source>Amount</source>
+                <target>Anzahl</target>
+            </trans-unit>
+            <trans-unit id="partials.email.productList.headlineType">
+                <source>Type</source>
+                <target>Art</target>
+            </trans-unit>
+            <trans-unit id="partials.email.productList.isBundle">
+                <source>Bundle</source>
+                <target>Bundle/Mappe</target>
+            </trans-unit>
+            <trans-unit id="partials.email.productList.isBundle">
+                <source>Complete Series/Batch</source>
+                <target>Komplette Reihe/Mappe</target>
+            </trans-unit>
+            <trans-unit id="partials.email.productList.isSubscription">
+                <source>Subscription</source>
+                <target>Abonnement</target>
+            </trans-unit>
+            <trans-unit id="partials.email.productList.isSingle">
+                <source>Single Order</source>
+                <target>Einzelbestellung</target>
+            </trans-unit>
+
+
+            <!-- Partials/Email/ShippingAddress.html -->
+
+			<trans-unit id="partials.email.shippingAddress.shippingAddress">
+				<source>Shipping Address</source>
+				<target>Lieferadresse</target>
+			</trans-unit>
+			<trans-unit id="partials.email.shippingAddress.remark">
+				<source>Remark</source>
+				<target>Hinweis zur Bestellung</target>
+			</trans-unit>
+
+
+
+			<!-- ================================================================================== -->
+
+			<!-- Form errors -->
+			<trans-unit id="shippingAddressValidator.field.gender">
+				<source>Salutation</source>
+				<target>Anrede</target>
+			</trans-unit>
+			<trans-unit id="shippingAddressValidator.field.firstName">
+				<source>Firstname</source>
+				<target>Vorname</target>
+			</trans-unit>
+			<trans-unit id="shippingAddressValidator.field.lastName">
+				<source>Lastname</source>
+				<target>Nachname</target>
+			</trans-unit>
+			<trans-unit id="shippingAddressValidator.field.address">
+				<source>Address</source>
+				<target>Adresse</target>
+			</trans-unit>
+			<trans-unit id="shippingAddressValidator.field.zip">
+				<source>ZIP</source>
+				<target>PLZ</target>
+			</trans-unit>
+			<trans-unit id="shippingAddressValidator.field.city">
+				<source>City</source>
+				<target>Stadt</target>
+			</trans-unit>
+			<trans-unit id="shippingAddressValidator.notFilled">
+                <source>Please fill out the field '%s'.</source>
+                <target>Bitte füllen Sie das Feld '%s' aus.</target>
+			</trans-unit>
+			<trans-unit id="shippingAddressValidator.invalidEmail">
+				<source>Please enter a valid e-mail address.</source>
+				<target>Bitte geben Sie eine gültige E-Mailadresse ein.</target>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

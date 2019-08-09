@@ -1,0 +1,28 @@
+<T3DataStructure>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <TCEforms>
+                    <sheetTitle>LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:flexform.order.sheetTitle</sheetTitle>
+                </TCEforms>
+                <type>array</type>
+                <el>
+                    <settings.products>
+                        <TCEforms>
+                            <label>LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:flexform.order.products</label>
+                            <config>
+                                <type>select</type>
+                                <size>10</size>
+                                <minitems>0</minitems>
+                                <maxitems>99</maxitems>
+                                <multiple>1</multiple>
+                                <foreign_table>tx_rkwshop_domain_model_product</foreign_table>
+                                <foreign_table_where> AND tx_rkwshop_domain_model_product.deleted = 0 AND tx_rkwshop_domain_model_product.hidden = 0 ORDER BY tx_rkwshop_domain_model_product.title</foreign_table_where>
+                            </config>
+                        </TCEforms>
+                    </settings.products>
+                </el>
+            </ROOT>
+        </sDEF>
+    </sheets>
+</T3DataStructure>

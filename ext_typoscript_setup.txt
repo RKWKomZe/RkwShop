@@ -1,0 +1,114 @@
+config.tx_extbase.persistence {
+
+    classes {
+
+        RKW\RkwBasics\Domain\Model\Pages {
+            subclasses {
+                Tx_RkwShop_Pages = RKW\RkwShop\Domain\Model\Pages
+            }
+        }
+
+        RKW\RkwShop\Domain\Model\Pages {
+            mapping {
+
+                # tablename
+                tableName = pages
+
+                columns {
+                    uid.mapOnProperty 		= uid
+                    pid.mapOnProperty		= pid
+                    title.mapOnProperty 	= title
+                    subtitle.mapOnProperty 	= subtitle
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwRegistration\Domain\Model\FrontendUser {
+            subclasses {
+                Tx_RkwShop_FrontendUser = RKW\RkwShop\Domain\Model\FrontendUser
+            }
+        }
+
+        RKW\RkwShop\Domain\Model\FrontendUser {
+            mapping {
+                tableName = fe_users
+                recordType =
+            }
+        }
+
+
+        #===============================================
+
+
+        TYPO3\CMS\Extbase\Domain\Model\BackendUser {
+            subclasses {
+                Tx_RkwShop_BackendUser = RKW\RkwShop\Domain\Model\BackendUser
+            }
+        }
+
+
+        RKW\RkwShop\Domain\Model\BackendUser {
+            mapping {
+                tableName = be_users
+                columns {
+                    usergroup.mapOnProperty = backendUserGroups
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwRegistration\Domain\Model\ShippingAddress {
+            subclasses {
+                Tx_RkwShop_ShippingAddress = RKW\RkwShop\Domain\Model\ShippingAddress
+            }
+        }
+
+        RKW\RkwShop\Domain\Model\ShippingAddress {
+            mapping {
+
+                # tablename
+                tableName = tx_rkwregistration_domain_model_shippingaddress
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\Order {
+            mapping {
+                columns {
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    hidden.mapOnProperty = hidden
+                    deleted.mapOnProperty = deleted
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\OrderItem {
+            mapping {
+                columns {
+                    ext_order.mapOnProperty = order
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\Product {
+            mapping {
+                columns {
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    hidden.mapOnProperty = hidden
+                    deleted.mapOnProperty = deleted
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,36 @@
+{
+    "name": "rkw/rkw-shop",
+    "type": "typo3-cms-extension",
+    "description": "Extension for ordering publications",
+    "homepage": "https://www.rkw-kompetenzzentrum.de",
+    "license": ["GPL-2.0+"],
+    "keywords": ["TYPO3 CMS", "RKW", "Shop"],
+    "support": {
+        "email": "developer@steffenkroggel.de"
+    },
+    "authors": [
+        {
+            "name": "Steffen Kroggel",
+            "email": "developer@steffenkroggel.de",
+            "homepage": "http://www.steffenkroggel.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "typo3/cms-core": "^7.6.0 || ^8.7.0",
+        "rkw/rkw-basics": ">=8.7.2",
+        "rkw/rkw-mailer": ">=8.7.1",
+        "rkw/rkw-registration": ">=8.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RKW\\RkwShop\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "rkw_shop"
+        }
+    }
+}

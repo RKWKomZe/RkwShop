@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_shop">
+		<header/>
+		<body>
+			<trans-unit id="tx_rkwshop_domain_model_order">
+				<source>RKW Shop: Order</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.email">
+				<source>E-Mail</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.frontendUser">
+				<source>Frontend User</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.orderItem">
+				<source>Ordered Products</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.shippingAddress">
+				<source>Shipping Address</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.pages">
+				<source>Pages</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.status.sent">
+				<source>Sent</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.remark" approved="yes">
+				<source>Remark</source>
+			</trans-unit>
+
+
+            
+            <trans-unit id="tx_rkwshop_domain_model_orderitem">
+				<source>RKW Shop: OrderItem</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_orderitem.product">
+				<source>Product</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_orderitem.amount">
+				<source>Amount</source>
+			</trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_orderitem.isPreOrder">
+                <source>Is Pre-Order</source>
+            </trans-unit>
+
+
+            <trans-unit id="tx_rkwshop_domain_model_product">
+                <source>RKW Shop: Product</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.recordType">
+                <source>Product-Type</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.recordType.default">
+                <source>Default</source>
+                <target>Standard</target>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.recordType.bundle">
+                <source>Bundle</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.recordType.subscription">
+                <source>Subscription</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.title">
+                <source>Title</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.subtitle">
+                <source>Subtitle</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.adminEmail">
+                <source>Additional Admin-E-Mail for Order- Mails</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.backendUser">
+                <source>Backend Users for Order- Mails</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.stock">
+                <source>Stock</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.orderedExternal">
+                <source>Sum Of External Orders</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.page">
+                <source>Page</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.image">
+                <source>Image</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.productBundle">
+                <source>Bundle/Subscription</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.allowSingleOrder">
+                <source>Allow Single Order</source>
+            </trans-unit>
+
+
+             <!-- tx_rkwshop_domain_model_stock -->
+            <trans-unit id="tx_rkwshop_domain_model_stock">
+                <source>RKW Shop: Stock</source>
+            </trans-unit>
+             <trans-unit id="tx_rkwshop_domain_model_stock.amount">
+                 <source>Amount</source>
+             </trans-unit>
+             <trans-unit id="tx_rkwshop_domain_model_stock.deliveryStart">
+                 <source>Delivery Start</source>
+             </trans-unit>
+             <trans-unit id="tx_rkwshop_domain_model_stock.comment">
+                 <source>Comment</source>
+             </trans-unit>
+
+
+
+            <!-- TCA- Tabs -->
+            <trans-unit id="tx_rkwshop_domain_model_product.tab.basics">
+                <source>Basics</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.tab.stock">
+                <source>Stock</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.tab.order">
+                <source>Bestellung</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.tab.language">
+                <source>Language</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.tab.access">
+                <source>Access</source>
+            </trans-unit>
+
+
+			<!-- flexform -->
+			<trans-unit id="flexform.order.sheetTitle">
+				<source>Options</source>
+			</trans-unit>
+			<trans-unit id="flexform.order.products">
+				<source>Products</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

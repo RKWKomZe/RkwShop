@@ -1,0 +1,9 @@
+.rkw-order__loading {
+    padding:20px;
+}
+
+.rkw-order__loading img {
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}

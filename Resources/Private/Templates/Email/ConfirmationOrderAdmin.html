@@ -1,0 +1,22 @@
+{namespace rkwMailer=RKW\RkwMailer\ViewHelpers}
+<f:layout name="Email/{mailType}" />
+
+
+<!-- PLAINTEXT -->
+<f:section name="Plaintext"><rkwMailer:plaintextLineBreaks>
+	<rkwMailer:frontend.translate key="templates.email.confirmationOrderAdmin.headline" languageKey="{backendUser.lang}" extensionName="rkwShop" arguments="{0 : backendUser.realName}" />\n
+	\n
+	<rkwMailer:frontend.translate key="templates.email.confirmationOrderAdmin.text1" languageKey="{backendUser.lang}" extensionName="rkwShop" />\n
+	\n
+	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: backendUser.lang}"/>\n
+	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: backendUser.lang}"/>
+</rkwMailer:plaintextLineBreaks></f:section>
+
+<!-- HTML -->
+<f:section name="Html">
+	<h1><rkwMailer:frontend.translate key="templates.email.confirmationOrderAdmin.headline" languageKey="{backendUser.lang}" extensionName="rkwShop" arguments="{0 : backendUser.realName}" /></h1>
+	<p><rkwMailer:frontend.translate key="templates.email.confirmationOrderAdmin.text1" languageKey="{backendUser.lang}" extensionName="rkwShop" /></p>
+
+	<f:render partial="Email/ProductList" section="Html" arguments="{order: order, frontendUser: order.frontendUser, language: backendUser.lang}"/>
+	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: order, frontendUser: order.frontendUser, language: backendUser.lang}"/>
+</f:section>

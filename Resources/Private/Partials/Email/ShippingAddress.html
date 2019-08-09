@@ -1,0 +1,41 @@
+{namespace rkwMailer=RKW\RkwMailer\ViewHelpers}
+{namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
+
+<f:layout name="Email/{mailType}" />
+
+
+<!-- PLAINTEXT -->
+<f:section name="Plaintext">
+	=============================================================\n
+	<rkwMailer:frontend.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" />\n
+	=============================================================\n
+	<f:if condition="{order.shippingAddress.company}">{order.shippingAddress.company}\n</f:if>
+	<f:if condition="{order.shippingAddress.title}"><rkwRegistration:title title="{order.shippingAddress.title}" /> </f:if>{order.shippingAddress.firstName} {order.shippingAddress.lastName}\n
+	{order.shippingAddress.address}\n
+	{order.shippingAddress.zip} {order.shippingAddress.city}\n
+	<f:if condition="{order.remark}">
+		\n
+		=============================================================\n
+		<rkwMailer:frontend.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" />\n
+		=============================================================\n
+		{order.remark}\n
+	</f:if>
+</f:section>
+
+<!-- HTML -->
+<f:section name="Html">
+	<h2><rkwMailer:frontend.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" /></h2>
+	<p>
+		<f:if condition="{order.shippingAddress.company}">{order.shippingAddress.company}<br/></f:if>
+        <f:if condition="{order.shippingAddress.title}"><rkwRegistration:title title="{order.shippingAddress.title}" /> </f:if>{order.shippingAddress.firstName} {order.shippingAddress.lastName}<br/>
+		{order.shippingAddress.address}<br/>
+		{order.shippingAddress.zip} {order.shippingAddress.city}
+	</p>
+
+	<f:if condition="{order.remark}">
+		<h2><rkwMailer:frontend.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" /></h2>
+		<p>
+			{order.remark}
+		</p>
+	</f:if>
+</f:section>

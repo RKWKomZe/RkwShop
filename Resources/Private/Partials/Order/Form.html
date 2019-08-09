@@ -1,0 +1,14 @@
+{namespace vh=RKW\RkwShop\ViewHelpers}
+
+<f:render partial="Order/Form/ProductList" arguments="{_all}" />
+
+<div class="order-form">
+    <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress" /></h5>
+    <f:render partial="Order/Form/UserData" arguments="{_all}" />
+</div>
+
+<f:render partial="Order/Form/Terms" arguments="{_all}" />
+
+
+
+

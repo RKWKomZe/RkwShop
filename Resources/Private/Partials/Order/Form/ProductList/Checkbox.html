@@ -1,0 +1,15 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
+<div class="order-list__order">
+    <span class="checkbox">
+        <label>
+            <f:form.checkbox property="orderItem.{product.uid}.amount" value="1" checked="<rkwShop:OrderItemAmount orderItemList='{orderItem}' product='{product}' />"/>
+            <span>
+                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.checkbox.subscription" />
+            </span>
+
+            <!-- add hidden field with product -->
+            <f:form.hidden property="orderItem.{product.uid}.product" value="{product}" />
+        </label>
+    </span>
+</div>

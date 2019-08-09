@@ -1,0 +1,19 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="main">
+
+    <f:render partial="FlashMessages"  arguments="{_all}" />
+
+    <f:render partial="FormErrors" arguments="{object:Order}" />
+
+    <f:if condition="{products}">
+
+        <!-- form -->
+        <f:form action="create" name="order" object="{order}" class="form-fields" >
+            <f:render partial="Order/Form" arguments="{_all}" />
+        </f:form>
+
+    </f:if>
+</f:section>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>1</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>1</product>
+    </tx_rkwshop_domain_model_orderitem>
+
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>2</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>1</product>
+    </tx_rkwshop_domain_model_orderitem>
+
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>3</uid>
+        <pid>1</pid>
+        <amount>4</amount>
+        <product>1</product>
+    </tx_rkwshop_domain_model_orderitem>
+
+
+    <!-- testing normal stock calculation -->
+    <!-- check 1 & 2 -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>10</uid>
+        <pid>1</pid>
+        <amount>10</amount>
+        <product>10</product>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>11</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>10</product>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>16</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>10</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+
+    <!-- check 3 -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>12</uid>
+        <pid>1</pid>
+        <amount>11</amount>
+        <product>11</product>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>13</uid>
+        <pid>1</pid>
+        <amount>7</amount>
+        <product>12</product>
+    </tx_rkwshop_domain_model_orderitem>
+
+    <!-- check 4 -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>14</uid>
+        <pid>1</pid>
+        <amount>12</amount>
+        <product>13</product>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>15</uid>
+        <pid>1</pid>
+        <amount>7</amount>
+        <product>14</product>
+    </tx_rkwshop_domain_model_orderitem>
+
+
+    <!-- testing pre-order stock calculation -->
+    <!-- check 1 -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>20</uid>
+        <pid>1</pid>
+        <amount>70</amount>
+        <product>20</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>21</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>20</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>22</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>20</product>
+        <is_pre_order>0</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+
+    <!-- check 2 -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>23</uid>
+        <pid>1</pid>
+        <amount>1200</amount>
+        <product>21</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+
+    <!-- check 3 -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>24</uid>
+        <pid>1</pid>
+        <amount>22</amount>
+        <product>22</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>25</uid>
+        <pid>1</pid>
+        <amount>33</amount>
+        <product>23</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+
+    <!-- check 4 -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>26</uid>
+        <pid>1</pid>
+        <amount>11</amount>
+        <product>24</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>27</uid>
+        <pid>1</pid>
+        <amount>9</amount>
+        <product>25</product>
+        <is_pre_order>1</is_pre_order>
+    </tx_rkwshop_domain_model_orderitem>
+
+
+    <!-- check of cleanup -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>30</uid>
+        <pid>1</pid>
+        <amount>9</amount>
+        <product>30</product>
+        <ext_order>6</ext_order>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>31</uid>
+        <pid>1</pid>
+        <amount>0</amount>
+        <product>31</product>
+        <ext_order>6</ext_order>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>32</uid>
+        <pid>1</pid>
+        <amount>1</amount>
+        <product>32</product>
+        <ext_order>6</ext_order>
+    </tx_rkwshop_domain_model_orderitem>
+
+
+</dataset>
