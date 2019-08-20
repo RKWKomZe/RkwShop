@@ -32,8 +32,9 @@ $EM_CONF[$_EXTKEY] = array(
             'rkw_registration' => '8.7.5-8.7.99'
 		),
 		'conflicts' => array(
-            'rkw_order' => '',
+            'rkw_authors' => '0.0.0-7.6.13',
             'rkw_basics' => '0.0.0-8.7.6',
+            'rkw_order' => '',
             'rkw_soap' => '0.0.0-7.6.5',
             'rkw_registration' => '0.0.0-8.7.4'
 		),
