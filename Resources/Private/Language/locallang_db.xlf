@@ -69,6 +69,12 @@
             <trans-unit id="tx_rkwshop_domain_model_product.subtitle">
                 <source>Subtitle</source>
             </trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_product.publishing_date">
+				<source>Publishing Date</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_product.author">
+				<source>Authors</source>
+			</trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.adminEmail">
                 <source>Additional Admin-E-Mail for Order- Mails</source>
             </trans-unit>
@@ -87,6 +93,9 @@
             <trans-unit id="tx_rkwshop_domain_model_product.image">
                 <source>Image</source>
             </trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_product.download">
+				<source>Download</source>
+			</trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.productBundle">
                 <source>Bundle/Subscription</source>
             </trans-unit>

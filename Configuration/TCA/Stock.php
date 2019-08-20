@@ -6,8 +6,8 @@ if (!defined ('TYPO3_MODE')) {
 $GLOBALS['TCA']['tx_rkwshop_domain_model_stock'] = [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_stock',
-		'label' => 'amount',
-        'label_alt' => 'comment',
+		'label' => 'comment',
+        'label_alt' => 'amount',
         'label_alt_force' => 1,
 		'default_sortby' => 'ORDER BY crdate',
 		'tstamp' => 'tstamp',

@@ -27,10 +27,10 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
         'requestUpdate' => 'product_bundle',
 	],
 	'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, image, stock, ordered_external, page, product_bundle, backend_user, admin_email',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, publishing_date, image, stock, ordered_external, page, product_bundle, backend_user, admin_email',
 	],
 	'types' => [
-		'0' => ['showitem' => '--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics,record_type, title, subtitle, image, page, product_bundle,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden;;1, starttime, endtime'],
+		'0' => ['showitem' => '--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics,record_type, title, subtitle, publishing_date, download, image, page, product_bundle,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden;;1, starttime, endtime'],
         '\RKW\RkwShop\Domain\Model\ProductBundle' => ['showitem' => '--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics,record_type, title, subtitle, image, page,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email,allow_single_order,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden;;1, starttime, endtime'],
         '\RKW\RkwShop\Domain\Model\ProductSubscription' => ['showitem' => '--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics,record_type, title, subtitle, image, page,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email,allow_single_order,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden;;1, starttime, endtime'],
     ],
@@ -111,6 +111,15 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
 				'eval' => 'trim'
 			],
 		],
+        'publishing_date' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.publishing_date',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'datetime'
+            ],
+        ],
 		'stock' => [
             'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.stock',
@@ -157,7 +166,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'int,required',
+                'eval' => 'int',
                 'wizards' => [
                     '_PADDING' => 2,
                     'link' => [
@@ -184,8 +193,18 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
                 'softref' => 'typolink'
             ],
         ],
+        'download' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.download',
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'download',
+                array('maxitems' => 1),
+                'doc,docx,docm,xls,xlsx,pdf'
+            ),
+        ],
         'image' => [
             'exclude' => 0,
+            'displayCond' => 'FIELD:download:REQ:FALSE',
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.image',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'image',
@@ -263,3 +282,22 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
         ],
     ],
 ];
+
+// Extend TCA when rkw_authors is available
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_authors')) {
+
+    $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['columns']['author'] = array(
+        'exclude' => 0,
+        'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.author',
+        'config' => array(
+            'type' => 'select',
+            'renderType' => 'selectMultipleSideBySide',
+            'foreign_table' => 'tx_rkwauthors_domain_model_authors',
+            'foreign_table_where' => 'AND ((\'###PAGE_TSCONFIG_IDLIST###\' <> \'0\' AND FIND_IN_SET(tx_rkwauthors_domain_model_authors.pid,\'###PAGE_TSCONFIG_IDLIST###\')) OR (\'###PAGE_TSCONFIG_IDLIST###\' = \'0\')) AND tx_rkwauthors_domain_model_authors.sys_language_uid = ###REC_FIELD_sys_language_uid### ORDER BY tx_rkwauthors_domain_model_authors.last_name ASC',
+            'maxitems'      => 9999,
+            'minitems'      => 0,
+            'size'          => 5,
+        ),
+    );
+    $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['types'][0]['showitem'] = str_replace(', publishing_date,', ', publishing_date, author,', $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['types'][0]['showitem']);
+}

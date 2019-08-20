@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_shop">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_shop">
 		<header/>
 		<body>
 
@@ -159,6 +159,13 @@
             <trans-unit id="partials.order.form.productList.belongsTo">
                 <source>Belongs to this series/folder:</source>
                 <target>Gehört zu dieser Reihe/Mappe:</target>
+            </trans-unit>
+
+
+            <!-- Partials/Order/Form/ProductList/BundleContents.html -->
+            <trans-unit id="partials.order.form.productList.bundleContents.contents">
+                <source>Contents:</source>
+                <target>Inhalt:</target>
             </trans-unit>
 
 

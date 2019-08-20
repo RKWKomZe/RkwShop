@@ -1,8 +1,6 @@
 <?php
 
-namespace RKW\RkwShop\Domain\Repository;
-
-
+namespace RKW\RkwShop\Domain\Model;
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,17 +13,22 @@ namespace RKW\RkwShop\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 /**
- * Class PagesRepository
+ * Class Author
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwShop
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class PagesRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
-{
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_authors')) {
+    class Author extends \RKW\RkwAuthors\Domain\Model\Authors
+    {
 
+    }
+} else {
+    class Author
+    {
 
-
+    }
 }

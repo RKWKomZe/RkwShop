@@ -60,8 +60,11 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	subtitle varchar(255) DEFAULT '' NOT NULL,
+	publishing_date int(11) unsigned DEFAULT '0' NOT NULL,
+	author varchar(255) DEFAULT '' NOT NULL,
 	page varchar(255) DEFAULT '' NOT NULL,
 	image int(11) unsigned NOT NULL default '0',
+	download int(11) unsigned NOT NULL default '0',
 	product_bundle int(11) unsigned DEFAULT '0',
 	allow_single_order tinyint(4) unsigned DEFAULT '1' NOT NULL,
 
