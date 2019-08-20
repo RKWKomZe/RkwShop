@@ -21,17 +21,21 @@ $EM_CONF[$_EXTKEY] = array(
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'clearCacheOnLoad' => 0,
-	'version' => '8.7.2',
+	'version' => '7.6.0',
 	'constraints' => array(
 		'depends' => array(
             'extbase' => '7.6.0-8.7.99',
             'fluid' => '7.6.0-8.7.99',
             'typo3' => '7.6.0-8.7.99',
-            'rkw_basics' => '8.7.2-8.7.99',
-            'rkw_mailer' => '8.7.1-8.7.99',
-            'rkw_registration' => '8.7.0-8.7.99'
+            'rkw_basics' => '8.7.7-8.7.99',
+            'rkw_mailer' => '8.7.20-8.7.99',
+            'rkw_registration' => '8.7.5-8.7.99'
 		),
 		'conflicts' => array(
+            'rkw_order' => '',
+            'rkw_basics' => '0.0.0-8.7.6',
+            'rkw_soap' => '0.0.0-7.6.5',
+            'rkw_registration' => '0.0.0-8.7.4'
 		),
 		'suggests' => array(
 		),

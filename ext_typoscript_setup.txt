@@ -2,6 +2,9 @@ config.tx_extbase.persistence {
 
     classes {
 
+        // dependeny to rkw_authors is optional - see ext_typoscript_setup.txt in rkw_authors
+        #===============================================
+
         RKW\RkwBasics\Domain\Model\Pages {
             subclasses {
                 Tx_RkwShop_Pages = RKW\RkwShop\Domain\Model\Pages
@@ -40,7 +43,6 @@ config.tx_extbase.persistence {
 
 
         #===============================================
-
 
         TYPO3\CMS\Extbase\Domain\Model\BackendUser {
             subclasses {
@@ -109,6 +111,30 @@ config.tx_extbase.persistence {
                 }
             }
         }
+
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\ProductBundle {
+            mapping {
+
+                recordType = \RKW\RkwShop\Domain\Model\ProductBundle
+                tableName = tx_rkwshop_domain_model_product
+            }
+            subclasses {
+                \RKW\RkwShop\Domain\Model\ProductSubscription = RKW\RkwShop\Domain\Model\ProductSubscription
+            }
+        }
+
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\ProductSubscription {
+            mapping {
+
+                recordType = \RKW\RkwShop\Domain\Model\ProductSubscription
+                tableName = tx_rkwshop_domain_model_product
+            }
+        }
     }
 }
-

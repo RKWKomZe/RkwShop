@@ -72,6 +72,22 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     
     /**
+     * publishingDate
+     *
+     * @var integer
+     */
+    protected $publishingDate;
+
+    
+    /**
+     * author
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Author>
+     */
+    protected $author = null;
+    
+    
+    /**
      * page
      *
      * @var \RKW\RkwShop\Domain\Model\Pages
@@ -84,7 +100,15 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \RKW\RkwBasics\Domain\Model\FileReference
      */
-    protected $image = null;    
+    protected $image = null;
+    
+
+    /**
+     * download
+     *
+     * @var \RKW\RkwBasics\Domain\Model\FileReference
+     */
+    protected $download = null;
 
 
     /**
@@ -106,6 +130,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * stock
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Stock>
+     * @cascade remove
      */
     protected $stock;
 
@@ -154,6 +179,8 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->backendUser = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->author = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+
     }
 
     /**
@@ -296,6 +323,74 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
+     * Sets the publishingDate value
+     *
+     * @param integer $publishingDate
+     * @api
+     */
+    public function setPublishingDate($publishingDate)
+    {
+        $this->publishingDate = $publishingDate;
+    }
+
+
+
+    /**
+     * Adds a author
+     *
+     * @param \RKW\RkwShop\Domain\Model\Author $author
+     * @return void
+     */
+    public function addAuthor(\RKW\RkwShop\Domain\Model\Author $author)
+    {
+        $this->author->attach($author);
+    }
+
+    /**
+     * Removes a author
+     *
+     * @param \RKW\RkwShop\Domain\Model\Author $author
+     * @return void
+     */
+    public function removeAuthor(\RKW\RkwShop\Domain\Model\Author $author)
+    {
+        $this->author->detach($author);
+    }
+
+    /**
+     * Returns the author
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Author> $author
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Sets the author
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Author> $author
+     * @return void
+     */
+    public function setAuthor(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $author)
+    {
+        $this->author = $author;
+    }
+    
+
+    /**
+     * Returns the publishingDate value
+     *
+     * @return integer
+     * @api
+     */
+    public function getPublishingDate()
+    {
+        return $this->publishingDate;
+    }
+
+    /**
      * Returns the productBundle
      *
      * @return \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
@@ -380,6 +475,28 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->image = $image;
     }
+
+
+    /**
+     * Returns the download
+     *
+     * @return \RKW\RkwBasics\Domain\Model\FileReference $download
+     */
+    public function getDownload()
+    {
+        return $this->download;
+    }
+
+    /**
+     * Sets the download
+     *
+     * @param \RKW\RkwBasics\Domain\Model\FileReference $download
+     * @return void
+     */
+    public function setDownload(\RKW\RkwBasics\Domain\Model\FileReference $download)
+    {
+        $this->download = $download;
+    }    
 
 
     /**

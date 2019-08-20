@@ -2,6 +2,8 @@
 
 namespace RKW\RkwShop\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -42,8 +44,25 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->getQuerySettings()->setIgnoreEnableFields(true);
 
         return $query->execute();
-     }
+    }
 
+
+
+    /**
+     * Get all products including hidden and deleted
+     *
+     * @param \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
+     * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByProductBundleOrderedByPublishingDate (\RKW\RkwShop\Domain\Model\ProductBundle $productBundle)
+    {
+
+        $query = $this->createQuery();
+        $query->equals('productBundle', $productBundle);
+        $query->setOrderings(array('publishingDate' => QueryInterface::ORDER_ASCENDING));
+
+        return $query->execute();
+    }
 
 
 

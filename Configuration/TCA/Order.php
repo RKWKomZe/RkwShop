@@ -24,13 +24,12 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
 		'showRecordFieldList' => 'hidden, status, email, frontend_user, shipping_address, order_item, remark',
 	],
 	'types' => [
-		'1' => ['showitem' => 'hidden;;1, status, email, frontend_user, hipping_address, order_item, sremark'],
+		'1' => ['showitem' => 'hidden;;1, status, email, frontend_user, shipping_address, order_item, remark'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
 	],
 	'columns' => [
-	
 
 		'hidden' => [
 			'exclude' => 0,
@@ -43,12 +42,14 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
 			'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status',
 			'config' => [
-				'type' => 'check',
-				'default' => 0,
+				'type' => 'select',
+                'renderType' => 'selectSingle',
+                'default' => 0,
 				'items' => [
-					'1' => [
-						'0' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.sent'
-					]
+					['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.new', 0],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.exported', 90],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.sent', 100],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.closed', 200]
 				]
 			],
 		],

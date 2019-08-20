@@ -1,0 +1,24 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
+<f:if condition="<rkwShop:bundleContent product='{product}' />">
+
+    <div class="order-list__contents">
+        <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleContents.contents" /></span>
+        <ol>
+            <f:for each="<rkwShop:bundleContent product='{product}' />" as="bundleItem" >
+                <li>
+                    <f:if condition="{bundleItem.page}">
+                        <f:then>
+                            <f:link.page pageUid="{bundleItem.page.uid}">
+                                {bundleItem.title}. {bundleItem.subtitle}
+                            </f:link.page>
+                        </f:then>
+                        <f:else>
+                            {bundleItem.title}. {bundleItem.subtitle}
+                        </f:else>
+                    </f:if>
+                </li>
+            </f:for>
+        </ol>
+    </div>
+</f:if>

@@ -27,10 +27,22 @@
 				<source>Status</source>
 				<target>Status</target>
 			</trans-unit>
-			<trans-unit id="tx_rkwshop_domain_model_order.status.sent">
-				<source>Sent</source>
-				<target>Versendet</target>
+			<trans-unit id="tx_rkwshop_domain_model_order.status.new">
+				<source>new</source>
+				<target>neu</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.status.exported">
+				<source>exported</source>
+				<target>exportiert</target>
+			</trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_order.status.sent">
+                <source>sent</source>
+                <target>versendet</target>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_order.status.closed">
+                <source>closed</source>
+                <target>abgeschlossen</target>
+            </trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.remark" approved="yes">
 				<source>Remark</source>
 				<target>Anmerkung</target>
@@ -85,6 +97,14 @@
 				<source>Subtitle</source>
 				<target>Untertitel</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_product.publishing_date">
+				<source>Publishing Date</source>
+				<target>Veröffentlichungsdatum</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_product.author">
+				<source>Authors</source>
+				<target>Autoren/Ansprechpartner</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.adminEmail">
 				<source>Additional Admin-E-Mail for Order- Mails</source>
 				<target>Zusätzliche Admin-E-Mail für Bestell- E-Mails</target>
@@ -108,6 +128,10 @@
 			<trans-unit id="tx_rkwshop_domain_model_product.image">
 				<source>Image</source>
 				<target>Bild</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_product.download">
+				<source>Download</source>
+				<target>Download</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.productBundle">
 				<source>Bundle/Subscription</source>

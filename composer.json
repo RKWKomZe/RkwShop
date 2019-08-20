@@ -1,7 +1,7 @@
 {
     "name": "rkw/rkw-shop",
     "type": "typo3-cms-extension",
-    "description": "Extension for ordering publications",
+    "description": "Shop extension",
     "homepage": "https://www.rkw-kompetenzzentrum.de",
     "license": ["GPL-2.0+"],
     "keywords": ["TYPO3 CMS", "RKW", "Shop"],
@@ -18,10 +18,17 @@
     ],
     "require": {
         "php": ">=5.6",
+        "ext-simplexml" : "*",
         "typo3/cms-core": "^7.6.0 || ^8.7.0",
-        "rkw/rkw-basics": ">=8.7.2",
-        "rkw/rkw-mailer": ">=8.7.1",
-        "rkw/rkw-registration": ">=8.7.0"
+        "rkw/rkw-basics": ">=8.7.7",
+        "rkw/rkw-mailer": ">=8.7.20",
+        "rkw/rkw-registration": ">=8.7.5"
+    },
+    "conflict": {
+        "rkw/rkw-order": "*",
+        "rkw/rkw-basics" : "<8.7.7",
+        "rkw/rkw-soap" : "<7.6.6",
+        "rkw/rkw-registration" : "<8.7.5"
     },
     "autoload": {
         "psr-4": {
