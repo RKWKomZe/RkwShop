@@ -104,7 +104,7 @@ class StockRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getStockSumByProductAndPreOrderReturnsStockOfGivenProductWithoutPreOrderAndWithoutDeleted()
+    public function getStockSumByProductAndPreOrder_ReturnsStockOf_GivenProductWithoutPreOrderAndWithoutDeleted()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -119,7 +119,7 @@ class StockRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getStockSumByProductAndPreOrderTrueReturnsPreOrderStockOfGivenProductAndWithoutDeleted()
+    public function getStockSumByProductAndPreOrderTrue_ReturnsPreOrderStockOf_GivenProductAndWithoutDeleted()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */

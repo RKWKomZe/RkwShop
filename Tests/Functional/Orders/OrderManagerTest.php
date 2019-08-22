@@ -206,7 +206,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenNoFrontendUserAndTermsFalseThrowsException ()
+    public function createOrder_GivenNoFrontendUserAndTermsFalse_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -228,7 +228,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenNonPersistentFrontendUserAndTermsFalseThrowsException ()
+    public function createOrder_GivenNonPersistentFrontendUserAndTermsFalse_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -253,7 +253,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenNoFrontendUserAndTermsTrueAndPrivacyFalseThrowsException ()
+    public function createOrder_GivenNoFrontendUserAndTermsTrueAndPrivacyFalse_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -275,7 +275,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenFrontendUserAndTermsTrueAndPrivacyFalseThrowsException ()
+    public function createOrder_GivenFrontendUserAndTermsTrueAndPrivacyFalse_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -300,7 +300,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenNonPersistentFrontendUserAndTermsFalseAndPrivacyTrueThrowsException ()
+    public function createOrder_GivenNonPersistentFrontendUserAndTermsFalseAndPrivacyTrue_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -326,7 +326,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
       * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenFrontendUserWithInvalidEmailAndTermsTrueAndPrivacyTrueThrowsException ()
+    public function createOrder_GivenFrontendUserWithInvalidEmailAndTermsTrueAndPrivacyTrue_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -353,7 +353,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenFrontendUserWithInvalidEmailAndTermsTrueAndPrivacyTrueAndMissingShippingAddressModelThrowsException ()
+    public function createOrder_GivenFrontendUserWithInvalidEmailAndTermsTrueAndPrivacyTrueAndMissingShippingAddressModel_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -382,7 +382,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenPersistentFrontendUserAndTermsTrueAndPrivacyTrueAndMissingOrderItemThrowsException ()
+    public function createOrder_GivenPersistentFrontendUserAndTermsTrueAndPrivacyTrueAndMissingOrderItem_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -416,7 +416,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenPersistentFrontendUserAndTermsTrueAndPrivacyTrueAndOrderItemHavingAmountZeroThrowsException ()
+    public function createOrder_GivenPersistentFrontendUserAndTermsTrueAndPrivacyTrueAndOrderItemHavingAmountZero_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -444,7 +444,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenPersistentFrontendUserAndTermsFalseAndPrivacyTrueReturnsCreateMessageAndAddsOrderAndPrivacyInformationToDatabase ()
+    public function createOrder_GivenPersistentFrontendUserAndTermsFalseAndPrivacyTrue_ReturnsCreateMessageAndAddsOrderAndPrivacyInformationToDatabase ()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
@@ -478,7 +478,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenNoFrontendUserAndTermsTrueAndPrivacyTrueReturnsOptInMessageAndAddsRegistrationToDatabase ()
+    public function createOrder_GivenNoFrontendUserAndTermsTrueAndPrivacyTrue_ReturnsOptInMessageAndAddsRegistrationToDatabase ()
     {
 
         static::assertEquals('orderManager.message.createdOptIn', $this->subject->createOrder($this->fixtureDummy, $this->requestDummy, null, true, true));
@@ -503,7 +503,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForProductOutOfStockThrowsException ()
+    public function createOrder_GivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForProductOutOfStock_ThrowsException ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -532,7 +532,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForProductOutOfStockButNotOutOfPreOrderReturnsOptInMessageAndAddsRegistrationToDatabase ()
+    public function createOrder_GivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForProductOutOfStockButNotOutOfPreOrder_ReturnsOptInMessageAndAddsRegistrationToDatabase ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -564,7 +564,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrderGivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForSubscriptionProductOutOfStockReturnsOptInMessageAndAddsRegistrationToDatabase ()
+    public function createOrder_GivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForSubscriptionProductOutOfStock_ReturnsOptInMessageAndAddsRegistrationToDatabase ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -595,7 +595,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenPersistedOrderAndPersistedFrontendUserThrowsException ()
+    public function saveOrder_GivenPersistedOrderAndPersistedFrontendUser_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -619,7 +619,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderAndNonPersistedFrontendUserThrowsException ()
+    public function saveOrder_GivenOrderAndNonPersistedFrontendUser_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -640,7 +640,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderWithoutOrderItemThrowsException ()
+    public function saveOrder_GivenOrderWithoutOrderItem_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -668,7 +668,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderWithOrderItemHavingAmountZeroThrowsException ()
+    public function saveOrder_GivenOrderWithOrderItemHavingAmountZero_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -691,7 +691,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderWithoutShippingAddressThrowsException ()
+    public function saveOrder_GivenOrderWithoutShippingAddress_ThrowsException ()
     {
 
         static::expectException(\RKW\RkwShop\Exception::class);
@@ -724,7 +724,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderAndPersistedFrontendUserReturnsTrueAndAddsOrderAndShippingAddressToDatabaseWithFrontendUserSet ()
+    public function saveOrder_GivenOrderAndPersistedFrontendUser_ReturnsTrueAndAddsOrderAndShippingAddressToDatabaseWithFrontendUserSet ()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
@@ -750,7 +750,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderGivenOrderAndPersistedFrontendUserReturnsTrueAndAddsOrderAndShippingAddressWithExpectedDataToDatabase ()
+    public function saveOrder_GivenOrderAndPersistedFrontendUser_ReturnsTrueAndAddsOrderAndShippingAddressWithExpectedDataToDatabase ()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
@@ -787,7 +787,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function removeAllOrdersOfFrontendUserSignalSlotRemovesAllOpenOrdersOfGivenUser ()
+    public function removeAllOrdersOfFrontendUserSignalSlot_GivenFrontendUser_RemovesAllOpenOrdersOfGivenUser ()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
@@ -810,7 +810,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getRemainingStockReturnsStockAndSubstractsOrderedAndOrderedExternalFromStock ()
+    public function getRemainingStock_GivenProduct_ReturnsStockAndSubstractsOrderedAndOrderedExternalFromStock ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -825,7 +825,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      *
      */
-    public function getRemainingStockReturnsZeroIfCalculatedValueIsBelowZero ()
+    public function getRemainingStock_GivenProduct_ReturnsZeroIfCalculatedValueIsBelowZero ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -841,7 +841,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getRemainingStockGivenProductWithProductBundleWithAllowSingleOrderFalseReturnsStockOfProductBundle ()
+    public function getRemainingStock_GivenProductWithProductBundleWithAllowSingleOrderFalse_ReturnsStockOfProductBundle ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -855,7 +855,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getRemainingStockGivenProductWithProductBundleWithAllowSingleOrderTrueReturnsStockOfProduct()
+    public function getRemainingStock_GivenProductWithProductBundleWithAllowSingleOrderTrue_ReturnsStockOfProduct()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -872,7 +872,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getPreOrderStockReturnsStockAndSubstractsOrderedAndNotOrderedExternalFromStock ()
+    public function getPreOrderStock_GivenProduct_ReturnsStockAndSubstractsOrderedAndNotOrderedExternalFromStock ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -887,7 +887,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      *
      */
-    public function getPreOrderStockReturnsZeroIfCalculatedValueIsBelowZero ()
+    public function getPreOrderStock_GivenProduct_ReturnsZeroIfCalculatedValueIsBelowZero ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -902,7 +902,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getPreOrderStockGivenProductWithProductBundleWithAllowSingleOrderFalseReturnsStockOfProductBundle ()
+    public function getPreOrderStock_GivenProductWithProductBundleWithAllowSingleOrderFalse_ReturnsStockOfProductBundle ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -916,7 +916,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function getPreOrderStockGivenProductWithProductBundleWithAllowSingleOrderTrueReturnsStockOfProduct()
+    public function getPreOrderStock_GivenProductWithProductBundleWithAllowSingleOrderTrue_ReturnsStockOfProduct()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -932,7 +932,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function cleanUpOrderItemListRemovesOrderItemObjectsWithAmountLowerThanOne ()
+    public function cleanUpOrderItemList_GivenOrder_RemovesOrderItemObjectsWithAmountLowerThanOne ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
@@ -953,7 +953,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function getBackendUsersForAdminMailsGivenProductWithAdminsSetAndOneAdminWithInvalidEmailReturnsArrayWithBackendUsersWithValidEmailOnly ()
+    public function getBackendUsersForAdminMails_GivenProductWithAdminsSetAndOneAdminWithInvalidEmail_ReturnsArrayWithBackendUsersWithValidEmailOnly ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -977,7 +977,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function getBackendUsersForAdminMailsGivenProductWithInvalidAdminMailInFieldReturnsArrayWithBackendUsersWithValidEmailOnly ()
+    public function getBackendUsersForAdminMails_GivenProductWithInvalidAdminMailInField_ReturnsArrayWithBackendUsersWithValidEmailOnly ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -1000,7 +1000,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function getBackendUsersForAdminMailsGivenProductWithoutAdminsSetReturnsArrayWithFallbackBeUser ()
+    public function getBackendUsersForAdminMails_GivenProductWithoutAdminsSet_ReturnsArrayWithFallbackBeUser ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -1021,7 +1021,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function getBackendUsersForAdminMailsGivenProductWithParentProductReturnsArrayWithBackendUsersWithValidEmailOnly ()
+    public function getBackendUsersForAdminMails_GivenProductWithParentProduct_ReturnsArrayWithBackendUsersWithValidEmailOnly ()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
