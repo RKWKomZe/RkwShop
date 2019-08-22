@@ -92,7 +92,7 @@ class ProductRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findByUidListReturnsListOfProductsAndRespectsEnableFields()
+    public function findByUidList_ReturnsListOfProductsAndRespectsEnableFields()
     {
 
         $result = $this->subject->findByUidList('1,2,3,4');
@@ -105,7 +105,7 @@ class ProductRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findByUidListReturnsListOfProductsAndIgnoresDuplicates()
+    public function findByUidList_ReturnsListOfProductsAndIgnoresDuplicates()
     {
 
         $result = $this->subject->findByUidList('1,2,3,4,1,2');
@@ -118,7 +118,7 @@ class ProductRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findByUidListReturnsListOfProductsAndKeepsGivenOrder()
+    public function findByUidList_ReturnsListOfProductsAndKeepsGivenOrder()
     {
 
         $result = $this->subject->findByUidList('4,3,2,1');
@@ -134,7 +134,7 @@ class ProductRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findAllSoapReturnsListOfProductsIncludingDeletedAndDisabledAndIgnoresStoragePid()
+    public function findAllSoap_ReturnsListOfProductsIncludingDeletedAndDisabledAndIgnoresStoragePid()
     {
         $result = $this->subject->findAllSoap();
         static::assertEquals(9, count($result));

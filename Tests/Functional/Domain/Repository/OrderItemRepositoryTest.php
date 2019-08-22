@@ -104,7 +104,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getOrderedSumByProductAndPreOrderGivenNormalProductReturnsSumOfOrderAmountsForGivenProductWithoutPreOrdersAndWithoutDeleted()
+    public function getOrderedSumByProductAndPreOrder_GivenNormalProduct_ReturnsSumOfOrderAmountsForGivenProductWithoutPreOrdersAndWithoutDeleted()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -119,7 +119,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getOrderedSumByProductAndPreOrderGivenNormalProductAndPreOrderTrueReturnsSumOfPreOrderAmountsForGivenProductWithoutDeleted()
+    public function getOrderedSumByProductAndPreOrder_GivenNormalProductAndPreOrderTrue_ReturnsSumOfPreOrderAmountsForGivenProductWithoutDeleted()
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -135,7 +135,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findByOrderUidSoapGivenOrderUidReturnsOrderItemsOfGivenOrderUidIncludingDeletedAndIgnoresStoragePid()
+    public function findByOrderUidSoap_GivenOrderUid_ReturnsOrderItemsOfGivenOrderUidIncludingDeletedAndIgnoresStoragePid()
     {
         $result = $this->subject->findByOrderUidSoap(20);
         self::assertCount(2, $result);
@@ -146,7 +146,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findByOrderUidSoapGivenOrderUidReturnsOrderItemsOfGivenOrderUidIncludingRelationToDeletedProduct()
+    public function findByOrderUidSoap_GivenOrderUid__ReturnsOrderItemsOfGivenOrderUidIncludingRelationToDeletedProduct()
     {
         $result = $this->subject->findByOrderUidSoap(30);
         self::assertCount(1, $result);

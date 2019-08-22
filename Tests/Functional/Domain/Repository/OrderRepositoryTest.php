@@ -101,7 +101,7 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findByFrontendUserReturnsOrdersWithoutRespectingStorageId()
+    public function findByFrontendUser_ReturnsOrdersWithoutRespectingStorageId()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
@@ -118,7 +118,7 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findByFrontendUserReturnsOnlyNonDeletedOrders()
+    public function findByFrontendUser_ReturnsOnlyNonDeletedOrders()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
@@ -133,7 +133,7 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function findByFrontendUserReturnsOnlyOrdersOfGivenUser()
+    public function findByFrontendUser_ReturnsOnlyOrdersOf_GivenUser()
     {
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
@@ -152,7 +152,7 @@ class OrderRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function findByTimestampSoapGivenTimestampZeroReturnsCompleteListOfOrdersIncludingDeletedAndDisabledAndIgnoresStoragePid()
+    public function findByTimestampSoap_GivenTimestampZero_ReturnsCompleteListOfOrdersIncludingDeletedAndDisabledAndIgnoresStoragePid()
     {
         $result = $this->subject->findByTimestampSoap(0);
         static::assertEquals(12, count($result));
@@ -164,7 +164,7 @@ class OrderRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function findByTimestampSoapGivenTimestampValueReturnsListOfOrdersWithTimestampEqualOrGreaterThanGiven()
+    public function findByTimestampSoap_GivenTimestampValue_ReturnsListOfOrdersWithTimestampEqualOrGreaterThanGiven()
     {
         $result = $this->subject->findByTimestampSoap(5000);
         static::assertEquals(1, count($result));
