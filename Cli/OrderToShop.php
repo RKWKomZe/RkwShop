@@ -1,8 +1,41 @@
 <?php
 namespace RKW;
 
-require_once ('vendor/autoload.php');
+if (php_sapi_name() != "cli") {
+    echo 'This script has to be executed via CLI.' . "\n";
+    exit(1);
+}
 
+if (! file_exists('vendor')) {
+    echo 'This script has to be executed from the document root.' . "\n";
+    exit(1);
+}
+
+if (count($argv) < 6) {
+    echo 'Missing parameters. Usage:' . "\n" .
+        'php5.6 web/typo3conf/ext/rkw_shop/Cli/OrderToShop.php [HOST] [DATABASE] [USER] [PASS] [PID-DEFAULT] [PID-FOR-SHIPPING-ADDRESSES]' . "\n";
+    exit(1);
+}
+
+$credentials = [
+    'host' => $argv[1],
+    'database' => $argv[2],
+    'user' => $argv[3],
+    'pass' => $argv[4]
+];
+
+$pidDefault = $argv[5];
+$pidShippingAddress = isset($argv[6]) ? $argv[6] : $argv[5];
+
+
+$orderToShop = new \RKW\OrderToShop($credentials);
+$orderToShop->moveIt($pidDefault, $pidShippingAddress);
+echo "Done.\n";
+
+
+# ================================================================================
+
+require_once ('vendor/autoload.php');
 
 class OrderToShop
 {
@@ -487,23 +520,3 @@ class OrderToShop
     }
 }
 
-
-
-if (php_sapi_name() != "cli") {
-    echo 'This script has to be executed via CLI.';
-    exit;
-}
-
-$credentials = [
-    'host' => $argv[1],
-    'database' => $argv[2],
-    'user' => $argv[3],
-    'pass' => $argv[4]
-];
-
-$pidDefault = $argv[5];
-$pidShippingAddress = isset($argv[6]) ? $argv[6] : $argv[5];
-
-$orderToShop = new \RKW\OrderToShop($credentials);
-$orderToShop->moveIt($pidDefault, $pidShippingAddress);
-echo "Done.\n";
