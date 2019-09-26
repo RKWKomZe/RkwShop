@@ -241,7 +241,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->email = $email;
     }
 
-  
 
     /**
      * Returns the remark
