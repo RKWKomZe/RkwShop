@@ -42,7 +42,7 @@
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.firstName">
 				<source>First Name</source>
 			</trans-unit>
-			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.lastLame">
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.lastName">
 				<source>Last Name</source>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.company">
