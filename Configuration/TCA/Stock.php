@@ -5,12 +5,13 @@ if (!defined ('TYPO3_MODE')) {
 
 $GLOBALS['TCA']['tx_rkwshop_domain_model_stock'] = [
 	'ctrl' => [
-		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_stock',
+        'hideTable' => true,
+        'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_stock',
 		'label' => 'comment',
         'label_alt' => 'amount',
         'label_alt_force' => 1,
 		'default_sortby' => 'ORDER BY crdate',
-		'tstamp' => 'tstamp',
+        'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => true,
