@@ -17,10 +17,10 @@
 	=============================================================\n
 	\n
 	<rkwMailer:frontend.translate key="templates.email.optInRequest.textOptIn" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" />\n
-	<rkwMailer:frontend.link action="optIn" controller="Order" extensionName="rkwShop" pluginName="rkwShop" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_rkwshop: {token_yes: tokenYes, user: userSha1}}" section="rkw-order" />\n
+	<rkwMailer:frontend.link action="optIn" controller="Order" extensionName="rkwShop" pluginName="ItemList" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_itemlist: {token_yes: tokenYes, user: userSha1}}" section="rkw-order" />\n
 	\n
 	<rkwMailer:frontend.translate key="templates.email.optInRequest.textOptOut" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" />\n
-	<rkwMailer:frontend.link action="optIn" controller="Order" extensionName="rkwShop" pluginName="rkwShop" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_rkwshop: {token_no: tokenNo, user: userSha1}}" section="rkw-order" />
+	<rkwMailer:frontend.link action="optIn" controller="Order" extensionName="rkwShop" pluginName="ItemList" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_itemlist: {token_no: tokenNo, user: userSha1}}" section="rkw-order" />
 </rkwMailer:plaintextLineBreaks></f:section>
 
 
@@ -38,11 +38,11 @@
 	<h2><rkwMailer:frontend.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></h2>
 	<p>
 		<rkwMailer:frontend.translate key="templates.email.optInRequest.textOptIn" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/><br>
-		<a href="<rkwMailer:frontend.link action='optIn' controller='Order' extensionName='rkwShop' pluginName='rkwShop' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_rkwshop: {token_yes: tokenYes, user: userSha1}}' section='rkw-order' />"><rkwMailer:frontend.translate key="templates.email.optInRequest.textOptInLinkLabel" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></a>
+		<a href="<rkwMailer:frontend.link action='optIn' controller='Order' extensionName='rkwShop' pluginName='ItemList' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_itemlist: {token_yes: tokenYes, user: userSha1}}' section='rkw-order' />"><rkwMailer:frontend.translate key="templates.email.optInRequest.textOptInLinkLabel" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></a>
 	</p>
 	<p>
 		<rkwMailer:frontend.translate key="templates.email.optInRequest.textOptOut" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" /><br>
-		<a href="<rkwMailer:frontend.link action='optIn' controller='Order' extensionName='rkwShop' pluginName='rkwShop' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_rkwshop: {token_no: tokenNo, user: userSha1}}' section='rkw-order' />"><rkwMailer:frontend.translate key="templates.email.optInRequest.textOptOutLinkLabel" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></a>
+		<a href="<rkwMailer:frontend.link action='optIn' controller='Order' extensionName='rkwShop' pluginName='ItemList' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_itemlist: {token_no: tokenNo, user: userSha1}}' section='rkw-order' />"><rkwMailer:frontend.translate key="templates.email.optInRequest.textOptOutLinkLabel" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></a>
 	</p>
 </f:section>
 

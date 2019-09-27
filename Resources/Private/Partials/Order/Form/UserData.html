@@ -14,16 +14,18 @@
 		<f:form.select id="txrkwshop-gender" property="shippingAddress.gender" value="{f:if(condition:'{newOrder.shippingAddress.gender} != 99',then:'{newOrder.shippingAddress.gender}',else:'{frontendUser.txRkwregistrationGender}')}" options="{99: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect\")}', 0: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.man\")}', 1: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.woman\")}'}" optionValueField="uid" optionLabelField="name" />
 	</div>
 
-	<!-- title -->
-	<div class="v320-1">
-		<label for="txrkwshop-title" class="form-label">
-			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.title" />
-			<f:if condition="<rkwShop:isRequiredField field='title' /> == 0">
-				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
-			</f:if>
-		</label>
-		<f:form.select id="txrkwshop-title" property="shippingAddress.title" options="<rkwRegistration:titleList />" optionValueField="uid" optionLabelField="name" prependOptionValue="0" prependOptionLabel="{f:translate(key:'LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.title.I.pleaseSelect')}" />
-	</div>
+	<f:comment>
+		<!-- title -->
+		<div class="v320-1">
+			<label for="txrkwshop-title" class="form-label">
+				<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.title" />
+				<f:if condition="<rkwShop:isRequiredField field='title' /> == 0">
+					<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+				</f:if>
+			</label>
+			<f:form.select id="txrkwshop-title" property="shippingAddress.title" options="<rkwRegistration:titleList />" optionValueField="uid" optionLabelField="name" prependOptionValue="0" prependOptionLabel="{f:translate(key:'LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.title.I.pleaseSelect')}" />
+		</div>
+	</f:comment>
 
 	<!-- firstName -->
 	<div class="v320-1">
@@ -61,12 +63,6 @@
 		</f:if>
 	</div>
 
-
-</div>
-
-
-<div class="v320-2-of-2">
-
 	<!-- company -->
 	<div class="v320-1">
 		<label for="txrkwshop-company" class="form-label">
@@ -84,6 +80,13 @@
 			</f:else>
 		</f:if>
 	</div>
+
+</div>
+
+
+<div class="v320-2-of-2">
+
+
 
 	<!-- address -->
 	<div class="v320-1">
