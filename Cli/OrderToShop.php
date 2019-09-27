@@ -83,6 +83,7 @@ class OrderToShop
 
         $newProducts = [];
         $newPlugins = [];
+        $deletePlugins = [];
         $newStocks = [];
         $newFileReferences = [];
 
@@ -227,6 +228,7 @@ class OrderToShop
 
                 // push
                 $newPlugins[] = $newPlugin;
+                $deletePlugins[] = $plugin['uid'];
             }
 
             // push
@@ -300,6 +302,11 @@ class OrderToShop
         // save plugins
         foreach ($newPlugins as $newPlugin) {
             $this->insert('tt_content', $newPlugin);
+        }
+
+        // delete plugins
+        foreach ($deletePlugins as $deletePlugin) {
+            $this->delete('tt_content', $deletePlugin);
         }
 
         // save fileReferences
@@ -469,6 +476,28 @@ class OrderToShop
 
     }
 
+
+    /**
+     * insert
+     *
+     * @param string $table
+     * @param int $uid
+     * @return boolean
+     * @throws \Exception
+     */
+    public function delete($table, $uid)
+    {
+
+        $sql = 'UPDATE ' . $table . ' SET deleted = 1 WHERE uid = ?';
+        $sth = $this->pdo->prepare($sql);
+        if ($result = $sth->execute(array($uid))) {
+            return true;
+        } else {
+            $error = $sth->errorInfo();
+            throw new \Exception($error[2] . ' on execution of "' . $sth->queryString . '" with params ' .  print_r($uid, true));
+        }
+
+    }
 
     /**
      * serialize flexform-data of tt_content element from string to array
