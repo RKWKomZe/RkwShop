@@ -42,7 +42,7 @@
 		<f:for each="{order.orderItem}" as="orderItem" iteration="iterator">
 			<tr class="{f:if(condition: iterator.isEven, then: 'even')}">
 				<td>
-					{orderItem.product.title}<br>
+					<strong>{orderItem.product.title}</strong><br>
 					{orderItem.product.subtitle}
 				</td>
 				<td class="align-center">
