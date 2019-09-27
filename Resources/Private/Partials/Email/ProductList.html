@@ -11,12 +11,12 @@
 	=============================================================\n
 	<f:for each="{order.orderItem}" as="orderItem" iteration="iterator">
 		{orderItem.amount} x {orderItem.product.title} (
-		<f:if condition="{orderItem.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+		<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
 			<f:then>
 				<rkwMailer:frontend.translate key="partials.email.productList.isBundle" languageKey="{language}" extensionName="rkwShop"/>
 			</f:then>
 			<f:else>
-				<f:if condition="{orderItem.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
+				<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
 					<f:then>
 						<rkwMailer:frontend.translate key="partials.email.productList.isSubscription" languageKey="{language}" extensionName="rkwShop"/>
 					</f:then>
@@ -49,12 +49,12 @@
 					{orderItem.amount}
 				</td>
 				<td class="align-center">
-					<f:if condition="{orderItem.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+					<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
 						<f:then>
 							<rkwMailer:frontend.translate key="partials.email.productList.isBundle" languageKey="{language}" extensionName="rkwShop"/>
 						</f:then>
 						<f:else>
-							<f:if condition="{orderItem.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
+							<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
 								<f:then>
 									<rkwMailer:frontend.translate key="partials.email.productList.isSubscription" languageKey="{language}" extensionName="rkwShop"/>
 								</f:then>
