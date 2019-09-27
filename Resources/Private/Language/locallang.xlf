@@ -317,6 +317,10 @@
 			<trans-unit id="shippingAddressValidator.invalidEmail">
 				<source>Please enter a valid e-mail address.</source>
 			</trans-unit>
+			<trans-unit id="form.error.1332933658">
+				<source>Please enter a valid numeric value.</source>
+			</trans-unit>
+
 
 		</body>
 	</file>

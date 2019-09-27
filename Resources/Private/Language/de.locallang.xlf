@@ -400,6 +400,10 @@
 				<source>Please enter a valid e-mail address.</source>
 				<target>Bitte geben Sie eine gültige E-Mailadresse ein.</target>
 			</trans-unit>
+			<trans-unit id="form.error.1332933658">
+				<source>Please enter order quantities only as integer (e.g. "20"),</source>
+				<target>Bitte geben Sie Bestellmengen nur als Ganzzahl an (z.B. "20").</target>
+			</trans-unit>
 
 		</body>
 	</file>
