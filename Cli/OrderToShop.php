@@ -131,6 +131,8 @@ class OrderToShop
                         uid_foreign = ?
                         AND fieldname = \'txRkwbasicsFile\'
                         AND tablenames = \'pages\'
+                        AND deleted = 0
+                        AND hidden = 0
                     LIMIT 1;
                 ';
 
