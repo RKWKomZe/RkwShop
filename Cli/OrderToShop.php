@@ -377,6 +377,7 @@ class OrderToShop
             // build order item
             $newOrderItem = [
                 'uid' => $oldOrder['uid'],
+                'pid' => $pid,
                 'ext_order' => $newOrder['uid'],
                 'product' => $oldOrder['pages'],
                 'amount' => $oldOrder['amount'],
@@ -387,7 +388,7 @@ class OrderToShop
 
             // push and add
             $newOrderItems[] = $newOrderItem;
-            $newOrder['order_item'] = $newOrderItem['uid'];
+            $newOrder['order_item'] = 1;
 
 
             // check for subscribe or series
@@ -406,6 +407,7 @@ class OrderToShop
                     // build order item
                     $newOrderItem = [
                         'uid' => $oldOrder['uid'] + 5000,
+                        'pid' => $pid,
                         'ext_order' => $newOrder['uid'],
                         'product' => $product['product_bundle'],
                         'amount' => 1,
@@ -415,7 +417,7 @@ class OrderToShop
                     ];
 
                     // push and add
-                    $newOrder['order_item'] .= ',' . $newOrderItem['uid'];
+                    $newOrder['order_item'] += 1;
                     $newOrderItems[] = $newOrderItem;
                 }
             }
