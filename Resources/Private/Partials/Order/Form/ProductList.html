@@ -35,7 +35,6 @@
 					<f:then>
 						<!-- is single order allowed? -->
 						<f:if condition="{product.productBundle.allowSingleOrder}">
-
 							<f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
 						</f:if>
 

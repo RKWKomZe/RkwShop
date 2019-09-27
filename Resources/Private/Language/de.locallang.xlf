@@ -197,6 +197,10 @@
                 <source>Still %s in stock.</source>
                 <target>Noch %s auf Lager.</target>
             </trans-unit>
+            <trans-unit id="partials.order.form.productList.input.inStock">
+                <source>In stock.</source>
+                <target>Auf Lager.</target>
+            </trans-unit>
 
 
 

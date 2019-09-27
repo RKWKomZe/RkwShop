@@ -157,6 +157,9 @@
             <trans-unit id="partials.order.form.productList.input.stockLeft">
                 <source>Still %s in stock.</source>
             </trans-unit>
+            <trans-unit id="partials.order.form.productList.input.inStock">
+                <source>In stock.</source>
+            </trans-unit>
 
 
 

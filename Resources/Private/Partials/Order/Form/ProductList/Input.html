@@ -3,7 +3,10 @@
 <f:if condition="<rkwShop:ProductStock product='{product}' />">
     <f:then>
         <p class="order-list__status">
-            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.stockLeft" arguments="{0: '{rkwShop:ProductStock(product: product)}'}"/>
+            <f:comment>
+                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.stockLeft" arguments="{0: '{rkwShop:ProductStock(product: product)}'}"/>
+            </f:comment>
+            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.inStock" />
         </p>
         <f:render section="FieldOnly" arguments="{_all}" />
     </f:then>
