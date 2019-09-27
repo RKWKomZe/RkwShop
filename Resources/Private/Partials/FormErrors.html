@@ -6,8 +6,8 @@
 				<f:for each="{errors}" as="propertyError">
 					<div class="message-error typo3-message">
 						<f:translate
-								key="form.error.{propertyError.code}"
-								arguments="{0:'{f:translate(key:\"form.error.{propertyName}\")}'}" >{propertyError.message}
+							key="form.error.{propertyError.code}"
+							arguments="{0:'{f:translate(key:\"form.error.{propertyName}\")}'}" >{propertyError.message}
 						</f:translate>
 					</div>
 				</f:for>
