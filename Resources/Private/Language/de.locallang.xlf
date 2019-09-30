@@ -23,7 +23,7 @@
             <!-- tx_rkwshop_domain_model_shippingaddress -->
             <trans-unit id="tx_rkwshop_domain_model_shippingaddress">
 				<source>Shipping Address</source>
-				<target>Lieferaddresse</target>
+				<target>Lieferadresse</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender">
 				<source>Gender</source>
@@ -156,9 +156,17 @@
 				<source>Order now</source>
 				<target>Jetzt bestellen</target>
 			</trans-unit>
-            <trans-unit id="partials.order.form.productList.belongsTo">
+
+
+
+            <!-- Partials/Order/Form/ProductList/BundleContents.html -->
+            <trans-unit id="partials.order.form.productList.bundleOptions.belongsToBundle">
                 <source>Belongs to this series/folder:</source>
                 <target>Gehört zu dieser Reihe/Mappe:</target>
+            </trans-unit>
+            <trans-unit id="partials.order.form.productList.bundleOptions.bundleContains">
+                <source>This bundle contains:</source>
+                <target>Diese Reihe/Mappe enthält:</target>
             </trans-unit>
 
 

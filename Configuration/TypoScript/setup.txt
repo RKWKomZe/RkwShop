@@ -238,8 +238,8 @@ plugin.tx_rkwshop.libs {
 
 
 	# PDF Thumbnails
-	responsivePdfThumbnail = IMAGE
-	responsivePdfThumbnail {
+	responsiveThumbnail = IMAGE
+	responsiveThumbnail {
 
 		file {
 			import.current = 1
@@ -273,6 +273,7 @@ plugin.tx_rkwshop.libs {
             desktopRetina2.maxW.override < .desktop.maxW.override
 		}
 	}
+
 }
 
 

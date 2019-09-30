@@ -124,10 +124,15 @@
 			<trans-unit id="partials.order.form.productList.orderButton">
 				<source>Order now</source>
 			</trans-unit>
-            <trans-unit id="partials.order.form.productList.belongsTo">
+
+
+			<!-- Partials/Order/Form/ProductList/BundleOptions.html -->
+            <trans-unit id="partials.order.form.productList.bundleOptions.belongsToBundle">
                 <source>Belongs to this series/folder:</source>
             </trans-unit>
-
+            <trans-unit id="partials.order.form.productList.bundleOptions.bundleContains">
+                <source>This bundle contains:</source>
+            </trans-unit>
 
             <!-- Partials/Order/Form/ProductList/BundleContents.html -->
             <trans-unit id="partials.order.form.productList.bundleContents.contents">
