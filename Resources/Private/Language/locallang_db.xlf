@@ -99,6 +99,9 @@
             <trans-unit id="tx_rkwshop_domain_model_product.productBundle">
                 <source>Bundle/Subscription</source>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.recordType.download">
+                <source>Download</source>
+            </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.allowSingleOrder">
                 <source>Allow Single Order</source>
             </trans-unit>

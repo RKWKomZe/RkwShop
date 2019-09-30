@@ -131,8 +131,10 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
             if (! in_array($product->getUid(), $uidList)) {
 
-                $result[] = $product;
-                $uidList[] = $product->getUid();
+                if ($product->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductDownload') {
+                    $result[] = $product;
+                    $uidList[] = $product->getUid();
+                }
             }
         }
 
