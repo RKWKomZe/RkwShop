@@ -195,7 +195,7 @@
             </trans-unit>
             <trans-unit id="partials.order.form.productList.input.outOfStockPreOrder">
                 <source>Unfortunately currently out of stock, but can be pre-ordered.</source>
-                <target>Leider derzeit vergriffen, kann aber vorbestellt werden.</target>
+                <target>Leider derzeit nicht lieferbar, kann aber vorbestellt werden.</target>
             </trans-unit>
             <trans-unit id="partials.order.form.productList.input.outOfStock">
                 <source>Unfortunately currently out of stock.</source>
