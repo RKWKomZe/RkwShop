@@ -67,7 +67,6 @@ class OrderToShop
     public function moveIt ($pid = 2829, $pidShippingAddress = 618)
     {
 
-
         // cleanup
         //=================================================
         $this->pdo->query('
@@ -78,6 +77,7 @@ class OrderToShop
             TRUNCATE tx_rkwregistration_domain_model_shippingaddress;
             DELETE FROM tt_content WHERE list_type = \'rkwshop_itemlist\' AND CType = \'list\';
         ');
+
 
         //=================================================
 
@@ -159,7 +159,7 @@ class OrderToShop
                 'subtitle' => $page['subtitle'],
                 'page' => $page['uid'],
                 'product_bundle' => $page['tx_rkwbasics_series'],
-                'record_type' => '0',
+                'record_type' => '\RKW\RkwShop\Domain\Model\ProductDownload',
                 'stock' => $page['uid'],
                 'publishing_date' => $page['tx_rkwsearch_pubdate'],
                 'download' => $page['tx_rkwbasics_file'],
@@ -204,33 +204,43 @@ class OrderToShop
 
                 // set admins
                 if ($settings['settings.mail.backendUser']) {
-                    $newProduct['backend_user'] = $settings['settings.mail.backendUser'];
 
                     if (
                         ($page['tx_rkwbasics_series'])
                         && (isset($seriesAdmins[$page['tx_rkwbasics_series']]))
                     ) {
                         $seriesAdmins[$page['tx_rkwbasics_series']] = array_merge($seriesAdmins[$page['tx_rkwbasics_series']], explode(',', $settings['settings.mail.backendUser']));
+                    } else {
+                        $newProduct['backend_user'] = $settings['settings.mail.backendUser'];
                     }
                 }
 
-                // set stock to available value
-                $newStock['amount'] = 500;
 
-                $newPlugin = [
-                    'pid' => $page['uid'],
-                    'header' => $plugin['header'],
-                    'tstamp' => $plugin['tstamp'],
-                    'crdate' => $plugin['crdate'],
-                    'pi_flexform' => $this->getNewFlexform([$newProduct['uid']]),
-                    'CType' => 'list',
-                    'list_type' => 'rkwshop_itemlist',
-                    'colPos' => $plugin['colPos'],
-                ];
+                if (
+                    ($plugin['deleted'] == 0)
+                    && ($plugin['hidden'] == 0)
+                ) {
 
-                // push
-                $newPlugins[] = $newPlugin;
-                $deletePlugins[] = $plugin['uid'];
+                    // set stock to available value
+                    $newStock['amount'] = 500;
+                    $newProduct['record_type'] = 0;
+
+                    $newPlugin = [
+                        'pid' => $page['uid'],
+                        'header' => $plugin['header'],
+                        'tstamp' => $plugin['tstamp'],
+                        'crdate' => $plugin['crdate'],
+                        'pi_flexform' => $this->getNewFlexform([$newProduct['uid']]),
+                        'CType' => 'list',
+                        'list_type' => 'rkwshop_itemlist',
+                        'colPos' => $plugin['colPos'],
+                    ];
+
+                    // push
+                    $newPlugins[] = $newPlugin;
+                    $deletePlugins[] = $plugin['uid'];
+                }
+
             }
 
             // push

@@ -89,6 +89,10 @@
                 <source>Subscription</source>
                 <target>Abonnement</target>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.recordType.download">
+                <source>Download</source>
+                <target>Download</target>
+            </trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.title">
 				<source>Title</source>
 				<target>Titel</target>
