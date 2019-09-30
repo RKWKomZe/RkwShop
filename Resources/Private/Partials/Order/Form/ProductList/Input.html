@@ -32,11 +32,18 @@
 <f:section name="FieldOnly">
 
     <div class="order-list__order">
-        <f:form.textfield id="txrkwshop-amount-{product.uid}" property="orderItem.{product.uid}.amount" value="<rkwShop:OrderItemAmount orderItemList='{orderItem}' product='{product}' />" class="feedback-field"/>
+        <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" property="orderItem.{product.uid}.amount" value="<rkwShop:OrderItemAmount orderItemList='{orderItem}' product='{product}' />" class="feedback-field"/>
 
         <f:if condition="{product.productBundle.recordType} == 0">
             <f:then>
-                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountSingle" />
+                <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+                    <f:then>
+                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
+                    </f:then>
+                    <f:else>
+                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountSingle" />
+                    </f:else>
+                </f:if>
             </f:then>
             <f:else>
                 <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />

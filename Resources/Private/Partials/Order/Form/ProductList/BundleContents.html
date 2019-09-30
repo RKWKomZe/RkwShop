@@ -3,7 +3,9 @@
 <f:if condition="<rkwShop:bundleContent product='{product}' />">
 
     <div class="order-list__contents">
-        <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleContents.contents" /></span>
+        <f:if condition="{product.recordType} != '\RKW\RkwShop\Domain\Model\ProductBundle'">
+            <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleContents.contents" /></span>
+        </f:if>
         <ol>
             <f:for each="<rkwShop:bundleContent product='{product}' />" as="bundleItem" >
                 <li>

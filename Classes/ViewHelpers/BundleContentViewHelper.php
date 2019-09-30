@@ -33,10 +33,14 @@ class BundleContentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractV
      */
     public function render(\RKW\RkwShop\Domain\Model\Product $product)
     {
-
+        $productForList = $product->getProductBundle();
+        if ($product->getRecordType() == '\RKW\RkwShop\Domain\Model\ProductBundle') {
+            $productForList = $product;
+        }
+        
         if (
-            ($product->getProductBundle())
-            && ($product->getProductBundle()->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')
+            ($productForList)
+            && ($productForList->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')
         ){
             $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 
@@ -44,7 +48,7 @@ class BundleContentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractV
             $productRepository = $objectManager->get('RKW\\RkwShop\\Domain\\Repository\\ProductRepository');
 
             /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $results */
-            $results = $productRepository->findByProductBundle($product->getProductBundle());
+            $results = $productRepository->findByProductBundle($productForList);
 
             // only if there are more than the one we triggered this helper with
             if (count($results->toArray()) > 1) {
