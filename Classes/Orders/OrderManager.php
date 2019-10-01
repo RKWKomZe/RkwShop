@@ -292,9 +292,24 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
         // send mail to admins
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $backendUsersList = [];
+        $backendUsersForProductMap = [];
         foreach ($order->getOrderItem() as $orderItem) {
-            $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array($this->getBackendUsersForAdminMails($orderItem->getProduct()), $order));
+
+            $backendUsersForProduct = $this->getBackendUsersForAdminMails($orderItem->getProduct());
+            $backendUsersList = array_merge($backendUsersList, $backendUsersForProduct);
+            $tempBackendUserForProductMap = [];
+            /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
+            foreach ($backendUsersForProduct as $backendUser) {
+                if ($backendUser->getRealName()) {
+                    $tempBackendUserForProductMap[] = $backendUser->getRealName();
+                } else if ($backendUser->getEmail()) {
+                    $tempBackendUserForProductMap[] = $backendUser->getEmail();
+                }
+            }
+            $backendUsersForProductMap[$orderItem->getProduct()->getUid()] = implode(', ', $tempBackendUserForProductMap);
         }
+        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
 
         $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Saved order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
         return true;
@@ -359,10 +374,26 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
                 // send mail to admins
                 /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+                $backendUsersList = [];
+                $backendUsersForProductMap = [];
                 foreach ($order->getOrderItem() as $orderItem) {
-                    $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array($this->getBackendUsersForAdminMails($orderItem->getProduct()), $order));
+                    $backendUsersForProduct = $this->getBackendUsersForAdminMails($orderItem->getProduct());
+                    $backendUsersList = array_merge($backendUsersList, $backendUsersForProduct);
+
+                    $tempBackendUserForProductMap = [];
+                    /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
+                    foreach ($backendUsersForProduct as $backendUser) {
+                        if ($backendUser->getRealName()) {
+                            $tempBackendUserForProductMap[] = $backendUser->getRealName();
+                        } else if ($backendUser->getEmail()) {
+                            $tempBackendUserForProductMap[] = $backendUser->getEmail();
+                        }
+                    }
+                    $backendUsersForProductMap[$orderItem->getProduct()->getUid()] = implode(', ', $tempBackendUserForProductMap);
                 }
+                $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
                 $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Deleted order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
+
             }
         }
     }

@@ -283,6 +283,9 @@
             <trans-unit id="partials.email.productList.isSingle">
                 <source>Single Order</source>
             </trans-unit>
+            <trans-unit id="partials.email.productList.responsible">
+                <source>Responsible</source>
+            </trans-unit>
 
 
             <!-- Partials/Email/ShippingAddress.html -->
