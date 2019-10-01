@@ -358,10 +358,14 @@
                 <source>Single Order</source>
                 <target>Einzelbestellung</target>
             </trans-unit>
+            <trans-unit id="partials.email.productList.responsible">
+                <source>Responsible</source>
+                <target>Versand durch</target>
+            </trans-unit>
+
 
 
             <!-- Partials/Email/ShippingAddress.html -->
-
 			<trans-unit id="partials.email.shippingAddress.shippingAddress">
 				<source>Shipping Address</source>
 				<target>Lieferadresse</target>

@@ -1,0 +1,21 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
+<f:if condition="{product.image}" >
+    <f:then>
+        <figure class="order-list__image">
+            <f:cObject typoscriptObjectPath="plugin.tx_rkwshop.libs.responsiveThumbnail" data="{product.image.uid}"/>
+        </figure>
+    </f:then>
+    <f:else>
+        <figure class="order-list__image order-list__image--cover">
+            <f:if condition="{product.download}" >
+                <f:then>
+                    <f:cObject typoscriptObjectPath="plugin.tx_rkwshop.libs.responsiveThumbnail" data="{product.download.uid}"/>
+                </f:then>
+                <f:else>
+                    <f:cObject typoscriptObjectPath="plugin.tx_rkwshop.libs.responsiveThumbnail" data="EXT:rkw_shop/Resources/Public/Images/publications-fallback.jpg"/>
+                </f:else>
+            </f:if>
+        </figure>
+    </f:else>
+</f:if>
