@@ -277,6 +277,7 @@ class OrderToShop
                 'backend_user' => (($seriesAdmins[$serie['uid']]) ? implode(',', array_unique($seriesAdmins[$serie['uid']])) : '')
             ];
 
+
             if (
                 (strpos($serie['name'], 'RKW Magazin') === 0)
                 || (strpos($serie['name'], 'ibr') === 0)
