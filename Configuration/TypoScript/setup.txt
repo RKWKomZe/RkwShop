@@ -70,6 +70,10 @@ config.tx_extbase.persistence {
         }
 
         RKW\RkwShop\Domain\Model\ShippingAddress {
+
+            # very important to set the storagePid explicit - otherwise it will add to the pid of related objects
+            newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
+
             mapping {
 
                 # tablename
