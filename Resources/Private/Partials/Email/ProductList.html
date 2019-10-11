@@ -1,5 +1,7 @@
 {namespace rkwMailer=RKW\RkwMailer\ViewHelpers}
 {namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
 
 <f:layout name="Email/{mailType}" />
 
@@ -25,7 +27,10 @@
 					</f:else>
 				</f:if>
 			</f:else>
-		</f:if>)\n
+		</f:if>)
+        <f:if condition="{backendUserForProductMap}">
+            \n<rkwMailer:frontend.translate key="partials.email.productList.responsible" languageKey="{language}" extensionName="rkwShop"/>: <rkwShop:GetListOfAdminsForProduct product="{orderItem.product}" backendUserForProductMap="{backendUserForProductMap}" />
+        </f:if>\n
 	</f:for>
 </f:section>
 
@@ -42,8 +47,28 @@
 		<f:for each="{order.orderItem}" as="orderItem" iteration="iterator">
 			<tr class="{f:if(condition: iterator.isEven, then: 'even')}">
 				<td>
-					<strong>{orderItem.product.title}</strong><br>
-					{orderItem.product.subtitle}
+                    <f:if condition="{orderItem.product.page}">
+                        <f:then>
+                            <!-- set link only for admins -->
+                            <f:if condition="{backendUserForProductMap}">
+                                <f:then>
+                                    <strong><a href="<rkwMailer:frontend.link absolute='true' pageUid='{orderItem.product.page.uid}' noCacheHash='true' />">{orderItem.product.title}</a></strong>
+                                </f:then>
+                                <f:else>
+                                    <strong>{orderItem.product.title}</strong>
+                                </f:else>
+                            </f:if>
+                        </f:then>
+                        <f:else>
+                            <strong>{orderItem.product.title}</strong>
+                        </f:else>
+                    </f:if>
+					<f:if condition="{orderItem.product.subtitle}">
+                        <br>{orderItem.product.subtitle}
+                    </f:if>
+                    <f:if condition="{backendUserForProductMap}">
+                        <br/><em><rkwMailer:frontend.translate key="partials.email.productList.responsible" languageKey="{language}" extensionName="rkwShop"/>: <rkwShop:GetListOfAdminsForProduct product="{orderItem.product}" backendUserForProductMap="{backendUserForProductMap}" /></em>
+                    </f:if>
 				</td>
 				<td class="align-center">
 					{orderItem.amount}

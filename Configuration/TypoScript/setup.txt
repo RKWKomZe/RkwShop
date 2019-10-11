@@ -70,6 +70,10 @@ config.tx_extbase.persistence {
         }
 
         RKW\RkwShop\Domain\Model\ShippingAddress {
+
+            # very important to set the storagePid explicit - otherwise it will add to the pid of related objects
+            newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
+
             mapping {
 
                 # tablename
@@ -238,8 +242,8 @@ plugin.tx_rkwshop.libs {
 
 
 	# PDF Thumbnails
-	responsivePdfThumbnail = IMAGE
-	responsivePdfThumbnail {
+	responsiveThumbnail = IMAGE
+	responsiveThumbnail {
 
 		file {
 			import.current = 1
@@ -273,6 +277,7 @@ plugin.tx_rkwshop.libs {
             desktopRetina2.maxW.override < .desktop.maxW.override
 		}
 	}
+
 }
 
 

@@ -1,0 +1,49 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
+<f:section name="belongsToBundle">
+    <div class="order-list__item order-list__item--sub">
+        <p class="order-list__belongs">
+            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleOptions.belongsToBundle" />
+        </p>
+        <div class="order-list__details order-list__details--sub">
+            <h4 class="order-list__title">{product.productBundle.title}</h4>
+
+            <f:render partial="Order/Form/ProductList/BundleContents" arguments="{product: product}" />
+
+            <!-- check which kind of bundle we have here -->
+            <f:if condition="{product.productBundle.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
+                <f:then>
+                    <f:render partial="Order/Form/ProductList/Checkbox" arguments="{product: product.productBundle, orderItem: orderItem}" />
+                </f:then>
+
+                <f:else>
+                    <f:render partial="Order/Form/ProductList/Input" arguments="{product: product.productBundle, orderItem: orderItem}" />
+                </f:else>
+            </f:if>
+        </div>
+    </div>
+</f:section>
+
+
+<f:section name="isBundle">
+    <div class="order-list__item order-list__item--sub">
+        <p class="order-list__belongs">
+            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleOptions.bundleContains" />
+        </p>
+        <div class="order-list__details order-list__details--sub">
+
+            <f:render partial="Order/Form/ProductList/BundleContents" arguments="{product: product}" />
+
+            <!-- check which kind of bundle we have here -->
+            <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
+                <f:then>
+                    <f:render partial="Order/Form/ProductList/Checkbox" arguments="{product: product, orderItem: orderItem}" />
+                </f:then>
+
+                <f:else>
+                    <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: orderItem}" />
+                </f:else>
+            </f:if>
+        </div>
+    </div>
+</f:section>

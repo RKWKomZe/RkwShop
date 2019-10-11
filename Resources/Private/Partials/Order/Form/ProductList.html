@@ -6,23 +6,16 @@
 
 		<li class="order-list__item">
 
-			<figure class="order-list__image">
-				<f:if condition="{product.image}" >
-					<f:then>
-						<f:cObject typoscriptObjectPath="plugin.tx_rkwshop.libs.responsivePdfThumbnail" data="{product.image.uid}"/>
-					</f:then>
-					<f:else>
-						<f:if condition="{product.download}" >
-							<f:then>
-								<f:cObject typoscriptObjectPath="plugin.tx_rkwshop.libs.responsivePdfThumbnail" data="{product.download.uid}"/>
-							</f:then>
-							<f:else>
-								<f:cObject typoscriptObjectPath="plugin.tx_rkwshop.libs.responsivePdfThumbnail" data="EXT:rkw_shop/Resources/Public/Images/publications-fallback.jpg"/>
-							</f:else>
-						</f:if>
-					</f:else>
-				</f:if>
-			</figure>
+            <f:if condition="{product.page}">
+                <f:then>
+                    <f:link.page pageUid="{product.page.uid}">
+                        <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product, orderItem: order.orderItem}" />
+                    </f:link.page>
+                </f:then>
+                <f:else>
+                    <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product, orderItem: order.orderItem}" />
+                </f:else>
+            </f:if>
 
 			<div class="order-list__details">
 				<h4 class="order-list__title">{product.title}</h4>
@@ -30,43 +23,35 @@
 					<p class="order-list__subtitle">{product.subtitle}</p>
 				</f:if>
 
-				<!-- Check for bundle -->
-				<f:if condition="{product.productBundle.uid} > 0">
-					<f:then>
-						<!-- is single order allowed? -->
-						<f:if condition="{product.productBundle.allowSingleOrder}">
-							<f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
-						</f:if>
+                <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
 
+                    <!-- is bundle itself? -->
+                    <f:then>
+                        <f:render partial="Order/Form/ProductList/BundleOptions" section="isBundle" arguments="{product: product, orderItem: order.orderItem}" />
+                    </f:then>
 
-						<div class="order-list__item order-list__item--sub">
-							<p class="order-list__belongs">
-								<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.belongsTo" />
-							</p>
-							<div class="order-list__details order-list__details--sub">
-								<h4 class="order-list__title">{product.productBundle.title}</h4>
+                    <!-- belongs to bundle? -->
+                    <f:else>
 
-								<f:render partial="Order/Form/ProductList/BundleContents" arguments="{product: product}" />
+                        <f:if condition="{product.productBundle.uid} > 0">
+                            <f:then>
 
-								<!-- check which kind of bundle we have here -->
-								<f:if condition="{product.productBundle.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
-									<f:then>
-										<f:render partial="Order/Form/ProductList/Checkbox" arguments="{product: product.productBundle, orderItem: order.orderItem}" />
-									</f:then>
+                                <!-- is single order allowed? -->
+                                <f:if condition="{product.productBundle.allowSingleOrder}">
+                                    <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                                </f:if>
 
-									<f:else>
-										<f:render partial="Order/Form/ProductList/Input" arguments="{product: product.productBundle, orderItem: order.orderItem}" />
-									</f:else>
-								</f:if>
-							</div>
-						</div>
-					</f:then>
+                                <f:render partial="Order/Form/ProductList/BundleOptions" section="belongsToBundle" arguments="{product: product, orderItem: order.orderItem}" />
+                            </f:then>
 
-					<!-- without bundle -->
-					<f:else>
-						<f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
-					</f:else>
-				</f:if>
+                            <!-- without bundle -->
+                            <f:else>
+                                <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                            </f:else>
+                        </f:if>
+
+                    </f:else>
+                </f:if>
 			</div>
 		</li>
 	</f:for>

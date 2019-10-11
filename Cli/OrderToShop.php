@@ -76,6 +76,7 @@ class OrderToShop
             TRUNCATE tx_rkwshop_domain_model_orderitem;
             TRUNCATE tx_rkwregistration_domain_model_shippingaddress;
             DELETE FROM tt_content WHERE list_type = \'rkwshop_itemlist\' AND CType = \'list\';
+            DELETE FROM sys_file_reference WHERE tablenames = \'tx_rkwshop_domain_model_product\';
         ');
 
 
@@ -158,9 +159,9 @@ class OrderToShop
                 'title' => $page['title'],
                 'subtitle' => $page['subtitle'],
                 'page' => $page['uid'],
+                'stock' => 0,
                 'product_bundle' => $page['tx_rkwbasics_series'],
                 'record_type' => '\RKW\RkwShop\Domain\Model\ProductDownload',
-                'stock' => $page['uid'],
                 'publishing_date' => $page['tx_rkwsearch_pubdate'],
                 'download' => $page['tx_rkwbasics_file'],
                 'author' => implode(',', $authorList)
@@ -224,6 +225,7 @@ class OrderToShop
                     // set stock to available value
                     $newStock['amount'] = 500;
                     $newProduct['record_type'] = 0;
+                    $newProduct['stock'] = $newProduct['uid'];
 
                     $newPlugin = [
                         'pid' => $page['uid'],
@@ -239,13 +241,13 @@ class OrderToShop
                     // push
                     $newPlugins[] = $newPlugin;
                     $deletePlugins[] = $plugin['uid'];
+                    $newStocks[] = $newStock;
                 }
 
             }
 
             // push
             $newProducts[] = $newProduct;
-            $newStocks[] = $newStock;
 
         }
 
@@ -274,8 +276,9 @@ class OrderToShop
                 'record_type' => '\\RKW\\RkwShop\\Domain\\Model\\ProductBundle',
                 'allow_single_order' => false,
                 'stock' => $serie['uid'],
-                'backend_user' => (($seriesAdmins[$serie['uid']]) ? implode(',', array_unique($seriesAdmins[$serie['uid']])) : '')
+                'backend_user' => (isset($seriesAdmins[$serie['uid']]) ? implode(',', array_unique($seriesAdmins[$serie['uid']])) : '')
             ];
+
 
             if (
                 (strpos($serie['name'], 'RKW Magazin') === 0)
@@ -283,21 +286,26 @@ class OrderToShop
             ) {
                 $newProduct['record_type'] = '\\RKW\\RkwShop\\Domain\\Model\\ProductSubscription';
                 $newProduct['allow_single_order'] = true;
-            }
+                $newProduct['stock'] = 0;
 
-            $newStock = [
-                'uid' => $newProduct['uid'],
-                'pid' => $pid,
-                'product' => $newProduct['uid'],
-                'amount' => 500,
-                'comment' => 'Initial stock',
-                'tstamp' => time(),
-                'crdate' => time(),
-            ];
+            } else {
+
+                $newStock = [
+                    'uid' => $newProduct['uid'],
+                    'pid' => $pid,
+                    'product' => $newProduct['uid'],
+                    'amount' => 500,
+                    'comment' => 'Initial stock',
+                    'tstamp' => time(),
+                    'crdate' => time(),
+                ];
+
+                // push
+                $newStocks[] = $newStock;
+            }
 
             // push
             $newProducts[] = $newProduct;
-            $newStocks[] = $newStock;
         }
 
         // ==============================

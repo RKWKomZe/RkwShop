@@ -129,6 +129,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \RKW\RkwShop\Domain\Model\BackendUser|array $backendUser
      * @param \RKW\RkwShop\Domain\Model\Order  $order
+     * @param array $backendUserForProductMap
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -142,10 +143,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     public function confirmationOrderAdmin
     (
         $backendUser,
-        \RKW\RkwShop\Domain\Model\Order $order
+        \RKW\RkwShop\Domain\Model\Order $order,
+        $backendUserForProductMap
     )
     {
-        $this->adminMail($backendUser, $order, 'confirmation');
+        $this->adminMail($backendUser, $order, $backendUserForProductMap, 'confirmation');
     }
 
 
@@ -181,8 +183,8 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \RKW\RkwShop\Domain\Model\BackendUser|array   $backendUser
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwShop\Domain\Model\Order               $order
-     *
+     * @param \RKW\RkwShop\Domain\Model\Order  $order
+     * @param array $backendUserForProductMap
      * @return void
      * @throws \RKW\RkwMailer\Service\MailException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
@@ -197,10 +199,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     (
         $backendUser,
         \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
-        \RKW\RkwShop\Domain\Model\Order $order
+        \RKW\RkwShop\Domain\Model\Order $order,
+        $backendUserForProductMap
     )
     {
-        $this->adminMail($backendUser, $order, 'delete', $frontendUser, true);
+        $this->adminMail($backendUser, $order, $backendUserForProductMap, 'delete', $frontendUser, true);
     }
 
 
@@ -276,6 +279,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \RKW\RkwShop\Domain\Model\BackendUser|array $backendUser
      * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param array $backendUserForProductMap
      * @param string $action
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @param bool $renderTemplates
@@ -292,6 +296,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     (
         $backendUser,
         \RKW\RkwShop\Domain\Model\Order $order,
+        $backendUserForProductMap,
         $action = 'confirmation',
         \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null,
         $renderTemplates = false
@@ -325,6 +330,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                             'order'        => $order,
                             'backendUser'  => $recipient,
                             'frontendUser' => $frontendUser,
+                            'backendUserForProductMap' => $backendUserForProductMap,
                             'pageUid'      => intval($GLOBALS['TSFE']->id),
                             'loginPid'     => intval($settingsDefault['loginPid']),
                         ),
