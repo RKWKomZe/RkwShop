@@ -159,7 +159,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
                     ['', 0],
                 ],
                 'foreign_table' => 'tx_rkwshop_domain_model_product',
-                'foreign_table_where' => 'AND tx_rkwshop_domain_model_product.deleted = 0 AND tx_rkwshop_domain_model_product.hidden = 0 AND NOT FIND_IN_SET(tx_rkwshop_domain_model_product.record_type, "0,\RKW\RkwShop\Domain\Model\ProductDownload") ORDER BY tx_rkwshop_domain_model_product.title ASC',
+                'foreign_table_where' => 'AND tx_rkwshop_domain_model_product.deleted = 0 AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.record_type NOT IN("0", "\\RKW\\RkwShop\\Domain\\Model\\ProductDownload") ORDER BY tx_rkwshop_domain_model_product.title ASC',
             ]
         ],
         'page' => [
