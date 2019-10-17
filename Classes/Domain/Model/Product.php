@@ -418,6 +418,9 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getAllowSingleOrder()
     {
+        if (! $this->getProductBundle()) {
+            return 99;
+        }
         return $this->allowSingleOrder;
     }
 
