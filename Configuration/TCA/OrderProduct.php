@@ -16,7 +16,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_orderitem'] = [
 		'dividers2tabs' => TRUE,
         'delete' => 'deleted',
         'searchFields' => 'uid, order, product, amount, is_pre_order',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_shop') . 'Resources/Public/Icons/tx_rkwshop_domain_model_orderitem.gif'
+		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_orderitem.gif'
 	],
 	'interface' => [
 		'showRecordFieldList' => 'order, product, amount, is_pre_order',

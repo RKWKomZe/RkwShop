@@ -25,8 +25,9 @@
         "rkw/rkw-registration": "~8.7.5"
     },
     "conflict": {
-        "rkw/rkw-order": "*",
+        "rkw/rkw-authors" : "<7.6.14",
         "rkw/rkw-basics" : "<8.7.7",
+        "rkw/rkw-order": "*",
         "rkw/rkw-soap" : "<7.6.6",
         "rkw/rkw-registration" : "<8.7.5"
     },

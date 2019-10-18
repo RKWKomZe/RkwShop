@@ -20,7 +20,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_stock'] = [
             'disabled' => 'hidden',
         ],
 		'searchFields' => 'uid, product,amount,delivery_start,comment,',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_shop') . 'Resources/Public/Icons/tx_rkwshop_domain_model_stock.gif',
+		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_stock.gif',
 	],
 	'interface' => [
 		'showRecordFieldList' => 'product,amount,comment,delivery_start',
