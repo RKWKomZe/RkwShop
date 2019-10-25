@@ -1,9 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-    die ('Access denied.');
-}
-
-$GLOBALS['TCA']['tx_rkwshop_domain_model_stock'] = [
+return [
 	'ctrl' => [
         'hideTable' => true,
         'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_stock',

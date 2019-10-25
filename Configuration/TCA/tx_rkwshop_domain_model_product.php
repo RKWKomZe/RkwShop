@@ -1,9 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-    die ('Access denied.');
-}
-
-$GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
+return [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product',
 		'label' => 'title',
@@ -197,7 +193,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.download',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'download',
-                array('maxitems' => 1),
+                ['maxitems' => 1],
                 'doc,docx,docm,xls,xlsx,pdf'
             ),
         ],
@@ -281,22 +277,3 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_product'] = [
         ],
     ],
 ];
-
-// Extend TCA when rkw_authors is available
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_authors')) {
-
-    $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['columns']['author'] = array(
-        'exclude' => 0,
-        'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.author',
-        'config' => array(
-            'type' => 'select',
-            'renderType' => 'selectMultipleSideBySide',
-            'foreign_table' => 'tx_rkwauthors_domain_model_authors',
-            'foreign_table_where' => 'AND ((\'###PAGE_TSCONFIG_IDLIST###\' <> \'0\' AND FIND_IN_SET(tx_rkwauthors_domain_model_authors.pid,\'###PAGE_TSCONFIG_IDLIST###\')) OR (\'###PAGE_TSCONFIG_IDLIST###\' = \'0\')) AND tx_rkwauthors_domain_model_authors.sys_language_uid = ###REC_FIELD_sys_language_uid### ORDER BY tx_rkwauthors_domain_model_authors.last_name ASC',
-            'maxitems'      => 9999,
-            'minitems'      => 0,
-            'size'          => 5,
-        ),
-    );
-    $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['types'][0]['showitem'] = str_replace(', publishing_date,', ', publishing_date, author,', $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['types'][0]['showitem']);
-}
