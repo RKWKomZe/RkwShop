@@ -52,7 +52,7 @@
 
             <trans-unit id="tx_rkwshop_domain_model_orderitem">
 				<source>RKW Shop: OrderItem</source>
-				<target>RKW Shop: OrderItem</target>
+				<target>RKW Shop: Bestelltes Produkt</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_orderitem.product">
 				<source>Product</source>
