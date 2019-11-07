@@ -2,7 +2,7 @@ config.tx_extbase.persistence {
 
     classes {
 
-        // dependeny to rkw_authors is optional - see ext_typoscript_setup.txt in rkw_authors
+        // dependeny to rkw_authors is optional - see configuration in rkw_authors
         #===============================================
 
         RKW\RkwBasics\Domain\Model\Pages {
