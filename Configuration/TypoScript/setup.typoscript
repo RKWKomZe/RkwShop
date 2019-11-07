@@ -1,0 +1,285 @@
+
+config.tx_extbase.persistence {
+
+    classes {
+
+        // dependeny to rkw_authors is optional - see ext_typoscript_setup.txt in rkw_authors
+        #===============================================
+
+        RKW\RkwBasics\Domain\Model\Pages {
+            subclasses {
+                Tx_RkwShop_Pages = RKW\RkwShop\Domain\Model\Pages
+            }
+        }
+
+        RKW\RkwShop\Domain\Model\Pages {
+            mapping {
+
+                # tablename
+                tableName = pages
+
+                columns {
+                    uid.mapOnProperty 		= uid
+                    pid.mapOnProperty		= pid
+                    title.mapOnProperty 	= title
+                    subtitle.mapOnProperty 	= subtitle
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwRegistration\Domain\Model\FrontendUser {
+            subclasses {
+                Tx_RkwShop_FrontendUser = RKW\RkwShop\Domain\Model\FrontendUser
+            }
+        }
+
+        RKW\RkwShop\Domain\Model\FrontendUser {
+            mapping {
+                tableName = fe_users
+                recordType =
+            }
+        }
+
+
+        #===============================================
+
+        TYPO3\CMS\Extbase\Domain\Model\BackendUser {
+            subclasses {
+                Tx_RkwShop_BackendUser = RKW\RkwShop\Domain\Model\BackendUser
+            }
+        }
+
+
+        RKW\RkwShop\Domain\Model\BackendUser {
+            mapping {
+                tableName = be_users
+                columns {
+                    usergroup.mapOnProperty = backendUserGroups
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwRegistration\Domain\Model\ShippingAddress {
+            subclasses {
+                Tx_RkwShop_ShippingAddress = RKW\RkwShop\Domain\Model\ShippingAddress
+            }
+        }
+
+        RKW\RkwShop\Domain\Model\ShippingAddress {
+
+            # very important to set the storagePid explicit - otherwise it will add to the pid of related objects
+            newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
+
+            mapping {
+
+                # tablename
+                tableName = tx_rkwregistration_domain_model_shippingaddress
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\Order {
+            mapping {
+                columns {
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    hidden.mapOnProperty = hidden
+                    deleted.mapOnProperty = deleted
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\OrderItem {
+            mapping {
+                columns {
+                    ext_order.mapOnProperty = order
+                }
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\Product {
+            mapping {
+                columns {
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    hidden.mapOnProperty = hidden
+                    deleted.mapOnProperty = deleted
+                }
+            }
+        }
+
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\ProductBundle {
+            mapping {
+
+                recordType = \RKW\RkwShop\Domain\Model\ProductBundle
+                tableName = tx_rkwshop_domain_model_product
+            }
+            subclasses {
+                \RKW\RkwShop\Domain\Model\ProductSubscription = RKW\RkwShop\Domain\Model\ProductSubscription
+            }
+        }
+
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\ProductSubscription {
+            mapping {
+
+                recordType = \RKW\RkwShop\Domain\Model\ProductSubscription
+                tableName = tx_rkwshop_domain_model_product
+            }
+        }
+    }
+}
+
+// #########################################################
+
+
+plugin.tx_rkwshop {
+	view {
+		templateRootPaths.0 = {$plugin.tx_rkwshop.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_rkwshop.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_rkwshop.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_rkwshop.persistence.storagePid}
+	}
+
+	settings {
+		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
+		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
+		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
+		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
+	}
+
+}
+
+// #########################################################
+
+
+# Add jquery if not disabled
+[globalVar = LIT:1 = {$plugin.tx_rkwshop.settings.includeJQuery}]
+    page.includeJSFooterlibs.jquery = EXT:rkw_shop/Resources/Public/Scripts/jquery-1.11.1.min.js
+[global]
+
+page.includeJSFooter.txRkwShop = EXT:rkw_shop/Resources/Public/Scripts/RkwShop.js
+page.includeCSS.txRkwShop = EXT:rkw_shop/Resources/Public/Css/RkwShop.css
+
+
+
+txRkwShopJson = PAGE
+txRkwShopJson {
+    typeNum = 1510210402
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = 0
+        admPanel = 0
+        debug = 0
+        no_cache = 0
+        additionalHeaders.10.header = Content-type:application/json
+    }
+
+    20 = USER_INT
+    20 {
+
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        vendorName = RKW
+        extensionName = RkwShop
+        pluginName = ItemList
+        controller = Order
+        switchableControllerActions {
+
+            # Again: Controller-Name and Action
+            Order {
+                1 = newAjax
+            }
+        }
+
+        settings =< plugin.tx_rkwshop.settings
+        persistence =< plugin.tx_rkwshop.persistence
+        view =< plugin.tx_rkwshop.view
+    }
+}
+
+// #########################################################
+
+plugin.tx_rkwshop._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.typo3-messages .message-error {
+		color:red;
+	}
+
+	.typo3-messages .message-ok {
+		color:green;
+	}
+)
+
+
+
+// #########################################################
+plugin.tx_rkwshop.libs {
+
+
+	# PDF Thumbnails
+	responsiveThumbnail = IMAGE
+	responsiveThumbnail {
+
+		file {
+			import.current = 1
+			treatIdAsReference = 1
+			ext = png
+			maxW = 90
+		}
+
+		# Inherit configuration from tt_content
+		layout < tt_content.image.20.1.layout
+		layoutKey = picture
+		sourceCollection < plugin.tx_rkwbasics.libs.responsiveImages.sourceCollection
+
+		# set configuration for sourceCollection
+		sourceCollection {
+
+			mobile.maxW.override = 90
+			mobile.maxW.override.if {
+				value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.mobile}
+				isLessThan = 90
+			}
+			mobileRetina2.maxW.override < .mobile.maxW.override
+
+			tablet.maxW.override < .mobile.maxW.override
+			tablet.maxW.override.if.value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.tablet}
+			tabletRetina2.maxW.override < .tablet.maxW.override
+			tabletRetina3.maxW.override < .tablet.maxW.override
+
+			desktop.maxW.override < .mobile.maxW.override
+			desktop.maxW.override.if.value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.desktop}
+            desktopRetina2.maxW.override < .desktop.maxW.override
+		}
+	}
+
+}
+
+
+# needed for CommandController (otherwise PID 1 would be the storagePid)
+module.tx_rkwshop.persistence.storagePid < plugin.tx_rkwshop.persistence.storagePid
