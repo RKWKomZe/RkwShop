@@ -1,9 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-    die ('Access denied.');
-}
-
-$GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
+return [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order',
         'label' => 'email',
@@ -86,7 +82,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
                 'maxitems' => 99,
                 'size'  => 5,
                 'show_thumbs' =>  true,
-                'appearance' => array(
+                'appearance' => [
                     'elementBrowserType' => 'db',
                     'useSortable' => false,
                     'showPossibleLocalizationRecords' => false,
@@ -102,7 +98,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
                         'delete' => true,
                         'localize' => false,
                     ],
-                ),
+                ],
             ],
         ],
         'shipping_address' => [

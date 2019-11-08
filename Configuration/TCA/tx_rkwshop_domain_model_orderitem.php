@@ -1,11 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-    die ('Access denied.');
-}
-
-//\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_rkwshop_domain_model_orderitem', 'EXT:rkw_shop/Resources/Private/Language/locallang_csh_tx_rkwshop_domain_model_orderitem.xlf');
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_rkwshop_domain_model_orderitem');
-$GLOBALS['TCA']['tx_rkwshop_domain_model_orderitem'] = [
+return [
 	'ctrl' => [
         'hideTable' => true,
         'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_orderitem',
