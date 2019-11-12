@@ -1,9 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-    die ('Access denied.');
-}
-
-$GLOBALS['TCA']['tx_rkwshop_domain_model_stock'] = [
+return [
 	'ctrl' => [
         'hideTable' => true,
         'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_stock',
@@ -20,7 +16,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_stock'] = [
             'disabled' => 'hidden',
         ],
 		'searchFields' => 'uid, product,amount,delivery_start,comment,',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_shop') . 'Resources/Public/Icons/tx_rkwshop_domain_model_stock.gif',
+		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_stock.gif',
 	],
 	'interface' => [
 		'showRecordFieldList' => 'product,amount,comment,delivery_start',

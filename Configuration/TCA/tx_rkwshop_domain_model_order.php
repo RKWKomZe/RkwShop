@@ -1,9 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-    die ('Access denied.');
-}
-
-$GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
+return [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order',
         'label' => 'email',
@@ -18,13 +14,13 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
 			'disabled' => 'hidden',
 		],
 		'searchFields' => 'uid, amount,first_name,last_name,address,zip,city,email,frontend_user,pages,remark,',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rkw_shop') . 'Resources/Public/Icons/tx_rkwshop_domain_model_order.gif'
+		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_order.gif'
 	],
 	'interface' => [
 		'showRecordFieldList' => 'hidden, status, email, frontend_user, shipping_address, order_item, remark',
 	],
 	'types' => [
-		'1' => ['showitem' => 'hidden;;1, status, email, frontend_user, shipping_address, order_item, remark'],
+		'1' => ['showitem' => 'hidden,--palette--;;1, status, email, frontend_user, shipping_address, order_item, remark'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -86,7 +82,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
                 'maxitems' => 99,
                 'size'  => 5,
                 'show_thumbs' =>  true,
-                'appearance' => array(
+                'appearance' => [
                     'elementBrowserType' => 'db',
                     'useSortable' => false,
                     'showPossibleLocalizationRecords' => false,
@@ -102,7 +98,7 @@ $GLOBALS['TCA']['tx_rkwshop_domain_model_order'] = [
                         'delete' => true,
                         'localize' => false,
                     ],
-                ),
+                ],
             ],
         ],
         'shipping_address' => [
