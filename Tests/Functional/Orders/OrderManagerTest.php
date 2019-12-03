@@ -5,8 +5,10 @@ use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
+use RKW\RkwShop\Domain\Model\ShippingAddress;
 use RKW\RkwShop\Orders\OrderManager;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
+use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
 use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use RKW\RkwShop\Domain\Repository\ShippingAddressRepository;
@@ -93,6 +95,11 @@ class OrderManagerTest extends FunctionalTestCase
     private $orderRepository;
 
     /**
+     * @var \RKW\RkwShop\Domain\Repository\OrderItemRepository
+     */
+    private $orderItemRepository;
+
+    /**
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      */
     private $productRepository;
@@ -163,11 +170,12 @@ class OrderManagerTest extends FunctionalTestCase
         $this->frontendUserRepository = $this->objectManager->get(FrontendUserRepository::class);
         $this->shippingAddressRepository = $this->objectManager->get(ShippingAddressRepository::class);
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
+        $this->orderItemRepository = $this->objectManager->get(OrderItemRepository::class);
         $this->productRepository = $this->objectManager->get(ProductRepository::class);
         $this->privacyRepository = $this->objectManager->get(PrivacyRepository::class);
         $this->registrationRepository = $this->objectManager->get(RegistrationRepository::class);
 
-        $this->globalRequest = $this->objectManager->get(Request::class);
+        //$this->globalRequest = $this->objectManager->get(Request::class);
 
         // Calculating max database uids
         $this->maxNumbers = [
@@ -217,14 +225,18 @@ class OrderManagerTest extends FunctionalTestCase
         * Given I'm not logged in
         * Given I do not accept the Terms & Conditions
         * When I make an order
-        * Then an error is thrown
+        * Then an acceptTerms-error is thrown
         */
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderManager.error.acceptTerms');
 
-        $order = GeneralUtility::makeInstance(Order::class);
-        $request = $this->objectManager->get(Request::class);
-        $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, false, false);
+        $this->subject->createOrder($order, $request, null, false, false);
 
     }
 
@@ -249,17 +261,21 @@ class OrderManagerTest extends FunctionalTestCase
          * Given I'm not registered
          * Given I do not accept the Terms & Conditions
          * When I make an order
-         * Then an error is thrown
+         * Then an acceptTerms-error is thrown
          */
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.acceptTerms');
-
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
         $frontendUser = GeneralUtility::makeInstance(FrontendUser::class);
 
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
         $request = $this->objectManager->get(Request::class);
-        $this->subject->createOrder($this->globalFixture, $this->globalRequest, $frontendUser, false, false);
+
+        static::expectException(\RKW\RkwShop\Exception::class);
+        static::expectExceptionMessage('orderManager.error.acceptTerms');
+
+        $this->subject->createOrder($order, $request, $frontendUser, false, false);
 
     }
 
@@ -284,12 +300,18 @@ class OrderManagerTest extends FunctionalTestCase
          * Given I accept the Terms and Conditions
          * Given I do not accept the Privacy-Terms
          * When I make an order
-         * Then an error is thrown
+         * Then an acceptPrivacy error is thrown
          */
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderManager.error.acceptPrivacy');
 
-        $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, true, false);
+        $this->subject->createOrder($order, $request, null, true, false);
 
     }
 
@@ -315,17 +337,23 @@ class OrderManagerTest extends FunctionalTestCase
          * Given I'm logged in
          * Given I do not accept the Privacy-Terms
          * When I make an order
-         * Then an error is thrown
+         * Then an acceptPrivacy-error is thrown
          */
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check20.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check10.xml');
+
+                /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderManager.error.acceptPrivacy');
 
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(1);
-
-        $this->subject->createOrder($this->globalFixture, $this->globalRequest, $frontendUser, true, false);
+        $this->subject->createOrder($order, $request, $frontendUser, true, false);
 
     }
 
@@ -342,7 +370,6 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     * @throws \Exception
       */
     public function createOrderChecksForValidEmail ()
     {
@@ -354,14 +381,19 @@ class OrderManagerTest extends FunctionalTestCase
          * Given I accept the Privacy-Terms
          * Given I have used an invalid email
          * When I make an order
-         * Then an error is thrown
+         * Then an invalidEmail-error is thrown
          */
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('invalid-email');
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderManager.error.invalidEmail');
 
-        $this->globalFixture->setEmail('invalid-email');
-
-        $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, true, true);
+        $this->subject->createOrder($order, $request, null, true, true);
 
     }
 
@@ -376,8 +408,9 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
      */
-    public function createOrderChecksForShippingAddress ()
+    public function createOrderChecksForValidShippingAddress ()
     {
 
         /**
@@ -386,19 +419,27 @@ class OrderManagerTest extends FunctionalTestCase
          * Given I accept the Terms & Conditions
          * Given I accept the Privacy-Terms
          * Given I have used a valid email
-         * Given no shipping address is added
+         * Given shipping address has no city given
          * When I make an order
-         * Then an error is thrown
+         * Then an noShippingAddress-error is thrown
          */
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noShippingAddress');
-
-
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
         $order->setEmail('email@rkw.de');
 
-        $this->subject->createOrder($order, $this->globalRequest, null, true, true);
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::expectException(\RKW\RkwShop\Exception::class);
+        static::expectExceptionMessage('orderManager.error.noShippingAddress');
+
+        $this->subject->createOrder($order, $request, null, true, true);
 
     }
 
@@ -422,53 +463,29 @@ class OrderManagerTest extends FunctionalTestCase
          *
          * Given I accept the Terms & Conditions
          * Given I accept the Privacy-Terms
-         * Given no orderItem is added
+         * Given I enter a valid shippingAddress
+         * Given no product is ordered
          * When I make an order
          * Then an error is thrown
          */
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderManager.error.noOrderItem');
 
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem  $orderItem */
-        foreach($this->globalFixture->getOrderItem() as $orderItem) {
-            $this->globalFixture->removeOrderItem($orderItem);
-        }
-
-        $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, true, true);
-
-    }
-
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function createOrderChecksAllOrderItemAmountsAreGreaterThanZero ()
-    {
-
-        /**
-         * Scenario:
-         *
-         * Given I accept the Terms & Conditions
-         * Given I accept the Privacy-Terms
-         * Given one of the orderItems has an amount of zero
-         * When I make an order
-         * Then an noOrderItem- error is thrown
-         */
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noOrderItem');
-
-        $this->globalFixture->getOrderItem()->current()->setAmount(0);
-
-        $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, true, true);
+        $this->subject->createOrder($order, $request, null, true, true);
 
     }
 
@@ -486,6 +503,290 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \Exception
      */
+    public function createOrderChecksAllOrderItemAmountsAreGreaterThanZero ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I accept the Terms & Conditions
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given a orderItem with product is added
+         * Given an product is ordered with amount less than one
+         * When I make an order
+         * Then an noOrderItem- error is thrown
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check20.xml');
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(0);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::expectException(\RKW\RkwShop\Exception::class);
+        static::expectExceptionMessage('orderManager.error.noOrderItem');
+
+        $this->subject->createOrder($order, $request, null, true, true);
+
+     }
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function createOrderChecksForStockOfProduct ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm not logged in
+         * Given I accept the Terms & Conditions
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered which is out of stock
+         * When I make an order
+         * Then an outOfStock- error is thrown
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check50.xml');
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::expectException(\RKW\RkwShop\Exception::class);
+        static::expectExceptionMessage('orderManager.error.outOfStock');
+
+        $this->subject->createOrder($order, $request, null, true, true);
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function createOrderChecksForPersistedOrders ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm not logged in
+         * Given I accept the Terms & Conditions
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered which is out of stock
+         * When I make an order
+         * Then an outOfStock- error is thrown
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check80.xml');
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = $this->orderRepository->findByUid(1);
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::expectException(\RKW\RkwShop\Exception::class);
+        static::expectExceptionMessage('orderManager.error.orderAlreadyPersisted');
+
+        $this->subject->createOrder($order, $request, $frontendUser, true, true);
+
+    }    
+
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function createOrderSavesOrderIfProductOutOfStockCanBePreOrdered ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm not logged in
+         * Given I accept the Terms & Conditions
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered which is out of stock
+         * Given that ordered product can be pre-ordered
+         * When I make an order
+         * Then the order is saved as registration
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check60.xml');
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::assertEquals(
+            'orderManager.message.createdOptIn',
+            $this->subject->createOrder($order, $request, null, true, true)
+        );
+
+    }
+
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function createOrderSavesOrderIfProductOutOfStockIsSubscription ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm not logged in
+         * Given I accept the Terms & Conditions
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered which is out of stock
+         * Given that ordered product is of type "subscription"
+         * When I make an order
+         * Then the order is saved as registration
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check70.xml');
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::assertEquals(
+            'orderManager.message.createdOptIn',
+            $this->subject->createOrder($order, $request, null, true, true)
+        );
+
+    }
+
+
+
+     /**
+      * @test
+      * @throws \RKW\RkwShop\Exception
+      * @throws \RKW\RkwRegistration\Exception
+      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+      * @throws \Exception
+      */
     public function createOrderSavesOrderIfUserIsLoggedIn ()
     {
 
@@ -494,28 +795,84 @@ class OrderManagerTest extends FunctionalTestCase
          *
          * Given I'm logged in
          * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered with amount greater than zero
          * When I make an order
          * Then the order is saved
+         * Then the email and remark of the order are saved
+         * Then the order is linked to the given frontendUser
+         * Then the shippingAddress is linked to the given frontendUser
+         * Then the shippingAddress is saved correctly
+         * Then the ordered product and the given amount is saved correctly
          * Then the privacy information is saved
          */
-        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check20.xml');
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check30.xml');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
-        static::assertEquals('orderManager.message.created', $this->subject->createOrder($this->globalFixture, $this->globalRequest, $frontendUser, false, true));
-
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByUid(1);
-        static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $order);
-        static::assertEquals($this->globalFixture->getEmail(), $order->getEmail());
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+        $order->setRemark('Testen wir das mal');
 
-        /** @var \RKW\RkwRegistration\Domain\Model\Privacy $privacy */
-        $privacy = $this->privacyRepository->findByUid(1);
-        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacy);
-        static::assertEquals($frontendUser->getUid(), $privacy->getUid());
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFirstName('Karl');
+        $shippingAddress->setLastName('Dall');
+        $shippingAddress->setCompany('Käse-Zentrum');
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::assertEquals(
+            'orderManager.message.created',
+            $this->subject->createOrder($order, $request, $frontendUser, false, true)
+        );
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
+        $orderDb = $this->orderRepository->findByUid(1);
+
+        $orderDb->getOrderItem()->rewind();
+        $order->getOrderItem()->rewind();
+
+        static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
+        static::assertEquals($order->getEmail(), $orderDb->getEmail());
+        static::assertEquals($order->getRemark(), $orderDb->getRemark());
+
+        static::assertEquals($frontendUser->getUid(), $orderDb->getFrontendUser()->getUid());
+        static::assertEquals($frontendUser->getUid(), $orderDb->getShippingAddress()->getFrontendUser()->getUid());
+
+        /** ToDo: Check for title object!!!! */
+        static::assertEquals($order->getShippingAddress()->getFirstName(), $orderDb->getShippingAddress()->getFirstName());
+        static::assertEquals($order->getShippingAddress()->getLastName(), $orderDb->getShippingAddress()->getLastName());
+        static::assertEquals($order->getShippingAddress()->getCompany(), $orderDb->getShippingAddress()->getCompany());
+        static::assertEquals($order->getShippingAddress()->getAddress(), $orderDb->getShippingAddress()->getAddress());
+        static::assertEquals($order->getShippingAddress()->getZip(), $orderDb->getShippingAddress()->getZip());
+        static::assertEquals($order->getShippingAddress()->getCity(), $orderDb->getShippingAddress()->getCity());
+
+        static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
+        static::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
+
+        /** @var \RKW\RkwRegistration\Domain\Model\Privacy $privacyDb */
+        $privacyDb = $this->privacyRepository->findByUid(1);
+        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacyDb);
+        static::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
+
     }
-
 
 
 
@@ -530,8 +887,9 @@ class OrderManagerTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
      */
-    public function createOrderCreatedRegistrationIfUserIsNotLoggedIn ()
+    public function createOrderCreatesRegistrationIfUserIsNotLoggedIn ()
     {
 
         /**
@@ -540,11 +898,40 @@ class OrderManagerTest extends FunctionalTestCase
          * Given I'm not logged in
          * Given I accept the Terms & Conditions
          * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered with amount greater than zero
          * When I make an order
-         * Then the order is saved
-         * Then the privacy information is saved
+         * Then the order is saved as registration
          */
-        static::assertEquals('orderManager.message.createdOptIn', $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, true, true));
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check40.xml');
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::assertEquals(
+            'orderManager.message.createdOptIn',
+            $this->subject->createOrder($order, $request, null, true, true)
+        );
 
         /** @var \RKW\RkwRegistration\Domain\Model\Registration $registration */
         $registration = $this->registrationRepository->findByUid(1);
@@ -554,325 +941,53 @@ class OrderManagerTest extends FunctionalTestCase
 
     }
 
+
+
+    //=============================================
+
     /**
      * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
      */
-    public function createOrder_GivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForProductOutOfStock_ThrowsException ()
+    public function removeAllOrdersOfFrontendUserSignalSlotRemovesAllOpenOrdersOfGivenUser ()
     {
 
         /**
          * Scenario:
          *
          * Given I'm not logged in
-         * Given I accept the Terms & Conditions
-         * Given I accept the Privacy-Terms
-         * Given the product is out of stock
-         * When I make an order
-         * Then an out of stock error is thrown
+         * When I delete all my orders
+         * Then all my orders are deleted
+         * Then all the corresponding order items are deleted
+         * Then all my shippingAddresses are deleted
+         * Then orders of other users are kept
+         * Then shippingAddresses of other users are kept
          */
-
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(5);
-
-        // set amount to very high value
-        $this->globalFixture->getOrderItem()->current()->setProduct($product);
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.outOfStock');
-
-        $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, true, true);
-
-    }
-
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function createOrder_GivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForProductOutOfStockButNotOutOfPreOrder_ReturnsOptInMessageAndAddsRegistrationToDatabase ()
-    {
-
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(6);
-
-        // set amount to very high value
-        $this->globalFixture->getOrderItem()->current()->setProduct($product);
-
-        static::assertEquals('orderManager.message.createdOptIn', $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, true, true));
-
-        /** @var \RKW\RkwRegistration\Domain\Model\Registration $registration */
-        $registration = $this->registrationRepository->findByUid(1);
-        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Registration', $registration);
-        static::assertEquals(4, $registration->getUser());
-        static::assertEquals('rkwShop', $registration->getCategory());
-
-    }
-
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function createOrder_GivenNoFrontendUserAndTermsTrueAndPrivacyTrueAndProductOrderForSubscriptionProductOutOfStock_ReturnsOptInMessageAndAddsRegistrationToDatabase ()
-    {
-
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(7);
-
-        // set amount to very high value
-        $this->globalFixture->getOrderItem()->current()->setProduct($product);
-
-        static::assertEquals('orderManager.message.createdOptIn', $this->subject->createOrder($this->globalFixture, $this->globalRequest, null, true, true));
-
-        /** @var \RKW\RkwRegistration\Domain\Model\Registration $registration */
-        $registration = $this->registrationRepository->findByUid(1);
-        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Registration', $registration);
-        static::assertEquals(4, $registration->getUser());
-        static::assertEquals('rkwShop', $registration->getCategory());
-
-    }
-
-
-
-    //=============================================
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function saveOrder_GivenPersistedOrderAndPersistedFrontendUser_ThrowsException ()
-    {
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.orderAlreadyPersisted');
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByUid(1);
-
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(1);
-
-        $this->subject->saveOrder($order, $frontendUser);
-
-    }
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function saveOrder_GivenOrderAndNonPersistedFrontendUser_ThrowsException ()
-    {
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.frontendUserNotPersisted');
-
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
-        $frontendUser = GeneralUtility::makeInstance(FrontendUser::class);
-
-        $this->subject->saveOrder($this->globalFixture, $frontendUser);
-
-    }
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function saveOrder_GivenOrderWithoutOrderItem_ThrowsException ()
-    {
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noOrderItem');
-
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(1);
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-
-        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
-        $shippingAddress = $this->shippingAddressRepository->findByUid(1);
-        $order->setShippingAddress($shippingAddress);
-
-        $this->subject->saveOrder($order, $frontendUser);
-
-    }
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function saveOrder_GivenOrderWithOrderItemHavingAmountZero_ThrowsException ()
-    {
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noOrderItem');
-
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(1);
-
-        $this->globalFixture->getOrderItem()->current()->setAmount(0);
-
-        $this->subject->saveOrder($this->globalFixture, $frontendUser);
-
-    }
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function saveOrder_GivenOrderWithoutShippingAddress_ThrowsException ()
-    {
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noShippingAddress');
-
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(1);
-
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(1);
-
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
-        $orderItem->setProduct($product);
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-        $order->addOrderItem($orderItem);
-
-        $this->subject->saveOrder($order, $frontendUser);
-
-    }
-
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function saveOrder_GivenOrderAndPersistedFrontendUser_ReturnsTrueAndAddsOrderAndShippingAddressToDatabaseWithFrontendUserSet ()
-    {
-
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(1);
-
-        static::assertTrue($this->subject->saveOrder($this->globalFixture, $frontendUser));
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByUid($this->maxNumbers['order']+1);
-
-        self::assertEquals($frontendUser->getUid(), $order->getFrontendUser()->getUid());
-        self::assertEquals($frontendUser->getUid(), $order->getShippingAddress()->getFrontendUser()->getUid());
-
-
-    }
-
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function saveOrder_GivenOrderAndPersistedFrontendUser_ReturnsTrueAndAddsOrderAndShippingAddressWithExpectedDataToDatabase ()
-    {
-
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(1);
-
-        static::assertTrue($this->subject->saveOrder($this->globalFixture, $frontendUser));
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByUid($this->maxNumbers['order']+1);
-
-        $order->getOrderItem()->rewind();
-        $this->globalFixture->getOrderItem()->rewind();
-
-        /** ToDo: Check for title object!!!! */
-        self::assertEquals($this->globalFixture->getOrderItem()->current()->getProduct()->getUid(), $order->getOrderItem()->current()->getProduct()->getUid());
-        self::assertEquals($this->globalFixture->getShippingAddress()->getFirstName(), $order->getShippingAddress()->getFirstName());
-        self::assertEquals($this->globalFixture->getShippingAddress()->getLastName(), $order->getShippingAddress()->getLastName());
-        self::assertEquals($this->globalFixture->getShippingAddress()->getCompany(), $order->getShippingAddress()->getCompany());
-        self::assertEquals($this->globalFixture->getShippingAddress()->getAddress(), $order->getShippingAddress()->getAddress());
-        self::assertEquals($this->globalFixture->getShippingAddress()->getZip(), $order->getShippingAddress()->getZip());
-        self::assertEquals($this->globalFixture->getShippingAddress()->getCity(), $order->getShippingAddress()->getCity());
-
-        self::assertEquals($this->globalFixture->getEmail(), $order->getEmail());
-        self::assertEquals($this->globalFixture->getRemark(), $order->getRemark());
-        self::assertEquals($this->globalFixture->getOrderItem()->current()->getAmount(), $order->getOrderItem()->current()->getAmount());
-
-    }
-    //=============================================
-
-    /**
-     * @test
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    public function removeAllOrdersOfFrontendUserSignalSlot_GivenFrontendUser_RemovesAllOpenOrdersOfGivenUser ()
-    {
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check90.xml');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(3);
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
 
         $this->subject->removeAllOrdersOfFrontendUserSignalSlot($frontendUser);
-        $result = $this->orderRepository->findByFrontendUser($frontendUser);
-        $resultAll = $this->orderRepository->findAll();
 
-        self::assertCount(0, $result);
-        self::assertCount($this->maxNumbers['order']-2, $resultAll);
+        $resultOrderUser = $this->orderRepository->findByFrontendUser($frontendUser);
+        $resultShippingAddressUser = $this->shippingAddressRepository->findByFrontendUser($frontendUser);
+
+        $resultOrderAll = $this->orderRepository->findAll();
+        $resultOrderItemAll = $this->orderItemRepository->findAll();
+        $resultShippingAddressAll = $this->shippingAddressRepository->findAll();
+
+        self::assertCount(0, $resultOrderUser);
+        self::assertCount(0, $resultShippingAddressUser);
+
+        self::assertCount(1, $resultOrderAll);
+        self::assertCount(1, $resultOrderItemAll);
+        self::assertCount(1, $resultShippingAddressAll);
+
     }
 
 
@@ -883,12 +998,23 @@ class OrderManagerTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
      */
-    public function getRemainingStock_GivenProduct_ReturnsStockAndSubstractsOrderedAndOrderedExternalFromStock ()
+    public function getRemainingStockSubstractsOrderedAndOrderedExternalFromStock ()
     {
 
+        /**
+         * Scenario:
+         *
+         * Given a product has been ordered from external
+         * Given the same product has been ordered via shop
+         * When I fetch the remaining stock
+         * Then external and internal orders are substracted
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check100.xml');
+
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(10);
+        $product =$this->productRepository->findByUid(1);
         self::assertEquals(65, $this->subject->getRemainingStockOfProduct($product));
 
     }
@@ -897,14 +1023,24 @@ class OrderManagerTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     *
+     * @throws \Exception
      */
-    public function getRemainingStock_GivenProduct_ReturnsZeroIfCalculatedValueIsBelowZero ()
+    public function getRemainingStockReturnsZeroIfAmountOrdersIsGreaterThanStock ()
     {
 
+        /**
+         * Scenario:
+         *
+         * Given a product has been ordered from external
+         * Given the same product has been ordered via shop
+         * Given the amount of orders exceeds the available stock
+         * When I fetch the remaining stock
+         * Then a value of zero is returned
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check110.xml');
+
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(10);
-        $product->setOrderedExternal(200);
+        $product =$this->productRepository->findByUid(1);
 
         self::assertEquals(0, $this->subject->getRemainingStockOfProduct($product));
 
@@ -914,12 +1050,22 @@ class OrderManagerTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
      */
-    public function getRemainingStock_GivenProductWithProductBundleWithAllowSingleOrderFalse_ReturnsStockOfProductBundle ()
+    public function getRemainingStockReturnsStockOfProductBundle()
     {
 
+        /**
+         * Scenario:
+         *
+         * Given a product is part of a product bundle
+         * When I fetch the remaining stock
+         * Then the stock of the product bundle is returned
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check120.xml');
+
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(11);
+        $product =$this->productRepository->findByUid(1);
         self::assertEquals(21, $this->subject->getRemainingStockOfProduct($product));
     }
 
@@ -928,13 +1074,23 @@ class OrderManagerTest extends FunctionalTestCase
      * @test
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
      */
-    public function getRemainingStock_GivenProductWithProductBundleWithAllowSingleOrderTrue_ReturnsStockOfProduct()
+    public function getRemainingStockReturnsStockOfProductIfSingleOrderIsAllowed()
     {
+        /**
+         * Scenario:
+         *
+         * Given a product is part of a product bundle
+         * Given in that product bundle allowSingleOrder is true
+         * When I fetch the remaining stock
+         * Then the stock of the product itself is returned
+         */
+        $this->importDataSet(__DIR__ . '/Fixtures/Database/Check130.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(13);
-        self::assertEquals(45, $this->subject->getRemainingStockOfProduct($product));
+        $product =$this->productRepository->findByUid(1);
+        self::assertEquals(68, $this->subject->getRemainingStockOfProduct($product));
     }
 
 

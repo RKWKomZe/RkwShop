@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+     <!-- product -->
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>Leitfaden mit Bestellungen</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test11@test.de</admin_email>
+        <stock>1</stock>
+        <ordered_external>20</ordered_external>
+        <record_type>0</record_type>
+        <product_bundle>2</product_bundle>
+    </tx_rkwshop_domain_model_product>
+    <tx_rkwshop_domain_model_product>
+        <uid>2</uid>
+        <pid>1</pid>
+        <title>Leitfaden mit Bestellungen</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test12@test.de</admin_email>
+        <stock>2</stock>
+        <ordered_external>22</ordered_external>
+        <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+        <product_bundle>0</product_bundle>
+        <allow_single_order>0</allow_single_order>
+    </tx_rkwshop_domain_model_product>
+
+    <!-- stock -->
+    <tx_rkwshop_domain_model_stock>
+        <uid>1</uid>
+        <pid>1</pid>
+        <product>1</product>
+        <amount>100</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+    <tx_rkwshop_domain_model_stock>
+        <uid>2</uid>
+        <pid>1</pid>
+        <product>2</product>
+        <amount>50</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+
+    <!-- orderItems -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>1</uid>
+        <pid>1</pid>
+        <amount>12</amount>
+        <product>1</product>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>2</uid>
+        <pid>1</pid>
+        <amount>7</amount>
+        <product>2</product>
+    </tx_rkwshop_domain_model_orderitem>
+</dataset>
