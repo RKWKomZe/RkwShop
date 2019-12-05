@@ -73,7 +73,7 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $query = $this->createQuery();
 
-        $query->getQuerySettings()->setRespectStoragePage(false);
+        // $query->getQuerySettings()->setRespectStoragePage(false);
         $query->getQuerySettings()->setIncludeDeleted(true);
         $query->getQuerySettings()->setIgnoreEnableFields(true);
 
