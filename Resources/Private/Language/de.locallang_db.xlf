@@ -66,6 +66,26 @@
                 <source>Is Pre-Order</source>
                 <target>Ist Vorbestellung</target>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_orderitem.status">
+				<source>Status</source>
+				<target>Status</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_orderitem.status.new">
+				<source>new</source>
+				<target>neu</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_orderitem.status.exported">
+				<source>exported</source>
+				<target>exportiert</target>
+			</trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_orderitem.status.sent">
+                <source>sent</source>
+                <target>versendet</target>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_orderitem.status.closed">
+                <source>closed</source>
+                <target>abgeschlossen</target>
+            </trans-unit>            
 
 
 

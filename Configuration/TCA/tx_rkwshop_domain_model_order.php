@@ -2,8 +2,8 @@
 return [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order',
-        'label' => 'email',
-        'label_alt' => 'status',
+        'label' => 'status',
+        'label_alt' => 'email',
         'label_alt_force' => 1,
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
@@ -13,7 +13,8 @@ return [
 		'enablecolumns' => [
 			'disabled' => 'hidden',
 		],
-		'searchFields' => 'uid, amount,first_name,last_name,address,zip,city,email,frontend_user,pages,remark,',
+        'default_sortby' => 'ORDER BY status ASC, email ASC',
+        'searchFields' => 'uid, amount,first_name,last_name,address,zip,city,email,frontend_user,pages,remark,',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_order.gif'
 	],
 	'interface' => [
@@ -36,7 +37,8 @@ return [
 		],
 		'status' => [
 			'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status',
+            'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
+            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status',
 			'config' => [
 				'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -59,6 +61,7 @@ return [
 				'foreign_table_where' => 'AND fe_users.disable = 0 AND fe_users.deleted = 0 ORDER BY username ASC',
 				'minitems' => 1,
 				'maxitems' => 1,
+                'readOnly' => true
 			],
 		],
         'email' => [
@@ -67,7 +70,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,email,required'
+                'eval' => 'trim,email,required',
+                'readOnly' => true
             ],
         ],
         'order_item' => [
@@ -99,6 +103,7 @@ return [
                         'localize' => false,
                     ],
                 ],
+                'readOnly' => true
             ],
         ],
         'shipping_address' => [
@@ -111,6 +116,7 @@ return [
                 'foreign_table_where' => 'AND tx_rkwregistration_domain_model_shippingaddress.deleted = 0 AND tx_rkwregistration_domain_model_shippingaddress.hidden = 0 ORDER BY tx_rkwregistration_domain_model_shippingaddress.address ASC',
                 'minitems' => 1,
                 'maxitems' => 1,
+                'readOnly' => true
             ],
         ],
 		'remark' => [
@@ -120,7 +126,8 @@ return [
 				'type' => 'text',
 				'cols' => 40,
 				'rows' => 15,
-				'eval' => 'trim'
+				'eval' => 'trim',
+                'readOnly' => true
 			]
 		],
 	],

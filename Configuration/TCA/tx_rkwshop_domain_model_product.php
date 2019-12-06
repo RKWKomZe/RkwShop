@@ -119,6 +119,12 @@ return [
             ],
         ],
 		'stock' => [
+            'displayCond' => [
+                'OR' => [
+                    'EXT:rkw_soap:LOADED:FALSE',
+                    'REC:NEW:TRUE'
+                ]
+            ],
             'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.stock',
             'config' => [
@@ -136,6 +142,7 @@ return [
             ]
 		],
         'ordered_external' => [
+            'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.orderedExternal',
             'config' => [
@@ -193,7 +200,9 @@ return [
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.download',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'download',
-                ['maxitems' => 1],
+                [
+                    'maxitems' => 1
+                ],
                 'doc,docx,docm,xls,xlsx,pdf'
             ),
         ],

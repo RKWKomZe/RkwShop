@@ -81,8 +81,7 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->equals('order', intval($orderUid))
         );
 
-        // return raw data here in order to include deleted relations, too!!!!
-        return $query->execute(true);
+        return $query->execute();
     }
 
 

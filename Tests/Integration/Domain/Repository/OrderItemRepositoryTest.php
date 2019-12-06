@@ -201,26 +201,33 @@ class OrderItemRepositoryTest extends FunctionalTestCase
 
     }
 
+
     /**
      * @test
      * @throws \Exception
      */
-    public function findByOrderUidSoapIncludesOrderItemsWithReferencesToDeletedProducts()
+    public function findByOrderUidSoapIncludesOrderItemsWithReferencesToDeletedAndHiddenProducts()
     {
         /**
          * Scenario:
          *
-         * Given a order has one order item
-         * Given that order item refers to a deleted product
+         * Given there is a order with three order items
+         * Given that each order-item refers to a product
+         * Given that one of the products has been deleted
+         * Given that one of the products has been hidden
          * When I fetch the order-items for the order
-         * Then the order items is returned
-         * Then the reference to to deleted order is returned
+         * Then the three order-items are returned
+         * Then the relation to the deleted product is kept
+         * Then the relation to the hidden product is kept
          */
         $this->importDataSet(__DIR__ . '/OrderItemRepositoryTest/Fixtures/Database/Check40.xml');
+        $result = $this->subject->findByOrderUidSoap(1)->toArray();
 
-        $result = $this->subject->findByOrderUidSoap(1);
-        self::assertCount(1, $result);
-        self::assertEquals(1, $result[0]['product']);
+        self::assertCount(3, $result);
+        self::assertEquals(1, $result[0]->getProduct()->getUid());
+        self::assertEquals(2, $result[1]->getProduct()->getUid());
+        self::assertEquals(3, $result[2]->getProduct()->getUid());
+
 
     }
 

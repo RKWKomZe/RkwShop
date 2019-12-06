@@ -91,7 +91,7 @@ class ProductRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \Exception
      */
-    public function findByUidListRespectsEnableFields()
+    public function findByUidListRespectsEnableFieldsAndDeleted()
     {
         /**
          * Scenario:
@@ -193,17 +193,17 @@ class ProductRepositoryTest extends FunctionalTestCase
     /**
      * @test
      * @throws \Exception
-     * _ReturnsListOfProductsIncludingDeletedAndDisabledAndIgnoresStoragePid
      */
-    public function findAllSoapIgnoresEnableFields()
+    public function findAllSoapIgnoresEnableFieldsAndDeleted()
     {
         /**
          * Scenario:
          *
-         * Given a list of six product uids
-         * Given that the uids are not ordered by uid
+         * Given there are four products
+         * Given that one product is hidden
+         * Given that one product is deleted
          * When I fetch the products
-         * Then the returned products are in the same order as given
+         * Then all four products are returned
          */
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check10.xml');
 
@@ -221,10 +221,10 @@ class ProductRepositoryTest extends FunctionalTestCase
         /**
          * Scenario:
          *
-         * Given a list of six product uids
-         * Given that the uids are not ordered by uid
+         * Given there are two products
+         * Given that one product has a different storage pid
          * When I fetch the products
-         * Then the returned products are in the same order as given
+         * Then only one product is returned
          */
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check20.xml');
 

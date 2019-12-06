@@ -242,6 +242,70 @@ class OrderRepositoryTest extends FunctionalTestCase
     }
 
     /**
+     * @test
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
+    public function findByTimestampSoapIncludesReferencesToDeletedAndHiddenFeUsers ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given there are three orders
+         * Given that each order belongs to a different frontend user
+         * Given that one of the frontend users is deleted
+         * Given that one of the frontend users is hidden
+         * When I fetch the orders by timestamp zero
+         * Then the three orders are returned
+         * Then the relation to the deleted frontend user is kept
+         * Then the relation to the hidden frontend user is kept
+         */
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check70.xml');
+
+        $result = $this->subject->findByTimestampSoap(0)->toArray();
+        static::assertEquals(3, count($result));
+
+        static::assertGreaterThan(0, $result[0]->getFrontendUser());
+        static::assertGreaterThan(0, $result[1]->getFrontendUser());
+        static::assertGreaterThan(0, $result[2]->getFrontendUser());
+
+
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
+    public function findByTimestampSoapIncludesReferencesToDeletedShippingAddresses ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given there are three orders
+         * Given that each order belongs to a different shipping address
+         * Given that one of the shipping address is deleted
+         * Given that one of the shipping address is hidden
+         * When I fetch the orders by timestamp zero
+         * Then the three orders are returned
+         * Then the relation to the deleted shipping address is kept
+         * Then the relation to the hidden shipping address is kept
+         */
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check80.xml');
+
+        $result = $this->subject->findByTimestampSoap(0)->toArray();
+        static::assertEquals(3, count($result));
+
+        static::assertGreaterThan(0, $result[0]->getShippingAddress());
+        static::assertGreaterThan(0, $result[1]->getShippingAddress());
+        static::assertGreaterThan(0, $result[2]->getShippingAddress());
+
+
+    }
+
+    /**
      * TearDown
      */
     protected function tearDown()

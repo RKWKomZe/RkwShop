@@ -9,7 +9,26 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>0</stock>
         <record_type>0</record_type>
-        <deleted>1</deleted>
+    </tx_rkwshop_domain_model_product>
+
+    <tx_rkwshop_domain_model_product>
+        <uid>2</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>0</stock>
+        <record_type>0</record_type>
+        <hidden>1</hidden>
+    </tx_rkwshop_domain_model_product>
+
+    <tx_rkwshop_domain_model_product>
+        <uid>3</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>0</stock>
+        <record_type>0</record_type>
+        <hidden>1</hidden>
     </tx_rkwshop_domain_model_product>
 
     <!-- order -->
@@ -20,17 +39,29 @@
         <remark>Toller Hinweis!!!</remark>
         <frontend_user>0</frontend_user>
         <status>0</status>
-        <order_item>1,2</order_item>
+        <order_item>1,2,3</order_item>
     </tx_rkwshop_domain_model_order>
 
     <!-- order items -->
     <tx_rkwshop_domain_model_orderitem>
-        <uid>50</uid>
+        <uid>1</uid>
         <pid>1</pid>
         <amount>4</amount>
         <product>1</product>
-        <deleted>1</deleted>
-        <is_pre_order>1</is_pre_order>
+        <ext_order>1</ext_order>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>2</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>2</product>
+        <ext_order>1</ext_order>
+    </tx_rkwshop_domain_model_orderitem>
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>3</uid>
+        <pid>1</pid>
+        <amount>8</amount>
+        <product>3</product>
         <ext_order>1</ext_order>
     </tx_rkwshop_domain_model_orderitem>
 

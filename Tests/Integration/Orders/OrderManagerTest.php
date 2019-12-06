@@ -966,7 +966,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I delete all my orders
          * Then all my orders are deleted
          * Then all the corresponding order items are deleted
-         * Then all my shippingAddresses are deleted
+         * Then all my shippingAddresses are kept
          * Then orders of other users are kept
          * Then shippingAddresses of other users are kept
          */
@@ -985,11 +985,11 @@ class OrderManagerTest extends FunctionalTestCase
         $resultShippingAddressAll = $this->shippingAddressRepository->findAll();
 
         self::assertCount(0, $resultOrderUser);
-        self::assertCount(0, $resultShippingAddressUser);
+        self::assertCount(1, $resultShippingAddressUser);
 
         self::assertCount(1, $resultOrderAll);
         self::assertCount(1, $resultOrderItemAll);
-        self::assertCount(1, $resultShippingAddressAll);
+        self::assertCount(2, $resultShippingAddressAll);
 
     }
 
