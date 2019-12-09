@@ -305,6 +305,80 @@ class OrderRepositoryTest extends FunctionalTestCase
 
     }
 
+
+
+    //===================================================================
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
+    public function findByUidSoapIncludesDeletedOrders()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given there is an order
+         * Given the order is deleted
+         * When I fetch the order by uid
+         * Then the order is returned
+         */
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check90.xml');
+
+        $result = $this->subject->findByUidSoap(1);
+        static::assertInstanceOf(\RKW\RkwShop\Domain\Model\Order::class, $result);
+
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
+    public function findByUidSoapIncludesHiddenOrders()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given there is an order
+         * Given the order is hidden
+         * When I fetch the order by uid
+         * Then the order is returned
+         */
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check100.xml');
+
+        $result = $this->subject->findByUidSoap(1);
+        static::assertInstanceOf(\RKW\RkwShop\Domain\Model\Order::class, $result);
+
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
+    public function findByUidSoapRespectsStoragePid ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given there is an order
+         * Given the order has a different storage pid
+         * When I fetch the order by uid
+         * Then the order is not returned
+         */
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check110.xml');
+
+        $result = $this->subject->findByUidSoap(1);
+        static::assertNull($result);
+
+    }
+
+
     /**
      * TearDown
      */

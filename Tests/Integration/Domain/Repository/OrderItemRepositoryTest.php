@@ -231,6 +231,55 @@ class OrderItemRepositoryTest extends FunctionalTestCase
 
     }
 
+
+    //===================================================================
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
+    public function findByUidSoapIncludesDeletedOrderItems()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given there is an order item
+         * Given the order item is deleted
+         * When I fetch the order item by uid
+         * Then the order item is returned
+         */
+        $this->importDataSet(__DIR__ . '/OrderItemRepositoryTest/Fixtures/Database/Check50.xml');
+
+        $result = $this->subject->findByUidSoap(1);
+        static::assertInstanceOf(\RKW\RkwShop\Domain\Model\OrderItem::class, $result);
+
+    }
+
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
+    public function findByUidSoapRespectsStoragePid ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given there is an order item
+         * Given the order item has a different storage pid
+         * When I fetch the order item by uid
+         * Then the order item is not returned
+         */
+        $this->importDataSet(__DIR__ . '/OrderItemRepositoryTest/Fixtures/Database/Check60.xml');
+
+        $result = $this->subject->findByUidSoap(1);
+        static::assertNull($result);
+
+    }
     /**
      * TearDown
      */

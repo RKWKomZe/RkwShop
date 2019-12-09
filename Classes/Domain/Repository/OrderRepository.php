@@ -56,10 +56,10 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Find all orders that have been updated recently
      *
-     * @api used by RKW Soap
      * @param integer $timestamp
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     *  @api used by RKW Soap
      */
     public function findByTimestampSoap($timestamp)
     {
@@ -83,12 +83,13 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * Finds an object matching the given identifier.
      *
      * @param int $uid The identifier of the object to find
-     * @return object The matching object if found, otherwise NULL
+     * @return \RKW\RkwShop\Domain\Model\Order The matching object if found, otherwise NULL
      * @api used by RKW Soap
      */
     public function findByUidSoap($uid)
     {
         $query = $this->createQuery();
+
         $query->getQuerySettings()->setIncludeDeleted(true);
         $query->getQuerySettings()->setIgnoreEnableFields(true);
 
