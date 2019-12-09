@@ -29,6 +29,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
 
+
     /**
      * Find all orders of a frontendUser
      *
@@ -39,6 +40,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
 
         $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
 
         $query->matching(
             $query->logicalAnd(
@@ -54,17 +56,17 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Find all orders that have been updated recently
      *
-     * @api used by RKW Soap
      * @param integer $timestamp
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     *  @api used by RKW Soap
      */
     public function findByTimestampSoap($timestamp)
     {
 
         $query = $this->createQuery();
 
-        $query->getQuerySettings()->setRespectStoragePage(false);
+        // $query->getQuerySettings()->setRespectStoragePage(false);
         $query->getQuerySettings()->setIncludeDeleted(true);
         $query->getQuerySettings()->setIgnoreEnableFields(true);
 
@@ -75,6 +77,31 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->setOrderings(array('tstamp' => QueryInterface::ORDER_ASCENDING));
         return $query->execute();
     }
+
+
+    /**
+     * Finds an object matching the given identifier.
+     *
+     * @param int $uid The identifier of the object to find
+     * @return \RKW\RkwShop\Domain\Model\Order The matching object if found, otherwise NULL
+     * @api used by RKW Soap
+     */
+    public function findByUidSoap($uid)
+    {
+        $query = $this->createQuery();
+
+        $query->getQuerySettings()->setIncludeDeleted(true);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+        $query->matching(
+            $query->equals('uid', $uid)
+        );
+
+        $query->setLimit(1);
+
+        return $query->execute()->getFirst();
+    }
+
 
 
 }

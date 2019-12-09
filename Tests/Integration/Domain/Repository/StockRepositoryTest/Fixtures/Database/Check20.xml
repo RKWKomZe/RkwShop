@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+
+    <!-- products -->
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>1,2,3</stock>
+        <record_type>0</record_type>
+    </tx_rkwshop_domain_model_product>
+
+    <!-- stocks -->
+    <tx_rkwshop_domain_model_stock>
+        <uid>1</uid>
+        <pid>1</pid>
+        <product>1</product>
+        <amount>50</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+
+    <tx_rkwshop_domain_model_stock>
+        <uid>2</uid>
+        <pid>1</pid>
+        <product>1</product>
+        <amount>30</amount>
+        <comment>Auf- und Unterlage</comment>
+        <delivery_start>2524608000</delivery_start>
+    </tx_rkwshop_domain_model_stock>
+
+    <tx_rkwshop_domain_model_stock>
+        <uid>3</uid>
+        <pid>1</pid>
+        <product>1</product>
+        <amount>20</amount>
+        <comment>Auf- und Unterlage</comment>
+        <delivery_start>1365088466</delivery_start>
+    </tx_rkwshop_domain_model_stock>
+
+</dataset>

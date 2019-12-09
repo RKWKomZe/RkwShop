@@ -45,6 +45,21 @@
             <trans-unit id="tx_rkwshop_domain_model_orderitem.isPreOrder">
                 <source>Is Pre-Order</source>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_orderitem.status">
+				<source>Status</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_orderitem.status.new">
+				<source>new</source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_orderitem.status.exported">
+				<source>exported</source>
+			</trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_orderitem.status.sent">
+                <source>sent</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_orderitem.status.closed">
+                <source>closed</source>
+            </trans-unit>
 
 
             <trans-unit id="tx_rkwshop_domain_model_product">

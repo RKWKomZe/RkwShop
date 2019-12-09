@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+     <!-- product -->
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
+        <stock>1</stock>
+        <backend_user>1,2</backend_user>
+        <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+    </tx_rkwshop_domain_model_product>
+
+    <!-- BE-Users -->
+    <be_users>
+        <uid>1</uid>
+        <pid>0</pid>
+        <username>test1</username>
+        <email>test1@test.de</email>
+        <lang>de</lang>
+    </be_users>
+    <be_users>
+        <uid>2</uid>
+        <pid>0</pid>
+        <username>test2</username>
+        <email>test2@test.de</email>
+        <lang>de</lang>
+    </be_users>
+    <be_users>
+        <uid>3</uid>
+        <pid>0</pid>
+        <username>test3</username>
+        <email>test3@test.de</email>
+        <lang>de</lang>
+    </be_users>
+</dataset>

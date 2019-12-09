@@ -1,0 +1,38 @@
+
+plugin.tx_rkwshop {
+	view {
+		# cat=plugin.tx_rkwshop/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:rkw_shop/Resources/Private/Templates/
+		# cat=plugin.tx_rkwshop/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:rkw_shop/Resources/Private/Partials/
+		# cat=plugin.tx_rkwshop/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:rkw_shop/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_rkwshop//a; type=string; label=Default storage PID
+		storagePid =
+
+	}
+
+	settings {
+
+        # cat=plugin.tx_rkwshop/a; type=boolean; label=Include jQuery?
+        includeJQuery = 0
+
+		# cat=plugin.tx_rkwshop//a; type=integer; label=Pid of terms & conditions
+		termsPid =
+
+        # cat=plugin.tx_rkwshop/a; type=boolean; label=Disable admin mails?
+        disableAdminMails = 0
+
+		# cat=plugin.tx_rkwshop//a; type=string; label=Username of BE-User if none is set in plugin
+		fallbackBackendUserForAdminMails =
+
+		# cat=plugin.tx_rkwshop//a; type=integer; label=Maximum amount per order item
+		maxOrderItemAmount = 100
+
+		# cat=plugin.tx_rkwshop//a; type=string; label=List of required fields for shipping address
+		requiredFields = gender, firstName, lastName, address, zip, city
+	}
+
+}
