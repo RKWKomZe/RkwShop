@@ -13,10 +13,10 @@ return [
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_orderitem.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'order, product, amount, is_pre_order',
+		'showRecordFieldList' => 'order, status, product, amount, is_pre_order',
 	],
 	'types' => [
-		'1' => ['showitem' => 'order, product, amount, is_pre_order'],
+		'1' => ['showitem' => 'order, status, product, amount, is_pre_order'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -26,6 +26,22 @@ return [
         'order' => [
             'config' => [
                 'type' => 'passthrough',
+            ],
+        ],
+        'status' => [
+            'exclude' => 0,
+            'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
+            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_orderitem.status',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'default' => 0,
+                'items' => [
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_orderitem.status.new', 0],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_orderitem.status.exported', 90],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_orderitem.status.sent', 100],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_orderitem.status.closed', 200]
+                ]
             ],
         ],
 
@@ -58,7 +74,7 @@ return [
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_orderitem.isPreOrder',
             'config' => [
                 'type' => 'check',
-                'readOnly' => 0,
+                'readOnly' => true,
             ],
         ],
 	],

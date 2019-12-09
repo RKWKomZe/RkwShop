@@ -86,7 +86,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * shippingAddress
      *
      * @var \RKW\RkwShop\Domain\Model\ShippingAddress
-     * @cascade remove
      */
     protected $shippingAddress = null;
 

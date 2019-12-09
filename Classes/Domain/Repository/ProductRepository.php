@@ -32,25 +32,6 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Get all products including hidden and deleted
      *
-     * @api Used by RKW Soap
-     * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-    */
-    public function findAllSoap()
-    {
-
-        $query = $this->createQuery();
-        $query->getQuerySettings()->setRespectStoragePage(false);
-        $query->getQuerySettings()->setIncludeDeleted(true);
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
-
-        return $query->execute();
-    }
-
-
-
-    /**
-     * Get all products including hidden and deleted
-     *
      * @param \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
      * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
@@ -140,6 +121,50 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         return $result;
         //===
+    }
+
+
+    /**
+     * Get all products including hidden and deleted
+     *
+     * @api Used by RKW Soap
+     * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findAllSoap()
+    {
+
+        $query = $this->createQuery();
+        // $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setIncludeDeleted(true);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+        $parser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Storage\\Typo3DbQueryParser');
+        $queryParts = $parser->parseQuery($query);
+        file_put_contents('/var/www/komze/data.txt', print_r($queryParts, true));
+
+        return $query->execute();
+    }
+
+    /**
+     * Finds an object matching the given identifier.
+     *
+     * @param int $uid The identifier of the object to find
+     * @return object The matching object if found, otherwise NULL
+     * @api used by RKW Soap
+     */
+    public function findByUidSoap($uid)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIncludeDeleted(true);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+        $query->matching(
+            $query->equals('uid', $uid)
+        );
+
+        $query->setLimit(1);
+
+        return $query->execute()->getFirst();
     }
 
 

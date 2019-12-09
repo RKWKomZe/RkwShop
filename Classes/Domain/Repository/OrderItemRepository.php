@@ -73,7 +73,6 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $query = $this->createQuery();
 
-        $query->getQuerySettings()->setRespectStoragePage(false);
         $query->getQuerySettings()->setIncludeDeleted(true);
         $query->getQuerySettings()->setIgnoreEnableFields(true);
 
@@ -81,9 +80,32 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $query->equals('order', intval($orderUid))
         );
 
-        // return raw data here in order to include deleted relations, too!!!!
-        return $query->execute(true);
+        return $query->execute();
     }
+
+
+
+    /**
+     * Finds an object matching the given identifier.
+     *
+     * @param int $uid The identifier of the object to find
+     * @return \RKW\RkwShop\Domain\Model\OrderItem The matching object if found, otherwise NULL
+     * @api used by RKW Soap
+     */
+    public function findByUidSoap($uid)
+    {
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIncludeDeleted(true);
+
+        $query->matching(
+            $query->equals('uid', $uid)
+        );
+
+        $query->setLimit(1);
+
+        return $query->execute()->getFirst();
+    }
+
 
 
 
