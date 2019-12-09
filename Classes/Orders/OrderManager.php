@@ -181,7 +181,12 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         // check for shippingAddress
-        if (! $order->getShippingAddress()) {
+        if (
+            (! $order->getShippingAddress())
+            || (! $order->getShippingAddress()->getAddress())
+            || (! $order->getShippingAddress()->getZip())
+            || (! $order->getShippingAddress()->getCity())
+        ){
             throw new Exception('orderManager.error.noShippingAddress');
         }
 
@@ -255,7 +260,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
+    protected function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
 
         // check order
@@ -266,17 +271,6 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         // check frontendUser
         if ($frontendUser->_isNew()) {
             throw new Exception('orderManager.error.frontendUserNotPersisted');
-        }
-
-        // check shippingAddress
-        if (! $order->getShippingAddress()) {
-            throw new Exception('orderManager.error.noShippingAddress');
-        }
-
-        // cleanup & check orderItem
-        $this->cleanUpOrderItemList($order);
-        if (! count($order->getOrderItem()->toArray())) {
-            throw new Exception('orderManager.error.noOrderItem');
         }
 
         // add frontendUser to order and shippingAddress
@@ -391,7 +385,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
                     }
                     $backendUsersForProductMap[$orderItem->getProduct()->getUid()] = implode(', ', $tempBackendUserForProductMap);
                 }
-                $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
+                $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_ADMIN, array(array_unique($backendUsersList), $frontendUser, $order, $backendUsersForProductMap));
                 $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Deleted order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
 
             }

@@ -58,6 +58,15 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
+     * Status
+     *
+     * @var integer
+     */
+    protected $status = 0;
+
+
+
+    /**
      * Returns the order
      *
      * @return \RKW\RkwShop\Domain\Model\Order $order
@@ -143,5 +152,30 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->isPreOrder = $isPreOrder;
     }
+
+    /**
+     * Sets the status value
+     *
+     * @param integer $status
+     * @api
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+
+    /**
+     * Returns the status value
+     *
+     * @return integer
+     * @api
+     */
+    public function getStatus()
+    {
+        return $this->status;
+        //===
+    }
+
 
 }

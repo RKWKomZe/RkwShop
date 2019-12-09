@@ -27,6 +27,16 @@ call_user_func(
 
 
         //=================================================================
+        // Register DataMapper
+        //=================================================================
+        /** @var \TYPO3\CMS\Extbase\Object\Container\Container $extbaseObjectContainer */
+        $extbaseObjectContainer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class);
+        $extbaseObjectContainer->registerImplementation(
+            \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper::class,
+            \RKW\RkwShop\Persistence\Generic\Mapper\DataMapper::class
+        );
+
+        //=================================================================
         // Register SignalSlots
         //=================================================================
         /**
