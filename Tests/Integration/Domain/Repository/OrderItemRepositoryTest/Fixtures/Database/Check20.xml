@@ -24,10 +24,11 @@
 
     <!-- order items -->
     <tx_rkwshop_domain_model_orderitem>
-        <uid>50</uid>
+        <uid>1</uid>
         <pid>1</pid>
         <amount>4</amount>
         <product>1</product>
+        <crdate>123</crdate>
         <deleted>1</deleted>
         <is_pre_order>1</is_pre_order>
         <ext_order>1</ext_order>
