@@ -100,6 +100,9 @@ config.tx_extbase.persistence {
             mapping {
                 columns {
                     ext_order.mapOnProperty = order
+                    crdate.mapOnProperty = crdate
+                    tstamp.mapOnProperty = tstamp
+                    deleted.mapOnProperty = deleted
                 }
             }
         }
