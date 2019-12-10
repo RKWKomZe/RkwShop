@@ -76,4 +76,12 @@
         <frontend_user>3</frontend_user>
         <order_item>0</order_item>
     </tx_rkwshop_domain_model_order>
+    <tx_rkwshop_domain_model_order>
+        <uid>4</uid>
+        <pid>1</pid>
+        <email>test3@dummy.de</email>
+        <remark>Toller Hinweis!!!</remark>
+        <frontend_user>999</frontend_user>
+        <order_item>0</order_item>
+    </tx_rkwshop_domain_model_order>
 </dataset>
