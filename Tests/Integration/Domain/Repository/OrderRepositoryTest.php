@@ -246,7 +246,7 @@ class OrderRepositoryTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \Exception
      */
-    public function findByTimestampSoapIncludesReferencesToDeletedAndRemovedAndHiddenFeUsers ()
+    public function findByTimestampSoapIncludesReferencesToDeletedAndHiddenFeUsers ()
     {
 
         /**
@@ -264,16 +264,16 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check70.xml');
 
         $result = $this->subject->findByTimestampSoap(0)->toArray();
-        static::assertEquals(4, count($result));
+        static::assertEquals(3, count($result));
 
         static::assertGreaterThan(0, $result[0]->getFrontendUser());
         static::assertGreaterThan(0, $result[1]->getFrontendUser());
         static::assertGreaterThan(0, $result[2]->getFrontendUser());
-        static::assertGreaterThan(0, $result[3]->getFrontendUser());
-
 
 
     }
+
+
 
     /**
      * @test
