@@ -76,7 +76,7 @@ return [
 					['', 0],
 				],
 				'foreign_table' => 'tx_rkwshop_domain_model_product',
-				'foreign_table_where' => 'AND tx_rkwshop_domain_model_product.pid=###CURRENT_PID### AND tx_rkwshop_domain_model_product.sys_language_uid IN (-1,0)',
+				'foreign_table_where' => ' AND tx_rkwshop_domain_model_product.pid=###CURRENT_PID### AND tx_rkwshop_domain_model_product.sys_language_uid IN (-1,0)',
 			],
 		],
 		'l10n_diffsource' => [
@@ -119,12 +119,13 @@ return [
             ],
         ],
 		'stock' => [
+		    /* not very user friendly
             'displayCond' => [
                 'OR' => [
                     'EXT:rkw_soap:LOADED:FALSE',
                     'REC:NEW:TRUE'
                 ]
-            ],
+            ],*/
             'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.stock',
             'config' => [
@@ -162,7 +163,7 @@ return [
                     ['', 0],
                 ],
                 'foreign_table' => 'tx_rkwshop_domain_model_product',
-                'foreign_table_where' => 'AND tx_rkwshop_domain_model_product.deleted = 0 AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.record_type NOT IN("0", "\\RKW\\RkwShop\\Domain\\Model\\ProductDownload") ORDER BY tx_rkwshop_domain_model_product.title ASC',
+                'foreign_table_where' => ' AND ((\'###PAGE_TSCONFIG_IDLIST###\' <> \'0\' AND FIND_IN_SET(tx_rkwshop_domain_model_product.pid,\'###PAGE_TSCONFIG_IDLIST###\')) OR (\'###PAGE_TSCONFIG_IDLIST###\' = \'0\')) AND tx_rkwshop_domain_model_product.deleted = 0 AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.record_type = \'\\\\RKW\\\\RkwShop\\\\Domain\\\\Model\\\\ProductBundle\' ORDER BY tx_rkwshop_domain_model_product.title ASC',
             ]
         ],
         'page' => [

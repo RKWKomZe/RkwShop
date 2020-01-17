@@ -15,14 +15,14 @@ return [
 		'enablecolumns' => [
             'disabled' => 'hidden',
         ],
-		'searchFields' => 'uid, product,amount,delivery_start,comment,',
+		'searchFields' => 'is_external,product,amount,delivery_start,comment,',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_stock.gif',
 	],
 	'interface' => [
-		'showRecordFieldList' => 'product,amount,comment,delivery_start',
+		'showRecordFieldList' => 'product,is_external,amount,comment,delivery_start',
 	],
 	'types' => [
-		'0' => ['showitem' => 'product,amount,comment,delivery_start'],
+		'0' => ['showitem' => 'product,is_external,amount,comment,delivery_start'],
     ],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -30,6 +30,12 @@ return [
 	'columns' => [
 
 	    'product' => [
+            'config' => [
+                'type' => 'passthrough',
+            ],
+        ],
+
+        'is_external' => [
             'config' => [
                 'type' => 'passthrough',
             ],

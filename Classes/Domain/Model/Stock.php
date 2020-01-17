@@ -51,6 +51,14 @@ class Stock extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
+     * isExternal
+     *
+     * @var bool
+     */
+    protected $isExternal;
+
+
+    /**
      * Returns the amount
      *
      * @return int $amount
@@ -117,6 +125,27 @@ class Stock extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->comment = $comment;
     }
 
+    /**
+     * Returns the isExternal
+     *
+     * @return bool $isExternal
+     */
+    public function getIsExternal()
+    {
+        return $this->isExternal;
+    }
+
+
+    /**
+     * Sets the isExternal
+     *
+     * @param bool $isExternal
+     * @return void
+     */
+    public function setIsExternal($isExternal)
+    {
+        $this->isExternal = $isExternal;
+    }
 
 
 }
