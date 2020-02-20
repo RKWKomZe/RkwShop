@@ -20,6 +20,30 @@ call_user_func(
             )
         );
 
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'RKW.' . $extKey,
+            'ProductList',
+            array(
+                'Product' => 'index',
+            ),
+            // non-cacheable actions
+            array(
+                'Product' => 'index',
+            )
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'RKW.' . $extKey,
+            'ProductDetail',
+            array(
+                'Product' => 'show',
+            ),
+            // non-cacheable actions
+            array(
+                'Product' => 'show',
+            )
+        );
+
         //=================================================================
         // Register CommandController
         //=================================================================

@@ -149,7 +149,6 @@ config.tx_extbase.persistence {
 
 // #########################################################
 
-
 plugin.tx_rkwshop {
 	view {
 		templateRootPaths.0 = {$plugin.tx_rkwshop.view.templateRootPath}
@@ -167,6 +166,8 @@ plugin.tx_rkwshop {
 	}
 
 	settings {
+        listPid = {$plugin.tx_rkwshop.settings.listPid}
+        showPid = {$plugin.tx_rkwshop.settings.showPid}
 		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
@@ -289,7 +290,6 @@ plugin.tx_rkwshop.libs {
 	}
 
 }
-
 
 # needed for CommandController (otherwise PID 1 would be the storagePid)
 module.tx_rkwshop.persistence.storagePid < plugin.tx_rkwshop.persistence.storagePid

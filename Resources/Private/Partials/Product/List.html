@@ -1,0 +1,12 @@
+<f:if condition="<f:count>{productList}</f:count>">
+
+    <f:for each="{productList}" as="product">
+        <p>
+            <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : product}" class="box {event.department.cssClass} event big" title="{product.title}">{product.title}</f:link.action>
+        </p>
+    </f:for>
+
+</f:if>
+
+<!-- lazy loading / load more box -->
+<f:render partial="Product/List/MoreLink" arguments="{_all}" />

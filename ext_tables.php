@@ -14,6 +14,17 @@ call_user_func(
             'RKW Shop'
         );
 
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'RKW.' . $extKey,
+            'ProductList',
+            'RKW Shop: Produktliste'
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'RKW.' . $extKey,
+            'ProductDetail',
+            'RKW Shop: Produktdetail'
+        );
 
         //=================================================================
         // Add tables

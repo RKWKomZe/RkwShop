@@ -1,0 +1,17 @@
+{namespace rkw=RKW\RkwEvents\ViewHelpers}
+
+<f:if condition="{showMoreLink}">
+
+    <div class="box-wrapper">
+        <f:link.action action="filter" controller="Ajax" pluginName="pi1" extensionName="RkwEvents" class="box small help ajax next-page autoload" additionalParams="{tx_rkwevents_pi1: '{filter: filter, page: pageMore, archive: archive}', type: '{ajaxTypeNum}'}" additionalAttributes="{data-page-type: '{ajaxTypeNum}'}">
+            <header>
+                <p>
+                    <f:translate key="tx_rkwevents_fluid.partials_event_list_more.interesting" extensionName="RkwEvents" />
+                    <br>
+                    <strong><f:translate key="tx_rkwevents_fluid.partials_event_list_more.showMore" extensionName="RkwEvents" /></strong>
+                </p>
+            </header>
+        </f:link.action>
+    </div>
+
+</f:if>

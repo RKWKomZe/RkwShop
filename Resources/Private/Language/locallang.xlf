@@ -166,7 +166,10 @@
                 <source>In stock.</source>
             </trans-unit>
 
-
+            <!-- Partials/Product/Detail/Form.html -->
+			<trans-unit id="partials.product.detail.form.addToCartButton">
+				<source>Add to cart</source>
+			</trans-unit>
 
 			<!-- ================================================================================== -->
 
