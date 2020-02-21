@@ -78,6 +78,9 @@
             <trans-unit id="tx_rkwshop_domain_model_product.recordType.subscription">
                 <source>Subscription</source>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.articleNumber">
+                <source>Article number</source>
+            </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.title">
                 <source>Title</source>
             </trans-unit>
@@ -122,6 +125,9 @@
             </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.allowSingleOrder">
                 <source>Allow Single Order</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.comment">
+                <source>Comment</source>
             </trans-unit>
 
 

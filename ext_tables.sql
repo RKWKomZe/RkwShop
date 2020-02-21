@@ -59,6 +59,8 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 
 	record_type varchar(255) DEFAULT '0' NOT NULL,
 
+	article_number varchar(255) DEFAULT '' NOT NULL,
+
 	title varchar(255) DEFAULT '' NOT NULL,
 	subtitle varchar(255) DEFAULT '' NOT NULL,
     description text NOT NULL,
@@ -75,6 +77,8 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 
 	backend_user varchar(255) DEFAULT '' NOT NULL,
 	admin_email varchar(255) DEFAULT '' NOT NULL,
+
+    comment text NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

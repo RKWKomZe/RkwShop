@@ -55,6 +55,12 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $deleted;
 
+    /**
+     * articleNumber
+     *
+     * @var string
+     */
+    protected $articleNumber;
 
     /**
      * title
@@ -164,7 +170,12 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $adminEmail;
 
-
+    /**
+     * comment
+     *
+     * @var string
+     */
+    protected $comment;
     
     /**
      * __construct
@@ -285,6 +296,27 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->deleted;
     }
 
+
+    /**
+     * Returns the articleNumber
+     *
+     * @return string $articleNumber
+     */
+    public function getArticleNumber()
+    {
+        return $this->articleNumber;
+    }
+
+    /**
+     * Sets the articleNumber
+     *
+     * @param string $articleNumber
+     * @return void
+     */
+    public function setArticleNumber($articleNumber)
+    {
+        $this->articleNumber = $articleNumber;
+    }
 
     /**
      * Returns the title
@@ -466,6 +498,26 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->allowSingleOrder = $allowSingleOrder;
     }
 
+    /**
+     * Returns the comment
+     *
+     * @return string $comment
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Sets the comment
+     *
+     * @param string $comment
+     * @return void
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+    }
 
     /**
      * Returns the page
