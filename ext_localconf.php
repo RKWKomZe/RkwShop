@@ -37,10 +37,24 @@ call_user_func(
             'ProductDetail',
             array(
                 'Product' => 'show',
+                'Cart' => 'show, update',
             ),
             // non-cacheable actions
             array(
                 'Product' => 'show',
+                'Cart' => 'show, update',
+            )
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'RKW.' . $extKey,
+            'Cart',
+            array(
+                'Cart' => 'show, update',
+            ),
+            // non-cacheable actions
+            array(
+                'Cart' => 'show, update',
             )
         );
 

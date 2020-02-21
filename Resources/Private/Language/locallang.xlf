@@ -171,6 +171,11 @@
 				<source>Add to cart</source>
 			</trans-unit>
 
+            <!-- Partials/Cart/List.html -->
+			<trans-unit id="partials.cart.show.form.orderButton">
+				<source>Order cart</source>
+			</trans-unit>
+
 			<!-- ================================================================================== -->
 
 			<!-- E-Mail subjects-->

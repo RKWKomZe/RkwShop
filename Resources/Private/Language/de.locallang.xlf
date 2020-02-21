@@ -216,6 +216,12 @@
 				<target>In den Warenkorb</target>
 			</trans-unit>
 
+            <!-- Partials/Cart/List.html -->
+			<trans-unit id="partials.cart.show.form.orderButton">
+				<source>Order cart</source>
+				<target>Warenkorb bestellen</target>
+			</trans-unit>
+
 			<!-- ================================================================================== -->
 
 			<!-- E-Mail subjects-->

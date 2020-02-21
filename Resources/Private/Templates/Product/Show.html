@@ -16,7 +16,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <f:section name="main">
 
     <!-- form -->
-    <f:form action="create" name="order" object="{order}" class="form-fields order-list" >
+    <f:form action="update" controller="Cart" name="product" object="{product}" class="form-fields order-list" >
 
         <div class="order-list__item">
 
@@ -28,7 +28,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
                     <p class="order-list__subtitle">{product.subtitle}</p>
                 </f:if>
 
-                <f:render partial="Order/Form/ProductList/Input" arguments="{product: product}" />
+                <f:render partial="Product/Detail/Input" arguments="{product: product}" />
 
                 <p class="v320-1">
                     <button class="button" type="submit">
