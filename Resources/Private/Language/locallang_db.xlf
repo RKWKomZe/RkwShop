@@ -84,6 +84,9 @@
             <trans-unit id="tx_rkwshop_domain_model_product.subtitle">
                 <source>Subtitle</source>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.description">
+                <source>Description</source>
+            </trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.publishing_date">
 				<source>Publishing Date</source>
 			</trans-unit>

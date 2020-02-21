@@ -1,10 +1,23 @@
 <f:if condition="<f:count>{productList}</f:count>">
 
-    <f:for each="{productList}" as="product">
-        <p>
-            <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : product}" class="box {event.department.cssClass} event big" title="{product.title}">{product.title}</f:link.action>
-        </p>
-    </f:for>
+    <div class="order-list">
+
+        <f:for each="{productList}" as="product">
+
+            <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : product}" class="box {event.department.cssClass} event big order-list__item" title="{product.title}">
+
+                <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product}" />
+
+                <div class="order-list__details">
+                    <h4 class="order-list__title">{product.title}</h4>
+                    <f:if condition="{product.subtitle}">
+                        <p class="order-list__subtitle">{product.subtitle}</p>
+                    </f:if>
+                </div>
+
+            </f:link.action>
+
+        </f:for>
 
 </f:if>
 

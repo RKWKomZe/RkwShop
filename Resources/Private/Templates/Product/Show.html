@@ -27,6 +27,9 @@ Otherwise your changes will be overwritten the next time you save the extension 
                 <f:if condition="{product.subtitle}">
                     <p class="order-list__subtitle">{product.subtitle}</p>
                 </f:if>
+                <f:if condition="{product.description}">
+                    <p class="order-list__description">{product.description}</p>
+                </f:if>
 
                 <f:render partial="Product/Detail/Input" arguments="{product: product}" />
 

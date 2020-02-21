@@ -121,6 +121,10 @@
 				<source>Subtitle</source>
 				<target>Untertitel</target>
 			</trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.description">
+                <source>Description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.publishing_date">
 				<source>Publishing Date</source>
 				<target>Veröffentlichungsdatum</target>
