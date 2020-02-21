@@ -45,18 +45,27 @@ class CartController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function updateAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
     {
 
-        //  create an orderItem based on the requested product and put it in the cart
-
         $orderItem = new OrderItem();
         $orderItem->setProduct($product);
         $orderItem->setAmount($amount);
 
-        //  check, if product uid already exists,
-        //  if yes, update the amount
-        //  if no, add new item
-
         $cartItems = $GLOBALS['TSFE']->fe_user->getKey('ses', 'cart');
-        $cartItems[] = $orderItem;
+
+        $orderItemExists = false;
+        foreach ($cartItems as $key => $cartItem) {
+            if ($cartItem->getProduct()->getUid() === $orderItem->getProduct()->getUid()) {
+                $amount = $cartItem->getAmount() + $orderItem->getAmount();
+                $cartItem->setAmount($amount);
+
+                $cartItems[$key] = $cartItem;
+
+                $orderItemExists = true;
+            }
+        }
+
+        if (! $orderItemExists) {
+            $cartItems[] = $orderItem;
+        }
 
         $GLOBALS['TSFE']->fe_user->setKey('ses', 'cart', $cartItems);
         $GLOBALS['TSFE']->fe_user->storeSessionData();
