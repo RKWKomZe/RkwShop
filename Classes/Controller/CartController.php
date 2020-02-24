@@ -19,6 +19,7 @@ use RKW\RkwShop\Helper\DivUtility;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
  * Class CartController
@@ -39,56 +40,44 @@ class CartController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $productRepository = null;
 
     /**
+     * Cart
+     *
+     * @var \RKW\RkwShop\Cart\Cart
+     * @inject
+     */
+    protected $cart;
+
+    /**
+     * action update cart
+     *
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param int                               $amount
      */
     public function updateAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
     {
 
-        $orderItem = new OrderItem();
-        $orderItem->setProduct($product);
-        $orderItem->setAmount($amount);
-
-        $cartItems = $GLOBALS['TSFE']->fe_user->getKey('ses', 'cart');
-
-        $orderItemExists = false;
-        foreach ($cartItems as $key => $cartItem) {
-            if ($cartItem->getProduct()->getUid() === $orderItem->getProduct()->getUid()) {
-                $amount = $cartItem->getAmount() + $orderItem->getAmount();
-                $cartItem->setAmount($amount);
-
-                $cartItems[$key] = $cartItem;
-
-                $orderItemExists = true;
-            }
-        }
-
-        if (! $orderItemExists) {
-            $cartItems[] = $orderItem;
-        }
-
-        $GLOBALS['TSFE']->fe_user->setKey('ses', 'cart', $cartItems);
-        $GLOBALS['TSFE']->fe_user->storeSessionData();
+        $this->cart->initializeCart($product, $amount);
 
         $this->redirect('show', 'Cart', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
 
     }
 
     /**
-     * action show
+     * action show cart
      *
      * @return void
      */
     public function showAction()
     {
-        $cartItems = $GLOBALS['TSFE']->fe_user->getKey('ses', 'cart');
+
+        $cart = $this->cart->get();
 
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 
 //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
         $this->view->assignMultiple([
-            'cartItems'   => $cartItems,
+            'cartItems'   => $cart->getOrderItem(),
         ]);
 
     }

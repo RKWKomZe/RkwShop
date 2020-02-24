@@ -8,6 +8,8 @@ CREATE TABLE tx_rkwshop_domain_model_order (
 
 	email varchar(255) DEFAULT '' NOT NULL,
 	frontend_user int(11) unsigned DEFAULT '0',
+    frontend_user_session_hash varchar(32) DEFAULT '' NOT NULL,
+
 	order_item text NOT NULL,
 	shipping_address int(11) DEFAULT '0' NOT NULL,
 	remark text NOT NULL,
@@ -48,7 +50,6 @@ CREATE TABLE tx_rkwshop_domain_model_orderitem (
 
 );
 
-
 #
 # Table structure for table 'tx_rkwshop_domain_model_product'
 #
@@ -63,7 +64,7 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	subtitle varchar(255) DEFAULT '' NOT NULL,
-    description text NOT NULL,
+    description text,
 	publishing_date int(11) unsigned DEFAULT '0' NOT NULL,
 	author varchar(255) DEFAULT '' NOT NULL,
 	page varchar(255) DEFAULT '' NOT NULL,
@@ -78,7 +79,7 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 	backend_user varchar(255) DEFAULT '' NOT NULL,
 	admin_email varchar(255) DEFAULT '' NOT NULL,
 
-    comment text NOT NULL,
+    comment text,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

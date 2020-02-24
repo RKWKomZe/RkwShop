@@ -16,7 +16,6 @@ namespace RKW\RkwShop\Controller;
  */
 
 use RKW\RkwShop\Helper\DivUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class ProductController
@@ -36,6 +35,11 @@ class ProductController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     protected $productRepository = null;
 
+    /**
+     * action list products
+     *
+     * @return void
+     */
     public function indexAction()
     {
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
@@ -51,9 +55,10 @@ class ProductController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     }
 
     /**
-     * action show
+     * action show single product
      *
      * @param \RKW\RkwShop\Domain\Model\Product $product
+     *
      * @return void
      */
     public function showAction(\RKW\RkwShop\Domain\Model\Product $product)

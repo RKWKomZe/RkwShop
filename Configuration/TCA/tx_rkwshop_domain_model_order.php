@@ -130,5 +130,16 @@ return [
                 'readOnly' => true
 			]
 		],
+        'frontend_user_session_hash' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.remark',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim',
+                'readOnly' => true
+            ]
+        ],
 	],
 ];

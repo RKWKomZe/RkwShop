@@ -327,6 +327,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
         static::assertNull($result);
 
     }
+
     /**
      * TearDown
      */

@@ -3,6 +3,7 @@
 namespace RKW\RkwShop\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -52,6 +53,30 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         //===
     }
 
+
+    /**
+     * Find all orders by frontend user session hash
+     *
+     * @param string $hash
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByFrontendUserSessionHash($hash = '')
+    {
+
+        $hash = ($hash != '') ? $hash : $_COOKIE[FrontendUserAuthentication::getCookieName()];
+
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
+
+        $query->matching(
+            $query->logicalAnd(
+                $query->equals('frontendUserSessionHash', $hash)
+            )
+        );
+
+        return $query->execute();
+        //===
+    }
 
     /**
      * Find all orders that have been updated recently

@@ -83,6 +83,13 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
+     * frontendUserSessionHash
+     *
+     * @var string
+     */
+    protected $frontendUserSessionHash = '';
+
+    /**
      * shippingAddress
      *
      * @var \RKW\RkwShop\Domain\Model\ShippingAddress
@@ -281,6 +288,27 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setFrontendUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
         $this->frontendUser = $frontendUser;
+    }
+
+    /**
+     * Returns the frontendUserSessionHash
+     *
+     * @return string $frontendUserSessionHash
+     */
+    public function getFrontendUserSessionHash()
+    {
+        return $this->frontendUserSessionHash;
+    }
+
+    /**
+     * Sets the frontendUserSessionHash
+     *
+     * @param string $frontendUserSessionHash
+     * @return void
+     */
+    public function setFrontendUserSessionHash($frontendUserSessionHash)
+    {
+        $this->frontendUserSessionHash = $frontendUserSessionHash;
     }
 
     /**

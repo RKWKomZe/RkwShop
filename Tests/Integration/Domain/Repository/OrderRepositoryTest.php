@@ -10,6 +10,8 @@ use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -380,6 +382,32 @@ class OrderRepositoryTest extends FunctionalTestCase
 
     }
 
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findByFrontendUserSessionHashGetsCurrentUsersOrder()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given a guest user created a cart
+         * Given a second guest user created a cart
+         * When I fetch the cart of the user by frontend user cookie hash
+         * Then only his cart is returned
+         */
+
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check210.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';  //  get this from a fixture or set it in a fixture
+
+        $result = $this->subject->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($result));
+        static::assertEquals('1', $result[0]->getUid());
+
+    }
 
     /**
      * TearDown
