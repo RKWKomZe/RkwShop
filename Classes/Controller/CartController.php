@@ -56,7 +56,7 @@ class CartController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function updateAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
     {
 
-        $this->cart->initializeCart($product, $amount);
+        $this->cart->initialize($product, $amount);
 
         $this->redirect('show', 'Cart', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
 

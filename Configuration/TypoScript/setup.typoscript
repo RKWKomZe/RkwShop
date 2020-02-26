@@ -168,7 +168,7 @@ plugin.tx_rkwshop {
 	settings {
         listPid = {$plugin.tx_rkwshop.settings.listPid}
         showPid = {$plugin.tx_rkwshop.settings.showPid}
-        cartid = {$plugin.tx_rkwshop.settings.showPid}
+        cartPid = {$plugin.tx_rkwshop.settings.cartPid}
 		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
