@@ -52,14 +52,11 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $whereAddition .
             QueryTypo3::getWhereClauseForVersioning('tx_rkwshop_domain_model_orderitem') .
             QueryTypo3::getWhereClauseForEnableFields('tx_rkwshop_domain_model_orderitem') . '
-        
         ');
 
         $result = $query->execute(true);
         return intval($result[0]['sum']);
     }
-
-
 
     /**
      * Find all order items by order uid

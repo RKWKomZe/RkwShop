@@ -3,8 +3,10 @@
 namespace RKW\RkwShop\Cart;
 
 use \RKW\RkwShop\Exception;
+use Doctrine\Common\Util\Debug;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
@@ -102,6 +104,7 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param int $amount
+     * @param bool $remove
      *
      * @return void
      *
@@ -115,11 +118,11 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function initialize(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
+    public function initialize(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
     {
 
         if ($this->get()) {
-            $this->update($product, $amount);
+            $this->update($product, $amount, $remove);
         } else {
             $this->create($product, $amount);
         }
@@ -172,6 +175,7 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param int $amount
+     * @param bool $remove
      *
      * @return void
      *
@@ -185,25 +189,49 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function update(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
+    public function update(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
     {
 
         $order = $this->get();
 
-        $orderItem = new OrderItem();
-        $orderItem->setProduct($product);
-        $orderItem->setAmount($amount);
+        //  check, if there are existing orderitems
+        $orderItems = $order->getOrderItem();
 
-        $order->addOrderItem($orderItem);
+        if ($remove && $orderItems->count() > 0) {
 
-        // save it
-        $this->orderRepository->add($order);
+            $removableItem = $this->containsOrderItem($product, $orderItems);
+
+            $this->removeOrderItem($order, $removableItem);
+
+        } else {
+
+            //  Check, if product already exists?
+            //  If yes and remove === false
+            //  update amount
+
+            $existingItem = $this->containsOrderItem($product, $orderItems);
+
+            if ($existingItem) {
+
+                $this->updateOrderItem($amount, $existingItem);
+
+            } else {
+
+                $this->addOrderItem($product, $amount, $order);
+
+            }
+
+        }
+
+        //  on remove please check, if order does contain any order items at all
+        //  if empty, you may remove it, too
+
         $this->persistenceManager->persistAll();
 
     }
 
     /**
-     * @return object
+     * @return \RKW\RkwShop\Domain\Model\Order $order
      */
     public function get()
     {
@@ -213,7 +241,7 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Clean up cart product list
      *
-     * @param \RKW\RkwShop\Domain\Model\Order order
+     * @param \RKW\RkwShop\Domain\Model\Order $order
      * @return void
      */
     public function cleanUpOrderItemList (\RKW\RkwShop\Domain\Model\Order $order)
@@ -257,6 +285,72 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         return $this->logger;
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @param                                   $amount
+     * @param Order                             $order
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
+    protected function addOrderItem(\RKW\RkwShop\Domain\Model\Product $product, $amount, Order $order)
+    {
+        $orderItem = new OrderItem();
+        $orderItem->setProduct($product);
+        $orderItem->setAmount($amount);
+
+        $order->addOrderItem($orderItem);
+
+        $this->orderRepository->update($order);
+    }
+
+    /**
+     * @param           $amount
+     * @param OrderItem $existingItem
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
+    protected function updateOrderItem($amount, OrderItem $existingItem)
+    {
+        $existingItem->setAmount($amount + $existingItem->getAmount());
+
+        $this->orderItemRepository->update($existingItem);
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Product            $product
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderItems
+     * @return object|OrderItem
+     */
+    protected function containsOrderItem(\RKW\RkwShop\Domain\Model\Product $product, \TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderItems)
+    {
+        if ($orderItems->count() > 0) {
+            /** @var \RKW\RkwShop\Domain\Model\OrderItem $existingItem */
+            foreach ($orderItems as $orderItem) {
+                if ($orderItem->getProduct() === $product) {
+                    $existingItem = $orderItem;
+                }
+            }
+        }
+
+        return $existingItem;
+    }
+
+    /**
+     * @param Order     $order
+     * @param OrderItem $removableItem
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
+    protected function removeOrderItem(Order $order, OrderItem $removableItem)
+    {
+        $order->removeOrderItem($removableItem);
+
+        $this->orderRepository->update($order);
+
+        $this->orderItemRepository->remove($removableItem); //  sets deleted flag
+        //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/
     }
 
 

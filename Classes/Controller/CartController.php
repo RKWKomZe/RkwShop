@@ -52,11 +52,12 @@ class CartController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param int                               $amount
+     * @param bool                              $remove
      */
-    public function updateAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
+    public function updateAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
     {
 
-        $this->cart->initialize($product, $amount);
+        $this->cart->initialize($product, $amount, $remove);
 
         $this->redirect('show', 'Cart', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
 
@@ -70,14 +71,14 @@ class CartController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function showAction()
     {
 
-        $cart = $this->cart->get();
+        $order = $this->cart->get(); //  liefert bereits die Order zurück
 
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 
 //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
         $this->view->assignMultiple([
-            'cartItems'   => $cart->getOrderItem(),
+            'order'   => $order,
         ]);
 
     }

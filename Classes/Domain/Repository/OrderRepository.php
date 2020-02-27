@@ -29,8 +29,6 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
-
-
     /**
      * Find all orders of a frontendUser
      *
