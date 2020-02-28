@@ -3,8 +3,7 @@ return [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product',
 		'label' => 'title',
-		'label_alt' => 'subtitle',
-		'label_alt_force' => 1,
+        'label_userFunc' => \RKW\RkwShop\Utilities\TCA::class . '->productTitle',
 		'default_sortby' => 'ORDER BY title',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
@@ -97,7 +96,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required'
+                'eval' => 'trim,required,unique'
             ],
         ],
 		'title' => [
