@@ -28,6 +28,9 @@ plugin.tx_rkwshop {
         # cat=plugin.tx_rkwshop//a; type=integer; label=PID for checkout view
         checkoutPid =
 
+        # cat=plugin.tx_rkwshop//a; type=integer; label=PID for checkout success view
+        checkoutSuccessPid =
+
         # cat=plugin.tx_rkwshop//a; type=integer; label=PID for account page
         accountPid =
 

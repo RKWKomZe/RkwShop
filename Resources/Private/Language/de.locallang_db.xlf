@@ -31,6 +31,10 @@
 				<source>new</source>
 				<target>neu</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.status.ordered">
+				<source>ordered</source>
+				<target>bestellt</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.status.exported">
 				<source>exported</source>
 				<target>exportiert</target>

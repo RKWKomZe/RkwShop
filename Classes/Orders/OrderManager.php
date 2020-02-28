@@ -264,9 +264,10 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     {
 
         // check order
-        if (! $order->_isNew()) {
-            throw new Exception('orderManager.error.orderAlreadyPersisted');
-        }
+        // the order is already persisted as part of the cart
+//        if (! $order->_isNew()) {
+//            throw new Exception('orderManager.error.orderAlreadyPersisted');
+//        }
 
         // check frontendUser
         if ($frontendUser->_isNew()) {
@@ -275,6 +276,8 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
         // add frontendUser to order and shippingAddress
         $order->setFrontendUser($frontendUser);
+        $order->setFrontendUserSessionHash(''); //  order is processed and no longer available to the cart
+        $order->setStatus(50);
         $order->getShippingAddress()->setFrontendUser($frontendUser);
 
         // save it

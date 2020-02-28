@@ -177,7 +177,10 @@
 			</trans-unit>
 
             <!-- Partials/Cart/List.html -->
-			<trans-unit id="partials.cart.show.form.orderButton">
+			<trans-unit id="partials.cart.show.empty">
+				<source>Your cart is empty.</source>
+			</trans-unit>
+            <trans-unit id="partials.cart.show.form.orderButton">
 				<source>Order cart</source>
 			</trans-unit>
 

@@ -170,6 +170,7 @@ plugin.tx_rkwshop {
         showPid = {$plugin.tx_rkwshop.settings.showPid}
         cartPid = {$plugin.tx_rkwshop.settings.cartPid}
         checkoutPid = {$plugin.tx_rkwshop.settings.checkoutPid}
+        checkoutSuccessPid = {$plugin.tx_rkwshop.settings.checkoutSuccessPid}
         accountPid = {$plugin.tx_rkwshop.settings.accountPid}
 		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}

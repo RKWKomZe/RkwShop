@@ -203,6 +203,9 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
 
             $this->removeOrderItem($order, $removableItem);
 
+            //  Check, if order is now empty
+            //  If order is empty, delete the order too
+
         } else {
 
             //  Check, if product already exists?
@@ -351,6 +354,8 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
 
         $this->orderItemRepository->remove($removableItem); //  sets deleted flag
         //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/
+
+
     }
 
 

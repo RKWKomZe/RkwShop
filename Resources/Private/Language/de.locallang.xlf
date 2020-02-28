@@ -223,6 +223,10 @@
 			</trans-unit>
 
             <!-- Partials/Cart/List.html -->
+			<trans-unit id="partials.cart.show.empty">
+				<source>Your cart is empty.</source>
+				<target>Sie haben derzeit keine Produkte in Ihrem Warenkorb.</target>
+			</trans-unit>
 			<trans-unit id="partials.cart.show.form.orderButton">
 				<source>Order cart</source>
 				<target>Zur Kasse gehen</target>

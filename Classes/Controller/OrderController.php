@@ -251,6 +251,11 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 )
             );
 
+            $uri = $this->uriBuilder
+                ->setTargetPageUid((int)$this->settings['checkoutSuccessPid'])
+                ->build();
+            $this->redirectToUri($uri);
+
         } catch (\RKW\RkwShop\Exception $exception) {
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
