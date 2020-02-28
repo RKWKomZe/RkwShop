@@ -51,10 +51,26 @@ call_user_func(
             'Cart',
             array(
                 'Cart' => 'show, update',
+                'Checkout' => 'create',
             ),
             // non-cacheable actions
             array(
                 'Cart' => 'show, update',
+                'Checkout' => 'create',
+            )
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'RKW.' . $extKey,
+            'Checkout',
+            array(
+                'Checkout' => 'create',
+                'Order' => 'create',
+            ),
+            // non-cacheable actions
+            array(
+                'Checkout' => 'create',
+                'Order' => 'create',
             )
         );
 

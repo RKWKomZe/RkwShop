@@ -32,6 +32,12 @@ call_user_func(
             'RKW Shop: Warenkorb'
         );
 
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'RKW.' . $extKey,
+            'Checkout',
+            'RKW Shop: Checkout'
+        );
+
         //=================================================================
         // Add tables
         //=================================================================

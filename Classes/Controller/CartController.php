@@ -79,6 +79,7 @@ class CartController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         $this->view->assignMultiple([
             'order'   => $order,
+            'checkoutPid'   => (int)$this->settings['checkoutPid']
         ]);
 
     }

@@ -15,7 +15,8 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <f:section name="main">
 
-    <div class="order-list">
+    <!-- form -->
+    <f:form action="create" name="order" object="{order}" controller="Checkout" pluginName="Checkout" extensionName="RkwShop" pageUid="{checkoutPid}" class="form-fields order-list" >
         <p>{order.pid}</p>
         <f:for each="{order.orderItem}" as="orderItem">
 
@@ -49,6 +50,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
             </button>
         </p>
 
-    </div>
+    </f:form>
 
 </f:section>

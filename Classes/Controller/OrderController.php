@@ -260,7 +260,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
             );
 
-            $this->forward('new', null, null,
+            $this->forward('create', 'Checkout', 'RkwShop',
                 [
                     'order' => $order,
                     'terms' => $terms,

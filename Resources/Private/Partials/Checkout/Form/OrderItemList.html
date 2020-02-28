@@ -1,0 +1,20 @@
+<f:for each="{order.orderItem}" as="orderItem">
+
+    <div class="order-list__item">
+
+        <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: orderItem.product}" />
+
+        <div class="order-list__details">
+            <h4 class="order-list__title">{orderItem.product.title}</h4>
+            <f:if condition="{orderItem.product.subtitle}">
+                <p class="order-list__subtitle">{orderItem.product.subtitle}</p>
+            </f:if>
+
+            <p>Bestellmenge: {orderItem.amount}</p>
+            <f:form.textfield type="hidden" id="txrkwshop-amount-{product.uid}" name="amount" value="{orderItem.amount}" class="feedback-field"/>
+
+        </div>
+
+    </div>
+
+</f:for>

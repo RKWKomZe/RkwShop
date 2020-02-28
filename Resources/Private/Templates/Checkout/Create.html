@@ -1,0 +1,46 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+Resources:
+Private:
+Templates:
+Show.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+    <f:section name="main">
+
+        <f:render partial="FlashMessages" arguments="{_all}" />
+        <f:render partial="FormErrors" arguments="{object:Order}" />
+
+        <!-- form -->
+        <f:form action="create" controller="Order" name="order" object="{order}" class="form-fields" >
+
+            <f:render partial="Checkout/Form/OrderItemList" arguments="{_all}" />
+
+            <div class="order-form">
+                <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress" /></h5>
+                <f:render partial="Order/Form/UserData" arguments="{_all}" />
+            </div>
+
+            <f:render partial="Order/Form/Terms" arguments="{_all}" />
+
+        </f:form>
+
+    </f:section>
+
+</f:section>
+
+
+
+
+
+
+
