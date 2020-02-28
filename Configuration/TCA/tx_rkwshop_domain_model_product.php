@@ -59,6 +59,7 @@ return [
                 'foreign_table_where' => 'AND tx_rkwshop_domain_model_producttype.deleted = 0 ORDER BY title ASC',
                 'minitems' => 1,
                 'maxitems' => 1,
+                'default' => 1,
             ],
         ],
         'sys_language_uid' => [

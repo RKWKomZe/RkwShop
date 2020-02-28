@@ -109,6 +109,7 @@ CREATE TABLE tx_rkwshop_domain_model_producttype (
 
 	title varchar(255) DEFAULT '' NOT NULL,
     description text,
+    class varchar(255) DEFAULT '' NOT NULL,
 	has_article_number tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	allow_single_order tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
