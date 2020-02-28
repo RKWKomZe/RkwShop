@@ -34,6 +34,12 @@ call_user_func(
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
             'RKW.' . $extKey,
+            'MiniCart',
+            'RKW Shop: Mini-Warenkorb'
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'RKW.' . $extKey,
             'Checkout',
             'RKW Shop: Checkout'
         );

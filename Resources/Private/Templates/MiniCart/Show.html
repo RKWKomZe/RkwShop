@@ -1,0 +1,31 @@
+
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+Resources:
+Private:
+Templates:
+List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+    <f:if condition="<f:count>{order.orderItem}</f:count>">
+        <f:then>
+            <f:link.action pageUid="{cartPid}">
+                <p>
+                    <span class="icon-list">Ihr Warenkorb</span><br>
+                    <span class="small"><f:count>{order.orderItem}</f:count> Artikel</span>
+                </p>
+            </f:link.action>
+        </f:then>
+        <f:else>
+            Ihr Warenkorb ist leer.
+        </f:else>
+    </f:if>
+
+</f:section>

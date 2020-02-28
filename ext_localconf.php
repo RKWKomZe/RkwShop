@@ -62,6 +62,18 @@ call_user_func(
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'RKW.' . $extKey,
+            'MiniCart',
+            [
+                'MiniCart' => 'show',
+            ],
+            // non-cacheable actions
+            [
+                'MiniCart' => 'show',
+            ]
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'RKW.' . $extKey,
             'Checkout',
             array(
                 'Checkout' => 'create',
