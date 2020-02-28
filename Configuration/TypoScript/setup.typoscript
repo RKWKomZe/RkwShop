@@ -170,11 +170,11 @@ plugin.tx_rkwshop {
         showPid = {$plugin.tx_rkwshop.settings.showPid}
         cartPid = {$plugin.tx_rkwshop.settings.cartPid}
         checkoutPid = {$plugin.tx_rkwshop.settings.checkoutPid}
+        accountPid = {$plugin.tx_rkwshop.settings.accountPid}
 		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
 		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
-
 	}
 
 }

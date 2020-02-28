@@ -33,6 +33,21 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 {
 
     /**
+     * FrontendUserRepository
+     *
+     * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
+     * @inject
+     */
+    protected $frontendUserRepository;
+
+    /**
+     * logged in FrontendUser
+     *
+     * @var \RKW\RkwShop\Domain\Model\FrontendUser
+     */
+    protected $frontendUser = null;
+
+    /**
      * action create
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
@@ -43,14 +58,71 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function createAction(\RKW\RkwShop\Domain\Model\Order $order = null, $terms = null, $privacy = null)
     {
 
+        //  if current user is not logged in yet, take him to mein.rkw
+        if (! $this->getFrontendUser()) {
+            $uri = $this->uriBuilder
+                ->setTargetPageUid((int)$this->settings['accountPid'])
+                ->build();
+            $this->redirectToUri($uri);
+        }
+
+        //  update the order information like shipping address, if there is a logged in user
+
+        //  don't do any implicit sign up through create order, a user has to be registered in an isolated process, so that ordering can be isolated too
+
+        //  show his cart somewhere in the header or the menu to give him access to, when he returns
+
         $this->view->assignMultiple([
-            'frontendUser'    => null,
+            'frontendUser'    => $this->getFrontendUser(),
             'order'           => $order,
             'termsPid'        => (int)$this->settings['termsPid'],
             'terms'           => $terms,
             'privacy'         => $privacy
         ]);
 
+    }
+
+    /**
+     * Returns current logged in user object
+     *
+     * @return \RKW\RkwRegistration\Domain\Model\FrontendUser|null
+     */
+    protected function getFrontendUser()
+    {
+
+        if (!$this->frontendUser) {
+
+            $frontendUser = $this->frontendUserRepository->findByUidNoAnonymous($this->getFrontendUserId());
+            if ($frontendUser instanceof \RKW\RkwRegistration\Domain\Model\FrontendUser) {
+                $this->frontendUser = $frontendUser;
+            }
+        }
+
+        return $this->frontendUser;
+        //===
+    }
+
+
+
+    /**
+     * Id of logged User
+     *
+     * @return integer|null
+     */
+    protected function getFrontendUserId()
+    {
+        // is $GLOBALS set?
+        if (
+            ($GLOBALS['TSFE'])
+            && ($GLOBALS['TSFE']->loginUser)
+            && ($GLOBALS['TSFE']->fe_user->user['uid'])
+        ) {
+            return intval($GLOBALS['TSFE']->fe_user->user['uid']);
+            //===
+        }
+
+        return null;
+        //===
     }
 
 }

@@ -225,7 +225,7 @@
             <!-- Partials/Cart/List.html -->
 			<trans-unit id="partials.cart.show.form.orderButton">
 				<source>Order cart</source>
-				<target>Warenkorb bestellen</target>
+				<target>Zur Kasse gehen</target>
 			</trans-unit>
 
 			<!-- ================================================================================== -->
