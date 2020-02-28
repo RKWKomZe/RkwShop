@@ -60,6 +60,8 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 
 	record_type varchar(255) DEFAULT '0' NOT NULL,
 
+    product_type int(11) unsigned DEFAULT '0',
+
 	article_number varchar(255) DEFAULT '' NOT NULL,
 
 	title varchar(255) DEFAULT '' NOT NULL,
@@ -97,6 +99,25 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 
 );
 
+#
+# Table structure for table 'tx_rkwshop_domain_model_producttype'
+#
+CREATE TABLE tx_rkwshop_domain_model_producttype (
+
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+
+	title varchar(255) DEFAULT '' NOT NULL,
+    description text,
+	has_article_number tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	allow_single_order tinyint(4) unsigned DEFAULT '0' NOT NULL,
+
+	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
+
+	PRIMARY KEY (uid)
+
+);
 
 #
 # Table structure for table 'tx_rkwshop_domain_model_stock'
