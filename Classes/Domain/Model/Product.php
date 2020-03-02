@@ -31,6 +31,12 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $recordType;
 
+    /**
+     * page
+     *
+     * @var \RKW\RkwShop\Domain\Model\ProductType
+     */
+    protected $productType;
 
     /**
      * @var integer
@@ -223,6 +229,27 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setRecordType($recordType)
     {
         return $this->recordType = $recordType;
+    }
+
+    /**
+     * Returns the productType
+     *
+     * @return \RKW\RkwShop\Domain\Model\ProductType $productType
+     */
+    public function getProductType()
+    {
+        return $this->productType;
+    }
+
+    /**
+     * Sets the productType
+     *
+     * @param \RKW\RkwShop\Domain\Model\ProductType $productType
+     * @return void
+     */
+    public function setProductType(\RKW\RkwShop\Domain\Model\ProductType $productType)
+    {
+        $this->productType = $productType;
     }
 
 

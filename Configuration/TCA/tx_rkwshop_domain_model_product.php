@@ -56,7 +56,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_rkwshop_domain_model_producttype',
-                'foreign_table_where' => 'AND tx_rkwshop_domain_model_producttype.deleted = 0 ORDER BY title ASC',
+                'foreign_table_where' => 'AND tx_rkwshop_domain_model_producttype.deleted = 0 ORDER BY uid ASC',
                 'minitems' => 1,
                 'maxitems' => 1,
                 'default' => 1,

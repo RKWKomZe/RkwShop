@@ -2,7 +2,7 @@
 
     <div class="order-list">
 
-        <f:for each="{productList}" as="product">
+        <f:for each="{productList}" as="product" iteration="productIterator">
 
             <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : product}" class="box {event.department.cssClass} event big order-list__item" title="{product.title}">
 
@@ -13,11 +13,33 @@
                     <f:if condition="{product.subtitle}">
                         <p class="order-list__subtitle">{product.subtitle}</p>
                     </f:if>
+
+                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductDefault'">
+                        <p>{product.productType.model}</p>
+                    </f:if>
+
+                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+                        <p>{product.productType.model}</p>
+                    </f:if>
+
+                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
+                        <p>{product.productType.model}</p>
+                    </f:if>
+
+                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductDownload'">
+                        <p>{product.productType.model}</p>
+                    </f:if>
+
+                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductEvent'">
+                        <p>{product.productType.model}</p>
+                    </f:if>
                 </div>
 
             </f:link.action>
 
         </f:for>
+
+    </div>
 
 </f:if>
 
