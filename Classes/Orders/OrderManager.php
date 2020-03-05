@@ -264,10 +264,9 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     {
 
         // check order
-        // the order is already persisted as part of the cart
-//        if (! $order->_isNew()) {
-//            throw new Exception('orderManager.error.orderAlreadyPersisted');
-//        }
+        if ($order->getStatus() > 0) {
+            throw new Exception('orderManager.error.orderAlreadyPersisted');
+        }
 
         // check frontendUser
         if ($frontendUser->_isNew()) {

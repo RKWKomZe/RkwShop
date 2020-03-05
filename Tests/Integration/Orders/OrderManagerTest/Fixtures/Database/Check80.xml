@@ -22,6 +22,7 @@
         <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <shipping_address>1</shipping_address>
+        <status>50</status>
     </tx_rkwshop_domain_model_order>
     <tx_rkwregistration_domain_model_shippingaddress>
         <uid>1</uid>
