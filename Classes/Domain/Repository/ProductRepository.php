@@ -46,6 +46,26 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
 
+    /**
+     * Get all products contained in the bundle
+     *
+     * @param \RKW\RkwShop\Domain\Model\Product $productBundle
+     * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findByProductBundle (\RKW\RkwShop\Domain\Model\Product $productBundle)
+    {
+
+        $constraints = [];
+        $query = $this->createQuery();
+
+        $constraints[] = $query->equals('uid_foreign', $productBundle->getUid());
+
+        $query->matching($query->logicalAnd($constraints));
+
+//        $query->statement('SELECT * FROM tx_rkwshop_domain_model_product_product_mm WHERE uid_foreign="?"', [$productBundle->getUid()]);
+
+        return $query->execute();
+    }
 
     /**
      * Find all products by a list of uids
