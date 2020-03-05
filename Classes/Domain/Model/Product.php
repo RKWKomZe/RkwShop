@@ -137,6 +137,19 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $productBundle;
 
+    /**
+     * parentProducts
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Product>
+     */
+    protected $parentProducts = null;
+
+    /**
+     * childProducts
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Product>
+     */
+    protected $childProducts = null;
 
     /**
      * allowSingleOrder
@@ -204,7 +217,8 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->backendUser = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $this->author = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-
+        $this->parentProducts = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->childProducts = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**
@@ -741,6 +755,48 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setAdminEmail($adminEmail)
     {
         $this->adminEmail = $adminEmail;
+    }
+
+    /**
+     * Gets the parent products like bundle, etc.
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Product> $parentProducts
+     */
+    public function getParentProducts()
+    {
+        return $this->parentProducts;
+    }
+
+    /**
+     * Sets the parent products like bundle, etc.
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Product> $parentProducts
+     * @return void
+     */
+    public function setParentProducts($parentProducts)
+    {
+        $this->parentProducts = $parentProducts;
+    }
+
+    /**
+     * Gets the child products
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Product> $childProducts
+     */
+    public function getChildProducts()
+    {
+        return $this->childProducts;
+    }
+
+    /**
+     * Sets the child products
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Product> $childProducts
+     * @return void
+     */
+    public function setChildProducts($childProducts)
+    {
+        $this->childProducts = $childProducts;
     }
 
 }

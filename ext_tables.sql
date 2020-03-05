@@ -59,7 +59,6 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	record_type varchar(255) DEFAULT '0' NOT NULL,
-
     product_type int(11) unsigned DEFAULT '0',
 
 	article_number varchar(255) DEFAULT '' NOT NULL,
@@ -74,6 +73,9 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 	download int(11) unsigned NOT NULL default '0',
 	product_bundle int(11) unsigned DEFAULT '0',
 	allow_single_order tinyint(4) unsigned DEFAULT '0' NOT NULL,
+
+	parent_products int(11) unsigned DEFAULT '0' NOT NULL,
+	child_products int(11) unsigned DEFAULT '0' NOT NULL,
 
 	stock varchar(255) DEFAULT '' NOT NULL,
     ordered_external int(11) unsigned DEFAULT '0' NOT NULL,
@@ -100,6 +102,19 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 );
 
 #
+# Table structure for table 'tx_rkwshop_domain_model_product_product_mm'
+#
+CREATE TABLE tx_rkwshop_domain_model_product_product_mm (
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
+);
+
+#
 # Table structure for table 'tx_rkwshop_domain_model_producttype'
 #
 CREATE TABLE tx_rkwshop_domain_model_producttype (
@@ -116,7 +131,11 @@ CREATE TABLE tx_rkwshop_domain_model_producttype (
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
-	PRIMARY KEY (uid)
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
+	l10n_parent int(11) DEFAULT '0' NOT NULL,
+	l10n_diffsource mediumblob,
+
+	PRIMARY KEY (uid),
 
 );
 

@@ -4,38 +4,35 @@
 
         <f:for each="{productList}" as="product" iteration="productIterator">
 
-            <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : product}" class="box {event.department.cssClass} event big order-list__item" title="{product.title}">
-
+            <div class="order-list__item">
                 <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product}" />
 
                 <div class="order-list__details">
-                    <h4 class="order-list__title">{product.title}</h4>
+                    <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : product}" title="{product.title}">
+                        <h4 class="order-list__title">{product.title}</h4>
+                    </f:link.action>
+                    <p>{product.productType.model}</p>
                     <f:if condition="{product.subtitle}">
                         <p class="order-list__subtitle">{product.subtitle}</p>
                     </f:if>
 
-                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductDefault'">
-                        <p>{product.productType.model}</p>
+                    <!-- product contains -->
+                    <f:if condition="<f:count>{product.childProducts}</f:count>">
+                        <f:render partial="Product/List/BundleOptions" section="isBundle" arguments="{product: product, showPid: showPid}" />
                     </f:if>
 
-                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
-                        <p>{product.productType.model}</p>
+                    <!-- product is part of -->
+                    <f:if condition="<f:count>{product.parentProducts}</f:count>">
+                        <f:for each="{product.parentProducts}" as="parentProduct">
+                            <f:if condition="{parentProduct.productType.model} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+                                <f:render partial="Product/List/BundleOptions" section="belongsToBundle" arguments="{product: parentProduct, showPid: showPid}" />
+                            </f:if>
+                        </f:for>
                     </f:if>
 
-                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
-                        <p>{product.productType.model}</p>
-                    </f:if>
-
-                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductDownload'">
-                        <p>{product.productType.model}</p>
-                    </f:if>
-
-                    <f:if condition="{product.productType.model} == '\RKW\RkwShop\Domain\Model\ProductEvent'">
-                        <p>{product.productType.model}</p>
-                    </f:if>
                 </div>
 
-            </f:link.action>
+            </div>
 
         </f:for>
 

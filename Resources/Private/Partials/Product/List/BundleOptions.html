@@ -1,0 +1,40 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
+<f:section name="isBundle">
+    <div class="order-list__item order-list__item--sub">
+        <p class="order-list__belongs">
+            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleOptions.bundleContains" />
+        </p>
+        <div class="order-list__details order-list__details--sub">
+            <div class="order-list__contents">
+                <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleContents.contents" /></span>
+                <ol>
+                    <f:for each="{product.childProducts}" as="bundleItem" >
+                        <li>
+                            <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : bundleItem}" title="{bundleItem.title}">
+                                {bundleItem.title}. {bundleItem.subtitle}
+                            </f:link.action>
+                        </li>
+                    </f:for>
+                </ol>
+            </div>
+        </div>
+    </div>
+</f:section>
+
+<f:section name="belongsToBundle">
+
+    <div class="order-list__item order-list__item--sub">
+        <p class="order-list__belongs">
+            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleOptions.belongsToBundle" />
+        </p>
+        <div class="order-list__details order-list__details--sub">
+            <h4 class="order-list__title">{product.title}</h4>
+            <f:render partial="Product/List/BundleItems" arguments="{product: product, showPid: showPid}" />
+        </div>
+    </div>
+
+</f:section>
+
+
+

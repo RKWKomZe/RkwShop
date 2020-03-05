@@ -31,11 +31,9 @@ class TCA
     {
         $record = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
 
-        $newTitle = '[' . $record['article_number'] . ' - ' . $record['record_type'] . '] ' . $record['title'];
+        $recordProductType = BackendUtility::getRecord('tx_rkwshop_domain_model_producttype', $record['product_type']);
 
-        if ($record['subtitle'] !== '') {
-            $newTitle = $newTitle . ', ' . $record['subtitle'];
-        }
+        $newTitle = $record['title'] . ' [' . $record['article_number'] . ' - ' . $recordProductType['model'] . ']';
 
         $parameters['title'] = $newTitle;
     }

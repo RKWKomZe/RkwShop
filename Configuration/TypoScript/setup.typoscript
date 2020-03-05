@@ -123,6 +123,16 @@ config.tx_extbase.persistence {
 
         #===============================================
 
+        RKW\RkwShop\Domain\Model\ProductDefault {
+            mapping {
+
+                recordType = \RKW\RkwShop\Domain\Model\ProductDefault
+                tableName = tx_rkwshop_domain_model_product
+            }
+        }
+
+        #===============================================
+
         RKW\RkwShop\Domain\Model\ProductBundle {
             mapping {
 

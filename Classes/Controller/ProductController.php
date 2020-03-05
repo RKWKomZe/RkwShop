@@ -45,7 +45,6 @@ class ProductController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 
         $queryResult = $this->productRepository->findAll();
-
         $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
         $this->view->assignMultiple([

@@ -18,35 +18,76 @@ return [
 		],
 		'searchFields' => 'uid, article_number, title, subtitle, description, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_product.gif',
-        'type' => 'product_type',
+        'type' => 'record_type',
         'requestUpdate' => 'product_bundle',
 	],
 	'interface' => [
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, article_number, title, subtitle, description, publishing_date, image, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment',
 	],
 	'types' => [
-		'1' => ['showitem' => '--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, product_type, article_number, title, subtitle, description, publishing_date, download, image, page, product_bundle,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,--palette--;;1, starttime, endtime'],
-        '2' => ['showitem' => '--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, product_type, article_number, title, subtitle, description, image, page,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,--palette--;;1, starttime, endtime'],
-        '3' => ['showitem' => '--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, product_type, article_number, title, subtitle, description, image, page,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,--palette--;;1, starttime, endtime'],
-        '4' => ['showitem' => '--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, product_type, article_number, title, subtitle, description, image, page,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,--div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,--palette--;;1, starttime, endtime'],
+        '\RKW\RkwShop\Domain\Model\ProductDefault' => [
+            'showitem' => '
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, publishing_date, download, image, page, product_bundle,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --palette--;;1, starttime, endtime
+            '
+        ],
+        '\RKW\RkwShop\Domain\Model\ProductBundle' => [
+            'showitem' => '
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --palette--;;1, starttime, endtime
+            '
+        ],
+        '\RKW\RkwShop\Domain\Model\ProductSubscription' => [
+            'showitem' => '
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --palette--;;1, starttime, endtime
+            '
+        ],
+        '\RKW\RkwShop\Domain\Model\ProductDownload' => [
+            'showitem' => '
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, image, page,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --palette--;;1, starttime, endtime
+            '
+        ],
+        '\RKW\RkwShop\Domain\Model\ProductEvent' => [
+            'showitem' => '
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, image, page,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --palette--;;1, starttime, endtime
+            '
+        ],
     ],
 	'palettes' => [
 		'1' => ['showitem' => ''],
 	],
 	'columns' => [
-
         'record_type' => [
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.default', '0'],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.default', '\RKW\RkwShop\Domain\Model\ProductDefault'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.bundle', '\RKW\RkwShop\Domain\Model\ProductBundle'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.subscription', '\RKW\RkwShop\Domain\Model\ProductSubscription'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.download', '\RKW\RkwShop\Domain\Model\ProductDownload'],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.event', '\RKW\RkwShop\Domain\Model\ProductEvent'],
                 ],
-                'default' => '0'
+                'default' => '\RKW\RkwShop\Domain\Model\ProductDefault'
             ],
         ],
         'product_type' => [
@@ -324,6 +365,41 @@ return [
                 'cols' => 40,
                 'rows' => 15,
                 'eval' => 'trim'
+            ],
+        ],
+        'parent_products' => [
+            'label'=>'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.parentProducts',
+            'exclude' => 0,
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_rkwshop_domain_model_product',
+                'foreign_field' => 'uid_local',
+                'foreign_table_where' => 'AND tx_rkwshop_domain_model_product.uid != ###THIS_UID### AND tx_rkwshop_domain_model_product.product_type IN (2,3) AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.deleted = 0 ORDER BY title ASC',
+                'MM' => 'tx_rkwshop_domain_model_product_product_mm',
+                'size' => 10,
+                'autoSizeMax' => 30,
+                'maxitems' => 9999,
+                'minitems' => 0,
+                'multiple' => 0,
+            ],
+        ],
+        'child_products' => [
+            'exclude' => false,
+            'label'=>'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.childProducts',
+            'config'  => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_rkwshop_domain_model_product',
+                'foreign_field' => 'uid_local',
+                'foreign_table_where' => 'AND tx_rkwshop_domain_model_product.uid != ###THIS_UID### AND tx_rkwshop_domain_model_product.product_type NOT IN (2,3) AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.deleted = 0 ORDER BY title ASC',
+                'MM' => 'tx_rkwshop_domain_model_product_product_mm',
+                'MM_opposite_field' => 'parent_products',
+                'size' => 10,
+                'autoSizeMax' => 30,
+                'maxitems' => 9999,
+                'minitems' => 0,
+                'multiple' => 0,
             ],
         ],
     ],

@@ -1,0 +1,18 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+
+<f:if condition="<rkwShop:bundleItems product='{product}' />">
+    <div class="order-list__contents">
+        <f:if condition="{product.productType.model} != '\RKW\RkwShop\Domain\Model\ProductBundle'">
+            <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleContents.contents" /></span>
+        </f:if>
+        <ol>
+            <f:for each="<rkwShop:bundleItems product='{product}' />" as="bundleItem" >
+                <li>
+                    <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : bundleItem}" title="{bundleItem.title}">
+                        {bundleItem.title}. {bundleItem.subtitle}
+                    </f:link.action>
+                </li>
+            </f:for>
+        </ol>
+    </div>
+</f:if>

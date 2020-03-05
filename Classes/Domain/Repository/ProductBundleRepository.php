@@ -25,7 +25,4 @@ namespace RKW\RkwShop\Domain\Repository;
  */
 class ProductBundleRepository extends ProductRepository
 {
-
-
-
 }
