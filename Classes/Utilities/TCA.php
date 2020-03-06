@@ -15,6 +15,7 @@ namespace RKW\RkwShop\Utilities;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * TCA
@@ -33,7 +34,7 @@ class TCA
 
         $recordProductType = BackendUtility::getRecord('tx_rkwshop_domain_model_producttype', $record['product_type']);
 
-        $newTitle = $record['title'] . ' [' . $record['article_number'] . ' - ' . $recordProductType['model'] . ']';
+        $newTitle = $record['title'] . ' [' . $record['article_number'] . ' - ' . $recordProductType['title'] . ']';
 
         $parameters['title'] = $newTitle;
     }
