@@ -111,6 +111,9 @@ config.tx_extbase.persistence {
 
         RKW\RkwShop\Domain\Model\Product {
             mapping {
+                recordType = \RKW\RkwShop\Domain\Model\Product
+                tableName = tx_rkwshop_domain_model_product
+
                 columns {
                     crdate.mapOnProperty = crdate
                     tstamp.mapOnProperty = tstamp
@@ -118,16 +121,9 @@ config.tx_extbase.persistence {
                     deleted.mapOnProperty = deleted
                 }
             }
-        }
-
-
-        #===============================================
-
-        RKW\RkwShop\Domain\Model\ProductDefault {
-            mapping {
-
-                recordType = \RKW\RkwShop\Domain\Model\ProductDefault
-                tableName = tx_rkwshop_domain_model_product
+            subclasses {
+                \RKW\RkwShop\Domain\Model\ProductBundle = RKW\RkwShop\Domain\Model\ProductBundle
+                \RKW\RkwShop\Domain\Model\ProductDownload = RKW\RkwShop\Domain\Model\ProductDownload
             }
         }
 
@@ -135,7 +131,6 @@ config.tx_extbase.persistence {
 
         RKW\RkwShop\Domain\Model\ProductBundle {
             mapping {
-
                 recordType = \RKW\RkwShop\Domain\Model\ProductBundle
                 tableName = tx_rkwshop_domain_model_product
             }
@@ -144,12 +139,19 @@ config.tx_extbase.persistence {
             }
         }
 
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\ProductDownload {
+            mapping {
+                recordType = \RKW\RkwShop\Domain\Model\ProductDownload
+                tableName = tx_rkwshop_domain_model_product
+            }
+        }
 
         #===============================================
 
         RKW\RkwShop\Domain\Model\ProductSubscription {
             mapping {
-
                 recordType = \RKW\RkwShop\Domain\Model\ProductSubscription
                 tableName = tx_rkwshop_domain_model_product
             }

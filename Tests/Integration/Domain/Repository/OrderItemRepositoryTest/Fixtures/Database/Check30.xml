@@ -7,7 +7,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>0</stock>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
 
     <!-- order -->

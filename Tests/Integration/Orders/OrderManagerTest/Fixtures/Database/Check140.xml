@@ -8,7 +8,7 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test11@test.de</admin_email>
         <stock>1</stock>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_product>
         <uid>2</uid>
@@ -17,7 +17,7 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test21@test.de</admin_email>
         <stock>2</stock>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
 
     <!-- stock -->

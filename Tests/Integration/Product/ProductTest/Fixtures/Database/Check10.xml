@@ -3,8 +3,8 @@
 
     <tx_rkwshop_domain_model_producttype>
         <uid>1</uid>
-        <title>ProductDefault</title>
-        <model>\RKW\RkwShop\Domain\Model\ProductDefault</model>
+        <title>Product</title>
+        <model>\RKW\RkwShop\Domain\Model\Product</model>
         <has_article_number>0</has_article_number>
         <allow_single_order>0</allow_single_order>
     </tx_rkwshop_domain_model_producttype>
@@ -29,13 +29,13 @@
     <tx_rkwshop_domain_model_product>
         <uid>2</uid>
         <pid>1</pid>
-        <title>ProductDefault</title>
+        <title>Product</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
         <stock>2</stock>
         <comment></comment>
         <backend_user />
-        <record_type>\RKW\RkwShop\Domain\Model\ProductDefault</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
         <child_products>1</child_products>
     </tx_rkwshop_domain_model_product>
 

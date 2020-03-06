@@ -2,20 +2,13 @@
 
 namespace RKW\RkwShop\Tests\Integration\Product;
 
-use Doctrine\Common\Util\Debug;
 use RKW\RkwShop\Domain\Model\Product;
-use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use RKW\RkwShop\Domain\Repository\OrderRepository;
-use RKW\RkwShop\Domain\Repository\ProductRepository;
-use RKW\RkwShop\Domain\Repository\OrderItemRepository;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-use RKW\RkwShop\Domain\Repository\ProductBundleRepository;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use RKW\RkwShop\Domain\Model\ProductBundle;
+use RKW\RkwShop\Domain\Repository\ProductRepository;
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -58,29 +51,9 @@ class ProductTest extends FunctionalTestCase
     protected $coreExtensionsToLoad = [];
 
     /**
-     * @var \RKW\RkwShop\Cart\Cart
-     */
-    private $subject = null;
-
-    /**
-     * @var \RKW\RkwShop\Domain\Repository\OrderRepository
-     */
-    private $orderRepository;
-
-    /**
-     * @var \RKW\RkwShop\Domain\Repository\OrderItemRepository
-     */
-    private $orderItemRepository;
-
-    /**
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      */
     private $productRepository;
-
-    /**
-     * @var \RKW\RkwShop\Domain\Repository\ProductBundleRepository
-     */
-    private $productBundleRepository;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
@@ -91,7 +64,6 @@ class ProductTest extends FunctionalTestCase
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
     private $objectManager;
-
 
     /**
      * Setup
@@ -129,13 +101,7 @@ class ProductTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-//        $this->subject = $this->objectManager->get(Cart::class);
-
-        $this->orderRepository = $this->objectManager->get(OrderRepository::class);
-        $this->orderItemRepository = $this->objectManager->get(OrderItemRepository::class);
-
         $this->productRepository = $this->objectManager->get(ProductRepository::class);
-        $this->productBundleRepository = $this->objectManager->get(ProductBundleRepository::class);
 
     }
 
@@ -160,16 +126,14 @@ class ProductTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Product $childProduct */
         $childProduct = $this->productRepository->findByUid(2);
 
+        static::assertInstanceOf(Product::class, $childProduct);
+
         static::assertEquals(1, $childProduct->getParentProducts()->count());
 
         /** @var \RKW\RkwShop\Domain\Model\Product $parentProduct */
         $parentProduct = $this->productRepository->findByUid(1);
 
         static::assertSame($parentProduct, $childProduct->getParentProducts()->current());
-
-        //  Wie kann ich festlegen, dass das Objekt aus der richtigen Instanz kommt? In diesem Falle also nicht "Product", sondern "ProductBundle"???
-        //  https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/9.5/Deprecation-86270-ExtbaseXclassViaTypoScriptSettings.html
-
         static::assertInstanceOf(ProductBundle::class, $parentProduct);
 
     }

@@ -16,13 +16,16 @@ CREATE TABLE tx_rkwshop_domain_model_producttype (
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
+	sys_language_uid int(11) DEFAULT '0' NOT NULL,
+	l10n_parent int(11) DEFAULT '0' NOT NULL,
+	l10n_diffsource mediumblob,
+
 	PRIMARY KEY (uid)
 
 );
 
-INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('1', '0', 'ProductDefault', 'Description Typ Product', '\\RKW\\RkwShop\\Domain\\Model\\ProductDefault', '0', '1', '0', '0');
+INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('1', '0', 'Product', 'Description Typ Product', '\\RKW\\RkwShop\\Domain\\Model\\Product', '0', '1', '0', '0');
 INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('2', '0', 'ProductBundle', 'Description Typ ProductBundle', '\\RKW\\RkwShop\\Domain\\Model\\ProductBundle', '0', '1', '0', '0');
 INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('3', '0', 'ProductSubscription', 'Description Typ ProductSubscription', '\\RKW\\RkwShop\\Domain\\Model\\ProductSubscription', '0', '1', '0', '0');
 INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('4', '0', 'ProductDownload', 'Description Typ ProductDownload', '\\RKW\\RkwShop\\Domain\\Model\\ProductDownload', '0', '1', '0', '0');
-INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('5', '0', 'ProductEvent', 'Description Typ ProductEvent', '\\RKW\\RkwShop\\Domain\\Model\\ProductEvent', '0', '1', '0', '0');
 

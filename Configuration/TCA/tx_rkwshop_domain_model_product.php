@@ -25,7 +25,7 @@ return [
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, article_number, title, subtitle, description, publishing_date, image, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment',
 	],
 	'types' => [
-        '\RKW\RkwShop\Domain\Model\ProductDefault' => [
+        '\RKW\RkwShop\Domain\Model\Product' => [
             'showitem' => '
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, publishing_date, download, image, page, product_bundle,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
@@ -62,14 +62,6 @@ return [
                 --palette--;;1, starttime, endtime
             '
         ],
-        '\RKW\RkwShop\Domain\Model\ProductEvent' => [
-            'showitem' => '
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, image, page,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
-                --palette--;;1, starttime, endtime
-            '
-        ],
     ],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -81,13 +73,12 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.default', '\RKW\RkwShop\Domain\Model\ProductDefault'],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.default', '\RKW\RkwShop\Domain\Model\Product'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.bundle', '\RKW\RkwShop\Domain\Model\ProductBundle'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.subscription', '\RKW\RkwShop\Domain\Model\ProductSubscription'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.download', '\RKW\RkwShop\Domain\Model\ProductDownload'],
-                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.event', '\RKW\RkwShop\Domain\Model\ProductEvent'],
                 ],
-                'default' => '\RKW\RkwShop\Domain\Model\ProductDefault'
+                'default' => '\RKW\RkwShop\Domain\Model\Product'
             ],
         ],
         'product_type' => [

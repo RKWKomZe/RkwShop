@@ -8,7 +8,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_product>
         <uid>2</uid>
@@ -16,7 +16,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_product>
         <uid>3</uid>
@@ -24,7 +24,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_product>
         <uid>4</uid>
@@ -32,7 +32,7 @@
         <title>Leitfaden deluxe</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <stock>100</stock>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
 
 </dataset>

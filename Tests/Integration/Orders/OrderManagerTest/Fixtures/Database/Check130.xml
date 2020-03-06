@@ -9,7 +9,7 @@
         <admin_email>test11@test.de</admin_email>
         <stock>1,3</stock>
         <ordered_external>20</ordered_external>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
         <product_bundle>2</product_bundle>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_product>

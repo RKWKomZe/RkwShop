@@ -135,7 +135,7 @@ CREATE TABLE tx_rkwshop_domain_model_producttype (
 	l10n_parent int(11) DEFAULT '0' NOT NULL,
 	l10n_diffsource mediumblob,
 
-	PRIMARY KEY (uid),
+	PRIMARY KEY (uid)
 
 );
 

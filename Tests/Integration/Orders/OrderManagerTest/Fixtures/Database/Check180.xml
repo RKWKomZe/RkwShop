@@ -10,7 +10,7 @@
         <stock>4</stock>
         <backend_user>5</backend_user>
         <product_bundle>2</product_bundle>
-        <record_type>0</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_product>
         <uid>2</uid>
