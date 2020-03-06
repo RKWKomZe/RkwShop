@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+
+    <tx_rkwshop_domain_model_producttype>
+        <uid>1</uid>
+        <title>ProductDefault</title>
+        <model>\RKW\RkwShop\Domain\Model\ProductDefault</model>
+        <has_article_number>0</has_article_number>
+        <allow_single_order>0</allow_single_order>
+    </tx_rkwshop_domain_model_producttype>
+    <tx_rkwshop_domain_model_producttype>
+        <uid>2</uid>
+        <title>ProductBundle</title>
+        <model>\RKW\RkwShop\Domain\Model\ProductBundle</model>
+        <has_article_number>0</has_article_number>
+        <allow_single_order>0</allow_single_order>
+    </tx_rkwshop_domain_model_producttype>
+
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>ProductBundle</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <stock>1</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+    </tx_rkwshop_domain_model_product>
+    <tx_rkwshop_domain_model_product>
+        <uid>2</uid>
+        <pid>1</pid>
+        <title>ProductDefault</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
+        <stock>2</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\ProductDefault</record_type>
+        <child_products>1</child_products>
+    </tx_rkwshop_domain_model_product>
+
+    <tx_rkwshop_domain_model_product_product_mm>
+        <uid_local>2</uid_local>
+        <uid_foreign>1</uid_foreign>
+    </tx_rkwshop_domain_model_product_product_mm>
+
+    <tx_rkwshop_domain_model_stock>
+        <uid>1</uid>
+        <pid>1</pid>
+        <product>1</product>
+        <amount>100</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+    <tx_rkwshop_domain_model_stock>
+        <uid>2</uid>
+        <pid>1</pid>
+        <product>1</product>
+        <amount>100</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+
+</dataset>
