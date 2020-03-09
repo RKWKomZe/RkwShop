@@ -18,8 +18,13 @@
                         <p class="order-list__subtitle">{product.subtitle}</p>
                     </f:if>
 
-                    <!-- product contains -->
+                    <!-- product is a standalone product -->
+
+                    <!-- product is a collection product -->
                     <f:if condition="<f:count>{product.childProducts}</f:count>">
+
+                        Wenn das Produkt selbst aber vom Typ "Product" ist, dann ist ein Status "vergriffen" nur notwendig, wenn die Kindelemente vergriffen sein sollten.
+                        Wenn das Produkt selbst aber vom Typ "ProductCollection" ist, dann ist ein Status "vergriffen" nur notwendig, wenn die Kindelemente vergriffen sein sollten.
 
                         <f:if condition="<rkwShop:ProductStock product='{product}' />">
                             <f:then>
@@ -49,8 +54,12 @@
                         <f:render partial="Product/List/BundleOptions" section="isBundle" arguments="{product: product, showPid: showPid}" />
                     </f:if>
 
-                    <!-- product is part of -->
+                    <!-- product belongs to a collection product -->
                     <f:if condition="<f:count>{product.parentProducts}</f:count>">
+
+                        belongs to a collection product
+                        ein
+
                         <f:for each="{product.parentProducts}" as="parentProduct">
 
                             <f:if condition="<rkwShop:ProductStock product='{parentProduct}' />">
@@ -78,10 +87,10 @@
                                 </f:else>
                             </f:if>
 
-
-                            <f:if condition="{parentProduct.productType.model} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+                            <f:if condition="{parentProduct.productType.model} instanceof '\RKW\RkwShop\Domain\Model\ProductBundle'">
                                 <f:render partial="Product/List/BundleOptions" section="belongsToBundle" arguments="{product: parentProduct, showPid: showPid}" />
                             </f:if>
+
                         </f:for>
                     </f:if>
 

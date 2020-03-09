@@ -80,6 +80,9 @@
             <trans-unit id="tx_rkwshop_domain_model_product.recordType.default">
                 <source>Default</source>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.recordType.collection">
+                <source>Collection</source>
+            </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.recordType.bundle">
                 <source>Bundle</source>
             </trans-unit>

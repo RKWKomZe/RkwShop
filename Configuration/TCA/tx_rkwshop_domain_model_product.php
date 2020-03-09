@@ -35,6 +35,15 @@ return [
                 --palette--;;1, starttime, endtime
             '
         ],
+        '\RKW\RkwShop\Domain\Model\ProductCollection' => [
+            'showitem' => '
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, title, subtitle, description, image, page,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --palette--;;1, starttime, endtime
+            '
+        ],
         '\RKW\RkwShop\Domain\Model\ProductBundle' => [
             'showitem' => '
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
@@ -74,6 +83,7 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.default', '\RKW\RkwShop\Domain\Model\Product'],
+                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.collection', '\RKW\RkwShop\Domain\Model\ProductCollection'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.bundle', '\RKW\RkwShop\Domain\Model\ProductBundle'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.subscription', '\RKW\RkwShop\Domain\Model\ProductSubscription'],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.download', '\RKW\RkwShop\Domain\Model\ProductDownload'],

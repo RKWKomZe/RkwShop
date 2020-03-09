@@ -2,6 +2,11 @@
 namespace RKW\RkwShop\Tests\Integration\Domain\Repository;
 
 
+use RKW\RkwShop\Domain\Model\Product;
+use RKW\RkwShop\Domain\Model\ProductBundle;
+use RKW\RkwShop\Domain\Model\ProductDownload;
+use RKW\RkwShop\Domain\Model\ProductCollection;
+use RKW\RkwShop\Domain\Model\ProductSubscription;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 use RKW\RkwShop\Domain\Repository\ProductRepository;
@@ -233,6 +238,126 @@ class ProductRepositoryTest extends FunctionalTestCase
 
     }
 
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findAllReturnsInstanceOfProduct()
+    {
+        /**
+         * Scenario:
+         *
+         * Given there is a single product
+         * Given that product's recordType is 'Product'
+         * When I fetch all products
+         * Then the returned product is an instance of 'Product'
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check40.xml');
+
+        $result = $this->subject->findAll();
+
+        static::assertEquals(1, count($result));
+        static::assertInstanceOf(Product::class, $result[0]);
+
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findAllReturnsInstanceOfProductCollection()
+    {
+        /**
+         * Scenario:
+         *
+         * Given there is a single product
+         * Given that product's recordType is 'ProductCollection'
+         * When I fetch all products
+         * Then the returned product is an instance of 'ProductCollection'
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check60.xml');
+
+        $result = $this->subject->findAll();
+
+        static::assertEquals(1, count($result));
+        static::assertInstanceOf(ProductCollection::class, $result[0]);
+
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findAllReturnsInstanceOfProductBundle()
+    {
+        /**
+         * Scenario:
+         *
+         * Given there is a single product
+         * Given that product's recordType is 'ProductBundle'
+         * When I fetch all products
+         * Then the returned product is an instance of 'ProductBundle'
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check50.xml');
+
+        $result = $this->subject->findAll();
+
+        static::assertEquals(1, count($result));
+        static::assertInstanceOf(ProductBundle::class, $result[0]);
+
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findAllReturnsInstanceOfProductSubscription()
+    {
+        /**
+         * Scenario:
+         *
+         * Given there is a single product
+         * Given that product's recordType is 'ProductSubscription'
+         * When I fetch all products
+         * Then the returned product is an instance of 'ProductSubscription'
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check70.xml');
+
+        $result = $this->subject->findAll();
+
+        static::assertEquals(1, count($result));
+        static::assertInstanceOf(ProductSubscription::class, $result[0]);
+
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findAllReturnsInstanceOfProductDownload()
+    {
+        /**
+         * Scenario:
+         *
+         * Given there is a single product
+         * Given that product's recordType is 'ProductDownload'
+         * When I fetch all products
+         * Then the returned product is an instance of 'ProductDownload'
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check80.xml');
+
+        $result = $this->subject->findAll();
+
+        static::assertEquals(1, count($result));
+        static::assertInstanceOf(ProductDownload::class, $result[0]);
+
+    }
 
     /**
      * TearDown
