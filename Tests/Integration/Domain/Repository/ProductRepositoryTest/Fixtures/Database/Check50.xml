@@ -6,7 +6,6 @@
         <title>ProductBundle</title>
         <model>\RKW\RkwShop\Domain\Model\ProductBundle</model>
         <has_article_number>0</has_article_number>
-        <allow_single_order>0</allow_single_order>
     </tx_rkwshop_domain_model_producttype>
 
     <tx_rkwshop_domain_model_product>

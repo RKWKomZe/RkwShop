@@ -29,7 +29,7 @@ return [
             'showitem' => '
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, publishing_date, download, image, page, product_bundle,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime
@@ -48,7 +48,7 @@ return [
             'showitem' => '
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime
@@ -57,7 +57,7 @@ return [
         '\RKW\RkwShop\Domain\Model\ProductSubscription' => [
             'showitem' => '
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime
@@ -66,6 +66,7 @@ return [
         '\RKW\RkwShop\Domain\Model\ProductDownload' => [
             'showitem' => '
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, image, page,
+                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
                 --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime

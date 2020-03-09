@@ -11,7 +11,6 @@ CREATE TABLE tx_rkwshop_domain_model_producttype (
     description text,
 	model varchar(255) DEFAULT '' NOT NULL,
 	has_article_number tinyint(4) unsigned DEFAULT '0' NOT NULL,
-	allow_single_order tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,
@@ -24,9 +23,9 @@ CREATE TABLE tx_rkwshop_domain_model_producttype (
 
 );
 
-INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('1', '0', 'Product', 'Description Typ Product', '\\RKW\\RkwShop\\Domain\\Model\\Product', '1', '1', '0', '0', '0', '0', '');
-INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('2', '0', 'ProductBundle', 'Description Typ ProductBundle', '\\RKW\\RkwShop\\Domain\\Model\\ProductBundle', '1', '1', '0', '0', '0', '0', '');
-INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('3', '0', 'ProductSubscription', 'Description Typ ProductSubscription', '\\RKW\\RkwShop\\Domain\\Model\\ProductSubscription', '1', '1', '0', '0', '0', '0', '');
-INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('4', '0', 'ProductDownload', 'Description Typ ProductDownload', '\\RKW\\RkwShop\\Domain\\Model\\ProductDownload', '1', '1', '0', '0', '0', '0', '');
-INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('5', '0', 'ProductCollection', 'Description Typ ProductCollection', '\\RKW\\RkwShop\\Domain\\Model\\ProductCollection', '0', '1', '0', '0', '0', '0', '');
+INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('1', '0', 'Product', 'Description Typ Product', '\\RKW\\RkwShop\\Domain\\Model\\Product', '1', '0', '0', '0', '0', '');
+INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('2', '0', 'ProductBundle', 'Description Typ ProductBundle', '\\RKW\\RkwShop\\Domain\\Model\\ProductBundle', '1', '0', '0', '0', '0', '');
+INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('3', '0', 'ProductSubscription', 'Description Typ ProductSubscription', '\\RKW\\RkwShop\\Domain\\Model\\ProductSubscription', '1', '0', '0', '0', '0', '');
+INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('4', '0', 'ProductDownload', 'Description Typ ProductDownload', '\\RKW\\RkwShop\\Domain\\Model\\ProductDownload', '1', '0', '0', '0', '0', '');
+INSERT INTO tx_rkwshop_domain_model_producttype VALUES ('5', '0', 'ProductCollection', 'Description Typ ProductCollection', '\\RKW\\RkwShop\\Domain\\Model\\ProductCollection', '0', '0', '0', '0', '0', '');
 
