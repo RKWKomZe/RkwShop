@@ -246,6 +246,31 @@ class OrderRepositoryTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \Exception
      */
+    public function findByTimestampSoapIncludesOrdersContainingOrderItemsWithTimestampEqualOrGreaterThanGiven()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I have an order with a timestamp
+         * Given an order item within this order has a timestamp greater than the order timestmap
+         * When I fetch the orders by timestamp greater than the order's timestamp
+         * Then this respective order will be returned nevertheless
+         */
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check65.xml');
+
+        $result = $this->subject->findByTimestampSoap(4000);
+
+        static::assertEquals(1, count($result));
+        static::assertContains($this->subject->findByUid(1), $result);
+
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
     public function findByTimestampSoapIncludesReferencesToDeletedAndHiddenFeUsers ()
     {
 
