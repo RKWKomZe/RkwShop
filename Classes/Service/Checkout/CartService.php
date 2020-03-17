@@ -1,6 +1,6 @@
 <?php
 
-namespace RKW\RkwShop\Cart;
+namespace RKW\RkwShop\Service\Checkout;
 
 use \RKW\RkwShop\Exception;
 use Doctrine\Common\Util\Debug;
@@ -23,14 +23,14 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
  */
 
 /**
- * Class Cart
+ * Class CartService
  *
  * @author Christian Dilger <c.dilger@addorange.de>
  * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Cart implements \TYPO3\CMS\Core\SingletonInterface
+class CartService implements \TYPO3\CMS\Core\SingletonInterface
 {
 
     /**
@@ -118,13 +118,13 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function initialize(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
+    public function initializeCart(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
     {
 
-        if ($this->get()) {
-            $this->update($product, $amount, $remove);
+        if ($this->getCart()) {
+            $this->updateCart($product, $amount, $remove);
         } else {
-            $this->create($product, $amount);
+            $this->createCart($product, $amount);
         }
 
     }
@@ -147,7 +147,7 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function create(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
+    public function createCart(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
     {
 
         $order = new Order();
@@ -189,10 +189,10 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function update(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
+    public function updateCart(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
     {
 
-        $order = $this->get();
+        $order = $this->getCart();
 
         //  check, if there are existing orderitems
         $orderItems = $order->getOrderItem();
@@ -236,7 +236,7 @@ class Cart implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * @return \RKW\RkwShop\Domain\Model\Order $order
      */
-    public function get()
+    public function getCart()
     {
         return $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
     }

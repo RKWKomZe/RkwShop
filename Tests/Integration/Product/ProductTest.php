@@ -73,14 +73,14 @@ class ProductTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        /*$this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/BeUsers.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/FeUsers.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Pages.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Product.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Order.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/OrderItem.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/ShippingAddress.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Stock.xml');
+        /*$this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/BeUsers.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/FeUsers.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Pages.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Product.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Order.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/OrderItem.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/ShippingAddress.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Stock.xml');
 */
 
         $this->importDataSet(__DIR__ . '/ProductTest/Fixtures/Database/Global.xml');

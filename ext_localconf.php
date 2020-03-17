@@ -126,20 +126,20 @@ call_user_func(
         $signalSlotDispatcher->connect(
             'RKW\\RkwRegistration\\Tools\\Registration',
             \RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_USER_REGISTER_GRANT . 'RkwShop',
-            'RKW\RkwShop\Orders\OrderManager',
+            \RKW\RkwShop\Service\Checkout\OrderService::class,
             'saveOrderSignalSlot'
         );
 
         $signalSlotDispatcher->connect(
-            'RKW\\RkwShop\\Orders\\OrderManager',
-            \RKW\RkwShop\Orders\OrderManager::SIGNAL_AFTER_ORDER_CREATED_USER,
+            \RKW\RkwShop\Service\Checkout\OrderService::class,
+            \RKW\RkwShop\Service\Checkout\OrderService::SIGNAL_AFTER_ORDER_CREATED_USER,
             'RKW\\RkwShop\\Service\\RkwMailService',
             'confirmationOrderUser'
         );
 
         $signalSlotDispatcher->connect(
-            'RKW\\RkwShop\\Orders\\OrderManager',
-            \RKW\RkwShop\Orders\OrderManager::SIGNAL_AFTER_ORDER_CREATED_ADMIN,
+            \RKW\RkwShop\Service\Checkout\OrderService::class,
+            \RKW\RkwShop\Service\Checkout\OrderService::SIGNAL_AFTER_ORDER_CREATED_ADMIN,
             'RKW\\RkwShop\\Service\\RkwMailService',
             'confirmationOrderAdmin'
         );
@@ -147,20 +147,20 @@ call_user_func(
         $signalSlotDispatcher->connect(
             'RKW\\RkwRegistration\\Tools\\Registration',
             \RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_DELETING_USER,
-            'RKW\RkwShop\Orders\OrderManager',
+            \RKW\RkwShop\Service\Checkout\OrderService::class,
             'removeAllOrdersOfFrontendUserSignalSlot'
         );
 
         $signalSlotDispatcher->connect(
-            'RKW\\RkwShop\\Orders\\OrderManager',
-            \RKW\RkwShop\Orders\OrderManager::SIGNAL_AFTER_ORDER_DELETED_USER,
+            \RKW\RkwShop\Service\Checkout\OrderService::class,
+            \RKW\RkwShop\Service\Checkout\OrderService::SIGNAL_AFTER_ORDER_DELETED_USER,
             'RKW\\RkwShop\\Service\\RkwMailService',
             'deleteOrderUser'
         );
 
         $signalSlotDispatcher->connect(
-            'RKW\\RkwShop\\Orders\\OrderManager',
-            \RKW\RkwShop\Orders\OrderManager::SIGNAL_AFTER_ORDER_DELETED_ADMIN,
+            \RKW\RkwShop\Service\Checkout\OrderService::class,
+            \RKW\RkwShop\Service\Checkout\OrderService::SIGNAL_AFTER_ORDER_DELETED_ADMIN,
             'RKW\\RkwShop\\Service\\RkwMailService',
             'deleteOrderAdmin'
         );

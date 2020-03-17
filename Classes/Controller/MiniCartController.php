@@ -40,12 +40,12 @@ class MiniCartController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     protected $productRepository = null;
 
     /**
-     * Cart
+     * CartService
      *
-     * @var \RKW\RkwShop\Cart\Cart
+     * @var \RKW\RkwShop\Service\Checkout\CartService
      * @inject
      */
-    protected $cart;
+    protected $cartService;
 
     /**
      * action show cart
@@ -55,7 +55,7 @@ class MiniCartController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function showAction()
     {
 
-        $order = $this->cart->get(); //  liefert bereits die Order zurück
+        $order = $this->cartService->getCart(); //  liefert bereits die Order zurück
 
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 

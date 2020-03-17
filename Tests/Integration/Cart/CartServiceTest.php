@@ -3,6 +3,7 @@
 namespace RKW\RkwShop\Tests\Integration\Cart;
 
 use RKW\RkwShop\Cart\Cart;
+use RKW\RkwShop\Service\Checkout\CartService;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use RKW\RkwShop\Domain\Model\Order;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -30,14 +31,14 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 
 /**
- * CartTest
+ * CartServiceTest
  *
  * @author Christian Dilger <c.dilger@addorange.de>
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class CartTest extends FunctionalTestCase
+class CartServiceTest extends FunctionalTestCase
 {
 
     /**
@@ -56,7 +57,7 @@ class CartTest extends FunctionalTestCase
     protected $coreExtensionsToLoad = [];
 
     /**
-     * @var \RKW\RkwShop\Cart\Cart
+     * @var \RKW\RkwShop\Service\Checkout\CartService
      */
     private $subject = null;
 
@@ -94,17 +95,17 @@ class CartTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        /*$this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/BeUsers.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/FeUsers.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Pages.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Product.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Order.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/OrderItem.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/ShippingAddress.xml');
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Stock.xml');
+        /*$this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/BeUsers.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/FeUsers.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Pages.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Product.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Order.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/OrderItem.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/ShippingAddress.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Stock.xml');
 */
 
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Global.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Global.xml');
         $this->setUpFrontendRootPage(
             1,
             [
@@ -122,7 +123,7 @@ class CartTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-        $this->subject = $this->objectManager->get(Cart::class);
+        $this->subject = $this->objectManager->get(CartService::class);
 
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
         $this->orderItemRepository = $this->objectManager->get(OrderItemRepository::class);
@@ -146,7 +147,7 @@ class CartTest extends FunctionalTestCase
          * Then a new cart is created
          */
 
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Check10.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check10.xml');
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
@@ -158,7 +159,7 @@ class CartTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product = $this->productRepository->findByUid(1);
 
-        $this->subject->initialize($product, $amount = 1);
+        $this->subject->initializeCart($product, $amount = 1);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
@@ -171,7 +172,7 @@ class CartTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function initializeUpdatesOrderForSessionUserIfAnOrderDoesAlreadyExist ()
+    public function initializeCartUpdatesOrderForSessionUserIfAnOrderDoesAlreadyExist ()
     {
 
         /**
@@ -183,7 +184,7 @@ class CartTest extends FunctionalTestCase
          * Then the existing cart is updated
          */
 
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Check20.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check20.xml');
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
@@ -196,7 +197,7 @@ class CartTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $selectedProduct = $this->productRepository->findByUid(2);
 
-        $this->subject->initialize($selectedProduct, $amount = 1);
+        $this->subject->initializeCart($selectedProduct, $amount = 1);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
@@ -232,7 +233,7 @@ class CartTest extends FunctionalTestCase
          * Then an error is thrown
          */
 
-        $this->importDataSet(__DIR__ . '/CartTest/Fixtures/Database/Check20.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check20.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product = $this->productRepository->findByUid(1);
@@ -240,7 +241,7 @@ class CartTest extends FunctionalTestCase
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderManager.error.noOrderItem');
 
-        $this->subject->initialize($product, $amount = 0);
+        $this->subject->initializeCart($product, $amount = 0);
 
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace RKW\RkwShop\Orders;
+namespace RKW\RkwShop\Service\Checkout;
 
 use \RKW\RkwShop\Exception;
 
@@ -18,14 +18,14 @@ use \RKW\RkwShop\Exception;
  */
 
 /**
- * Class OrderManager
+ * Class OrderService
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
+class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 {
 
 

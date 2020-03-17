@@ -1,23 +1,21 @@
 <?php
-namespace RKW\RkwShop\Tests\Integration\Orders;
+namespace RKW\RkwShop\Tests\Integration\Checkout;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
-use RKW\RkwShop\Orders\OrderManager;
+use RKW\RkwShop\Service\Checkout\OrderService;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
 use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use RKW\RkwShop\Domain\Repository\ShippingAddressRepository;
 
-
 use RKW\RkwRegistration\Domain\Model\FrontendUser;
 use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
 use RKW\RkwRegistration\Domain\Repository\RegistrationRepository;
-
 
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -39,14 +37,14 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 
 /**
- * OrderManagerTest
+ * OrderServiceTest
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class OrderManagerTest extends FunctionalTestCase
+class OrderServiceTest extends FunctionalTestCase
 {
 
     /**
@@ -65,7 +63,7 @@ class OrderManagerTest extends FunctionalTestCase
     protected $coreExtensionsToLoad = [];
 
     /**
-     * @var \RKW\RkwShop\Orders\OrderManager
+     * @var \RKW\RkwShop\Orders\OrderService
      */
     private $subject = null;
 
@@ -123,17 +121,17 @@ class OrderManagerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        /*$this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/BeUsers.xml');
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/FeUsers.xml');
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Pages.xml');
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Product.xml');
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Order.xml');
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/OrderItem.xml');
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/ShippingAddress.xml');
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Stock.xml');
+        /*$this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/BeUsers.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/FeUsers.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Pages.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Product.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Order.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/OrderItem.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/ShippingAddress.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Stock.xml');
 */
 
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Global.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Global.xml');
         $this->setUpFrontendRootPage(
             1,
             [
@@ -151,7 +149,7 @@ class OrderManagerTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-        $this->subject = $this->objectManager->get(OrderManager::class);
+        $this->subject = $this->objectManager->get(OrderService::class);
         $this->frontendUserRepository = $this->objectManager->get(FrontendUserRepository::class);
         $this->shippingAddressRepository = $this->objectManager->get(ShippingAddressRepository::class);
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
@@ -299,7 +297,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I make an order
          * Then an acceptPrivacy-error is thrown
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check10.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check10.xml');
 
                 /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
@@ -477,7 +475,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I make an order
          * Then an noOrderItem- error is thrown
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check20.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check20.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
@@ -536,7 +534,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I make an order
          * Then an outOfStock- error is thrown
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check50.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check50.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
@@ -595,7 +593,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I make an order
          * Then an outOfStock- error is thrown
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check80.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check80.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = $this->orderRepository->findByUid(1);
@@ -642,7 +640,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I make an order
          * Then the order is saved as registration
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check60.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check60.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
@@ -703,7 +701,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I make an order
          * Then the order is saved as registration
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check70.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check70.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
@@ -769,7 +767,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then the ordered product and the given amount is saved correctly
          * Then the privacy information is saved
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check30.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check30.xml');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
@@ -866,7 +864,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I make an order
          * Then the order is saved as registration
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check40.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check40.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
@@ -930,7 +928,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then orders of other users are kept
          * Then shippingAddresses of other users are kept
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check90.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check90.xml');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
@@ -978,7 +976,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then pre-order-stocks are excluded from calculation
          * Then pre-orders are excluded from calculation
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check100.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check100.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
@@ -1008,7 +1006,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then pre-orders are excluded from calculation
          * Then a value of zero is returned
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check110.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check110.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
@@ -1038,7 +1036,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then pre-order-stocks of the product bundle are excluded from calculation
          * Then pre-orders of the product bundle are excluded from calculation
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check120.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check120.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
@@ -1068,7 +1066,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then pre-order-stocks are excluded from calculation
          * Then pre-orders are excluded from calculation
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check130.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check130.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
@@ -1098,7 +1096,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then normal order-stocks are excluded from calculation
          * Then normal orders are excluded from calculation
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check100.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check100.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
@@ -1128,7 +1126,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then normal orders are excluded from calculation
          * Then a value of zero is returned
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check110.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check110.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
@@ -1157,7 +1155,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then normal order-stocks of the product bundle are excluded from calculation
          * Then normal orders of the product bundle are excluded from calculation
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check120.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check120.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
@@ -1186,7 +1184,7 @@ class OrderManagerTest extends FunctionalTestCase
          * Then normal order-stocks are excluded from calculation
          * Then normal orders are excluded from calculation
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check130.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check130.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
@@ -1213,7 +1211,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I place an order
          * Then the product with amount of zero is removed from my order
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check140.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check140.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
@@ -1271,7 +1269,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I place an order
          * Then three admins are returned
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check150.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check150.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product = $this->productRepository->findByUid(1);
@@ -1307,7 +1305,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I place an order
          * Then one admin is returned only
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check160.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check160.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product = $this->productRepository->findByUid(1);
@@ -1340,7 +1338,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I place an order
          * Then one fallback-admin is returned only
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check170.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check170.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product = $this->productRepository->findByUid(1);
@@ -1373,7 +1371,7 @@ class OrderManagerTest extends FunctionalTestCase
          * When I place an order
          * Then the three admins of the product-bundle are returned
          */
-        $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check180.xml');
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check180.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product = $this->productRepository->findByUid(1);
