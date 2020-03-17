@@ -1,6 +1,6 @@
 <?php
 
-namespace RKW\RkwShop\Tests\Integration\Cart;
+namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
 use RKW\RkwShop\Cart\Cart;
 use RKW\RkwShop\Service\Checkout\CartService;

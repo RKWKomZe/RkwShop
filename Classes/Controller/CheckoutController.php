@@ -48,6 +48,29 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     protected $frontendUser = null;
 
     /**
+     * action show cart
+     *
+     * @return void
+     */
+    /*
+    public function showCartAction()
+    {
+
+        $order = $this->cart->get(); //  liefert bereits die Order zurück
+
+        $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
+
+    //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
+
+        $this->view->assignMultiple([
+            'order'   => $order,
+            'checkoutPid'   => (int)$this->settings['checkoutPid']
+        ]);
+
+    }
+    */
+
+    /**
      * action create
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order

@@ -1,6 +1,6 @@
 <?php
 
-namespace RKW\RkwShop\Tests\Integration\Product;
+namespace RKW\RkwShop\Tests\Integration\Model\Product;
 
 use RKW\RkwShop\Domain\Model\Product;
 use TYPO3\CMS\Core\Utility\GeneralUtility;

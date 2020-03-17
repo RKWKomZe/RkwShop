@@ -1,5 +1,5 @@
 <?php
-namespace RKW\RkwShop\Tests\Integration\Checkout;
+namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
@@ -63,7 +63,7 @@ class OrderServiceTest extends FunctionalTestCase
     protected $coreExtensionsToLoad = [];
 
     /**
-     * @var \RKW\RkwShop\Orders\OrderService
+     * @var \RKW\RkwShop\Service\Checkout\OrderService
      */
     private $subject = null;
 
