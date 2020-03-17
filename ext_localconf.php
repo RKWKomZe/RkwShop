@@ -51,12 +51,12 @@ call_user_func(
             'Cart',
             array(
                 'Cart' => 'show, update',
-                'Checkout' => 'create',
+                'Checkout' => 'showCart, create',
             ),
             // non-cacheable actions
             array(
                 'Cart' => 'show, update',
-                'Checkout' => 'create',
+                'Checkout' => 'showCart, create',
             )
         );
 
@@ -76,12 +76,12 @@ call_user_func(
             'RKW.' . $extKey,
             'Checkout',
             array(
-                'Checkout' => 'create',
+                'Checkout' => 'showCart, create',
                 'Order' => 'create',
             ),
             // non-cacheable actions
             array(
-                'Checkout' => 'create',
+                'Checkout' => 'showCart, create',
                 'Order' => 'create',
             )
         );

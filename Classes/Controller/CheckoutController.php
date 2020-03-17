@@ -41,6 +41,14 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     protected $frontendUserRepository;
 
     /**
+     * CartService
+     *
+     * @var \RKW\RkwShop\Service\Checkout\CartService
+     * @inject
+     */
+    protected $cartService;
+
+    /**
      * logged in FrontendUser
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
@@ -52,23 +60,25 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @return void
      */
-    /*
     public function showCartAction()
     {
 
-        $order = $this->cart->get(); //  liefert bereits die Order zurück
+        $order = $this->cartService->getCart(); //  liefert bereits die Order zurück
 
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 
     //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
-        $this->view->assignMultiple([
-            'order'   => $order,
-            'checkoutPid'   => (int)$this->settings['checkoutPid']
-        ]);
+//        $this->view->assignMultiple([
+//            'order'   => $order,
+//            'checkoutPid'   => (int)$this->settings['checkoutPid']
+//        ]);
+
+        $this->view->assign(
+            'order', $order
+        );
 
     }
-    */
 
     /**
      * action create
