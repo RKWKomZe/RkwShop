@@ -34,6 +34,13 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 {
 
     /**
+     * cart
+     *
+     * @var \RKW\RkwShop\Domain\Model\Order
+     */
+    protected $cart;
+
+    /**
      * orderRepository
      *
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
@@ -192,10 +199,10 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     public function updateCart(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
     {
 
-        $order = $this->getCart();
+        $this->getCart();
 
         //  check, if there are existing orderitems
-        $orderItems = $order->getOrderItem();
+        $orderItems = $this->cart->getOrderItem();
 
         if ($remove && $orderItems->count() > 0) {
 
@@ -216,11 +223,11 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
             if ($existingItem) {
 
-                $this->updateOrderItem($amount, $existingItem);
+                $this->changeQuantity($existingItem, $amount);
 
             } else {
 
-                $this->addOrderItem($product, $amount, $order);
+                $this->addOrderItem($product, $amount);
 
             }
 
@@ -238,8 +245,11 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getCart()
     {
-        return $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+        $this->cart = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+
+        return $this->cart;
     }
+
 
     /**
      * Clean up cart product list
@@ -293,19 +303,32 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param                                   $amount
-     * @param Order                             $order
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    protected function addOrderItem(\RKW\RkwShop\Domain\Model\Product $product, $amount, Order $order)
+    public function add(\RKW\RkwShop\Domain\Model\Product $product, $amount)
+    {
+        $this->getCart();
+
+        $this->addOrderItem($product, $amount);
+
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @param                                   $amount
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
+    protected function addOrderItem(\RKW\RkwShop\Domain\Model\Product $product, $amount)
     {
         $orderItem = new OrderItem();
         $orderItem->setProduct($product);
         $orderItem->setAmount($amount);
 
-        $order->addOrderItem($orderItem);
+        $this->cart->addOrderItem($orderItem);
 
-        $this->orderRepository->update($order);
+        $this->orderRepository->update($this->cart);
     }
 
     /**
@@ -314,7 +337,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    protected function updateOrderItem($amount, OrderItem $existingItem)
+    protected function changeQuantity(OrderItem $existingItem, $amount)
     {
         $existingItem->setAmount($amount + $existingItem->getAmount());
 
@@ -341,21 +364,28 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * @param Order     $order
+     * @param OrderItem $removableItem
+     */
+    public function remove(OrderItem $removableItem)
+    {
+        $this->getCart();
+
+        $this->removeOrderItem($removableItem);
+    }
+
+    /**
      * @param OrderItem $removableItem
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    protected function removeOrderItem(Order $order, OrderItem $removableItem)
+    protected function removeOrderItem(OrderItem $removableItem)
     {
-        $order->removeOrderItem($removableItem);
+        $this->cart->removeOrderItem($removableItem);
 
-        $this->orderRepository->update($order);
+        $this->orderRepository->update($this->cart);
 
         $this->orderItemRepository->remove($removableItem); //  sets deleted flag
         //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/
-
-
     }
 
 

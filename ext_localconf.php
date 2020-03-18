@@ -37,12 +37,12 @@ call_user_func(
             'ProductDetail',
             array(
                 'Product' => 'show',
-                'Checkout' => 'updateCart',
+                'CartItem' => 'addCartItem',
             ),
             // non-cacheable actions
             array(
                 'Product' => 'show',
-                'Checkout' => 'updateCart',
+                'CartItem' => 'addCartItem',
             )
         );
 
@@ -51,10 +51,12 @@ call_user_func(
             'Cart',
             array(
                 'Checkout' => 'showCart, updateCart, create',
+                'CartItem' => 'removeCartItem',
             ),
             // non-cacheable actions
             array(
                 'Checkout' => 'showCart, updateCart, create',
+                'CartItem' => 'removeCartItem',
             )
         );
 

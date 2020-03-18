@@ -38,14 +38,14 @@ Otherwise your changes will be overwritten the next time you save the extension 
                                 <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" name="amount" value="{orderItem.amount}" class="feedback-field"/>
                             </div>
 
-                            <f:link.action action="update" controller="Cart" arguments="{product: orderItem.product, remove: 'true'}" class="button" rel="nofollow">Produkt entfernen</f:link.action>
+                            <f:link.action action="removeCartItem" controller="CartItem" arguments="{orderItem: orderItem}" class="button" rel="nofollow">Produkt entfernen</f:link.action>
                         </div>
 
                     </div>
 
                 </f:for>
 
-                <p>Warenkorb aktualisieren</p>
+                <f:link.action action="updateCart" controller="Checkout" arguments="{product: orderItem.product, remove: 'true'}" class="button" rel="nofollow">Warenkorb aktualisieren</f:link.action>
 
                 <p class="v320-1">
                     <button class="button" type="submit">

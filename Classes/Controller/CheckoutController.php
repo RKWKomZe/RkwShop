@@ -67,7 +67,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 
-    //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
+        //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
         $this->view->assignMultiple([
             'order'   => $order,
@@ -107,21 +107,34 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function updateCartAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
     {
 
-        $this->cartService->initialize($product, $amount, $remove);
+        //  Die nachfolgenden Actions müssten über einen eigenen Controller CartItemController einzeln gesteuert werden und demzufolge hier raus!
+        //  addOrderItem aka addCartItem
+        //  removeFromCart aka removeCartItem
+        //  changeQuantity
+
+        $this->cartService->initializeCart($product, $amount, $remove);
 
         $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
 
     }
 
     /**
-     * action create
+     * see OrderController->newAction()
+     */
+    public function newOrderAction()
+    {
+
+    }
+
+    /**
+     * action confirm order
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param integer $terms
      * @param integer $privacy
      * @return void
      */
-    public function createAction(\RKW\RkwShop\Domain\Model\Order $order = null, $terms = null, $privacy = null)
+    public function confirmOrderAction(\RKW\RkwShop\Domain\Model\Order $order = null, $terms = null, $privacy = null)
     {
 
         //  if current user is not logged in yet, take him to mein.rkw
@@ -146,6 +159,22 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             'privacy'         => $privacy
         ]);
 
+    }
+
+    /**
+     * see OrderController->createAction()
+     */
+    public function finishOrderAction()
+    {
+
+    }
+
+    /**
+     *
+     */
+    public function successOrderAction()
+    {
+        //  show success page by id
     }
 
     /**
