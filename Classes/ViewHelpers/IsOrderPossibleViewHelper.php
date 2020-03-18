@@ -42,12 +42,12 @@ class IsOrderPossibleViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstrac
 
                 $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 
-                /** @var \RKW\RkwShop\Orders\OrderManager $orderManager */
-                $orderManager = $objectManager->get('RKW\\RkwShop\\Orders\\OrderManager');
+                /** @var \RKW\RkwShop\Service\Checkout\OrderService */
+                $orderService = $objectManager->get(\RKW\RkwShop\Service\Checkout\OrderService::class);
 
                 if (
-                    ($orderManager->getRemainingStockOfProduct($product))
-                    || ($orderManager->getPreOrderStockOfProduct($product))
+                    ($orderService->getRemainingStockOfProduct($product))
+                    || ($orderService->getPreOrderStockOfProduct($product))
                 ){
                     return true;
                 }

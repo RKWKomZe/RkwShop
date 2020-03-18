@@ -77,44 +77,44 @@
 
 			<!-- ================================================================================== -->
 
-			<!-- OrderManager -->
-            <trans-unit id="orderManager.error.acceptTerms">
+			<!-- OrderService -->
+            <trans-unit id="orderService.error.acceptTerms">
                 <source>Please accept our terms of use in order to place an order.</source>
                 <target>Das muss leider sein: Bitte akzeptieren Sie unsere Nutzungsbedingungen, um bestellen zu können.</target>
             </trans-unit>
-            <trans-unit id="orderManager.error.acceptPrivacy">
+            <trans-unit id="orderService.error.acceptPrivacy">
                 <source>The protection of your data is important to us. Therefore we ask you to agree to the storage of your personal data.</source>
                 <target>Der Schutz Ihrer Daten ist uns wichtig. Daher bitten wir Sie, der Speicherung Ihrer persönlichen Daten zuzustimmen.</target>
             </trans-unit>
-			<trans-unit id="orderManager.error.invalidEmail">
+			<trans-unit id="orderService.error.invalidEmail">
 				<source>Oops, something went wrong. Please enter a valid e-mail address.</source>
 				<target>Upps, da ist etwas schief gelaufen. Bitte geben Sie eine gültige E-Mailadresse ein.</target>
 			</trans-unit>
-			<trans-unit id="orderManager.error.noShippingAddress">
+			<trans-unit id="orderService.error.noShippingAddress">
 				<source>Oops, something went wrong. Please enter a delivery address.</source>
 				<target>Upps, da ist etwas schief gelaufen. Bitte geben Sie eine Lieferadresse an.</target>
 			</trans-unit>
-			<trans-unit id="orderManager.error.noOrderItem">
+			<trans-unit id="orderService.error.noOrderItem">
 				<source>Hm, have you possibly forgotten to indicate the order quantity?</source>
 				<target>Hm, haben Sie möglicherweise vergessen die Bestellmenge anzugeben?</target>
 			</trans-unit>
-			<trans-unit id="orderManager.error.outOfStock">
+			<trans-unit id="orderService.error.outOfStock">
 				<source><![CDATA[Hm, unfortunately you were not fast enough - at least one of the desired products is no longer available in the desired quantity. Please adjust your order if necessary or contact us by <a href="mailto:service@rkw.de">E-Mail</a>.]]></source>
                 <target><![CDATA[Hm, da waren Sie wohl leider nicht schnell genug – mindestens eines der gewünschten Produkte ist nicht mehr in der gewünschten Menge verfügbar. Bitte passen Sie Ihre Bestellung gegebenenfalls an oder wenden Sie sich per <a href="mailto:service@rkw.de">E-Mail</a> an uns.]]></target>
 			</trans-unit>
-            <trans-unit id="orderManager.error.orderAlreadyPersisted">
+            <trans-unit id="orderService.error.orderAlreadyPersisted">
                 <source><![CDATA[Oops, that shouldn't have happened. Apparently the order has already been saved.  Please contact our <a href="mailto:service@rkw.de">Support</a>.]]></source>
                 <target><![CDATA[Upps, das hätte nicht passieren dürfen. Offenbar wurde die Bestellung schon gespeichert. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
             </trans-unit>
-            <trans-unit id="orderManager.error.frontendUserNotPersisted">
+            <trans-unit id="orderService.error.frontendUserNotPersisted">
                 <source><![CDATA[Oops, that shouldn't have happened. The user account you submitted does not seem to exist. Please contact our <a href="mailto:service@rkw.de">Support</a>. ]]></source>
                 <target><![CDATA[Upps, das hätte nicht passieren dürfen. Das übergebene Nutzerkonto scheint nicht zu existieren. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
             </trans-unit>
-			<trans-unit id="orderManager.message.created">
+			<trans-unit id="orderService.message.created">
 				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
 				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
 			</trans-unit>
-			<trans-unit id="orderManager.message.createdOptIn">
+			<trans-unit id="orderService.message.createdOptIn">
 				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href=mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
 				<target><![CDATA[Fast geschafft! Eine E-Mail mit einem Bestätigungslink ist auf dem Weg zu Ihnen. Sollten Sie innerhalb der nächsten 2-3 Minuten keine E-Mail von uns erhalten, prüfen Sie Ihren Spam-Filter. Selbstverständlich steht Ihnen aber auch unser <a href=mailto:service@rkw.de">Support</a> bei Problemen jederzeit gerne mit Rat und Tat zur Seite.]]></target>
 			</trans-unit>

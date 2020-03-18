@@ -58,12 +58,12 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
-     * OrderManager
+     * OrderService
      *
-     * @var \RKW\RkwShop\Orders\OrderManager
+     * @var \RKW\RkwShop\Service\Checkout\OrderService
      * @inject
      */
-    protected $orderManager;
+    protected $orderService;
 
 
     /**
@@ -202,7 +202,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        if ($this->settings['products']) {
+        if ($this->settings['products']) {  //  das kommt aus dem expliziten Setzen von Produkten im Plugin, wie zum Beispiel für die Messe
 
             $products = $this->productRepository->findByUidList($this->settings['products']);
             $this->view->assignMultiple(
@@ -244,7 +244,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         try {
 
-            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
+            $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     $message, 'rkw_shop'

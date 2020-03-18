@@ -192,7 +192,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.acceptTerms');
+        static::expectExceptionMessage('orderService.error.acceptTerms');
 
         $this->subject->createOrder($order, $request, null, false, false);
 
@@ -231,7 +231,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.acceptTerms');
+        static::expectExceptionMessage('orderService.error.acceptTerms');
 
         $this->subject->createOrder($order, $request, $frontendUser, false, false);
 
@@ -267,7 +267,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.acceptPrivacy');
+        static::expectExceptionMessage('orderService.error.acceptPrivacy');
 
         $this->subject->createOrder($order, $request, null, true, false);
 
@@ -309,7 +309,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.acceptPrivacy');
+        static::expectExceptionMessage('orderService.error.acceptPrivacy');
 
         $this->subject->createOrder($order, $request, $frontendUser, true, false);
 
@@ -349,7 +349,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.invalidEmail');
+        static::expectExceptionMessage('orderService.error.invalidEmail');
 
         $this->subject->createOrder($order, $request, null, true, true);
 
@@ -395,7 +395,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noShippingAddress');
+        static::expectExceptionMessage('orderService.error.noShippingAddress');
 
         $this->subject->createOrder($order, $request, null, true, true);
 
@@ -441,7 +441,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noOrderItem');
+        static::expectExceptionMessage('orderService.error.noOrderItem');
 
         $this->subject->createOrder($order, $request, null, true, true);
 
@@ -501,7 +501,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noOrderItem');
+        static::expectExceptionMessage('orderService.error.noOrderItem');
 
         $this->subject->createOrder($order, $request, null, true, true);
 
@@ -560,7 +560,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.outOfStock');
+        static::expectExceptionMessage('orderService.error.outOfStock');
 
         $this->subject->createOrder($order, $request, null, true, true);
 
@@ -605,7 +605,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.orderAlreadyPersisted');
+        static::expectExceptionMessage('orderService.error.orderAlreadyPersisted');
 
         $this->subject->createOrder($order, $request, $frontendUser, true, true);
 
@@ -666,7 +666,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::assertEquals(
-            'orderManager.message.createdOptIn',
+            'orderService.message.createdOptIn',
             $this->subject->createOrder($order, $request, null, true, true)
         );
 
@@ -727,7 +727,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::assertEquals(
-            'orderManager.message.createdOptIn',
+            'orderService.message.createdOptIn',
             $this->subject->createOrder($order, $request, null, true, true)
         );
 
@@ -800,7 +800,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::assertEquals(
-            'orderManager.message.created',
+            'orderService.message.created',
             $this->subject->createOrder($order, $request, $frontendUser, false, true)
         );
 
@@ -890,7 +890,7 @@ class OrderServiceTest extends FunctionalTestCase
         $request = $this->objectManager->get(Request::class);
 
         static::assertEquals(
-            'orderManager.message.createdOptIn',
+            'orderService.message.createdOptIn',
             $this->subject->createOrder($order, $request, null, true, true)
         );
 

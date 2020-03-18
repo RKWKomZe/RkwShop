@@ -239,7 +239,7 @@ class CartServiceTest extends FunctionalTestCase
         $product = $this->productRepository->findByUid(1);
 
         static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderManager.error.noOrderItem');
+        static::expectExceptionMessage('orderService.error.noOrderItem');
 
         $this->subject->initializeCart($product, $amount = 0);
 

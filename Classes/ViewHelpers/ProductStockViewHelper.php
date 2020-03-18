@@ -38,13 +38,13 @@ class ProductStockViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 
         $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 
-        /** @var \RKW\RkwShop\Orders\OrderManager $orderManager */
-        $orderManager = $objectManager->get('RKW\\RkwShop\\Orders\\OrderManager');
+        /** @var \RKW\RkwShop\Service\Checkout\OrderService */
+        $orderService = $objectManager->get(\RKW\RkwShop\Service\Checkout\OrderService::class);
 
         if ($preOrder) {
-            return $orderManager->getPreOrderStockOfProduct($product);
+            return $orderService->getPreOrderStockOfProduct($product);
         }
 
-        return $orderManager->getRemainingStockOfProduct($product);
+        return $orderService->getRemainingStockOfProduct($product);
     }
 }

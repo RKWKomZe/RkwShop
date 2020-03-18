@@ -165,7 +165,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         // cleanup & check cartItem
         $this->cleanUpOrderItemList($order);
         if (! count($order->getOrderItem()->toArray())) {
-            throw new Exception('orderManager.error.noOrderItem');
+            throw new Exception('orderService.error.noOrderItem');
         }
 
     }

@@ -61,35 +61,35 @@
 
 			<!-- ================================================================================== -->
 
-			<!-- OrderManager -->
-            <trans-unit id="orderManager.error.acceptTerms">
+			<!-- OrderService -->
+            <trans-unit id="orderService.error.acceptTerms">
                 <source>Please accept our terms of use in order to place an order.</source>
             </trans-unit>
-            <trans-unit id="orderManager.error.acceptPrivacy">
+            <trans-unit id="orderService.error.acceptPrivacy">
                 <source>The protection of your data is important to us. Therefore we ask you to agree to the storage of your personal data.</source>
             </trans-unit>
-			<trans-unit id="orderManager.error.invalidEmail">
+			<trans-unit id="orderService.error.invalidEmail">
 				<source>Oops, something went wrong. Please enter a valid e-mail address.</source>
 			</trans-unit>
-			<trans-unit id="orderManager.error.noShippingAddress">
+			<trans-unit id="orderService.error.noShippingAddress">
 				<source>Oops, something went wrong. Please enter a delivery address.</source>
 			</trans-unit>
-			<trans-unit id="orderManager.error.noOrderItem">
+			<trans-unit id="orderService.error.noOrderItem">
 				<source>Hm, have you possibly forgotten to indicate the order quantity?</source>
 			</trans-unit>
-			<trans-unit id="orderManager.error.outOfStock">
+			<trans-unit id="orderService.error.outOfStock">
 				<source><![CDATA[Hm, unfortunately you were not fast enough - at least one of the desired products is no longer available in the desired quantity. Please adjust your order if necessary or contact us by <a href="mailto:service@rkw.de">E-Mail</a>.]]></source>
 			</trans-unit>
-            <trans-unit id="orderManager.error.orderAlreadyPersisted">
+            <trans-unit id="orderService.error.orderAlreadyPersisted">
                 <source><![CDATA[Oops, that shouldn't have happened. Apparently the order has already been saved.  Please contact our <a href="mailto:service@rkw.de">Support</a>.]]></source>
             </trans-unit>
-            <trans-unit id="orderManager.error.frontendUserNotPersisted">
+            <trans-unit id="orderService.error.frontendUserNotPersisted">
                 <source><![CDATA[Oops, that shouldn't have happened. The user account you submitted does not seem to exist. Please contact our <a href="mailto:service@rkw.de">Support</a>. ]]></source>
             </trans-unit>
-			<trans-unit id="orderManager.message.created">
+			<trans-unit id="orderService.message.created">
 				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
 			</trans-unit>
-			<trans-unit id="orderManager.message.createdOptIn">
+			<trans-unit id="orderService.message.createdOptIn">
 				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href=mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
 			</trans-unit>
 

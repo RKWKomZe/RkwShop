@@ -167,17 +167,17 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
                 || ($frontendUser->_isNew())
             )
         ) {
-            throw new Exception('orderManager.error.acceptTerms');
+            throw new Exception('orderService.error.acceptTerms');
         }
 
         // check privacy flag
         if (! $privacy) {
-            throw new Exception('orderManager.error.acceptPrivacy');
+            throw new Exception('orderService.error.acceptPrivacy');
         }
 
         // check given e-mail
         if (! \RKW\RkwRegistration\Tools\Registration::validEmail($order->getEmail())) {
-            throw new Exception('orderManager.error.invalidEmail');
+            throw new Exception('orderService.error.invalidEmail');
         }
 
         // check for shippingAddress
@@ -187,14 +187,14 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             || (! $order->getShippingAddress()->getZip())
             || (! $order->getShippingAddress()->getCity())
         ){
-            throw new Exception('orderManager.error.noShippingAddress');
+            throw new Exception('orderService.error.noShippingAddress');
         }
 
 
         // cleanup & check orderItem
         $this->cleanUpOrderItemList($order);
         if (! count($order->getOrderItem()->toArray())) {
-            throw new Exception('orderManager.error.noOrderItem');
+            throw new Exception('orderService.error.noOrderItem');
         }
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
@@ -208,7 +208,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
                 $stockPreOrder = $this->getPreOrderStockOfProduct($orderItem->getProduct());
 
                 if ($orderItem->getAmount() > ($stock + $stockPreOrder)) {
-                    throw new Exception('orderManager.error.outOfStock');
+                    throw new Exception('orderService.error.outOfStock');
                 }
             }
         }
@@ -225,7 +225,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             // add privacy info
             \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($request, $frontendUser, $order, 'new order');
 
-            return 'orderManager.message.created';
+            return 'orderService.message.created';
         }
 
 
@@ -243,7 +243,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             $request
         );
 
-        return 'orderManager.message.createdOptIn';
+        return 'orderService.message.createdOptIn';
 
     }
 
@@ -265,12 +265,12 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
         // check order
         if ($order->getStatus() > 0) {
-            throw new Exception('orderManager.error.orderAlreadyPersisted');
+            throw new Exception('orderService.error.orderAlreadyPersisted');
         }
 
         // check frontendUser
         if ($frontendUser->_isNew()) {
-            throw new Exception('orderManager.error.frontendUserNotPersisted');
+            throw new Exception('orderService.error.frontendUserNotPersisted');
         }
 
         // add frontendUser to order and shippingAddress
