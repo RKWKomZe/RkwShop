@@ -160,10 +160,7 @@ class CheckoutControllerTest extends FunctionalTestCase
         $this->productRepository = $this->objectManager->get(ProductRepository::class);
         $this->privacyRepository = $this->objectManager->get(PrivacyRepository::class);
         $this->registrationRepository = $this->objectManager->get(RegistrationRepository::class);
-
-
     }
-
 
     /**
      * @test
@@ -181,45 +178,29 @@ class CheckoutControllerTest extends FunctionalTestCase
     {
 
         /**
-        * Scenario:
-        *
-        * Given I'm not logged in
-        * Given I do not accept the Terms & Conditions
-        * When I make an order
-        * Then an acceptTerms-error is thrown
-        */
+         * Scenario:
+         *
+         * Given I visit the cart page
+         * Given I already have an order in the cart
+         * When I open the cart page
+         * Then my order is returned to the view
+         */
 
         $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check10.xml');
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUserSessionHash();
+        $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
 
         $view = $this->getMock(ViewInterface::class);
-        $view->expects($this->once())->method('assign')->with('order', $order);
-        $this->inject($this->subject, 'view', $view);
-
-        /*
-        $view = $this->getMock(ViewInterface::class);
-        $view->expects($this->once())->method('assignMultiple')->with('order', $order);
-        $this->inject($this->subject, 'view', $view);
-        */
+        $view->expects($this->once())->method('assignMultiple')->with([
+            'order' => $order,
+            'checkoutPid' => 0
+        ]);
+        $this->inject($this->subject,'view', $view);
 
         $this->subject->showCartAction();
-
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        //  $order = GeneralUtility::makeInstance(Order::class);
-
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
-        //  $request = $this->objectManager->get(Request::class);
-
-        //  static::expectException(\RKW\RkwShop\Exception::class);
-        //  static::expectExceptionMessage('orderManager.error.acceptTerms');
-
-
-        //  $this->subject->createOrder($order, $request, null, false, false);
 
     }
 

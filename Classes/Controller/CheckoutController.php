@@ -69,14 +69,10 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
     //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
-//        $this->view->assignMultiple([
-//            'order'   => $order,
-//            'checkoutPid'   => (int)$this->settings['checkoutPid']
-//        ]);
-
-        $this->view->assign(
-            'order', $order
-        );
+        $this->view->assignMultiple([
+            'order'   => $order,
+            'checkoutPid'   => (int)$this->settings['checkoutPid']
+        ]);
 
     }
 

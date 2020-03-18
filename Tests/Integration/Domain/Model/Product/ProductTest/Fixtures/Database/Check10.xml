@@ -42,19 +42,4 @@
         <uid_foreign>1</uid_foreign>
     </tx_rkwshop_domain_model_product_product_mm>
 
-    <tx_rkwshop_domain_model_stock>
-        <uid>1</uid>
-        <pid>1</pid>
-        <product>1</product>
-        <amount>100</amount>
-        <comment>Auf- und Unterlage</comment>
-    </tx_rkwshop_domain_model_stock>
-    <tx_rkwshop_domain_model_stock>
-        <uid>2</uid>
-        <pid>1</pid>
-        <product>1</product>
-        <amount>100</amount>
-        <comment>Auf- und Unterlage</comment>
-    </tx_rkwshop_domain_model_stock>
-
 </dataset>
