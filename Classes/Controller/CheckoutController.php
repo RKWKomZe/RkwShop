@@ -77,6 +77,43 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
 
     /**
+     * action show mini cart
+     *
+     * @return void
+     */
+    public function showMiniCartAction()
+    {
+
+        $order = $this->cartService->getCart(); //  liefert bereits die Order zurück
+
+        $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
+
+//        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
+
+        $this->view->assignMultiple([
+            'order'   => $order,
+            'cartPid'   => (int)$this->settings['cartPid']
+        ]);
+
+    }
+
+    /**
+     * action update cart
+     *
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @param int                               $amount
+     * @param bool                              $remove
+     */
+    public function updateCartAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
+    {
+
+        $this->cartService->initialize($product, $amount, $remove);
+
+        $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
+
+    }
+
+    /**
      * action create
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order

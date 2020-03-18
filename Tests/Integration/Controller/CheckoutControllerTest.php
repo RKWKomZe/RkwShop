@@ -164,25 +164,15 @@ class CheckoutControllerTest extends FunctionalTestCase
 
     /**
      * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function showCartReturnsCart()
+    public function showCartReturnsCartWithOrder()
     {
 
         /**
          * Scenario:
          *
-         * Given I visit the cart page
          * Given I already have an order in the cart
-         * When I open the cart page
+         * When I visit the cart page
          * Then my order is returned to the view
          */
 
@@ -201,6 +191,38 @@ class CheckoutControllerTest extends FunctionalTestCase
         $this->inject($this->subject,'view', $view);
 
         $this->subject->showCartAction();
+
+    }
+
+    /**
+     * @test
+     */
+    public function showMiniCartReturnsCartWithOrder()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I already have an order in the cart
+         * When I visit a page
+         * Then my order is returned to the mini cart
+         */
+
+        $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check10.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+
+        $view = $this->getMock(ViewInterface::class);
+        $view->expects($this->once())->method('assignMultiple')->with([
+            'order' => $order,
+            'cartPid' => 0
+        ]);
+        $this->inject($this->subject,'view', $view);
+
+        $this->subject->showMiniCartAction();
 
     }
 
