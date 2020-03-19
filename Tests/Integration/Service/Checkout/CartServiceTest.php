@@ -135,7 +135,7 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function initializeCreatesANewOrderForSessionUserIfAnOrderDoesNotAlreadyExist ()
+    public function initializeCartCreatesANewOrderForSessionUserIfAnOrderDoesNotAlreadyExist ()
     {
 
         /**

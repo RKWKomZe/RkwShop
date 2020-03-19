@@ -19,6 +19,7 @@ use RKW\RkwShop\Helper\DivUtility;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use RKW\RkwShop\Service\Checkout\OrderService;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /**
@@ -47,6 +48,14 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @inject
      */
     protected $cartService;
+
+    /**
+     * OrderService
+     *
+     * @var \RKW\RkwShop\Service\Checkout\OrderService
+     * @inject
+     */
+    protected $orderService;
 
     /**
      * logged in FrontendUser
@@ -129,12 +138,11 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     /**
      * action confirm order
      *
-     * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param integer $terms
      * @param integer $privacy
      * @return void
      */
-    public function confirmOrderAction(\RKW\RkwShop\Domain\Model\Order $order = null, $terms = null, $privacy = null)
+    public function confirmCartAction($terms = null, $privacy = null)
     {
 
         //  if current user is not logged in yet, take him to mein.rkw
@@ -142,8 +150,11 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $uri = $this->uriBuilder
                 ->setTargetPageUid((int)$this->settings['accountPid'])
                 ->build();
+            //  see redirectToLogin in rkw_registration
             $this->redirectToUri($uri);
         }
+
+        $order = $this->cartService->getCart();
 
         //  update the order information like shipping address, if there is a logged in user
 
@@ -162,17 +173,66 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
 
     /**
-     * see OrderController->createAction()
+     * action create
+     *
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param integer $terms
+     * @param integer $privacy
+     * @return void
+     * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
-    public function finishOrderAction()
+    public function orderCartAction(\RKW\RkwShop\Domain\Model\Order $order, $terms = null, $privacy = null)
     {
+        try {
+
+            $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
+            $this->addFlashMessage(
+                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    $message, 'rkw_shop'
+                )
+            );
+
+            $uri = $this->uriBuilder
+                ->setTargetPageUid((int)$this->settings['checkoutSuccessPid'])
+                ->build();
+            $this->redirectToUri($uri);
+
+        } catch (\RKW\RkwShop\Exception $exception) {
+            $this->addFlashMessage(
+                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    $exception->getMessage(), 'rkw_shop'
+                ),
+                '',
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
+            );
+
+            $this->forward('create', 'Checkout', 'RkwShop',
+                [
+                    'order' => $order,
+                    'terms' => $terms,
+                    'privacy' => $privacy
+                ]
+            );
+        }
+
+        $this->redirect('new');
 
     }
 
     /**
      *
      */
-    public function successOrderAction()
+    public function finishCartAction()
     {
         //  show success page by id
     }

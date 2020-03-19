@@ -1,6 +1,8 @@
 <?php
 namespace RKW\RkwShop\Tests\Integration\Controller;
 
+use RKW\RkwBasics\Helper\Common;
+use RKW\RkwRegistration\Tools\Authentication;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 use RKW\RkwShop\Domain\Model\Order;
@@ -168,6 +170,8 @@ class CheckoutControllerTest extends FunctionalTestCase
     public function showCartReturnsCartWithOrder()
     {
 
+        //  /checkout/cart
+
         /**
          * Scenario:
          *
@@ -224,6 +228,110 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $this->subject->showMiniCartAction();
 
+    }
+
+    /**
+     * @test
+     */
+    public function confirmCartReturnsCartWithOrder()
+    {
+
+        //  /checkout/confirm
+
+        /**
+         * Scenario:
+         *
+         * Given I am logged in
+         * Given I already have an order in the cart
+         * When I visit the cart confirm page
+         * Then my order is returned to the view
+         */
+
+        $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check20.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+
+        $view = $this->getMock(ViewInterface::class);
+        $view->expects($this->once())->method('assignMultiple')->with([
+            'frontendUser' => $frontendUser,
+            'order' => $order,
+            'termsPid' => 0,
+            'terms' => null,
+            'privacy' => null,
+        ]);
+        $this->inject($this->subject,'view', $view);
+
+        $this->subject->confirmCartAction();
+
+    }
+
+    /**
+     * @test
+     */
+    public function confirmCartRedirectsToRegistrationIfNoFrontendUserIsLoggedIn()
+    {
+
+        //  /checkout/confirm
+
+        /**
+         * Scenario:
+         *
+         * Given I am not logged in
+         * Given I already have an order in the cart
+         * When I visit the cart confirm page
+         * Then I am redirected to the registration page
+         */
+
+        $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check30.xml');
+
+        Common::initFrontendInBackendContext();
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+
+        $view = $this->getMock(ViewInterface::class);
+        $view->expects($this->once())->method('assignMultiple')->with([
+            'frontendUser' => $frontendUser,
+            'order' => $order,
+            'termsPid' => 0,
+            'terms' => null,
+            'privacy' => null,
+        ]);
+        $this->inject($this->subject,'view', $view);
+
+        $this->subject->confirmCartAction();
+
+    }
+
+    /**
+     * @test
+     */
+    public function orderCart()
+    {
+        //  /checkout/order -> /checkout/finish
+
+        //  validate order
+
+        //  assert redirect
+    }
+
+    /**
+     * @test
+     */
+    public function finishCart()
+    {
+        //  /checkout/finish
     }
 
     //=============================================

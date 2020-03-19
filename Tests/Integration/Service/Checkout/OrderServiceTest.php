@@ -299,7 +299,7 @@ class OrderServiceTest extends FunctionalTestCase
          */
         $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check10.xml');
 
-                /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
