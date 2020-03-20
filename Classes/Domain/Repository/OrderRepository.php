@@ -59,7 +59,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param integer $timestamp
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     *  @api used by RKW Soap
+     * @api used by RKW Soap
      */
     public function findByTimestampSoap($timestamp)
     {
@@ -71,7 +71,10 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->getQuerySettings()->setIgnoreEnableFields(true);
 
         $query->matching(
-            $query->greaterThanOrEqual('tstamp', intval($timestamp))
+            $query->logicalOr(
+                $query->greaterThanOrEqual('tstamp', intval($timestamp)),
+                $query->greaterThanOrEqual('orderItem.tstamp', intval($timestamp))
+            )
         );
 
         $query->setOrderings(array('tstamp' => QueryInterface::ORDER_ASCENDING));
