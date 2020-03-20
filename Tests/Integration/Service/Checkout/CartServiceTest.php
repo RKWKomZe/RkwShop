@@ -135,7 +135,7 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function initializeCartCreatesANewOrderForSessionUserIfAnOrderDoesNotAlreadyExist ()
+    public function getCartCreatesANewOrderForSessionUserIfAnOrderDoesNotAlreadyExist ()
     {
 
         /**
@@ -156,10 +156,7 @@ class CartServiceTest extends FunctionalTestCase
 
         static::assertEquals(0, count($orderBefore));
 
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(1);
-
-        $this->subject->initializeCart($product, $amount = 1);
+        $this->subject->getCart();
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
@@ -172,15 +169,14 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function initializeCartUpdatesOrderForSessionUserIfAnOrderDoesAlreadyExist ()
+    public function addProductUpdatesOrderForSessionUser()
     {
 
         /**
          * Scenario:
          *
-         * Given a guest adds a product to the cart
-         * Given he created a cart before
-         * When I initialize a cart
+         * Given my cart does already exists
+         * When I add a product
          * Then the existing cart is updated
          */
 
@@ -193,55 +189,110 @@ class CartServiceTest extends FunctionalTestCase
 
         static::assertEquals(1, count($orderBefore));
         static::assertEquals('1', $orderBefore->getFirst()->getUid());
+        static::assertEquals(0, count($orderBefore->getFirst()->getOrderItem()));
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $selectedProduct = $this->productRepository->findByUid(2);
+        $selectedProduct = $this->productRepository->findByUid(1);
 
-        $this->subject->initializeCart($selectedProduct, $amount = 1);
+        $this->subject->add($selectedProduct, $amount = 1);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
 
         static::assertEquals(1, count($orderAfter));
         static::assertEquals('1', $orderAfter->getFirst()->getUid());
-        static::assertEquals(2, count($orderAfter->getFirst()->getOrderItem()));
-//        static::assertEquals($selectedProduct, $orderAfter->getFirst()->getOrderItem()->rewind()->getProduct());
+        static::assertEquals(1, count($orderAfter->getFirst()->getOrderItem()));
 
     }
 
     /**
      * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createCartChecksForOrderItems ()
+    public function addSameProductAgainUpdatesQuantity()
     {
 
         /**
          * Scenario:
          *
-         * Given a product is added to the cart
-         * Given the amount is 0
-         * When I create a cart
-         * Then an error is thrown
+         * Given my cart does already exists
+         * Given my cart contains 1 item of a product
+         * When I add 1 additional item of this product
+         * Then the existing cart contains 2
          */
 
-        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check20.xml');
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check30.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderBefore));
+        static::assertEquals('1', $orderBefore->getFirst()->getUid());
+        static::assertEquals(1, count($orderBefore->getFirst()->getOrderItem()));
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(1);
+        $selectedProduct = $this->productRepository->findByUid(1);
 
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderService.error.noOrderItem');
+        $this->subject->add($selectedProduct, $amount = 1);
 
-        $this->subject->initializeCart($product, $amount = 0);
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderAfter));
+        static::assertEquals('1', $orderAfter->getFirst()->getUid());
+        static::assertEquals(1, $orderAfter->getFirst()->getOrderItem()->count());
+
+        $orderItems = $orderAfter->getFirst()->getOrderItem();
+        $orderItems->rewind();
+
+        static::assertEquals(2, $orderItems->current()->getAmount());
+
+    }
+
+    /**
+     * @test
+     */
+    public function removeProductUpdatesOrderForSessionUser()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given my cart does already exist
+         * Given 2 order items are already added
+         * When I remove the second order item
+         * Then the cart will be updated
+         * And will contain only the first order item
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check40.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderBefore));
+        static::assertEquals('1', $orderBefore->getFirst()->getUid());
+        static::assertEquals(2, count($orderBefore->getFirst()->getOrderItem()));
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $removableItem = $this->orderItemRepository->findByUid(2);
+
+        $this->subject->remove($removableItem);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderAfter));
+        static::assertEquals('1', $orderAfter->getFirst()->getUid());
+        static::assertEquals(1, count($orderAfter->getFirst()->getOrderItem()));
+
+        $orderItems = $orderAfter->getFirst()->getOrderItem();
+        $orderItems->rewind();
+
+        static::assertSame($this->orderItemRepository->findByUid(1), $orderItems->current());
 
     }
 

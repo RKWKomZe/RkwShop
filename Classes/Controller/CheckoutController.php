@@ -173,7 +173,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
 
     /**
-     * action create
+     * action orderCart
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param integer $terms

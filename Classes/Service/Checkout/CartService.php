@@ -107,75 +107,118 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     protected $logger;
 
     /**
-     * Initialize Cart
+     * Returns TYPO3 settings
      *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @param int $amount
-     * @param bool $remove
-     *
-     * @return void
-     *
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @return array
      */
-    public function initializeCart(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
+    protected function getSettings()
+    {
+        $settings = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
+            'Rkwshop'
+        );
+
+        return $settings['plugin.']['tx_rkwshop.']['settings.'];
+    }
+
+    /**
+     * Returns logger instance
+     *
+     * @return \TYPO3\CMS\Core\Log\Logger
+     */
+    protected function getLogger()
     {
 
-        if ($this->getCart()) {
-            $this->updateCart($product, $amount, $remove);
-        } else {
-            $this->createCart($product, $amount);
+        if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {
+            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Log\LogManager')->getLogger(__CLASS__);
         }
 
+        return $this->logger;
+    }
+
+    /**
+     * @return \RKW\RkwShop\Domain\Model\Order $order
+     */
+    public function getCart()
+    {
+
+        $this->cart = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+
+        return ($this->cart) ? $this->cart : $this->createCart();
     }
 
     /**
      * Create Cart
      *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @param int $amount
+     * @return \RKW\RkwShop\Domain\Model\Order  $order
      *
-     * @return void
-     *
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createCart(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
+    public function createCart()
     {
 
         $order = new Order();
         $order->setFrontendUserSessionHash($_COOKIE[FrontendUserAuthentication::getCookieName()]);
 
-        $orderItem = new OrderItem();
-        $orderItem->setProduct($product);
-        $orderItem->setAmount($amount);
-
-        $order->addOrderItem($orderItem);
-
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
 
-        // cleanup & check cartItem
-        $this->cleanUpOrderItemList($order);
-        if (! count($order->getOrderItem()->toArray())) {
-            throw new Exception('orderService.error.noOrderItem');
+        return $order;
+
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @param                                   $amount
+     */
+    public function add(\RKW\RkwShop\Domain\Model\Product $product, $amount)
+    {
+        $this->cart = $this->getCart();
+
+        $orderItem = $this->cart->containsProduct($product);
+
+        if ($orderItem) {
+            $this->changeQuantity($orderItem, $amount);
+        } else {
+            $orderItem = new OrderItem();
+            $orderItem->setProduct($product);
+            $orderItem->setAmount($amount);
+            $this->cart->addOrderItem($orderItem);
+
+            $this->orderRepository->update($this->cart);
         }
 
     }
+
+    /**
+     * @param           $amount
+     * @param OrderItem $existingItem
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     */
+    protected function changeQuantity(OrderItem $existingItem, $amount)
+    {
+        $existingItem->setAmount($amount + $existingItem->getAmount());
+
+        $this->orderItemRepository->update($existingItem);
+    }
+
+    /**
+     * @param OrderItem $removableItem
+     */
+    public function remove(OrderItem $removableItem)
+    {
+        $this->getCart();
+
+        $this->cart->removeOrderItem($removableItem);
+
+        $this->orderRepository->update($this->cart);
+
+        $this->orderItemRepository->remove($removableItem); //  sets deleted flag
+        //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/
+
+        $this->persistenceManager->persistAll();
+    }
+
 
     /**
      * Update Cart
@@ -239,154 +282,5 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         $this->persistenceManager->persistAll();
 
     }
-
-    /**
-     * @return \RKW\RkwShop\Domain\Model\Order $order
-     */
-    public function getCart()
-    {
-        $this->cart = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
-
-        return $this->cart;
-    }
-
-
-    /**
-     * Clean up cart product list
-     *
-     * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @return void
-     */
-    public function cleanUpOrderItemList (\RKW\RkwShop\Domain\Model\Order $order)
-    {
-
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        foreach ($order->getOrderItem()->toArray() as $orderItem) {
-            if (! $orderItem->getAmount()) {
-                $order->removeOrderItem($orderItem);
-            }
-        }
-    }
-
-    /**
-     * Returns TYPO3 settings
-     *
-     * @return array
-     */
-    protected function getSettings()
-    {
-        $settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
-            'Rkwshop'
-        );
-
-        return $settings['plugin.']['tx_rkwshop.']['settings.'];
-    }
-
-
-
-    /**
-     * Returns logger instance
-     *
-     * @return \TYPO3\CMS\Core\Log\Logger
-     */
-    protected function getLogger()
-    {
-
-        if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {
-            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Log\LogManager')->getLogger(__CLASS__);
-        }
-
-        return $this->logger;
-    }
-
-    /**
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @param                                   $amount
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     */
-    public function add(\RKW\RkwShop\Domain\Model\Product $product, $amount)
-    {
-        $this->getCart();
-
-        $this->addOrderItem($product, $amount);
-
-    }
-
-    /**
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @param                                   $amount
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     */
-    protected function addOrderItem(\RKW\RkwShop\Domain\Model\Product $product, $amount)
-    {
-        $orderItem = new OrderItem();
-        $orderItem->setProduct($product);
-        $orderItem->setAmount($amount);
-
-        $this->cart->addOrderItem($orderItem);
-
-        $this->orderRepository->update($this->cart);
-    }
-
-    /**
-     * @param           $amount
-     * @param OrderItem $existingItem
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     */
-    protected function changeQuantity(OrderItem $existingItem, $amount)
-    {
-        $existingItem->setAmount($amount + $existingItem->getAmount());
-
-        $this->orderItemRepository->update($existingItem);
-    }
-
-    /**
-     * @param \RKW\RkwShop\Domain\Model\Product            $product
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderItems
-     * @return object|OrderItem
-     */
-    protected function containsOrderItem(\RKW\RkwShop\Domain\Model\Product $product, \TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderItems)
-    {
-        if ($orderItems->count() > 0) {
-            /** @var \RKW\RkwShop\Domain\Model\OrderItem $existingItem */
-            foreach ($orderItems as $orderItem) {
-                if ($orderItem->getProduct() === $product) {
-                    $existingItem = $orderItem;
-                }
-            }
-        }
-
-        return $existingItem;
-    }
-
-    /**
-     * @param OrderItem $removableItem
-     */
-    public function remove(OrderItem $removableItem)
-    {
-        $this->getCart();
-
-        $this->removeOrderItem($removableItem);
-    }
-
-    /**
-     * @param OrderItem $removableItem
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     */
-    protected function removeOrderItem(OrderItem $removableItem)
-    {
-        $this->cart->removeOrderItem($removableItem);
-
-        $this->orderRepository->update($this->cart);
-
-        $this->orderItemRepository->remove($removableItem); //  sets deleted flag
-        //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/
-    }
-
 
 }

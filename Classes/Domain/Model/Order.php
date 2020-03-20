@@ -377,4 +377,24 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->orderItem = $orderItem;
     }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Product            $product
+     * @return object|OrderItem
+     */
+    public function containsProduct(\RKW\RkwShop\Domain\Model\Product $product)
+    {
+        $existingItem = null;
+
+        if ($this->orderItem->count() > 0) {
+            /** @var \RKW\RkwShop\Domain\Model\OrderItem $existingItem */
+            foreach ($this->orderItem as $orderItem) {
+                if ($orderItem->getProduct() === $product) {
+                    $existingItem = $orderItem;
+                }
+            }
+        }
+
+        return $existingItem;
+    }
 }
