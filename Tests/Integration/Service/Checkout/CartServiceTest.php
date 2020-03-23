@@ -2,17 +2,14 @@
 
 namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwShop\Cart\Cart;
-use RKW\RkwShop\Service\Checkout\CartService;
-use TYPO3\CMS\Extbase\Mvc\Request;
-use RKW\RkwShop\Domain\Model\Order;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
-use RKW\RkwShop\Domain\Repository\OrderItemRepository;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use RKW\RkwShop\Service\Checkout\CartService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
@@ -169,13 +166,13 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function addProductUpdatesOrderForSessionUser()
+    public function addAddsAProductToOrderForSessionUser()
     {
 
         /**
          * Scenario:
          *
-         * Given my cart does already exists
+         * Given my cart does already exist
          * When I add a product
          * Then the existing cart is updated
          */
@@ -208,13 +205,13 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function addSameProductAgainUpdatesQuantity()
+    public function addSameProductUpdatesQuantity()
     {
 
         /**
          * Scenario:
          *
-         * Given my cart does already exists
+         * Given my cart does already exist
          * Given my cart contains 1 item of a product
          * When I add 1 additional item of this product
          * Then the existing cart contains 2
@@ -253,7 +250,7 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function removeProductUpdatesOrderForSessionUser()
+    public function removeRemovesOrderItemFromOrderForSessionUser()
     {
 
         /**
@@ -293,6 +290,54 @@ class CartServiceTest extends FunctionalTestCase
         $orderItems->rewind();
 
         static::assertSame($this->orderItemRepository->findByUid(1), $orderItems->current());
+
+    }
+
+    /**
+     * @test
+     */
+    public function changeQuantityOfOrderItemUpdatesQuantity()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given my cart does already exist
+         * Given my cart contains 1 item of a product
+         * When I change the quantity of this item to 5
+         * Then the existing cart should show a quantity of 5 for this existing product
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check50.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderBefore));
+        static::assertEquals('1', $orderBefore->getFirst()->getUid());
+        static::assertEquals(1, count($orderBefore->getFirst()->getOrderItem()));
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $selectedOrderItems = $orderBefore->getFirst()->getOrderItem();
+        $selectedOrderItems->rewind();
+
+        $selectedOrderItem = $selectedOrderItems->current();
+
+        $this->subject->changeQuantity($selectedOrderItem, $amount = 5);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderAfter));
+        static::assertEquals('1', $orderAfter->getFirst()->getUid());
+        static::assertEquals(1, $orderAfter->getFirst()->getOrderItem()->count());
+
+        $orderItems = $orderAfter->getFirst()->getOrderItem();
+        $orderItems->rewind();
+
+        static::assertEquals(5, $orderItems->current()->getAmount());
 
     }
 

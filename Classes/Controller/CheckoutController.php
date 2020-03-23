@@ -107,27 +107,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
 
     /**
-     * action update cart
-     *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @param int                               $amount
-     * @param bool                              $remove
-     */
-    public function updateCartAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
-    {
-
-        //  Die nachfolgenden Actions müssten über einen eigenen Controller CartItemController einzeln gesteuert werden und demzufolge hier raus!
-        //  addOrderItem aka addCartItem
-        //  removeFromCart aka removeCartItem
-        //  changeQuantity
-
-        $this->cartService->initializeCart($product, $amount, $remove);
-
-        $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
-
-    }
-
-    /**
      * see OrderController->newAction()
      */
     public function newOrderAction()

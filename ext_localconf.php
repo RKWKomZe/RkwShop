@@ -50,13 +50,13 @@ call_user_func(
             'RKW.' . $extKey,
             'Cart',
             array(
-                'Checkout' => 'showCart, updateCart, confirmCart, orderCart',
-                'CartItem' => 'removeCartItem',
+                'Checkout' => 'showCart, confirmCart, orderCart',
+                'CartItem' => 'removeCartItem, changeCartItemQuantity',
             ),
             // non-cacheable actions
             array(
-                'Checkout' => 'showCart, updateCart, confirmCart, orderCart',
-                'CartItem' => 'removeCartItem',
+                'Checkout' => 'showCart, confirmCart, orderCart',
+                'CartItem' => 'removeCartItem, changeCartItemQuantity',
             )
         );
 

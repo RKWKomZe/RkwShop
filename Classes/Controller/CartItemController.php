@@ -15,6 +15,8 @@ namespace RKW\RkwShop\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * Class CartItemController
  *
@@ -42,12 +44,6 @@ class CartItemController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function addCartItemAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
     {
-
-        //  Die nachfolgenden Actions müssten über einen eigenen Controller CartItemController einzeln gesteuert werden und demzufolge hier raus!
-        //  addOrderItem aka addCartItem
-        //  removeFromCart aka removeCartItem
-        //  changeQuantity
-
         $this->cartService->add($product, $amount);
 
         $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
@@ -58,12 +54,33 @@ class CartItemController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @param \RKW\RkwShop\Domain\Model\OrderItem $orderItem
      *
+     * @ignorevalidation $orderItem
+     *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
     public function removeCartItemAction(\RKW\RkwShop\Domain\Model\OrderItem $orderItem)
     {
+        //  Warum schlägt die Validierung fehl, so dass ich @ignorevalidation nutzen muss?
         $this->cartService->remove($orderItem);
+
+        $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
+    }
+
+    /**
+     * action change cart item quantity
+     *
+     * @param \RKW\RkwShop\Domain\Model\OrderItem $orderItem
+     * @param int $amount
+     *
+     * @ignorevalidation $orderItem
+     *
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     */
+    public function changeCartItemQuantityAction(\RKW\RkwShop\Domain\Model\OrderItem $orderItem, $amount = 0)
+    {
+        $this->cartService->changeQuantity($orderItem, $amount);
 
         $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
     }

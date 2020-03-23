@@ -260,6 +260,8 @@ class CheckoutControllerTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
 
+        $request = $this->getMock(Request::class);
+
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
             'frontendUser' => $frontendUser,

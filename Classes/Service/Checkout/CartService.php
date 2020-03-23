@@ -2,11 +2,8 @@
 
 namespace RKW\RkwShop\Service\Checkout;
 
-use \RKW\RkwShop\Exception;
-use Doctrine\Common\Util\Debug;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
@@ -177,7 +174,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         $orderItem = $this->cart->containsProduct($product);
 
         if ($orderItem) {
-            $this->changeQuantity($orderItem, $amount);
+            $this->changeQuantity($orderItem, $amount + $orderItem->getAmount());
         } else {
             $orderItem = new OrderItem();
             $orderItem->setProduct($product);
@@ -190,16 +187,16 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * @param           $amount
-     * @param OrderItem $existingItem
+     * @param int       $amount
+     * @param OrderItem $orderItem
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    protected function changeQuantity(OrderItem $existingItem, $amount)
+    public function changeQuantity(OrderItem $orderItem, $amount)
     {
-        $existingItem->setAmount($amount + $existingItem->getAmount());
+        $orderItem->setAmount($amount);
 
-        $this->orderItemRepository->update($existingItem);
+        $this->orderItemRepository->update($orderItem);
     }
 
     /**
@@ -217,70 +214,6 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/
 
         $this->persistenceManager->persistAll();
-    }
-
-
-    /**
-     * Update Cart
-     *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @param int $amount
-     * @param bool $remove
-     *
-     * @return void
-     *
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function updateCart(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0, $remove = false)
-    {
-
-        $this->getCart();
-
-        //  check, if there are existing orderitems
-        $orderItems = $this->cart->getOrderItem();
-
-        if ($remove && $orderItems->count() > 0) {
-
-            $removableItem = $this->containsOrderItem($product, $orderItems);
-
-            $this->removeOrderItem($order, $removableItem);
-
-            //  Check, if order is now empty
-            //  If order is empty, delete the order too
-
-        } else {
-
-            //  Check, if product already exists?
-            //  If yes and remove === false
-            //  update amount
-
-            $existingItem = $this->containsOrderItem($product, $orderItems);
-
-            if ($existingItem) {
-
-                $this->changeQuantity($existingItem, $amount);
-
-            } else {
-
-                $this->addOrderItem($product, $amount);
-
-            }
-
-        }
-
-        //  on remove please check, if order does contain any order items at all
-        //  if empty, you may remove it, too
-
-        $this->persistenceManager->persistAll();
-
     }
 
 }
