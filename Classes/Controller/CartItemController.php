@@ -73,6 +73,7 @@ class CartItemController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @param \RKW\RkwShop\Domain\Model\OrderItem $orderItem
      * @param int $amount
      *
+     * @todo Warum ist hier ignorevalidation erforderlich?
      * @ignorevalidation $orderItem
      *
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException

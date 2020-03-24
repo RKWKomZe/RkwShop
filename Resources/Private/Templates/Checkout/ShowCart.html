@@ -20,7 +20,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
         <f:then>
 
             <!-- form -->
-            <f:form action="confirmCart" name="order" object="{order}" controller="Checkout" pluginName="Checkout" extensionName="RkwShop" pageUid="{checkoutPid}" class="form-fields order-list" >
+            <f:form action="confirmCart" name="order" object="{order}" controller="Checkout" pluginName="Checkout" extensionName="RkwShop" pageUid="{checkoutPid}" class="form-fields order-list js-order-list" >
                 <f:for each="{order.orderItem}" as="orderItem">
 
                     <div class="order-list__item">
@@ -35,10 +35,10 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
                             <p>Bestellmenge: {orderItem.amount}</p>
                             <div class="order-list__order">
-                                <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" name="amount" value="{orderItem.amount}" class="feedback-field"/>
+                                <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" name="amount" value="{orderItem.amount}" class="quantity"/>
+                                <f:form.hidden value="<f:uri.action controller='CartItem' action='changeCartItemQuantity' arguments='{orderItem: orderItem}'/>" class="js-change-quantity-url"/>
                             </div>
 
-                            <f:link.action action="changeCartItemQuantity" controller="CartItem" arguments="{orderItem: orderItem, amount: 10}" class="button" rel="nofollow">Anzahl aktualisieren</f:link.action>
                             <f:link.action action="removeCartItem" controller="CartItem" arguments="{orderItem: orderItem}" class="button" rel="nofollow">Produkt entfernen</f:link.action>
                         </div>
 
