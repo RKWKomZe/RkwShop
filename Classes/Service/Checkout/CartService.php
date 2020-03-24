@@ -194,9 +194,15 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function changeQuantity(OrderItem $orderItem, $amount)
     {
-        $orderItem->setAmount($amount);
 
-        $this->orderItemRepository->update($orderItem);
+        if ($amount === 0) {
+            $this->remove($orderItem);
+        } else {
+            $orderItem->setAmount($amount);
+
+            $this->orderItemRepository->update($orderItem);
+        }
+
     }
 
     /**

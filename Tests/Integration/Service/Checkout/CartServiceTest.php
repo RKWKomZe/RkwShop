@@ -205,7 +205,7 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function addSameProductUpdatesQuantity()
+    public function addSameProductUpdatesQuantityForProductPlusOne()
     {
 
         /**
@@ -338,6 +338,49 @@ class CartServiceTest extends FunctionalTestCase
         $orderItems->rewind();
 
         static::assertEquals(5, $orderItems->current()->getAmount());
+
+    }
+
+    /**
+     * @test
+     */
+    public function changeQuantityOfOrderItemToZeroRemovesOrderItemFromOrder()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given my cart does already exist
+         * Given my cart contains 1 item of a product
+         * When I change the quantity of this item to 0
+         * Then the order item will be removed from the order
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check60.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderBefore));
+        static::assertEquals('1', $orderBefore->getFirst()->getUid());
+        static::assertEquals(1, count($orderBefore->getFirst()->getOrderItem()));
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $selectedOrderItems = $orderBefore->getFirst()->getOrderItem();
+        $selectedOrderItems->rewind();
+
+        $selectedOrderItem = $selectedOrderItems->current();
+
+        $this->subject->changeQuantity($selectedOrderItem, $amount = 0);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderAfter));
+        static::assertEquals('1', $orderAfter->getFirst()->getUid());
+        static::assertEquals(0, $orderAfter->getFirst()->getOrderItem()->count());
 
     }
 
