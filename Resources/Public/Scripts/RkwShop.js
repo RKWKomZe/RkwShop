@@ -12,6 +12,28 @@ RkwShop.handle = (function ($) {
 		$orderContainer = $('#rkw-order-container');
 		_getContent();
 
+		//	listen to cart update
+		console.log('get it done');
+		_changeQuantity();
+
+	};
+
+	var _changeQuantity = function() {
+
+		var $quantities = $('.quantity');
+
+		if ($quantities.length > 0) {
+			$quantities.on('change', function ($quantity) {
+				var changeButton = $(this)
+					.closest('.order-list__item')
+					.find('.change-quantity');
+				var newHref = changeButton.attr('href') + '&tx_rkwshop_cart%5Bamount%5D=' + $(this)
+					.val();
+				changeButton.attr('href', newHref);
+				//	window.location.href = newHref;
+			});
+		}
+
 	};
 
 	var _getContent = function(e){

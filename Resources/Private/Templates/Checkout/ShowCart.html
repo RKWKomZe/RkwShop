@@ -35,10 +35,11 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
                             <p>Bestellmenge: {orderItem.amount}</p>
                             <div class="order-list__order">
-                                <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" name="amount" value="{orderItem.amount}" class="feedback-field"/>
+                                <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" name="amount" value="{orderItem.amount}" class="quantity"/>
                             </div>
 
-                            <f:link.action action="changeCartItemQuantity" controller="CartItem" arguments="{orderItem: orderItem, amount: 10}" class="button" rel="nofollow">Anzahl aktualisieren</f:link.action>
+                            <f:link.action action="changeCartItemQuantity" controller="CartItem" arguments="{orderItem: orderItem}" class="button change-quantity" rel="nofollow">Anzahl aktualisieren</f:link.action>
+
                             <f:link.action action="removeCartItem" controller="CartItem" arguments="{orderItem: orderItem}" class="button" rel="nofollow">Produkt entfernen</f:link.action>
                         </div>
 
