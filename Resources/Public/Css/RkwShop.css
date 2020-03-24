@@ -7,3 +7,14 @@
     margin-right:auto;
     display:block;
 }
+
+.order-list .order-list__item--remove {
+    position: absolute;
+    right: 0.5em;
+    font-size: 2em;
+}
+
+body.topic-1 .order-list .order-list__item--remove:hover {
+    text-decoration: none;
+    color: #e64415;
+}

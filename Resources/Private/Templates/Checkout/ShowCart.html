@@ -25,6 +25,8 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
                     <div class="order-list__item">
 
+                        <f:link.action action="removeCartItem" controller="CartItem" arguments="{orderItem: orderItem}" class="order-list__item--remove js-remove" rel="nofollow">&times;</f:link.action>
+
                         <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: orderItem.product}" />
 
                         <div class="order-list__details">
@@ -39,7 +41,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
                                 <f:form.hidden value="<f:uri.action controller='CartItem' action='changeCartItemQuantity' arguments='{orderItem: orderItem}'/>" class="js-change-quantity-url"/>
                             </div>
 
-                            <f:link.action action="removeCartItem" controller="CartItem" arguments="{orderItem: orderItem}" class="button" rel="nofollow">Produkt entfernen</f:link.action>
                         </div>
 
                     </div>
