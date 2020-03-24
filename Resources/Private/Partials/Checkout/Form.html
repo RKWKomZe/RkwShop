@@ -1,0 +1,26 @@
+{namespace vh=RKW\RkwShop\ViewHelpers}
+
+<f:form action="orderCart" name="order" object="{order}" controller="Checkout" pluginName="Checkout" extensionName="RkwShop" class="form-fields order-list" >
+
+    <f:render partial="Checkout/Form/OrderItemList" arguments="{_all}" />
+
+    <div class="order-form">
+        <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.checkout.confirm.form.billingaddress" /></h5>
+        <f:render partial="Checkout/Form/BillingAddress" arguments="{_all}" />
+    </div>
+
+    <div class="order-form">
+        <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.checkout.confirm.form.shippingaddress" /></h5>
+        <f:render partial="Checkout/Form/ShippingAddress" arguments="{_all}" />
+    </div>
+
+    <f:render partial="Checkout/Form/Terms" arguments="{_all}" />
+
+    <p class="v320-1">
+        <button class="button" type="submit">
+            <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.cart.show.form.orderButton" /></span>
+        </button>
+    </p>
+
+</f:form>
+

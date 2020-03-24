@@ -107,14 +107,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
 
     /**
-     * see OrderController->newAction()
-     */
-    public function newOrderAction()
-    {
-
-    }
-
-    /**
      * action confirm order
      *
      * @param integer $terms
@@ -135,6 +127,8 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         $order = $this->cartService->getCart();
 
+        //  get billing address and update frontend user, too
+
         //  update the order information like shipping address, if there is a logged in user
 
         //  don't do any implicit sign up through create order, a user has to be registered in an isolated process, so that ordering can be isolated too
@@ -148,6 +142,14 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             'terms'           => $terms,
             'privacy'         => $privacy
         ]);
+
+    }
+
+    /**
+     * see OrderController->newAction()
+     */
+    public function newOrderAction()
+    {
 
     }
 
@@ -204,7 +206,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             );
         }
 
-        $this->redirect('new');
+        $this->redirect('confirm');
 
     }
 

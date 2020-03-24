@@ -18,3 +18,7 @@ body.topic-1 .order-list .order-list__item--remove:hover {
     text-decoration: none;
     color: #e64415;
 }
+
+.order-form {
+    display: inline-block;
+}

@@ -184,6 +184,14 @@
 				<source>Order cart</source>
 			</trans-unit>
 
+            <!-- Partials/Checkout/Form.html -->
+            <trans-unit id="partials.checkout.confirm.form.billingaddress">
+				<source>Billing address</source>
+			</trans-unit>
+			<trans-unit id="partials.checkout.confirm.form.shippingaddress">
+				<source>Shipping address</source>
+			</trans-unit>
+
 			<!-- ================================================================================== -->
 
 			<!-- E-Mail subjects-->

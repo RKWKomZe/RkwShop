@@ -1,0 +1,170 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+{namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
+
+<div class="v320-1-of-2">
+
+	<!-- Gender -->
+	<div class="v320-1">
+		<label for="txrkwshop-gender" class="form-label">
+			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender" />
+			<f:if condition="<rkwShop:isRequiredField field='gender' /> == 0">
+				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+			</f:if>
+		</label>
+		<f:form.select id="txrkwshop-gender" property="shippingAddress.gender" value="{f:if(condition:'{newOrder.shippingAddress.gender} != 99',then:'{newOrder.shippingAddress.gender}',else:'{frontendUser.txRkwregistrationGender}')}" options="{99: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect\")}', 0: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.man\")}', 1: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.woman\")}'}" optionValueField="uid" optionLabelField="name" />
+	</div>
+
+	<f:comment>
+		<!-- title -->
+		<div class="v320-1">
+			<label for="txrkwshop-title" class="form-label">
+				<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.title" />
+				<f:if condition="<rkwShop:isRequiredField field='title' /> == 0">
+					<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+				</f:if>
+			</label>
+			<f:form.select id="txrkwshop-title" property="shippingAddress.title" options="<rkwRegistration:titleList />" optionValueField="uid" optionLabelField="name" prependOptionValue="0" prependOptionLabel="{f:translate(key:'LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.title.I.pleaseSelect')}" />
+		</div>
+	</f:comment>
+
+	<!-- firstName -->
+	<div class="v320-1">
+		<label for="txrkwshop-firstName" class="form-label">
+			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.firstName" />
+			<f:if condition="<rkwShop:isRequiredField field='firstName' /> == 0">
+				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+			</f:if>
+		</label>
+		<f:if condition="{newOrder.firstName}">
+			<f:then>
+				<f:form.textfield id="txrkwshop-firstName" property="shippingAddress.firstName" value="{shippingAddress.firstName}" additionalAttributes="{autocomplete: 'fname'}" class="feedback-field" />
+			</f:then>
+			<f:else>
+				<f:form.textfield id="txrkwshop-firstName" property="shippingAddress.firstName" value="{frontendUser.firstName}" additionalAttributes="{autocomplete: 'fname'}" class="feedback-field" />
+			</f:else>
+		</f:if>
+	</div>
+
+	<!-- lastName -->
+	<div class="v320-1">
+		<label for="txrkwshop-lastName" class="form-label">
+			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.lastName" />
+			<f:if condition="<rkwShop:isRequiredField field='lastName' /> == 0">
+				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+			</f:if>
+		</label>
+		<f:if condition="{newOrder.lastName}">
+			<f:then>
+				<f:form.textfield id="txrkwshop-lastName" property="shippingAddress.lastName" value="{shippingAddress.lastName}" additionalAttributes="{autocomplete: 'lname'}" class="feedback-field"/>
+			</f:then>
+			<f:else>
+				<f:form.textfield id="txrkwshop-lastName" property="shippingAddress.lastName" value="{frontendUser.lastName}" additionalAttributes="{autocomplete: 'lname'}" class="feedback-field"/>
+			</f:else>
+		</f:if>
+	</div>
+
+	<!-- company -->
+	<div class="v320-1">
+		<label for="txrkwshop-company" class="form-label">
+			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.company" />
+			<f:if condition="<rkwShop:isRequiredField field='company' /> == 0">
+				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+			</f:if>
+		</label>
+		<f:if condition="{newOrder.shippingAddress.company}">
+			<f:then>
+				<f:form.textfield id="txrkwshop-company" property="shippingAddress.company" value="{shippingAddress.company}" class="feedback-field"/>
+			</f:then>
+			<f:else>
+				<f:form.textfield id="txrkwshop-company" property="shippingAddress.company" value="{frontendUser.company}" class="feedback-field"/>
+			</f:else>
+		</f:if>
+	</div>
+
+</div>
+
+
+<div class="v320-2-of-2">
+
+
+
+	<!-- address -->
+	<div class="v320-1">
+		<label for="txrkwshop-address" class="form-label">
+			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.address" />
+			<f:if condition="<rkwShop:isRequiredField field='address' /> == 0">
+				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+			</f:if>
+		</label>
+		<f:if condition="{newOrder.shippingAddress.address}">
+			<f:then>
+				<f:form.textfield id="txrkwshop-address" property="shippingAddress.address" value="{shippingAddress.address}" additionalAttributes="{autocomplete: 'address'}" class="feedback-field"/>
+			</f:then>
+			<f:else>
+				<f:form.textfield id="txrkwshop-address" property="shippingAddress.address" value="{frontendUser.address}" additionalAttributes="{autocomplete: 'address'}" class="feedback-field"/>
+			</f:else>
+		</f:if>
+	</div>
+
+	<!-- zip -->
+	<div class="small-fields">
+
+		<div class="v320-1-of-2">
+			<div class="v320-1">
+				<label for="txrkwshop-zip" class="form-label">
+					<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.zip" />
+					<f:if condition="<rkwShop:isRequiredField field='zip' /> == 0">
+						<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+					</f:if>
+				</label>
+				<f:if condition="{newOrder.shippingAddress.zip}">
+					<f:then>
+						<f:form.textfield id="txrkwshop-zip" property="shippingAddress.zip" value="{shippingAddress.zip}" additionalAttributes="{autocomplete: 'zip'}" class="feedback-field"/>
+					</f:then>
+					<f:else>
+						<f:form.textfield id="txrkwshop-zip" property="shippingAddress.zip" value="{frontendUser.zip}" additionalAttributes="{autocomplete: 'zip'}" class="feedback-field"/>
+					</f:else>
+				</f:if>
+			</div>
+		</div>
+
+		<!-- city -->
+		<div class="v320-2-of-2">
+			<div class="v320-1">
+				<label for="txrkwshop-city" class="form-label">
+					<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.city" />
+					<f:if condition="<rkwShop:isRequiredField field='city' /> == 0">
+						<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
+					</f:if>
+				</label>
+				<f:if condition="{newOrder.shippingAddress.city}">
+					<f:then>
+						<f:form.textfield id="txrkwshop-city" property="shippingAddress.city" value="{shippingAddress.city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>
+					</f:then>
+					<f:else>
+						<f:form.textfield id="txrkwshop-city" property="shippingAddress.city" value="{frontendUser.city}" additionalAttributes="{autocomplete: 'city'}" class="feedback-field"/>
+					</f:else>
+				</f:if>
+			</div>
+		</div>
+	</div>
+
+	<!-- e-mail -->
+	<div class="v320-1">
+		<label for="txrkwshop-email" class="form-label">
+			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.email" />
+		</label>
+		<f:if condition="{frontendUser}">
+			<f:then>
+				<f:form.textfield id="txrkwshop-email" property="email" value="{frontendUser.email}" additionalAttributes="{autocomplete: 'email'}"  class="feedback-field"/>
+			</f:then>
+			<f:else>
+				<f:form.textfield id="txrkwshop-email" property="email" additionalAttributes="{autocomplete: 'email'}"  class="feedback-field"/>
+			</f:else>
+		</f:if>
+	</div>
+</div>
+
+
+
+

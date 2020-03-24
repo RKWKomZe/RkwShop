@@ -232,6 +232,16 @@
 				<target>Zur Kasse gehen</target>
 			</trans-unit>
 
+            <!-- Partials/Checkout/Form.html -->
+            <trans-unit id="partials.checkout.confirm.form.billingaddress">
+				<source>Billing address</source>
+				<target>Rechnungsadresse</target>
+			</trans-unit>
+			<trans-unit id="partials.checkout.confirm.form.shippingaddress">
+				<source>Shipping address</source>
+				<target>Lieferadresse</target>
+			</trans-unit>
+
 			<!-- ================================================================================== -->
 
 			<!-- E-Mail subjects-->

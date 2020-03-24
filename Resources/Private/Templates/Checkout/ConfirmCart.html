@@ -17,51 +17,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
     ShippingAddress-Formular, etc. - siehe aktuelle Bestellseite
 
-    <f:if condition="<f:count>{order.orderItem}</f:count>">
-
-        <f:then>
-
-            <!-- form -->
-            <f:form action="confirmCart" name="order" object="{order}" controller="Checkout" pluginName="Checkout" extensionName="RkwShop" pageUid="{checkoutPid}" class="form-fields order-list" >
-                <f:for each="{order.orderItem}" as="orderItem">
-
-                    <div class="order-list__item">
-
-                        <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: orderItem.product}" />
-
-                        <div class="order-list__details">
-                            <h4 class="order-list__title">{orderItem.product.title}</h4>
-                            <f:if condition="{orderItem.product.subtitle}">
-                                <p class="order-list__subtitle">{orderItem.product.subtitle}</p>
-                            </f:if>
-
-                            <p>Bestellmenge: {orderItem.amount}</p>
-                            <div class="order-list__order">
-                                <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" name="amount" value="{orderItem.amount}" class="feedback-field"/>
-                            </div>
-
-                            <f:link.action action="removeCartItem" controller="CartItem" arguments="{orderItem: orderItem}" class="button" rel="nofollow">Produkt entfernen</f:link.action>
-                        </div>
-
-                    </div>
-
-                </f:for>
-
-                <f:link.action action="updateCart" controller="Checkout" arguments="{product: orderItem.product, remove: 'true'}" class="button" rel="nofollow">Warenkorb aktualisieren</f:link.action>
-
-                <p class="v320-1">
-                    <button class="button" type="submit">
-                        <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.cart.show.form.orderButton" /></span>
-                    </button>
-                </p>
-
-            </f:form>
-
-        </f:then>
-        <f:else>
-            <p><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.cart.show.empty" /></p>
-        </f:else>
-
-    </f:if>
+    <f:render partial="Checkout/Form" arguments="{_all}" />
 
 </f:section>
