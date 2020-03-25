@@ -4,6 +4,9 @@ namespace RKW\RkwShop\Service\Checkout;
 
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use RKW\RkwShop\Domain\Model\ShippingAddress;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
@@ -69,6 +72,21 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      * @inject
      */
     protected $stockRepository;
+
+    /**
+     * FrontendUserRepository
+     *
+     * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
+     * @inject
+     */
+    protected $frontendUserRepository;
+
+    /**
+     * logged in FrontendUser
+     *
+     * @var \RKW\RkwShop\Domain\Model\FrontendUser
+     */
+    protected $frontendUser = null;
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
@@ -139,6 +157,11 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     public function getCart()
     {
 
+        //  @todo: In der Order muss der FrontendUser gesetzt werden, sofern verfügbar. Wenn nicht, also nicht angemeldet, dann wird der Hash genutzt.
+
+        //  @todo: Hier den Warenkorb nach FrontendUser oder FrontendUserHash suchen,
+        //  wenn FrontendUser da, dann bitte den FrontendUser setzen und den Hash leeren
+        //  außerdem muss auf den Status der Order geachtet werden, damit nicht später einfach auch weitere nicht mehr aktuelle bzw. bereits bestellte Warenkörbe abgerufen werden
         $this->cart = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
 
         return ($this->cart) ? $this->cart : $this->createCart();
@@ -154,12 +177,29 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     {
 
         $order = new Order();
-        $order->setFrontendUserSessionHash($_COOKIE[FrontendUserAuthentication::getCookieName()]);
+
+        if ($frontendUser = $this->getFrontendUser()) {
+            $order->setFrontendUser($frontendUser);
+        } else {
+            $order->setFrontendUserSessionHash($_COOKIE[FrontendUserAuthentication::getCookieName()]);
+        }
 
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
 
         return $order;
+
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     */
+    public function setCart(\RKW\RkwShop\Domain\Model\Order $order)
+    {
+        DebuggerUtility::var_dump($order->getFrontendUserSessionHash());
+
+        $this->cart = $order;
+
 
     }
 
@@ -220,6 +260,78 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/
 
         $this->persistenceManager->persistAll();
+    }
+
+    /**
+     */
+    public function updateShippingAddress()
+    {
+        $this->getCart();
+
+        if ($this->cart->getShippingAddressSameAsBillingAddress() === 1) {
+
+            $frontendUser = $this->cart->getFrontendUser();
+
+            /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+            $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+
+            $shippingAddress->setGender($frontendUser->getTxRkwregistrationGender());
+            $shippingAddress->setFirstName($frontendUser->getFirstName());
+            $shippingAddress->setLastName($frontendUser->getLastName());
+            $shippingAddress->setCompany($frontendUser->getCompany());
+            $shippingAddress->setAddress($frontendUser->getAddress());
+            $shippingAddress->setZip($frontendUser->getZip());
+            $shippingAddress->setCity($frontendUser->getCity());
+
+            $this->cart->setShippingAddress($shippingAddress);
+
+            $this->orderRepository->update($this->cart);
+
+        }
+
+    }
+
+    /**
+     * Returns current logged in user object
+     *
+     * @return \RKW\RkwRegistration\Domain\Model\FrontendUser|null
+     */
+    protected function getFrontendUser()
+    {
+
+        if (!$this->frontendUser) {
+
+            $frontendUser = $this->frontendUserRepository->findByUidNoAnonymous($this->getFrontendUserId());
+            if ($frontendUser instanceof \RKW\RkwRegistration\Domain\Model\FrontendUser) {
+                $this->frontendUser = $frontendUser;
+            }
+        }
+
+        return $this->frontendUser;
+        //===
+    }
+
+
+
+    /**
+     * Id of logged User
+     *
+     * @return integer|null
+     */
+    protected function getFrontendUserId()
+    {
+        // is $GLOBALS set?
+        if (
+            ($GLOBALS['TSFE'])
+            && ($GLOBALS['TSFE']->loginUser)
+            && ($GLOBALS['TSFE']->fe_user->user['uid'])
+        ) {
+            return intval($GLOBALS['TSFE']->fe_user->user['uid']);
+            //===
+        }
+
+        return null;
+        //===
     }
 
 }

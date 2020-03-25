@@ -98,7 +98,13 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $shippingAddress = null;
 
-    
+    /**
+     * shipping adress is same as billing address
+     *
+     * @var integer
+     */
+    protected $shippingAddressSameAsBillingAddress = 1;
+
     /**
      * orderItem
      *
@@ -334,6 +340,21 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->shippingAddress = $shippingAddress;
     }
 
+    /**
+     * @return int
+     */
+    public function getShippingAddressSameAsBillingAddress()
+    {
+        return $this->shippingAddressSameAsBillingAddress;
+    }
+
+    /**
+     * @param int $shippingAddressSameAsBillingAddress
+     */
+    public function setShippingAddressSameAsBillingAddress($shippingAddressSameAsBillingAddress)
+    {
+        $this->shippingAddressSameAsBillingAddress = $shippingAddressSameAsBillingAddress;
+    }
 
     /**
      * Adds a orderItem
@@ -397,4 +418,5 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         return $existingItem;
     }
+
 }

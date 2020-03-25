@@ -1,0 +1,34 @@
+{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+{namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
+
+<div class="v320-1-of-2">
+
+    <div class="v320-1">
+        <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.checkout.confirm.form.billingaddress" /></h5>
+
+        <p>[Gender] {frontendUser.firstName} {frontendUser.lastName}<br>
+            {frontendUser.company}<br>
+            {frontendUser.address}<br>
+            {frontendUser.zip} {frontendUser.city}</p>
+
+    </div>
+
+</div>
+
+<div class="v320-2-of-2">
+
+    <div class="v320-1">
+        <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.checkout.confirm.form.shippingaddress" /></h5>
+
+        <p>[Gender] {shippingAddress.firstName} {shippingAddress.lastName}<br>
+            {shippingAddress.company}<br>
+            {shippingAddress.address}<br>
+            {shippingAddress.zip} {shippingAddress.city}</p>
+
+    </div>
+
+</div>
+
+
+
+

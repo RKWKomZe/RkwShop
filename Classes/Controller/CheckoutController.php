@@ -117,6 +117,8 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
 
         //  if current user is not logged in yet, take him to mein.rkw
+        //  @todo: and if he is logged in, the cart has to be set to his frontend user id and the hash has to be deleted
+        //  @todo: how can I do this kind of redirect back to his cart and next controller action
         if (! $this->getFrontendUser()) {
             $uri = $this->uriBuilder
                 ->setTargetPageUid((int)$this->settings['accountPid'])
@@ -127,20 +129,17 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         $order = $this->cartService->getCart();
 
-        //  get billing address and update frontend user, too
+        DebuggerUtility::var_dump($order->getFrontendUser()->getUid());
+        DebuggerUtility::var_dump($this->getFrontendUser()->getUid());
+        exit();
 
-        //  update the order information like shipping address, if there is a logged in user
-
-        //  don't do any implicit sign up through create order, a user has to be registered in an isolated process, so that ordering can be isolated too
-
-        //  show his cart somewhere in the header or the menu to give him access to, when he returns
 
         $this->view->assignMultiple([
             'frontendUser'    => $this->getFrontendUser(),
             'order'           => $order,
             'termsPid'        => (int)$this->settings['termsPid'],
             'terms'           => $terms,
-            'privacy'         => $privacy
+            'privacy'         => $privacy,
         ]);
 
     }
@@ -151,6 +150,40 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function newOrderAction()
     {
 
+    }
+
+    /**
+     * action orderCart
+     *
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param integer $privacy
+     * @return void
+     * @todo fix validation
+     * @ignorevalidation $order
+//     * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
+     */
+    public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
+    {
+
+        DebuggerUtility::var_dump($order->getShippingAddress()->getAddress());
+
+        //  order ist an dieser Stelle !== $this->cartService->getCart()
+        $this->cartService->setCart($order);
+
+        //        $this->cartService->updateShippingAddress();
+
+        DebuggerUtility::var_dump($this->cartService->getCart()->getShippingAddress()->getAddress());
+
+//        $this->cartService->updateShippingAddress();
+
+        exit();
+
+        //  show order review page
+        $this->view->assignMultiple([
+            'frontendUser'    => $this->getFrontendUser(),
+            'order'           => $order,
+            'privacy'         => $privacy
+        ]);
     }
 
     /**
@@ -174,6 +207,15 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function orderCartAction(\RKW\RkwShop\Domain\Model\Order $order, $terms = null, $privacy = null)
     {
+
+        //  get billing address and update frontend user, too
+
+        //  update the order information like shipping address, if there is a logged in user
+
+        //  don't do any implicit sign up through create order, a user has to be registered in an isolated process, so that ordering can be isolated too
+
+        //  show his cart somewhere in the header or the menu to give him access to, when he returns
+
         try {
 
             $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);

@@ -11,7 +11,7 @@
 				<span class="optional">&nbsp;<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" /></span>
 			</f:if>
 		</label>
-		<f:form.select id="txrkwshop-gender" property="shippingAddress.gender" value="{f:if(condition:'{newOrder.shippingAddress.gender} != 99',then:'{newOrder.shippingAddress.gender}',else:'{frontendUser.txRkwregistrationGender}')}" options="{99: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect\")}', 0: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.man\")}', 1: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.woman\")}'}" optionValueField="uid" optionLabelField="name" />
+		<f:form.select id="txrkwshop-gender" property="frontendUser.txRkwregistrationGender" value="{frontendUser.txRkwregistrationGender}" options="{99: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect\")}', 0: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.man\")}', 1: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.woman\")}'}" optionValueField="uid" optionLabelField="name" />
 	</div>
 
 	<f:comment>
@@ -110,14 +110,7 @@
 		<label for="txrkwshop-email" class="form-label">
 			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.email" />
 		</label>
-		<f:if condition="{frontendUser}">
-			<f:then>
-				<f:form.textfield id="txrkwshop-email" property="email" value="{frontendUser.email}" additionalAttributes="{autocomplete: 'email'}"  class="feedback-field"/>
-			</f:then>
-			<f:else>
-				<f:form.textfield id="txrkwshop-email" property="email" additionalAttributes="{autocomplete: 'email'}"  class="feedback-field"/>
-			</f:else>
-		</f:if>
+        <f:form.textfield id="txrkwshop-email" property="email" value="{frontendUser.email}" additionalAttributes="{autocomplete: 'email'}"  class="feedback-field"/>
 	</div>
 </div>
 

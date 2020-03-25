@@ -2,6 +2,8 @@
 
 namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
+use RKW\RkwBasics\Helper\Common;
+use RKW\RkwRegistration\Tools\Authentication;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwShop\Cart\Cart;
 use RKW\RkwShop\Domain\Repository\OrderItemRepository;
@@ -10,6 +12,7 @@ use RKW\RkwShop\Domain\Repository\ProductRepository;
 use RKW\RkwShop\Service\Checkout\CartService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
@@ -57,6 +60,11 @@ class CartServiceTest extends FunctionalTestCase
      * @var \RKW\RkwShop\Service\Checkout\CartService
      */
     private $subject = null;
+
+    /**
+     * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
+     */
+    private $frontendUserRepository;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
@@ -121,6 +129,8 @@ class CartServiceTest extends FunctionalTestCase
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
         $this->subject = $this->objectManager->get(CartService::class);
+
+        $this->frontendUserRepository = $this->objectManager->get(FrontendUserRepository::class);
 
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
         $this->orderItemRepository = $this->objectManager->get(OrderItemRepository::class);
@@ -381,6 +391,88 @@ class CartServiceTest extends FunctionalTestCase
         static::assertEquals(1, count($orderAfter));
         static::assertEquals('1', $orderAfter->getFirst()->getUid());
         static::assertEquals(0, $orderAfter->getFirst()->getOrderItem()->count());
+
+    }
+
+    /**
+     * @test
+     */
+    public function updateShippingAddressSetsShippingAddressToBillingAddress()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given my cart does already exist
+         * Given I am logged in as a frontend user
+         * Given I want to use my billing address as shipping address
+         * When I review my order
+         * Then my shipping address will be set to my billing address
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check70.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals(1, count($orderBefore));
+        static::assertEquals('1', $orderBefore->getFirst()->getUid());
+        static::assertEquals(1, $orderBefore->getFirst()->getShippingAddressSameAsBillingAddress());
+
+        $this->subject->updateShippingAddress();
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+
+        static::assertEquals($orderBefore->getFirst()->getFrontendUser()->getCity(), $orderAfter->getFirst()->getShippingAddress()->getCity());
+
+    }
+
+    /**
+     * @test
+     */
+    public function createCartSetsFrontendUserOnOrderIfAlreadyLoggedIn()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I am logged in as a frontend user
+         * When I initialize a cart
+         * Then I am set on the corresponding order as a frontend user
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check80.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderBefore = $this->orderRepository->findByFrontendUser($frontendUser);
+
+        static::assertEquals(0, count($orderBefore));
+
+        $this->subject->getCart();
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $orderAfter = $this->orderRepository->findByFrontendUser($frontendUser);
+
+        static::assertEquals(1, count($orderAfter));
+        static::assertEquals('1', $orderAfter->getFirst()->getUid());
+
 
     }
 

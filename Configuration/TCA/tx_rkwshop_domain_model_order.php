@@ -120,6 +120,13 @@ return [
                 'readOnly' => true
             ],
         ],
+        'shipping_address_same_as_billing_address' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.shippingAddressSameAsBillingAddress',
+            'config' => [
+                'type' => 'check',
+            ],
+        ],
 		'remark' => [
 			'exclude' => 0,
 			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.remark',

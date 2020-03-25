@@ -6,6 +6,10 @@ RkwShop.handle = (function ($) {
 
 	var $quantities;
 
+	var $sameAsBilling;
+
+	var $shippingAddressForm;
+
 	var _init = function(){
 		$(document).ready(_onReady);
 	};
@@ -19,11 +23,18 @@ RkwShop.handle = (function ($) {
 		if ($quantities.length > 0) {
 			_changeQuantity();
 		}
+
+		$sameAsBilling = $('.js-same-as-billing');
+		if ($sameAsBilling.length > 0) {
+            $shippingAddressForm = $('.js-shipping-address-form');
+
+		    _showShippingAddressForm();
+        }
 	};
 
 	var _changeQuantity = function() {
 
-		$quantities.on('change', function ($quantity) {
+		$quantities.on('change', function () {
 			var changeUrl = $(this)
 				.closest('.order-list__item')
 				.find('.js-change-quantity-url')
@@ -33,6 +44,14 @@ RkwShop.handle = (function ($) {
 		});
 
 	};
+
+	var _showShippingAddressForm = function() {
+
+	    $sameAsBilling.on('change', function () {
+            $shippingAddressForm.toggleClass('hide');
+        });
+
+    };
 
 	var _getContent = function(e){
 
