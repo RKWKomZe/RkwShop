@@ -51,16 +51,15 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         //===
     }
 
-
     /**
      * Find all orders by frontend user session hash
      *
      * @param string $hash
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      *
-     * @throws \RKW\RkwShop\Exceptions\CartHashNotFoundException
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByFrontendUserSessionHash($hash = '')
+    public function findByFrontendUserOrFrontendUserSessionHash($frontendUser = null, $hash = '')
     {
 
         $hash = ($hash != '') ? $hash : $_COOKIE[FrontendUserAuthentication::getCookieName()];
@@ -69,12 +68,13 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $query->getQuerySettings()->setRespectStoragePage(false);
 
         $query->matching(
-            $query->logicalAnd(
-                $query->equals('frontendUserSessionHash', $hash)
+            $query->logicalOr(
+                $query->equals('frontendUserSessionHash', $hash),
+                $query->equals('frontendUser', $frontendUser)
             )
         );
 
-        return $query->execute();
+        return $query->execute()->getFirst();
         //===
     }
 

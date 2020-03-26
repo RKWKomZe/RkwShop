@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+
+    <fe_users>
+        <uid>1</uid>
+        <pid>0</pid>
+        <username>spd@test.de</username>
+        <email>lauterbach@spd.de</email>
+        <first_name />
+        <last_name />
+        <company />
+        <address />
+        <zip>10969</zip>
+        <city>Hamburg</city>
+        <tx_rkwregistration_gender>0</tx_rkwregistration_gender>
+        <tx_rkwregistration_title>0</tx_rkwregistration_title>
+        <tx_rkwregistration_language_key>fr</tx_rkwregistration_language_key>
+    </fe_users>
+
+    <!-- cart -->
+    <tx_rkwshop_domain_model_order>
+        <uid>1</uid>
+        <pid>1</pid>
+        <frontend_user>1</frontend_user>
+        <frontend_user_session_hash>12345678</frontend_user_session_hash>
+        <remark>Toller Hinweis!!! Aber echt!</remark>
+        <order_item>0</order_item>
+    </tx_rkwshop_domain_model_order>
+
+</dataset>

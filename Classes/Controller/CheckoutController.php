@@ -129,11 +129,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         $order = $this->cartService->getCart();
 
-        DebuggerUtility::var_dump($order->getFrontendUser()->getUid());
-        DebuggerUtility::var_dump($this->getFrontendUser()->getUid());
-        exit();
-
-
         $this->view->assignMultiple([
             'frontendUser'    => $this->getFrontendUser(),
             'order'           => $order,

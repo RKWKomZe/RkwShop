@@ -182,10 +182,12 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check10.xml');
 
+        Common::initFrontendInBackendContext();
+
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+        $order = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
@@ -217,7 +219,7 @@ class CheckoutControllerTest extends FunctionalTestCase
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+        $order = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
@@ -258,7 +260,7 @@ class CheckoutControllerTest extends FunctionalTestCase
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+        $order = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
 
         $request = $this->getMock(Request::class);
 

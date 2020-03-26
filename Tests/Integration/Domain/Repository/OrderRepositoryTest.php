@@ -2,6 +2,8 @@
 namespace RKW\RkwShop\Tests\Integration\Domain\Repository;
 
 
+use RKW\RkwBasics\Helper\Common;
+use RKW\RkwRegistration\Tools\Authentication;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
 use RKW\RkwShop\Domain\Repository\OrderRepository;
@@ -386,26 +388,59 @@ class OrderRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \Exception
      */
-    public function findByFrontendUserSessionHashGetsCurrentUsersOrder()
+    public function findByFrontendUserOrFrontendUserSessionHashGetsCurrentGuestUsersOrder()
     {
 
         /**
          * Scenario:
          *
-         * Given a guest user created a cart
-         * Given a second guest user created a cart
-         * When I fetch the cart of the user by frontend user cookie hash
-         * Then only his cart is returned
+         * Given current guest user created a cart
+         * Given another guest user created a cart
+         * When I fetch the cart by frontend user cookie hash
+         * Then only the cart of the current user is returned
          */
 
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check210.xml');
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';  //  get this from a fixture or set it in a fixture
 
-        $result = $this->subject->findByFrontendUserSessionHash();
+        $result = $this->subject->findByFrontendUserOrFrontendUserSessionHash();
 
         static::assertEquals(1, count($result));
-        static::assertEquals('1', $result[0]->getUid());
+        static::assertEquals('1', $result->getUid());
+
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findByFrontendUserOrFrontendUserSessionHashGetsCurrentLoggedInUsersOrder()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given a frontend user is logged in
+         * Given he created a cart
+         * Given the session hash is different
+         * When I fetch the cart of the user
+         * Then his cart is returned
+         */
+
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check220.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '';
+
+        $result = $this->subject->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+
+        static::assertEquals('1', $result->getUid());
 
     }
 

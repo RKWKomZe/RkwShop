@@ -159,11 +159,9 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     {
         //  @todo: außerdem muss auf den Status der Order geachtet werden, damit nicht später einfach auch weitere nicht mehr aktuelle bzw. bereits bestellte Warenkörbe abgerufen werden
 
-        if ($this->getFrontendUser()) {
-            $existingCart = $this->orderRepository->findByFrontendUser($this->getFrontendUser())->getFirst();
-        } else {
-            $existingCart = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
-        }
+        //  findByFrontendUserOrSessionHash
+
+        $existingCart = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($this->getFrontendUser());
 
         $this->cart = ($existingCart) ? $existingCart : $this->createCart();
 

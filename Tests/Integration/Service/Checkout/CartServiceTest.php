@@ -165,10 +165,10 @@ class CartServiceTest extends FunctionalTestCase
         $this->subject->getCart();
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
-        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         static::assertEquals(1, count($orderAfter));
-        static::assertEquals('1', $orderAfter->getFirst()->getUid());
+        static::assertEquals('1', $orderAfter->getUid());
 
     }
 
@@ -204,10 +204,10 @@ class CartServiceTest extends FunctionalTestCase
         $this->subject->getCart();
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
-        $orderAfter = $this->orderRepository->findByFrontendUser($frontendUser);
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
 
         static::assertEquals(1, count($orderAfter));
-        static::assertEquals('1', $orderAfter->getFirst()->getUid());
+        static::assertEquals('1', $orderAfter->getUid());
 
     }
 
@@ -260,24 +260,22 @@ class CartServiceTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
+        $orderBefore = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderBefore));
-        static::assertEquals('1', $orderBefore->getFirst()->getUid());
-        static::assertEquals(0, count($orderBefore->getFirst()->getOrderItem()));
+        static::assertEquals('1', $orderBefore->getUid());
+        static::assertEquals(0, count($orderBefore->getOrderItem()));
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $selectedProduct = $this->productRepository->findByUid(1);
 
         $this->subject->add($selectedProduct, $amount = 1);
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderAfter));
-        static::assertEquals('1', $orderAfter->getFirst()->getUid());
-        static::assertEquals(1, count($orderAfter->getFirst()->getOrderItem()));
+        static::assertEquals('1', $orderAfter->getUid());
+        static::assertEquals(1, count($orderAfter->getOrderItem()));
 
     }
 
@@ -300,26 +298,25 @@ class CartServiceTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
+        $orderBefore = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderBefore));
-        static::assertEquals('1', $orderBefore->getFirst()->getUid());
-        static::assertEquals(1, count($orderBefore->getFirst()->getOrderItem()));
+        static::assertEquals('1', $orderBefore->getUid());
+        static::assertEquals(1, count($orderBefore->getOrderItem()));
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $selectedProduct = $this->productRepository->findByUid(1);
 
         $this->subject->add($selectedProduct, $amount = 1);
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         static::assertEquals(1, count($orderAfter));
-        static::assertEquals('1', $orderAfter->getFirst()->getUid());
-        static::assertEquals(1, $orderAfter->getFirst()->getOrderItem()->count());
+        static::assertEquals('1', $orderAfter->getUid());
+        static::assertEquals(1, $orderAfter->getOrderItem()->count());
 
-        $orderItems = $orderAfter->getFirst()->getOrderItem();
+        $orderItems = $orderAfter->getOrderItem();
         $orderItems->rewind();
 
         static::assertEquals(2, $orderItems->current()->getAmount());
@@ -346,26 +343,24 @@ class CartServiceTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
+        $orderBefore = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderBefore));
-        static::assertEquals('1', $orderBefore->getFirst()->getUid());
-        static::assertEquals(2, count($orderBefore->getFirst()->getOrderItem()));
+        static::assertEquals('1', $orderBefore->getUid());
+        static::assertEquals(2, count($orderBefore->getOrderItem()));
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
         $removableItem = $this->orderItemRepository->findByUid(2);
 
         $this->subject->remove($removableItem);
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderAfter));
-        static::assertEquals('1', $orderAfter->getFirst()->getUid());
-        static::assertEquals(1, count($orderAfter->getFirst()->getOrderItem()));
+        static::assertEquals('1', $orderAfter->getUid());
+        static::assertEquals(1, count($orderAfter->getOrderItem()));
 
-        $orderItems = $orderAfter->getFirst()->getOrderItem();
+        $orderItems = $orderAfter->getOrderItem();
         $orderItems->rewind();
 
         static::assertSame($this->orderItemRepository->findByUid(1), $orderItems->current());
@@ -391,29 +386,28 @@ class CartServiceTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
+        $orderBefore = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         static::assertEquals(1, count($orderBefore));
-        static::assertEquals('1', $orderBefore->getFirst()->getUid());
-        static::assertEquals(1, count($orderBefore->getFirst()->getOrderItem()));
+        static::assertEquals('1', $orderBefore->getUid());
+        static::assertEquals(1, count($orderBefore->getOrderItem()));
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        $selectedOrderItems = $orderBefore->getFirst()->getOrderItem();
+        $selectedOrderItems = $orderBefore->getOrderItem();
         $selectedOrderItems->rewind();
 
         $selectedOrderItem = $selectedOrderItems->current();
 
         $this->subject->changeQuantity($selectedOrderItem, $amount = 5);
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderAfter));
-        static::assertEquals('1', $orderAfter->getFirst()->getUid());
-        static::assertEquals(1, $orderAfter->getFirst()->getOrderItem()->count());
+        static::assertEquals('1', $orderAfter->getUid());
+        static::assertEquals(1, $orderAfter->getOrderItem()->count());
 
-        $orderItems = $orderAfter->getFirst()->getOrderItem();
+        $orderItems = $orderAfter->getOrderItem();
         $orderItems->rewind();
 
         static::assertEquals(5, $orderItems->current()->getAmount());
@@ -439,27 +433,25 @@ class CartServiceTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
+        $orderBefore = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderBefore));
-        static::assertEquals('1', $orderBefore->getFirst()->getUid());
-        static::assertEquals(1, count($orderBefore->getFirst()->getOrderItem()));
+        static::assertEquals('1', $orderBefore->getUid());
+        static::assertEquals(1, count($orderBefore->getOrderItem()));
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        $selectedOrderItems = $orderBefore->getFirst()->getOrderItem();
+        $selectedOrderItems = $orderBefore->getOrderItem();
         $selectedOrderItems->rewind();
 
         $selectedOrderItem = $selectedOrderItems->current();
 
         $this->subject->changeQuantity($selectedOrderItem, $amount = 0);
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderAfter));
-        static::assertEquals('1', $orderAfter->getFirst()->getUid());
-        static::assertEquals(0, $orderAfter->getFirst()->getOrderItem()->count());
+        static::assertEquals('1', $orderAfter->getUid());
+        static::assertEquals(0, $orderAfter->getOrderItem()->count());
 
     }
 
@@ -489,19 +481,19 @@ class CartServiceTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
+        $orderBefore = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         static::assertEquals(1, count($orderBefore));
-        static::assertEquals('1', $orderBefore->getFirst()->getUid());
-        static::assertEquals(1, $orderBefore->getFirst()->getShippingAddressSameAsBillingAddress());
+        static::assertEquals('1', $orderBefore->getUid());
+        static::assertEquals(1, $orderBefore->getShippingAddressSameAsBillingAddress());
 
         $this->subject->updateShippingAddress();
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals($orderBefore->getFirst()->getFrontendUser()->getCity(), $orderAfter->getFirst()->getShippingAddress()->getCity());
+        static::assertEquals($orderBefore->getFrontendUser()->getCity(), $orderAfter->getShippingAddress()->getCity());
 
     }
 
