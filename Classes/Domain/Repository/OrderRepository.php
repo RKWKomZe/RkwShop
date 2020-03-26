@@ -57,6 +57,8 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      *
      * @param string $hash
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     *
+     * @throws \RKW\RkwShop\Exceptions\CartHashNotFoundException
      */
     public function findByFrontendUserSessionHash($hash = '')
     {

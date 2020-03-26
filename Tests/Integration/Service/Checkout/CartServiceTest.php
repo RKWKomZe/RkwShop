@@ -3,15 +3,14 @@
 namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
 use RKW\RkwBasics\Helper\Common;
-use RKW\RkwRegistration\Tools\Authentication;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-use RKW\RkwShop\Cart\Cart;
-use RKW\RkwShop\Domain\Repository\OrderItemRepository;
-use RKW\RkwShop\Domain\Repository\OrderRepository;
-use RKW\RkwShop\Domain\Repository\ProductRepository;
-use RKW\RkwShop\Service\Checkout\CartService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use RKW\RkwRegistration\Tools\Authentication;
+use RKW\RkwShop\Service\Checkout\CartService;
+use RKW\RkwShop\Domain\Repository\OrderRepository;
+use RKW\RkwShop\Domain\Repository\ProductRepository;
+use RKW\RkwShop\Domain\Repository\OrderItemRepository;
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
@@ -148,9 +147,9 @@ class CartServiceTest extends FunctionalTestCase
         /**
          * Scenario:
          *
-         * Given a guest adds a product to the cart
+         * Given a guest tries to create a cart
          * Given he has not created a cart yet
-         * When I initialize a cart
+         * When I get the cart
          * Then a new cart is created
          */
 
@@ -158,18 +157,88 @@ class CartServiceTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderBefore = $this->orderRepository->findByFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
+        $orders = $this->orderRepository->findAll();
 
-        static::assertEquals(0, count($orderBefore));
+        static::assertEquals(0, count($orders));
 
         $this->subject->getCart();
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
         $orderAfter = $this->orderRepository->findByFrontendUserSessionHash();
 
         static::assertEquals(1, count($orderAfter));
         static::assertEquals('1', $orderAfter->getFirst()->getUid());
+
+    }
+
+    /**
+     * @test
+     */
+    public function getCartCreatesANewOrderForFrontendUserIfAnOrderDoesNotAlreadyExistAndFrontendUserIsAlreadyLoggedIn ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given a logged in user tries to create a cart
+         * Given he has not created a cart yet
+         * When I get the cart
+         * Then a new cart is created
+         * And can be retrieved by frontend user
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check11.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
+        $orders = $this->orderRepository->findAll();
+
+        static::assertEquals(0, count($orders));
+
+        $this->subject->getCart();
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
+        $orderAfter = $this->orderRepository->findByFrontendUser($frontendUser);
+
+        static::assertEquals(1, count($orderAfter));
+        static::assertEquals('1', $orderAfter->getFirst()->getUid());
+
+    }
+
+    /**
+     * @test
+     */
+    public function getCartReturnsOrderForSessionUser ()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given a guest adds a product to the cart
+         * Given he has already created a cart
+         * When I try to get the cart
+         * Then the existing cart is returned
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check15.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $existingOrder */
+        $existingOrder = $this->orderRepository->findByUid(1);
+
+        static::assertEquals(1, count($existingOrder));
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $cart */
+        $cart = $this->subject->getCart();
+
+        static::assertSame($existingOrder, $cart);
 
     }
 

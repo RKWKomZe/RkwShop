@@ -7,6 +7,7 @@ use RKW\RkwShop\Domain\Model\OrderItem;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use RKW\RkwShop\Exceptions\CartHashNotFoundException;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
@@ -156,15 +157,17 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getCart()
     {
+        //  @todo: außerdem muss auf den Status der Order geachtet werden, damit nicht später einfach auch weitere nicht mehr aktuelle bzw. bereits bestellte Warenkörbe abgerufen werden
 
-        //  @todo: In der Order muss der FrontendUser gesetzt werden, sofern verfügbar. Wenn nicht, also nicht angemeldet, dann wird der Hash genutzt.
+        if ($this->getFrontendUser()) {
+            $existingCart = $this->orderRepository->findByFrontendUser($this->getFrontendUser())->getFirst();
+        } else {
+            $existingCart = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+        }
 
-        //  @todo: Hier den Warenkorb nach FrontendUser oder FrontendUserHash suchen,
-        //  wenn FrontendUser da, dann bitte den FrontendUser setzen und den Hash leeren
-        //  außerdem muss auf den Status der Order geachtet werden, damit nicht später einfach auch weitere nicht mehr aktuelle bzw. bereits bestellte Warenkörbe abgerufen werden
-        $this->cart = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
+        $this->cart = ($existingCart) ? $existingCart : $this->createCart();
 
-        return ($this->cart) ? $this->cart : $this->createCart();
+        return $this->cart;
     }
 
     /**
@@ -176,18 +179,18 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     public function createCart()
     {
 
-        $order = new Order();
+        $cart = new Order();
 
         if ($frontendUser = $this->getFrontendUser()) {
-            $order->setFrontendUser($frontendUser);
+            $cart->setFrontendUser($frontendUser);
         } else {
-            $order->setFrontendUserSessionHash($_COOKIE[FrontendUserAuthentication::getCookieName()]);
+            $cart->setFrontendUserSessionHash($_COOKIE[FrontendUserAuthentication::getCookieName()]);
         }
 
-        $this->orderRepository->add($order);
+        $this->orderRepository->add($cart);
         $this->persistenceManager->persistAll();
 
-        return $order;
+        return $cart;
 
     }
 
