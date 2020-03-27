@@ -309,6 +309,20 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * Create Order
+     *
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param \TYPO3\CMS\Extbase\Mvc\Request|null $request
+     * @param bool $privacy
+     * @return string
+     */
+    public function orderCart(\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, $privacy = false)
+    {
+
+        return 'orderService.message.created';
+    }
+
+    /**
      * Returns current logged in user object
      *
      * @return \RKW\RkwRegistration\Domain\Model\FrontendUser|null

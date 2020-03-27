@@ -537,6 +537,43 @@ class CartServiceTest extends FunctionalTestCase
 
     }
 
+    //  @todo: Timestamp setzen, wenn die Bestellung tatsächlich abgeschickt wird!!!! Damit kann dann zwischen Warenkörben und Bestellungen unterschieden werden.
+
+    //  @todo: Die nachfolgenden Checks müssen über einen Validator erfolgen!????
+    //  siehe OrderServiceTest
+    public function orderCartChecksForTermsIfNotLoggedIn() {
+        //  @todo: Nicht notwendig, da User bereits angemeldet und zugeordnet!?
+    }
+
+    public function createOrderChecksForTermsIfUserNotRegistered() {}
+    public function createOrderChecksForPrivacyTermsIfNotLoggedIn() {}
+    public function createOrderChecksForPrivacyTermIfUserIsLoggedIn() {}
+    public function createOrderChecksForValidEmail() {}
+    public function createOrderChecksForValidShippingAddress() {}
+    public function createOrderChecksForOrderItems() {}
+    public function createOrderChecksAllOrderItemAmountsAreGreaterThanZero() {}
+    public function createOrderChecksForStockOfProduct() {}
+    public function createOrderChecksForPersistedOrders() {}
+    public function createOrderSavesOrderIfProductOutOfStockCanBePreOrdered() {}
+    public function createOrderSavesOrderIfProductOutOfStockIsSubscription() {}
+    public function createOrderSavesOrderIfUserIsLoggedIn() {}
+    public function createOrderCreatesRegistrationIfUserIsNotLoggedIn() {}
+
+    public function removeAllOrdersOfFrontendUserSignalSlotRemovesAllOpenOrdersOfGivenUser() {}
+    public function getRemainingStockSubstractsOrderedAndOrderedExternalFromStock() {}
+    public function getRemainingStockReturnsZeroIfAmountOfOrdersIsGreaterThanStock() {}
+    public function getRemainingStockReturnsStockOfProductBundle() {}
+    public function getRemainingStockReturnsStockOfProductIfSingleOrderIsAllowed() {}
+    public function getPreOrderStockSubstractsOrderedAndOrderedExternalFromStock() {}
+    public function getPreOrderStockReturnsZeroIfAmountOfOrdersIsGreaterThanStock() {}
+    public function getPreOrderStockReturnsStockOfProductBundle() {}
+    public function getPreOrderStockReturnsStockOfProductIfSingleOrderIsAllowed() {}
+    public function cleanUpOrderItemListRemovesOrderItemObjectsWithAmountLowerThanOne() {}
+    public function getBackendUsersForAdminMailsAddsAdminFromTextField() {}
+    public function getBackendUsersForAdminMailsChecksForValidEmails() {}
+    public function getBackendUsersForAdminMailsReturnsFallbackAdmin() {}
+    public function getBackendUsersForAdminMailsReturnsAdminsOfProductBundle() {}
+
     //=============================================
 
     /**
