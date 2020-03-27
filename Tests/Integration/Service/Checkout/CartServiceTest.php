@@ -3,10 +3,14 @@
 namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
 use RKW\RkwBasics\Helper\Common;
+use TYPO3\CMS\Extbase\Mvc\Request;
+use RKW\RkwShop\Domain\Model\Order;
+use RKW\RkwShop\Domain\Model\OrderItem;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use RKW\RkwRegistration\Tools\Authentication;
 use RKW\RkwShop\Service\Checkout\CartService;
+use RKW\RkwShop\Domain\Model\ShippingAddress;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
 use RKW\RkwShop\Domain\Repository\OrderItemRepository;
@@ -550,8 +554,111 @@ class CartServiceTest extends FunctionalTestCase
     public function createOrderChecksForPrivacyTermIfUserIsLoggedIn() {}
     public function createOrderChecksForValidEmail() {}
     public function createOrderChecksForValidShippingAddress() {}
-    public function createOrderChecksForOrderItems() {}
-    public function createOrderChecksAllOrderItemAmountsAreGreaterThanZero() {}
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function orderCartChecksForOrderItems()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given no product is ordered
+         * When I make an order
+         * Then an error is thrown
+         */
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::expectException(\RKW\RkwShop\Exception::class);
+        static::expectExceptionMessage('orderService.error.noOrderItem');
+
+        $this->subject->orderCart($order, $request, null, true);
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function orderCartChecksAllOrderItemAmountsAreGreaterThanZero()
+    {
+        /**
+         * Scenario:
+         *
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given a orderItem with product is added
+         * Given a product is ordered with amount less than one
+         * When I make an order
+         * Then an noOrderItem- error is thrown
+         */
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check120.xml');
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(0);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::expectException(\RKW\RkwShop\Exception::class);
+        static::expectExceptionMessage('orderService.error.noOrderItem');
+
+        $this->subject->orderCart($order, $request, null, true);
+
+    }
+
+
+
     public function createOrderChecksForStockOfProduct() {}
     public function createOrderChecksForPersistedOrders() {}
     public function createOrderSavesOrderIfProductOutOfStockCanBePreOrdered() {}

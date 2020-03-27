@@ -2,6 +2,7 @@
 
 namespace RKW\RkwShop\Service\Checkout;
 
+use RKW\RkwShop\Exception;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -318,6 +319,11 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function orderCart(\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, $privacy = false)
     {
+        // cleanup & check orderItem
+        $this->cleanUpOrderItemList($order);
+        if (! count($order->getOrderItem()->toArray())) {
+            throw new Exception('orderService.error.noOrderItem');
+        }
 
         return 'orderService.message.created';
     }
@@ -363,6 +369,23 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
         return null;
         //===
+    }
+
+    /**
+     * Clean up order product list
+     *
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @return void
+     */
+    public function cleanUpOrderItemList (\RKW\RkwShop\Domain\Model\Order $order)
+    {
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        foreach ($order->getOrderItem()->toArray() as $orderItem) {
+            if (! $orderItem->getAmount()) {
+                $order->removeOrderItem($orderItem);
+            }
+        }
     }
 
 }
