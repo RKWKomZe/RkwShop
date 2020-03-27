@@ -488,7 +488,7 @@ class CartServiceTest extends FunctionalTestCase
         static::assertEquals('1', $orderBefore->getUid());
         static::assertEquals(1, $orderBefore->getShippingAddressSameAsBillingAddress());
 
-        $this->subject->updateShippingAddress();
+        $this->subject->updateShippingAddress($orderBefore);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
         $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();

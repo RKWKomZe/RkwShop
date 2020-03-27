@@ -48,7 +48,10 @@ RkwShop.handle = (function ($) {
 	var _showShippingAddressForm = function() {
 
 	    $sameAsBilling.on('change', function () {
-            $shippingAddressForm.toggleClass('hide');
+
+	        var $jcfCheckbox = $(this).closest('.jcf-checkbox');
+
+            ($jcfCheckbox.hasClass('jcf-checked')) ? $shippingAddressForm.removeClass('hide') : $shippingAddressForm.addClass('hide');
         });
 
     };

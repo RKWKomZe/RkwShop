@@ -277,18 +277,21 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @param Order     $cart
+     * @return Order    $cart
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function updateShippingAddress()
+    public function updateShippingAddress(\RKW\RkwShop\Domain\Model\Order $cart)
     {
-        $this->getCart();
+        if ($cart->getShippingAddressSameAsBillingAddress() === 1) {
 
-        if ($this->cart->getShippingAddressSameAsBillingAddress() === 1) {
-
-            $frontendUser = $this->cart->getFrontendUser();
+            $frontendUser = $cart->getFrontendUser();
 
             /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
             $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
 
+            $shippingAddress->setFrontendUser($frontendUser);
             $shippingAddress->setGender($frontendUser->getTxRkwregistrationGender());
             $shippingAddress->setFirstName($frontendUser->getFirstName());
             $shippingAddress->setLastName($frontendUser->getLastName());
@@ -297,11 +300,11 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
             $shippingAddress->setZip($frontendUser->getZip());
             $shippingAddress->setCity($frontendUser->getCity());
 
-            $this->cart->setShippingAddress($shippingAddress);
-
-            $this->orderRepository->update($this->cart);
+            $cart->setShippingAddress($shippingAddress);
 
         }
+
+        return $cart;
 
     }
 

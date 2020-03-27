@@ -129,6 +129,8 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         $order = $this->cartService->getCart();
 
+        $order = $this->cartService->updateShippingAddress($order);
+
         $this->view->assignMultiple([
             'frontendUser'    => $this->getFrontendUser(),
             'order'           => $order,
@@ -159,19 +161,9 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
     {
+        $this->cartService->updateShippingAddress($order);
 
-        DebuggerUtility::var_dump($order->getShippingAddress()->getAddress());
-
-        //  order ist an dieser Stelle !== $this->cartService->getCart()
-        $this->cartService->setCart($order);
-
-        //        $this->cartService->updateShippingAddress();
-
-        DebuggerUtility::var_dump($this->cartService->getCart()->getShippingAddress()->getAddress());
-
-//        $this->cartService->updateShippingAddress();
-
-        exit();
+        $order = $this->cartService->getCart();
 
         //  show order review page
         $this->view->assignMultiple([
