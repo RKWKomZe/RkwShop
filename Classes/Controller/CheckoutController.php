@@ -218,15 +218,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         }
 
-
-        //  @todo: Ist das notwendig? Oder könnte ich direkt auf die successAction weiterleiten?
-//        $uri = $this->uriBuilder
-//            ->setTargetPageUid((int)$this->settings['checkoutSuccessPid'])
-//            ->build();
-//        $this->redirectToUri($uri);
-
-        //  @todo: Alternative?
-          $this->redirect('finishOrder');
+        $this->redirect('finishOrder');
 
     }
 
@@ -235,7 +227,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function finishOrderAction()
     {
-        //  show success page by id
+        //  show success page
     }
 
     /**
