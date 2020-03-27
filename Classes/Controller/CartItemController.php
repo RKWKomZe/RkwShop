@@ -44,7 +44,9 @@ class CartItemController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function addCartItemAction(\RKW\RkwShop\Domain\Model\Product $product, $amount = 0)
     {
-        $this->cartService->add($product, $amount);
+        $cart = $this->cartService->getCart();
+
+        $this->cartService->add($cart, $product, $amount);
 
         $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
     }
@@ -61,8 +63,10 @@ class CartItemController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function removeCartItemAction(\RKW\RkwShop\Domain\Model\OrderItem $orderItem)
     {
+        $cart = $this->cartService->getCart();
+
         //  Warum schlägt die Validierung fehl, so dass ich @ignorevalidation nutzen muss?
-        $this->cartService->remove($orderItem);
+        $this->cartService->remove($orderItem, $cart);
 
         $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
     }
@@ -81,7 +85,9 @@ class CartItemController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function changeCartItemQuantityAction(\RKW\RkwShop\Domain\Model\OrderItem $orderItem, $amount = 0)
     {
-        $this->cartService->changeQuantity($orderItem, $amount);
+        $cart = $this->cartService->getCart();
+
+        $this->cartService->changeQuantity($cart, $orderItem, $amount);
 
         $this->redirect('showCart', 'Checkout', 'tx_rkwshop_cart', null, $this->settings['cartPid']);
     }

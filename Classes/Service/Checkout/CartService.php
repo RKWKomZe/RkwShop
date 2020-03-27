@@ -153,22 +153,6 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * @return \RKW\RkwShop\Domain\Model\Order $order
-     */
-    public function getCart()
-    {
-        //  @todo: außerdem muss auf den Status der Order geachtet werden, damit nicht später einfach auch weitere nicht mehr aktuelle bzw. bereits bestellte Warenkörbe abgerufen werden
-
-        //  findByFrontendUserOrSessionHash
-
-        $existingCart = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($this->getFrontendUser());
-
-        $this->cart = ($existingCart) ? $existingCart : $this->createCart();
-
-        return $this->cart;
-    }
-
-    /**
      * Create Cart
      *
      * @return \RKW\RkwShop\Domain\Model\Order  $order
@@ -179,17 +163,27 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
         $cart = new Order();
 
-        if ($frontendUser = $this->getFrontendUser()) {
-            $cart->setFrontendUser($frontendUser);
-        } else {
-            $cart->setFrontendUserSessionHash($_COOKIE[FrontendUserAuthentication::getCookieName()]);
-        }
-
         $this->orderRepository->add($cart);
         $this->persistenceManager->persistAll();
 
-        return $cart;
+        return $this->cart = $cart;
 
+    }
+
+    /**
+     * @return \RKW\RkwShop\Domain\Model\Order $order
+     */
+    public function getCart()
+    {
+        //  @todo: außerdem muss auf den Status der Order geachtet werden, damit nicht später einfach auch weitere nicht mehr aktuelle bzw. bereits bestellte Warenkörbe abgerufen werden
+
+        //  findByFrontendUserOrSessionHash
+
+        $existingCart = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($this->getFrontendUser());
+
+        $cart = ($existingCart) ? $existingCart : $this->createCart();
+
+        return $this->assignCart($cart);
     }
 
     /**
@@ -197,47 +191,66 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function setCart(\RKW\RkwShop\Domain\Model\Order $order)
     {
-        DebuggerUtility::var_dump($order->getFrontendUserSessionHash());
-
+        //  @todo: Check, if this does update the correct cart!
         $this->cart = $order;
-
-
     }
 
     /**
+     * @param \RKW\RkwShop\Domain\Model\Order   $cart
+     */
+    public function assignCart(\RKW\RkwShop\Domain\Model\Order $cart)
+    {
+        if ($frontendUser = $this->getFrontendUser()) {
+
+            $cart->setFrontendUserSessionHash('');
+            $cart->setFrontendUser($frontendUser);
+
+        } else {
+
+            $cart->setFrontendUserSessionHash($_COOKIE[FrontendUserAuthentication::getCookieName()]);
+
+        }
+
+        $this->orderRepository->update($cart);
+        $this->persistenceManager->persistAll();
+
+        return $cart;
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Order   $cart
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param                                   $amount
      */
-    public function add(\RKW\RkwShop\Domain\Model\Product $product, $amount)
+    public function add(\RKW\RkwShop\Domain\Model\Order $cart, \RKW\RkwShop\Domain\Model\Product $product, $amount)
     {
-        $this->cart = $this->getCart();
-
-        $orderItem = $this->cart->containsProduct($product);
+        $orderItem = $cart->containsProduct($product);
 
         if ($orderItem) {
-            $this->changeQuantity($orderItem, $amount + $orderItem->getAmount());
+            $this->changeQuantity($cart, $orderItem, $amount + $orderItem->getAmount());
         } else {
             $orderItem = new OrderItem();
             $orderItem->setProduct($product);
             $orderItem->setAmount($amount);
-            $this->cart->addOrderItem($orderItem);
+            $cart->addOrderItem($orderItem);
 
-            $this->orderRepository->update($this->cart);
+            $this->orderRepository->update($cart);
         }
 
     }
 
     /**
-     * @param int       $amount
+     * @param Order     $cart
      * @param OrderItem $orderItem
+     * @param int       $amount
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function changeQuantity(OrderItem $orderItem, $amount)
+    public function changeQuantity(\RKW\RkwShop\Domain\Model\Order $cart, OrderItem $orderItem, $amount)
     {
 
         if ($amount === 0) {
-            $this->remove($orderItem);
+            $this->remove($orderItem, $cart);
         } else {
             $orderItem->setAmount($amount);
 
@@ -248,14 +261,14 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * @param OrderItem $removableItem
+     * @param \RKW\RkwShop\Domain\Model\Order   $cart
+
      */
-    public function remove(OrderItem $removableItem)
+    public function remove(OrderItem $removableItem, \RKW\RkwShop\Domain\Model\Order $cart)
     {
-        $this->getCart();
+        $cart->removeOrderItem($removableItem);
 
-        $this->cart->removeOrderItem($removableItem);
-
-        $this->orderRepository->update($this->cart);
+        $this->orderRepository->update($cart);
 
         $this->orderItemRepository->remove($removableItem); //  sets deleted flag
         //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/

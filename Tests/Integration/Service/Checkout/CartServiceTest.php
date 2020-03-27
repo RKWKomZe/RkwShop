@@ -269,7 +269,7 @@ class CartServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $selectedProduct = $this->productRepository->findByUid(1);
 
-        $this->subject->add($selectedProduct, $amount = 1);
+        $this->subject->add($orderBefore, $selectedProduct, $amount = 1);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
         $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
@@ -307,7 +307,7 @@ class CartServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $selectedProduct = $this->productRepository->findByUid(1);
 
-        $this->subject->add($selectedProduct, $amount = 1);
+        $this->subject->add($orderBefore, $selectedProduct, $amount = 1);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
         $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
@@ -352,7 +352,7 @@ class CartServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
         $removableItem = $this->orderItemRepository->findByUid(2);
 
-        $this->subject->remove($removableItem);
+        $this->subject->remove($removableItem, $orderBefore);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
         $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
@@ -399,7 +399,7 @@ class CartServiceTest extends FunctionalTestCase
 
         $selectedOrderItem = $selectedOrderItems->current();
 
-        $this->subject->changeQuantity($selectedOrderItem, $amount = 5);
+        $this->subject->changeQuantity($orderBefore, $selectedOrderItem, $amount = 5);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
         $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
@@ -445,7 +445,7 @@ class CartServiceTest extends FunctionalTestCase
 
         $selectedOrderItem = $selectedOrderItems->current();
 
-        $this->subject->changeQuantity($selectedOrderItem, $amount = 0);
+        $this->subject->changeQuantity($orderBefore, $selectedOrderItem, $amount = 0);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
         $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
@@ -522,18 +522,18 @@ class CartServiceTest extends FunctionalTestCase
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderBefore = $this->orderRepository->findByFrontendUser($frontendUser);
+        $orderBefore = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
 
         static::assertEquals(0, count($orderBefore));
 
         $this->subject->getCart();
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $orderAfter = $this->orderRepository->findByFrontendUser($frontendUser);
+        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
 
         static::assertEquals(1, count($orderAfter));
-        static::assertEquals('1', $orderAfter->getFirst()->getUid());
-
+        static::assertEquals('1', $orderAfter->getUid());
+        static::assertEquals('', $orderAfter->getFrontendUserSessionHash());
 
     }
 
