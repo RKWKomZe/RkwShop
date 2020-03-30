@@ -48,6 +48,9 @@ call_user_func(
         // Add tables
         //=================================================================
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages(
+            'tx_rkwshop_domain_model_cart'
+        );
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages(
             'tx_rkwshop_domain_model_order'
         );
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages(

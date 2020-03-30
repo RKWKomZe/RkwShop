@@ -2,6 +2,7 @@
 
 namespace RKW\RkwShop\Service\Checkout;
 
+use RKW\RkwShop\Domain\Model\Cart;
 use RKW\RkwShop\Exception;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
@@ -41,6 +42,14 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      * @var \RKW\RkwShop\Domain\Model\Order
      */
     protected $cart;
+
+    /**
+     * cartRepository
+     *
+     * @var \RKW\RkwShop\Domain\Repository\CartRepository
+     * @inject
+     */
+    protected $cartRepository;
 
     /**
      * orderRepository
@@ -156,15 +165,15 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Create Cart
      *
-     * @return \RKW\RkwShop\Domain\Model\Order  $order
+     * @return \RKW\RkwShop\Domain\Model\Cart  $cart
      *
      */
     public function createCart()
     {
 
-        $cart = new Order();
+        $cart = new Cart();
 
-        $this->orderRepository->add($cart);
+        $this->cartRepository->add($cart);
         $this->persistenceManager->persistAll();
 
         return $this->cart = $cart;
@@ -172,7 +181,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * @return \RKW\RkwShop\Domain\Model\Order $order
+     * @return \RKW\RkwShop\Domain\Model\Cart $cart
      */
     public function getCart()
     {
@@ -180,7 +189,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
         //  findByFrontendUserOrSessionHash
 
-        $existingCart = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($this->getFrontendUser());
+        $existingCart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($this->getFrontendUser());
 
         $cart = ($existingCart) ? $existingCart : $this->createCart();
 
@@ -197,9 +206,9 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * @param \RKW\RkwShop\Domain\Model\Order   $cart
+     * @param \RKW\RkwShop\Domain\Model\Cart   $cart
      */
-    public function assignCart(\RKW\RkwShop\Domain\Model\Order $cart)
+    public function assignCart(\RKW\RkwShop\Domain\Model\Cart $cart)
     {
         if ($frontendUser = $this->getFrontendUser()) {
 
@@ -212,18 +221,18 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
         }
 
-        $this->orderRepository->update($cart);
+        $this->cartRepository->update($cart);
         $this->persistenceManager->persistAll();
 
         return $cart;
     }
 
     /**
-     * @param \RKW\RkwShop\Domain\Model\Order   $cart
+     * @param \RKW\RkwShop\Domain\Model\Cart   $cart
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param                                   $amount
      */
-    public function add(\RKW\RkwShop\Domain\Model\Order $cart, \RKW\RkwShop\Domain\Model\Product $product, $amount)
+    public function add(\RKW\RkwShop\Domain\Model\Cart $cart, \RKW\RkwShop\Domain\Model\Product $product, $amount)
     {
         $orderItem = $cart->containsProduct($product);
 
@@ -235,19 +244,19 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
             $orderItem->setAmount($amount);
             $cart->addOrderItem($orderItem);
 
-            $this->orderRepository->update($cart);
+            $this->cartRepository->update($cart);
         }
 
     }
 
     /**
-     * @param Order     $cart
+     * @param Cart     $cart
      * @param OrderItem $orderItem
      * @param int       $amount
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function changeQuantity(\RKW\RkwShop\Domain\Model\Order $cart, OrderItem $orderItem, $amount)
+    public function changeQuantity(\RKW\RkwShop\Domain\Model\Cart $cart, OrderItem $orderItem, $amount)
     {
 
         if ($amount === 0) {
@@ -262,14 +271,14 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * @param OrderItem $removableItem
-     * @param \RKW\RkwShop\Domain\Model\Order   $cart
+     * @param \RKW\RkwShop\Domain\Model\Cart   $cart
 
      */
-    public function remove(OrderItem $removableItem, \RKW\RkwShop\Domain\Model\Order $cart)
+    public function remove(OrderItem $removableItem, \RKW\RkwShop\Domain\Model\Cart $cart)
     {
         $cart->removeOrderItem($removableItem);
 
-        $this->orderRepository->update($cart);
+        $this->cartRepository->update($cart);
 
         $this->orderItemRepository->remove($removableItem); //  sets deleted flag
         //  direktes Löschen wäre möglich - siehe https://www.typo3.net/forum/thematik/zeige/thema/116947/

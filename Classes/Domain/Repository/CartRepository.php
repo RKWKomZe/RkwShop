@@ -19,18 +19,18 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
  */
 
 /**
- * Class OrderRepository
+ * Class CartRepository
  *
- * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @author Christian Dilger <c.dilger@addorange.de>
  * @copyright Rkw Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class CartRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
     /**
-     * Find all orders of a frontendUser
+     * Find all carts of a frontendUser
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
@@ -52,54 +52,30 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
-     * Find all orders that have been updated recently
+     * Find all carts by frontend user session hash
      *
-     * @param integer $timestamp
+     * @param string $hash
+     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     *
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     *  @api used by RKW Soap
      */
-    public function findByTimestampSoap($timestamp)
+    public function findByFrontendUserOrFrontendUserSessionHash($frontendUser = null, $hash = '')
     {
 
-        $query = $this->createQuery();
+        $hash = ($hash != '') ? $hash : $_COOKIE[FrontendUserAuthentication::getCookieName()];
 
-        // $query->getQuerySettings()->setRespectStoragePage(false);
-        $query->getQuerySettings()->setIncludeDeleted(true);
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setRespectStoragePage(false);
 
         $query->matching(
-            $query->greaterThanOrEqual('tstamp', intval($timestamp))
+            $query->logicalOr(
+                $query->equals('frontendUserSessionHash', $hash),
+                $query->equals('frontendUser', $frontendUser)
+            )
         );
-
-        $query->setOrderings(array('tstamp' => QueryInterface::ORDER_ASCENDING));
-        return $query->execute();
-    }
-
-
-    /**
-     * Finds an object matching the given identifier.
-     *
-     * @param int $uid The identifier of the object to find
-     * @return \RKW\RkwShop\Domain\Model\Order The matching object if found, otherwise NULL
-     * @api used by RKW Soap
-     */
-    public function findByUidSoap($uid)
-    {
-        $query = $this->createQuery();
-
-        $query->getQuerySettings()->setIncludeDeleted(true);
-        $query->getQuerySettings()->setIgnoreEnableFields(true);
-
-        $query->matching(
-            $query->equals('uid', $uid)
-        );
-
-        $query->setLimit(1);
 
         return $query->execute()->getFirst();
+        //===
     }
-
-
 
 }

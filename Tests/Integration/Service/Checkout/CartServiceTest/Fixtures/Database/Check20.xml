@@ -49,16 +49,13 @@
     </tx_rkwshop_domain_model_stock>
 
     <!-- cart -->
-    <tx_rkwshop_domain_model_order>
+    <tx_rkwshop_domain_model_cart>
         <uid>1</uid>
         <pid>1</pid>
-        <email>test@dummy.de</email>
-        <remark>Toller Hinweis!!!</remark>
         <frontend_user>0</frontend_user>
         <frontend_user_session_hash>12345678</frontend_user_session_hash>
-        <status>0</status>
         <order_item>0</order_item>
-    </tx_rkwshop_domain_model_order>
+    </tx_rkwshop_domain_model_cart>
 
     <!-- orderitem -->
     <tx_rkwshop_domain_model_orderitem>

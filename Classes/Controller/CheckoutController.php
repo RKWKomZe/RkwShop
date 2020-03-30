@@ -73,14 +73,14 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function showCartAction()
     {
 
-        $order = $this->cartService->getCart(); //  liefert bereits die Order zurück
+        $cart = $this->cartService->getCart(); //  liefert bereits den Warenkorb zurück
 
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 
         //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
         $this->view->assignMultiple([
-            'order'   => $order,
+            'cart'   => $cart,
             'checkoutPid'   => (int)$this->settings['checkoutPid']
         ]);
 
@@ -101,7 +101,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
         $this->view->assignMultiple([
-            'order'   => $order,
+            'cart'   => $cart,
             'cartPid'   => (int)$this->settings['cartPid']
         ]);
 
@@ -128,9 +128,12 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             $this->redirectToUri($uri);
         }
 
-        $order = $this->cartService->getCart();
+        $cart = $this->cartService->getCart();
 
-        $order = $this->cartService->updateShippingAddress($order);
+        //  @todo: convert cart to order
+        //  @todo: Set the shippingAddress and prepare order
+
+        $order = $this->cartService->updateShippingAddress($cart);
 
         $this->view->assignMultiple([
             'frontendUser'    => $this->getFrontendUser(),

@@ -5,10 +5,9 @@ use RKW\RkwBasics\Helper\Common;
 use RKW\RkwRegistration\Tools\Authentication;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
-use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Controller\CheckoutController;
 
-use RKW\RkwShop\Service\Checkout\OrderService;
+use RKW\RkwShop\Domain\Repository\CartRepository;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
@@ -80,6 +79,11 @@ class CheckoutControllerTest extends FunctionalTestCase
      * @var \RKW\RkwShop\Domain\Repository\ShippingAddressRepository
      */
     private $shippingAddressRepository;
+
+    /**
+     * @var \RKW\RkwShop\Domain\Repository\CartRepository
+     */
+    private $cartRepository;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
@@ -157,6 +161,7 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $this->frontendUserRepository = $this->objectManager->get(FrontendUserRepository::class);
         $this->shippingAddressRepository = $this->objectManager->get(ShippingAddressRepository::class);
+        $this->cartRepository = $this->objectManager->get(CartRepository::class);
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
         $this->orderItemRepository = $this->objectManager->get(OrderItemRepository::class);
         $this->productRepository = $this->objectManager->get(ProductRepository::class);
@@ -167,7 +172,7 @@ class CheckoutControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function showCartReturnsCartWithOrder()
+    public function showCartReturnsCart()
     {
 
         //  /checkout/cart
@@ -175,9 +180,9 @@ class CheckoutControllerTest extends FunctionalTestCase
         /**
          * Scenario:
          *
-         * Given I already have an order in the cart
+         * Given I already have a cart
          * When I visit the cart page
-         * Then my order is returned to the view
+         * Then my cart is returned to the view
          */
 
         $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check10.xml');
@@ -186,12 +191,12 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
-            'order' => $order,
+            'cart' => $cart,
             'checkoutPid' => 0
         ]);
         $this->inject($this->subject,'view', $view);
@@ -203,7 +208,7 @@ class CheckoutControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function showMiniCartReturnsCartWithOrder()
+    public function showMiniCartReturnsCart()
     {
 
         /**
@@ -218,12 +223,12 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
+        $order = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
-            'order' => $order,
+            'cart' => $cart,
             'cartPid' => 0
         ]);
         $this->inject($this->subject,'view', $view);
@@ -235,7 +240,7 @@ class CheckoutControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function confirmCartReturnsCartWithOrder()
+    public function confirmCartReturnsCart()
     {
 
         //  /checkout/confirm
@@ -244,9 +249,9 @@ class CheckoutControllerTest extends FunctionalTestCase
          * Scenario:
          *
          * Given I am logged in
-         * Given I already have an order in the cart
+         * Given I already have a cart
          * When I visit the cart confirm page
-         * Then my order is returned to the view
+         * Then my cart is returned to the view
          */
 
         $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check20.xml');
@@ -259,15 +264,15 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
+        $order = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
 
         $request = $this->getMock(Request::class);
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
             'frontendUser' => $frontendUser,
-            'order' => $order,
+            'cart' => $cart,
             'termsPid' => 0,
             'terms' => null,
             'privacy' => null,
