@@ -287,35 +287,21 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * @param Order     $cart
-     * @return Order    $cart
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @param \RKW\RkwShop\Domain\Model\Cart $cart
+     * @return \RKW\RkwShop\Domain\Model\Order $order
      */
-    public function updateShippingAddress(\RKW\RkwShop\Domain\Model\Order $cart)
+    public function convertCart(Cart $cart)
     {
-        if ($cart->getShippingAddressSameAsBillingAddress() === 1) {
+        $shippingAddress = $this->makeShippingAddress($cart);
 
-            $frontendUser = $cart->getFrontendUser();
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
 
-            /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
-            $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $order->setFrontendUser($cart->getFrontendUser());
+        $order->setShippingAddress($shippingAddress);
+        $order->setOrderItem($cart->getOrderItem());
 
-            $shippingAddress->setFrontendUser($frontendUser);
-            $shippingAddress->setGender($frontendUser->getTxRkwregistrationGender());
-            $shippingAddress->setFirstName($frontendUser->getFirstName());
-            $shippingAddress->setLastName($frontendUser->getLastName());
-            $shippingAddress->setCompany($frontendUser->getCompany());
-            $shippingAddress->setAddress($frontendUser->getAddress());
-            $shippingAddress->setZip($frontendUser->getZip());
-            $shippingAddress->setCity($frontendUser->getCity());
-
-            $cart->setShippingAddress($shippingAddress);
-
-        }
-
-        return $cart;
-
+        return $order;
     }
 
     /**
@@ -351,6 +337,30 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         return 'orderService.message.created';
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Cart $cart
+     * @return \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAdress
+     */
+    public function makeShippingAddress(\RKW\RkwShop\Domain\Model\Cart $cart)
+    {
+        $frontendUser = $cart->getFrontendUser();
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+
+        $shippingAddress->setFrontendUser($frontendUser);
+        $shippingAddress->setGender($frontendUser->getTxRkwregistrationGender());
+        $shippingAddress->setFirstName($frontendUser->getFirstName());
+        $shippingAddress->setLastName($frontendUser->getLastName());
+        $shippingAddress->setCompany($frontendUser->getCompany());
+        $shippingAddress->setAddress($frontendUser->getAddress());
+        $shippingAddress->setZip($frontendUser->getZip());
+        $shippingAddress->setCity($frontendUser->getCity());
+
+        return $shippingAddress;
+
     }
 
     /**

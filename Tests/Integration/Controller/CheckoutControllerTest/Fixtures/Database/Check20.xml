@@ -15,17 +15,12 @@
         <tx_rkwregistration_title>0</tx_rkwregistration_title>
         <tx_rkwregistration_language_key>fr</tx_rkwregistration_language_key>
     </fe_users>
+
     <!-- cart -->
     <tx_rkwshop_domain_model_cart>
         <uid>1</uid>
         <pid>1</pid>
-        <frontend_user_session_hash>12345678</frontend_user_session_hash>
-        <order_item>0</order_item>
-    </tx_rkwshop_domain_model_cart>
-    <tx_rkwshop_domain_model_cart>
-        <uid>2</uid>
-        <pid>1000</pid>
-        <frontend_user_session_hash>87654321</frontend_user_session_hash>
+        <frontend_user>1</frontend_user>
         <order_item>0</order_item>
     </tx_rkwshop_domain_model_cart>
 </dataset>

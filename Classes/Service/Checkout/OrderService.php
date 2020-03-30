@@ -2,7 +2,11 @@
 
 namespace RKW\RkwShop\Service\Checkout;
 
+use RKW\RkwShop\Domain\Model\Cart;
+use RKW\RkwShop\Domain\Model\Order;
+use RKW\RkwShop\Domain\Model\ShippingAddress;
 use \RKW\RkwShop\Exception;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -392,6 +396,58 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
             }
         }
+    }
+
+    public function checkShippingAddress(\RKW\RkwShop\Domain\Model\Order $order)
+    {
+        if ($order->getShippingAddressSameAsBillingAddress() === 1) {
+
+            $frontendUser = $order->getFrontendUser();
+            $shippingAddress = $this->makeShippingAddress($order);
+
+            /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+            $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+            /** @var \RKW\RkwShop\Domain\Model\Order $order */
+            $order = GeneralUtility::makeInstance(Order::class);
+
+            $shippingAddress->setFrontendUser($frontendUser);
+            $shippingAddress->setGender($frontendUser->getTxRkwregistrationGender());
+            $shippingAddress->setFirstName($frontendUser->getFirstName());
+            $shippingAddress->setLastName($frontendUser->getLastName());
+            $shippingAddress->setCompany($frontendUser->getCompany());
+            $shippingAddress->setAddress($frontendUser->getAddress());
+            $shippingAddress->setZip($frontendUser->getZip());
+            $shippingAddress->setCity($frontendUser->getCity());
+
+            $order->setShippingAddress($shippingAddress);
+
+        }
+
+        return $order;
+     }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @return \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAdress
+     */
+    public function makeShippingAddress(\RKW\RkwShop\Domain\Model\Order $order)
+    {
+        $frontendUser = $order->getFrontendUser();
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+
+        $shippingAddress->setFrontendUser($frontendUser);
+        $shippingAddress->setGender($frontendUser->getTxRkwregistrationGender());
+        $shippingAddress->setFirstName($frontendUser->getFirstName());
+        $shippingAddress->setLastName($frontendUser->getLastName());
+        $shippingAddress->setCompany($frontendUser->getCompany());
+        $shippingAddress->setAddress($frontendUser->getAddress());
+        $shippingAddress->setZip($frontendUser->getZip());
+        $shippingAddress->setCity($frontendUser->getCity());
+
+        return $shippingAddress;
+
     }
 
 

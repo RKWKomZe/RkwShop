@@ -470,7 +470,7 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function updateShippingAddressSetsShippingAddressToBillingAddress()
+    public function convertCartReturnsAnOrder()
     {
 
         /**
@@ -478,9 +478,9 @@ class CartServiceTest extends FunctionalTestCase
          *
          * Given my cart does already exist
          * Given I am logged in as a frontend user
-         * Given I want to use my billing address as shipping address
-         * When I review my order
-         * Then my shipping address will be set to my billing address
+         * When I want to confirm my cart
+         * Then an order is returned
+         * And my shipping address will be set to my billing address
          */
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check70.xml');
@@ -493,19 +493,18 @@ class CartServiceTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $orderBefore */
-        $orderBefore = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($orderBefore));
-        static::assertEquals('1', $orderBefore->getUid());
-        static::assertEquals(1, $orderBefore->getShippingAddressSameAsBillingAddress());
+        static::assertEquals(1, count($cart));
+        static::assertEquals('1', $cart->getUid());
 
-        $this->subject->updateShippingAddress($orderBefore);
+        $order = $this->subject->convertCart($cart);
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $orderAfter */
-        $orderAfter = $this->orderRepository->findByFrontendUserOrFrontendUserSessionHash();
-
-        static::assertEquals($orderBefore->getFrontendUser()->getCity(), $orderAfter->getShippingAddress()->getCity());
+        static::assertEquals($cart->getFrontendUser(), $order->getFrontendUser());
+        static::assertEquals($order->getFrontendUser()->getCity(), $order->getShippingAddress()->getCity());
+        static::assertEquals($cart->getOrderItem(), $order->getOrderItem());
+        static::assertEquals(1, $order->getShippingAddressSameAsBillingAddress());
 
     }
 

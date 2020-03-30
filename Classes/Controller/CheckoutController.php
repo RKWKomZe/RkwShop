@@ -130,10 +130,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         $cart = $this->cartService->getCart();
 
-        //  @todo: convert cart to order
-        //  @todo: Set the shippingAddress and prepare order
-
-        $order = $this->cartService->updateShippingAddress($cart);
+        $order = $this->cartService->convertCart($cart);
 
         $this->view->assignMultiple([
             'frontendUser'    => $this->getFrontendUser(),
@@ -154,7 +151,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     }
 
     /**
-     * action orderCart
+     * action reviewOrder
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param integer $privacy
@@ -165,9 +162,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
     {
-        $this->cartService->updateShippingAddress($order);
-
-        $order = $this->cartService->getCart();
+        $this->orderService->checkShippingAddress($order);
 
         // check privacy flag
         //  @todo: müsste hier über die Validierung abgefangen werden, nicht über die Exception!?

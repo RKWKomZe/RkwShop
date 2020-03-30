@@ -18,6 +18,7 @@ use RKW\RkwRegistration\Domain\Model\FrontendUser;
 use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
 use RKW\RkwRegistration\Domain\Repository\RegistrationRepository;
 
+use RKW\RkwShop\Service\Checkout\CartService;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -111,6 +112,11 @@ class CheckoutControllerTest extends FunctionalTestCase
     private $registrationRepository;
 
     /**
+     * @var \RKW\RkwShop\Service\Checkout\CartService
+     */
+    private $cartService;
+
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      */
     private $persistenceManager;
@@ -147,7 +153,7 @@ class CheckoutControllerTest extends FunctionalTestCase
                 'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_shop/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_shop/Tests/Functional/Orders/Fixtures/Frontend/Configuration/Rootpage.typoscript',
+                'EXT:rkw_shop/Tests/Integration/Controller/CheckoutControllerTest/Fixtures/Frontend/Configuration/Rootpage.typoscript',
             ]
         );
 
@@ -167,6 +173,7 @@ class CheckoutControllerTest extends FunctionalTestCase
         $this->productRepository = $this->objectManager->get(ProductRepository::class);
         $this->privacyRepository = $this->objectManager->get(PrivacyRepository::class);
         $this->registrationRepository = $this->objectManager->get(RegistrationRepository::class);
+        $this->cartService = $this->objectManager->get(CartService::class);
     }
 
     /**
@@ -240,7 +247,7 @@ class CheckoutControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function confirmCartReturnsCart()
+    public function confirmCartReturnsOrder()
     {
 
         //  /checkout/confirm
@@ -265,14 +272,16 @@ class CheckoutControllerTest extends FunctionalTestCase
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
-        $order = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+
+        $order = $this->cartService->convertCart($cart);
 
         $request = $this->getMock(Request::class);
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
             'frontendUser' => $frontendUser,
-            'cart' => $cart,
+            'order' => $order,
             'termsPid' => 0,
             'terms' => null,
             'privacy' => null,
@@ -309,8 +318,9 @@ class CheckoutControllerTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
 
+        //  this assert redirect
         $view = $this->getMock(ViewInterface::class);
-        $view->expects($this->once())->method('assignMultiple')->with([
+        $view->expects(static::once())->method('assignMultiple')->with([
             'frontendUser' => $frontendUser,
             'order' => $order,
             'termsPid' => 0,
@@ -320,6 +330,59 @@ class CheckoutControllerTest extends FunctionalTestCase
         $this->inject($this->subject,'view', $view);
 
         $this->subject->confirmCartAction();
+
+    }
+
+    /**
+     * @test
+     */
+    public function reviewOrderReturnsCorrectShippingAddress()
+    {
+
+        //  /checkout/review
+
+        /**
+         * Scenario:
+         *
+         * Given I am logged in
+         * Given I already have a cart
+         * Given I do not want to use a different shipping address
+         * When I visit the order review page
+         * Then I the order with the same address as the frontend user address is returned
+         */
+
+        $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check30.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = $this->orderRepository->findByFrontendUser($frontendUser)->getFirst();
+
+        /*
+        $result = $this->getMock(CheckoutController::class);
+        $result->expects($this->at(0))
+            ->method('getResult')
+            ->will($this->returnValue($rawResult));
+        $result->expects($this->at(1))
+            ->method('getResult')
+            ->will($this->returnValue(array()));
+        */
+
+        $view = $this->getMock(ViewInterface::class);
+        $view->expects($this->once())->method('assignMultiple')->with([
+            'frontendUser' => $frontendUser,
+            'order' => $order,
+            'privacy' => null,
+        ]);
+        $this->inject($this->subject,'view', $view);
+
+        $this->subject->reviewOrderAction($order);
 
     }
 
