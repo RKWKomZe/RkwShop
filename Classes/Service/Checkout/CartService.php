@@ -325,6 +325,22 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
             throw new Exception('orderService.error.noOrderItem');
         }
 
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        foreach($order->getOrderItem() as $orderItem) {
+
+            if (
+                (! $orderItem->getProduct() instanceof \RKW\RkwShop\Domain\Model\ProductSubscription)
+                && ($orderItem->getProduct()->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')
+            ){
+                $stock = $this->getRemainingStockOfProduct($orderItem->getProduct());
+                $stockPreOrder = $this->getPreOrderStockOfProduct($orderItem->getProduct());
+
+                if ($orderItem->getAmount() > ($stock + $stockPreOrder)) {
+                    throw new Exception('orderService.error.outOfStock');
+                }
+            }
+        }
+
         return 'orderService.message.created';
     }
 
@@ -369,6 +385,53 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
         return null;
         //===
+    }
+
+
+    /**
+     * Get remaining stock of product
+     *
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @return int
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
+    {
+        if (
+            ($product->getProductBundle())
+            && (! $product->getProductBundle()->getAllowSingleOrder())
+        ){
+            $product = $product->getProductBundle();
+        }
+
+        $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product);
+        $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product);
+
+        $remainingStock = intval($stockSum) - (intval($orderedSum) + intval($product->getOrderedExternal()));
+        return (($remainingStock > 0) ? $remainingStock : 0);
+    }
+
+    /**
+     * Get pre-order stock of product
+     *
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @return int
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     */
+    public function getPreOrderStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
+    {
+        if (
+            ($product->getProductBundle())
+            && (! $product->getProductBundle()->getAllowSingleOrder())
+        ){
+            $product = $product->getProductBundle();
+        }
+
+        $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product, true);
+        $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product, true);
+
+        $preOrderStock = intval($stockSum) - intval($orderedSum);
+        return (($preOrderStock > 0) ? $preOrderStock : 0);
     }
 
     /**

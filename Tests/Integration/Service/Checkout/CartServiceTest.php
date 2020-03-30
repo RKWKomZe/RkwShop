@@ -653,14 +653,72 @@ class CartServiceTest extends FunctionalTestCase
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderService.error.noOrderItem');
 
-        $this->subject->orderCart($order, $request, null, true);
+        $this->subject->orderCart($order, $request, null);
 
     }
 
 
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function orderCartChecksForStockOfProduct() {
+        /**
+         * Scenario:
+         *
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered which is out of stock
+         * When I make an order
+         * Then an outOfStock- error is thrown
+         */
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check150.xml');
 
-    public function createOrderChecksForStockOfProduct() {}
-    public function createOrderChecksForPersistedOrders() {}
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setEmail('email@rkw.de');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::expectException(\RKW\RkwShop\Exception::class);
+        static::expectExceptionMessage('orderService.error.outOfStock');
+
+        $this->subject->orderCart($order, $request, null);
+
+    }
+
+    public function createOrderChecksForPersistedOrders() {
+
+        //  @todo: Wie prüfe ich auf eine bereits abgesendete Bestellung?
+
+    }
+
     public function createOrderSavesOrderIfProductOutOfStockCanBePreOrdered() {}
     public function createOrderSavesOrderIfProductOutOfStockIsSubscription() {}
     public function createOrderSavesOrderIfUserIsLoggedIn() {}
