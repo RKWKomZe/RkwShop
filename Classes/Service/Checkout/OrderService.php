@@ -2,10 +2,9 @@
 
 namespace RKW\RkwShop\Service\Checkout;
 
-use RKW\RkwShop\Domain\Model\Cart;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
-use \RKW\RkwShop\Exception;
+use RKW\RkwShop\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /*

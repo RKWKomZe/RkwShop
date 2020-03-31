@@ -2,14 +2,11 @@
 namespace RKW\RkwShop\Tests\Integration\Domain\Repository;
 
 
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwBasics\Helper\Common;
 use RKW\RkwRegistration\Tools\Authentication;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-
 use RKW\RkwShop\Domain\Repository\CartRepository;
-use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
-
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;

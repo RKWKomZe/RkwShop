@@ -2,21 +2,21 @@
 
 namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwBasics\Helper\Common;
-use TYPO3\CMS\Extbase\Mvc\Request;
+use RKW\RkwRegistration\Tools\Authentication;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use RKW\RkwRegistration\Tools\Authentication;
-use RKW\RkwShop\Service\Checkout\CartService;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
 use RKW\RkwShop\Domain\Repository\CartRepository;
+use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
+use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
-use RKW\RkwShop\Domain\Repository\OrderItemRepository;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
+use RKW\RkwShop\Service\Checkout\CartService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 

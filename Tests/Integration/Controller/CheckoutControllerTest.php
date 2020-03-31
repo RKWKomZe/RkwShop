@@ -1,26 +1,21 @@
 <?php
 namespace RKW\RkwShop\Tests\Integration\Controller;
 
-use RKW\RkwBasics\Helper\Common;
-use RKW\RkwRegistration\Tools\Authentication;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-
-use RKW\RkwShop\Controller\CheckoutController;
-
-use RKW\RkwShop\Domain\Repository\CartRepository;
-use RKW\RkwShop\Domain\Repository\OrderRepository;
-use RKW\RkwShop\Domain\Repository\OrderItemRepository;
-use RKW\RkwShop\Domain\Repository\ProductRepository;
-use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
-use RKW\RkwShop\Domain\Repository\ShippingAddressRepository;
-
-use RKW\RkwRegistration\Domain\Model\FrontendUser;
+use RKW\RkwBasics\Helper\Common;
 use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
 use RKW\RkwRegistration\Domain\Repository\RegistrationRepository;
-
+use RKW\RkwRegistration\Tools\Authentication;
+use RKW\RkwShop\Controller\CheckoutController;
+use RKW\RkwShop\Domain\Repository\CartRepository;
+use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
+use RKW\RkwShop\Domain\Repository\OrderItemRepository;
+use RKW\RkwShop\Domain\Repository\OrderRepository;
+use RKW\RkwShop\Domain\Repository\ProductRepository;
+use RKW\RkwShop\Domain\Repository\ShippingAddressRepository;
 use RKW\RkwShop\Service\Checkout\CartService;
-use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
@@ -194,12 +189,10 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check10.xml');
 
-        Common::initFrontendInBackendContext();
-
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
-        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
+        $cart = $this->cartRepository->findByUid(1);
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
@@ -231,7 +224,7 @@ class CheckoutControllerTest extends FunctionalTestCase
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
-        $order = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
+        $cart = $this->cartRepository->findByUid(1);
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([

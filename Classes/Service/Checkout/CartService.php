@@ -3,13 +3,12 @@
 namespace RKW\RkwShop\Service\Checkout;
 
 use RKW\RkwShop\Domain\Model\Cart;
-use RKW\RkwShop\Exception;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use RKW\RkwShop\Exception;
 use RKW\RkwShop\Exceptions\CartHashNotFoundException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
@@ -185,10 +184,6 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getCart()
     {
-        //  @todo: außerdem muss auf den Status der Order geachtet werden, damit nicht später einfach auch weitere nicht mehr aktuelle bzw. bereits bestellte Warenkörbe abgerufen werden
-
-        //  findByFrontendUserOrSessionHash
-
         $existingCart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($this->getFrontendUser());
 
         $cart = ($existingCart) ? $existingCart : $this->createCart();

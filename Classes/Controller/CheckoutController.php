@@ -15,14 +15,6 @@ namespace RKW\RkwShop\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use RKW\RkwShop\Exception;
-use RKW\RkwShop\Helper\DivUtility;
-use RKW\RkwShop\Domain\Model\Order;
-use RKW\RkwShop\Domain\Model\OrderItem;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use RKW\RkwShop\Service\Checkout\OrderService;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
-
 /**
  * Class CheckoutController
  *
@@ -94,15 +86,15 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function showMiniCartAction()
     {
 
-        $order = $this->cartService->getCart(); //  liefert bereits die Order zurück
+        $cart = $this->cartService->getCart(); //  liefert bereits die Order zurück
 
         $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 
 //        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
 
         $this->view->assignMultiple([
-            'cart'   => $cart,
-            'cartPid'   => (int)$this->settings['cartPid']
+            'cart' => $cart,
+            'cartPid' => (int)$this->settings['cartPid']
         ]);
 
     }

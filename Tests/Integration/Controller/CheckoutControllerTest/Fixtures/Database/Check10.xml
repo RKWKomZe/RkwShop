@@ -7,10 +7,4 @@
         <frontend_user_session_hash>12345678</frontend_user_session_hash>
         <order_item>0</order_item>
     </tx_rkwshop_domain_model_cart>
-    <tx_rkwshop_domain_model_cart>
-        <uid>2</uid>
-        <pid>1000</pid>
-        <frontend_user_session_hash>87654321</frontend_user_session_hash>
-        <order_item>0</order_item>
-    </tx_rkwshop_domain_model_cart>
 </dataset>
