@@ -382,7 +382,7 @@ class CheckoutControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function orderCart()
+    public function orderCartPersistsOrderToDatabase()
     {
         //  /checkout/order -> /checkout/finish
 
