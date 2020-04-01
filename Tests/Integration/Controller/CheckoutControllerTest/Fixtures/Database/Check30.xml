@@ -5,10 +5,10 @@
         <pid>0</pid>
         <username>spd@test.de</username>
         <email>lauterbach@spd.de</email>
-        <first_name />
-        <last_name />
-        <company />
-        <address />
+        <first_name>Karl</first_name>
+        <last_name>Lauterbach</last_name>
+        <company>SPD</company>
+        <address>Önnevegel 17</address>
         <zip>10969</zip>
         <city>Hamburg</city>
         <tx_rkwregistration_gender>0</tx_rkwregistration_gender>

@@ -154,7 +154,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
     {
-        $this->orderService->checkShippingAddress($order);
+        $order = $this->orderService->checkShippingAddress($order);
 
         // check privacy flag
         //  @todo: müsste hier über die Validierung abgefangen werden, nicht über die Exception!?

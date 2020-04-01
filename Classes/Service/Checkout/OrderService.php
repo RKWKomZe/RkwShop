@@ -399,24 +399,10 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
     public function checkShippingAddress(\RKW\RkwShop\Domain\Model\Order $order)
     {
+
         if ($order->getShippingAddressSameAsBillingAddress() === 1) {
 
-            $frontendUser = $order->getFrontendUser();
             $shippingAddress = $this->makeShippingAddress($order);
-
-            /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
-            $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
-            /** @var \RKW\RkwShop\Domain\Model\Order $order */
-            $order = GeneralUtility::makeInstance(Order::class);
-
-            $shippingAddress->setFrontendUser($frontendUser);
-            $shippingAddress->setGender($frontendUser->getTxRkwregistrationGender());
-            $shippingAddress->setFirstName($frontendUser->getFirstName());
-            $shippingAddress->setLastName($frontendUser->getLastName());
-            $shippingAddress->setCompany($frontendUser->getCompany());
-            $shippingAddress->setAddress($frontendUser->getAddress());
-            $shippingAddress->setZip($frontendUser->getZip());
-            $shippingAddress->setCity($frontendUser->getCity());
 
             $order->setShippingAddress($shippingAddress);
 
