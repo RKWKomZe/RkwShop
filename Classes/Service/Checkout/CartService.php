@@ -36,6 +36,20 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 {
 
     /**
+     * Signal name for use in ext_localconf.php
+     *
+     * @const string
+     */
+    const SIGNAL_AFTER_ORDER_CREATED_ADMIN = 'afterOrderCreatedAdmin';
+
+    /**
+     * Signal name for use in ext_localconf.php
+     *
+     * @const string
+     */
+    const SIGNAL_AFTER_ORDER_CREATED_USER = 'afterOrderCreatedUser';    //  @todo: Ist das die richtige Benennung für dieses Event?
+
+    /**
      * cart
      *
      * @var \RKW\RkwShop\Domain\Model\Order
@@ -82,6 +96,14 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      * @inject
      */
     protected $stockRepository;
+
+    /**
+     * BackendUserRepository
+     *
+     * @var \RKW\RkwShop\Domain\Repository\BackendUserRepository
+     * @inject
+     */
+    protected $backendUserRepository;
 
     /**
      * FrontendUserRepository
@@ -294,7 +316,11 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
         $order->setFrontendUser($cart->getFrontendUser());
         $order->setShippingAddress($shippingAddress);
-        $order->setOrderItem($cart->getOrderItem());
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        foreach ($cart->getOrderItem() as $orderItem) {
+            $order->addOrderItem($orderItem);
+        }
 
         return $order;
     }
@@ -309,6 +335,21 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function orderCart(\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, $privacy = false)
     {
+
+        //  @todo: Wird Privacy überhaupt gebraucht, schließlich arbeiten wir hier nur mit bereits registrierten Benutzern? Nein, denn dies wird ja schon bei der eigentlichen Registrierung bestätigt!!!
+
+        //  Check from orderService - how to implement it
+
+        // check for shippingAddress
+//        if (
+//            (! $order->getShippingAddress())
+//            || (! $order->getShippingAddress()->getAddress())
+//            || (! $order->getShippingAddress()->getZip())
+//            || (! $order->getShippingAddress()->getCity())
+//        ){
+//            throw new Exception('orderService.error.noShippingAddress');
+//        }
+
         // cleanup & check orderItem
         $this->cleanUpOrderItemList($order);
         if (! count($order->getOrderItem()->toArray())) {
@@ -331,13 +372,42 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
             }
         }
 
-        // ====
+        // handling for existing and logged in users
+        if ($this->getFrontendUser()) {
 
-        //  Check from orderService - how to implement it
-        
+            if ($this->persistOrder($order)) {
+                return 'orderService.message.created';
+            }
+
+        }
+
+    }
+
+    /**
+     * persistOrder
+     *
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @return bool
+     * @throws \RKW\RkwShop\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     */
+    protected function persistOrder(\RKW\RkwShop\Domain\Model\Order $order)
+    {
+        //  @todo: Check state
+        // check order
+//        if ($order->getStatus() > 0) {
+//            throw new Exception('orderService.error.orderAlreadyPersisted');
+//        }
+
         // save it
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
+
+        //  @todo: $order->getFrontendUser() === $this->getFrontendUser()
+        $frontendUser = $order->getFrontendUser();
 
         // send final confirmation mail to user
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
@@ -363,11 +433,21 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         }
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
 
-        $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Saved order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
-        return true;
-        // ====
+        $this->deleteCart($this->getCart());
 
-        return 'orderService.message.created';
+        $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Saved order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
+
+        return true;
+
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Cart $cart
+     */
+    protected function deleteCart(\RKW\RkwShop\Domain\Model\Cart $cart)
+    {
+        $this->cartRepository->remove($cart);
+        $this->persistenceManager->persistAll();
     }
 
     /**
@@ -500,5 +580,64 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
             }
         }
     }
+
+    /**
+     * Get all BackendUsers for sending admin mails
+     *
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @return array <\RKW\RkwShop\Domain\Model\BackendUser> $backendUsers
+     */
+    public function getBackendUsersForAdminMails (\RKW\RkwShop\Domain\Model\Product $product)
+    {
+
+        $backendUsers = [];
+        $settings = $this->getSettings();
+        if (! $settings['disableAdminMails']) {
+
+            $productTemp = $product;
+            if ($product->getProductBundle()) {
+                $productTemp  = $product->getProductBundle();
+            }
+
+            // go through ObjectStorage
+            foreach ($productTemp->getBackendUser() as $backendUser) {
+                if ((\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))) {
+                    $backendUsers[] = $backendUser;
+                }
+            }
+
+            // get field for alternative e-emails
+            if ($email = $productTemp->getAdminEmail()) {
+
+                /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
+                $backendUser = $this->backendUserRepository->findOneByEmail($email);
+                if (
+                    ($backendUser)
+                    && (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))
+                ) {
+                    $backendUsers[] = $backendUser;
+                }
+            }
+
+            // fallback-handling
+            if (
+                (count($backendUsers) < 1)
+                && ($fallbackBeUser = $settings['fallbackBackendUserForAdminMails'])
+            ) {
+
+                /** @var \RKW\RkwShop\Domain\Model\BackendUser $beUser */
+                $backendUser = $this->backendUserRepository->findOneByUsername($fallbackBeUser);
+                if (
+                    ($backendUser)
+                    && (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))
+                ) {
+                    $backendUsers[] = $backendUser;
+                }
+            }
+        }
+
+        return $backendUsers;
+    }
+
 
 }

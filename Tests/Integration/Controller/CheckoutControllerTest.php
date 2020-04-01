@@ -192,7 +192,7 @@ class CheckoutControllerTest extends FunctionalTestCase
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
-        $cart = $this->cartRepository->findByUid(1);
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
@@ -314,7 +314,7 @@ class CheckoutControllerTest extends FunctionalTestCase
         //  this assert redirect
         $view = $this->getMock(ViewInterface::class);
         $view->expects(static::once())->method('assignMultiple')->with([
-            'frontendUser' => $frontendUser,
+            'frontendUser' => $order->getFrontendUser(),
             'order' => $order,
             'termsPid' => 0,
             'terms' => null,

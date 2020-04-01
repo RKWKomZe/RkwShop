@@ -2,8 +2,6 @@
 
 <f:form action="reviewOrder" name="order" object="{order}" controller="Checkout" pluginName="Checkout" extensionName="RkwShop" class="form-fields order-list" >
 
-    <f:render partial="Checkout/Form/OrderItemList" arguments="{_all}" />
-
     <div class="order-form">
         <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.checkout.confirm.form.billingaddress" /></h5>
         <f:render partial="Checkout/Form/BillingAddress" arguments="{_all}" />

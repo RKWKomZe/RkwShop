@@ -15,6 +15,9 @@ namespace RKW\RkwShop\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Doctrine\Common\Util\Debug;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * Class CheckoutController
  *
@@ -154,7 +157,18 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
     {
+        //  @todo: Warum werden die orderItems nicht aus der confirmAction übergeben, obwohl sie dort richtig gesetzt sind?
+        //  Daher ordne ich sie hier nochmals zu :-(.
+
+        $cart = $this->cartService->getCart();
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        foreach ($cart->getOrderItem() as $orderItem) {
+            $order->addOrderItem($orderItem);
+        }
+
         $order = $this->orderService->checkShippingAddress($order);
+
 
         // check privacy flag
         //  @todo: müsste hier über die Validierung abgefangen werden, nicht über die Exception!?
@@ -173,20 +187,20 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     /**
      * action orderCart
      *
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param integer $privacy
      * @return void
+     * @todo fix validation
+     * @ignorevalidation $order
+    //     * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
      */
-    public function orderCartAction()
+    public function orderCartAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
     {
-
-        $cart = $this->cartService->getCart();
-
-        //  get billing address and update frontend user, too
-
         //  don't do any implicit sign up through create order, a user has to be registered in an isolated process, so that ordering can be isolated too
 
         try {
 
-            $message = $this->cartService->orderCart($cart);
+            $message = $this->cartService->orderCart($order);
 
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(

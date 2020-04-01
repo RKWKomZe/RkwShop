@@ -15,13 +15,13 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <f:section name="main">
 
-    <f:if condition="<f:count>{order.orderItem}</f:count>">
+    <f:if condition="<f:count>{cart.orderItem}</f:count>">
 
         <f:then>
 
             <!-- form -->
             <f:form action="confirmCart" name="order" object="{order}" controller="Checkout" pluginName="Checkout" extensionName="RkwShop" pageUid="{checkoutPid}" class="form-fields order-list js-order-list" >
-                <f:for each="{order.orderItem}" as="orderItem">
+                <f:for each="{cart.orderItem}" as="orderItem">
 
                     <div class="order-list__item">
 

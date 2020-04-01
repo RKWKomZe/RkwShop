@@ -65,7 +65,7 @@ return [
             'config' => [
                 'type' => 'inline',
                 'internal_type' => 'db',
-                'foreign_table' => 'tx_rkwshop_domain_model_cartitem',
+                'foreign_table' => 'tx_rkwshop_domain_model_orderitem',
                 'foreign_field' => 'ext_order',
                 'minitems' => 1,
                 'maxitems' => 99,

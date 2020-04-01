@@ -71,6 +71,11 @@ class CartServiceTest extends FunctionalTestCase
     private $frontendUserRepository;
 
     /**
+     * @var \RKW\RkwRegistration\Domain\Repository\PrivacyRepository
+     */
+    private $privacyRepository;
+
+    /**
      * @var \RKW\RkwShop\Domain\Repository\CartRepository
      */
     private $cartRepository;
@@ -503,7 +508,7 @@ class CartServiceTest extends FunctionalTestCase
 
         static::assertEquals($cart->getFrontendUser(), $order->getFrontendUser());
         static::assertEquals($order->getFrontendUser()->getCity(), $order->getShippingAddress()->getCity());
-        static::assertEquals($cart->getOrderItem(), $order->getOrderItem());
+        static::assertEquals($cart->getOrderItem()->count(), $order->getOrderItem()->count());
         static::assertEquals(1, $order->getShippingAddressSameAsBillingAddress());
 
     }
@@ -748,17 +753,15 @@ class CartServiceTest extends FunctionalTestCase
          * Scenario:
          *
          * Given I'm logged in
-         * Given I accept the Privacy-Terms
          * Given I enter a valid shippingAddress
-         * Given an product is ordered with amount greater than zero
-         * When I make an order
+         * Given a product is ordered with amount greater than zero
+         * When I confirm an order
          * Then the order is saved
-         * Then the email and remark of the order are saved
+         * Then the remark of the order are saved
          * Then the order is linked to the given frontendUser
          * Then the shippingAddress is linked to the given frontendUser
          * Then the shippingAddress is saved correctly
          * Then the ordered product and the given amount is saved correctly
-         * Then the privacy information is saved
          */
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check130.xml');
@@ -766,13 +769,24 @@ class CartServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart  $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
-        $order->setEmail('email@rkw.de');
+        $order->setFrontendUser($frontendUser);
+
+        //  @todo: Brauche ich E-Mail noch in der Order? Nein, habe ja immer den FrontendUser
+        //  @todo: Brauche ich remark bei der Bestellung? Hmm, eigentlich schon, um Anmerkungen zur Bestellung zu machen.
+
         $order->setRemark('Testen wir das mal');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
         $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFrontendUser($frontendUser);
         $shippingAddress->setFirstName('Karl');
         $shippingAddress->setLastName('Dall');
         $shippingAddress->setCompany('Käse-Zentrum');
@@ -781,14 +795,11 @@ class CartServiceTest extends FunctionalTestCase
         $shippingAddress->setCity('Gauda');
         $order->setShippingAddress($shippingAddress);
 
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(1);
-
+        //  set order items from cart
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
-        $orderItem->setProduct($product);
-        $orderItem->setAmount(10);
-        $order->addOrderItem($orderItem);
+        foreach ($cart->getOrderItem() as $orderItem) {
+            $order->addOrderItem($orderItem);
+        }
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
         $request = $this->objectManager->get(Request::class);
@@ -805,7 +816,6 @@ class CartServiceTest extends FunctionalTestCase
         $order->getOrderItem()->rewind();
 
         static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
-        static::assertEquals($order->getEmail(), $orderDb->getEmail());
         static::assertEquals($order->getRemark(), $orderDb->getRemark());
 
         static::assertEquals($frontendUser->getUid(), $orderDb->getFrontendUser()->getUid());
@@ -822,10 +832,87 @@ class CartServiceTest extends FunctionalTestCase
         static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
         static::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
 
-        /** @var \RKW\RkwRegistration\Domain\Model\Privacy $privacyDb */
-        $privacyDb = $this->privacyRepository->findByUid(1);
-        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacyDb);
-        static::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function orderCartRemovesCartAfterCreatingOrderIfUserIsLoggedIn() {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm logged in
+         * Given I enter a valid shippingAddress
+         * Given a product is ordered with amount greater than zero
+         * When I confirm an order
+         * Then the order is saved
+         * Then the existing cart is deleted
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check140.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart  $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setFrontendUser($frontendUser);
+        $order->setRemark('Testen wir das mal');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFrontendUser($frontendUser);
+        $shippingAddress->setFirstName('Karl');
+        $shippingAddress->setLastName('Dall');
+        $shippingAddress->setCompany('Käse-Zentrum');
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        //  set order items from cart
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        foreach ($cart->getOrderItem() as $orderItem) {
+            $order->addOrderItem($orderItem);
+        }
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        static::assertEquals(
+            'orderService.message.created',
+            $this->subject->orderCart($order, $request, null)
+        );
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
+        $orderDb = $this->orderRepository->findByUid(1);
+
+        $order->getOrderItem()->rewind();
+        $orderDb->getOrderItem()->rewind();
+
+        static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cartDb */
+        $cartDb = $this->cartRepository->findAll();
+
+        static::assertCount(0, $cartDb);
 
     }
 
