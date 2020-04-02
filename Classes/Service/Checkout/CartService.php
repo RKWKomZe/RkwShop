@@ -215,12 +215,12 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param \RKW\RkwShop\Domain\Model\Cart $cart
      */
-    public function setCart(\RKW\RkwShop\Domain\Model\Order $order)
+    public function setCart(\RKW\RkwShop\Domain\Model\Cart $cart)
     {
         //  @todo: Check, if this does update the correct cart!
-        $this->cart = $order;
+        $this->cart = $cart;
     }
 
     /**
@@ -290,7 +290,6 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * @param OrderItem $removableItem
      * @param \RKW\RkwShop\Domain\Model\Cart   $cart
-
      */
     public function remove(OrderItem $removableItem, \RKW\RkwShop\Domain\Model\Cart $cart)
     {
@@ -327,131 +326,9 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * Create Order
-     *
-     * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @param \TYPO3\CMS\Extbase\Mvc\Request|null $request
-     * @param bool $privacy
-     * @return string
-     */
-    public function orderCart(\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, $privacy = false)
-    {
-
-        //  @todo: Bestellnummer generieren!!!
-        //  @todo: Wird Privacy überhaupt gebraucht, schließlich arbeiten wir hier nur mit bereits registrierten Benutzern? Nein, denn dies wird ja schon bei der eigentlichen Registrierung bestätigt!!!
-
-        //  Check from orderService - how to implement it
-
-        // check for shippingAddress
-//        if (
-//            (! $order->getShippingAddress())
-//            || (! $order->getShippingAddress()->getAddress())
-//            || (! $order->getShippingAddress()->getZip())
-//            || (! $order->getShippingAddress()->getCity())
-//        ){
-//            throw new Exception('orderService.error.noShippingAddress');
-//        }
-
-        // cleanup & check orderItem
-        $this->cleanUpOrderItemList($order);
-        if (! count($order->getOrderItem()->toArray())) {
-            throw new Exception('orderService.error.noOrderItem');
-        }
-
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        foreach($order->getOrderItem() as $orderItem) {
-
-            if (
-                (! $orderItem->getProduct() instanceof \RKW\RkwShop\Domain\Model\ProductSubscription)
-                && ($orderItem->getProduct()->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')
-            ){
-                $stock = $this->getRemainingStockOfProduct($orderItem->getProduct());
-                $stockPreOrder = $this->getPreOrderStockOfProduct($orderItem->getProduct());
-
-                if ($orderItem->getAmount() > ($stock + $stockPreOrder)) {
-                    throw new Exception('orderService.error.outOfStock');
-                }
-            }
-        }
-
-        // handling for existing and logged in users
-        if ($this->getFrontendUser()) {
-
-            //  @todo: Ist createOrder et. al. eine Aufgabe des orderService (siehe Shopware CheckoutController->order())?
-            if ($this->persistOrder($order)) {
-                return 'orderService.message.created';
-            }
-
-        }
-
-    }
-
-    /**
-     * persistOrder
-     *
-     * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @return bool
-     * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     */
-    protected function persistOrder(\RKW\RkwShop\Domain\Model\Order $order)
-    {
-        //  @todo: Check state
-        // check order
-//        if ($order->getStatus() > 0) {
-//            throw new Exception('orderService.error.orderAlreadyPersisted');
-//        }
-
-
-        // save it
-        $this->orderRepository->add($order);
-        $this->persistenceManager->persistAll();
-
-        //  @todo: $order->getFrontendUser() === $this->getFrontendUser()
-        $frontendUser = $order->getFrontendUser();
-
-        // send final confirmation mail to user
-        // @todo: Check, ob diese Events auch tatsächlich ausgelöst bzw. ausgeführt werden!!!
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
-
-        // send mail to admins
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        $backendUsersList = [];
-        $backendUsersForProductMap = [];
-        foreach ($order->getOrderItem() as $orderItem) {
-
-            $backendUsersForProduct = $this->getBackendUsersForAdminMails($orderItem->getProduct());
-            $backendUsersList = array_merge($backendUsersList, $backendUsersForProduct);
-            $tempBackendUserForProductMap = [];
-            /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
-            foreach ($backendUsersForProduct as $backendUser) {
-                if ($backendUser->getRealName()) {
-                    $tempBackendUserForProductMap[] = $backendUser->getRealName();
-                } else if ($backendUser->getEmail()) {
-                    $tempBackendUserForProductMap[] = $backendUser->getEmail();
-                }
-            }
-            $backendUsersForProductMap[$orderItem->getProduct()->getUid()] = implode(', ', $tempBackendUserForProductMap);
-        }
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
-
-        $this->deleteCart($this->getCart());    //  @todo: Löscht auch das zugehörige OrderItem, dass dann für die Order selbst nicht mehr bereitsteht. Evtl. also alles doppelt anlegen?
-
-
-
-        $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Saved order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
-
-        return true;
-
-    }
-
-    /**
      * @param \RKW\RkwShop\Domain\Model\Cart $cart
      */
-    protected function deleteCart(\RKW\RkwShop\Domain\Model\Cart $cart)
+    public function deleteCart(\RKW\RkwShop\Domain\Model\Cart $cart)
     {
         $this->cartRepository->remove($cart);
         $this->persistenceManager->persistAll();
@@ -501,8 +378,6 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         //===
     }
 
-
-
     /**
      * Id of logged User
      *
@@ -523,128 +398,5 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         return null;
         //===
     }
-
-
-    /**
-     * Get remaining stock of product
-     *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @return int
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
-    {
-        if (
-            ($product->getProductBundle())
-            && (! $product->getProductBundle()->getAllowSingleOrder())
-        ){
-            $product = $product->getProductBundle();
-        }
-
-        $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product);
-        $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product);
-
-        $remainingStock = intval($stockSum) - (intval($orderedSum) + intval($product->getOrderedExternal()));
-        return (($remainingStock > 0) ? $remainingStock : 0);
-    }
-
-    /**
-     * Get pre-order stock of product
-     *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @return int
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function getPreOrderStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
-    {
-        if (
-            ($product->getProductBundle())
-            && (! $product->getProductBundle()->getAllowSingleOrder())
-        ){
-            $product = $product->getProductBundle();
-        }
-
-        $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product, true);
-        $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product, true);
-
-        $preOrderStock = intval($stockSum) - intval($orderedSum);
-        return (($preOrderStock > 0) ? $preOrderStock : 0);
-    }
-
-    /**
-     * Clean up order product list
-     *
-     * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @return void
-     */
-    public function cleanUpOrderItemList (\RKW\RkwShop\Domain\Model\Order $order)
-    {
-
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        foreach ($order->getOrderItem()->toArray() as $orderItem) {
-            if (! $orderItem->getAmount()) {
-                $order->removeOrderItem($orderItem);
-            }
-        }
-    }
-
-    /**
-     * Get all BackendUsers for sending admin mails
-     *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @return array <\RKW\RkwShop\Domain\Model\BackendUser> $backendUsers
-     */
-    public function getBackendUsersForAdminMails (\RKW\RkwShop\Domain\Model\Product $product)
-    {
-
-        $backendUsers = [];
-        $settings = $this->getSettings();
-        if (! $settings['disableAdminMails']) {
-
-            $productTemp = $product;
-            if ($product->getProductBundle()) {
-                $productTemp  = $product->getProductBundle();
-            }
-
-            // go through ObjectStorage
-            foreach ($productTemp->getBackendUser() as $backendUser) {
-                if ((\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))) {
-                    $backendUsers[] = $backendUser;
-                }
-            }
-
-            // get field for alternative e-emails
-            if ($email = $productTemp->getAdminEmail()) {
-
-                /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
-                $backendUser = $this->backendUserRepository->findOneByEmail($email);
-                if (
-                    ($backendUser)
-                    && (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))
-                ) {
-                    $backendUsers[] = $backendUser;
-                }
-            }
-
-            // fallback-handling
-            if (
-                (count($backendUsers) < 1)
-                && ($fallbackBeUser = $settings['fallbackBackendUserForAdminMails'])
-            ) {
-
-                /** @var \RKW\RkwShop\Domain\Model\BackendUser $beUser */
-                $backendUser = $this->backendUserRepository->findOneByUsername($fallbackBeUser);
-                if (
-                    ($backendUser)
-                    && (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))
-                ) {
-                    $backendUsers[] = $backendUser;
-                }
-            }
-        }
-
-        return $backendUsers;
-    }
-
 
 }

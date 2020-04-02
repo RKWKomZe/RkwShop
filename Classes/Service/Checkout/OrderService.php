@@ -6,6 +6,7 @@ use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
 use RKW\RkwShop\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -161,27 +162,13 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function createOrder (\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null, $terms = false, $privacy = false)
     {
+        //  @todo: Bestellnummer generieren!!!
+        //  @todo: Wird Privacy überhaupt gebraucht, schließlich arbeiten wir hier nur mit bereits registrierten Benutzern? Nein, denn dies wird ja schon bei der eigentlichen Registrierung bestätigt!!!
 
-        // check terms if user is not logged in
-        if (
-            (! $terms)
-            && (
-                (! $frontendUser)
-                || ($frontendUser->_isNew())
-            )
-        ) {
-            throw new Exception('orderService.error.acceptTerms');
-        }
-
-        // check privacy flag
-        if (! $privacy) {
-            throw new Exception('orderService.error.acceptPrivacy');
-        }
-
-        // check given e-mail
-        if (! \RKW\RkwRegistration\Tools\Registration::validEmail($order->getEmail())) {
-            throw new Exception('orderService.error.invalidEmail');
-        }
+//        // check privacy flag
+//        if (! $privacy) {
+//            throw new Exception('orderService.error.acceptPrivacy');
+//        }
 
         // check for shippingAddress
         if (
@@ -223,39 +210,38 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
         ) {
 
             /// simply save order
-            $this->saveOrder($order, $frontendUser);
+            $this->persistOrder($order, $frontendUser);
 
             // add privacy info
-            \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($request, $frontendUser, $order, 'new order');
+//            \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($request, $frontendUser, $order, 'new order');
 
             return 'orderService.message.created';
         }
 
 
-        // handling for new users
-        // register new user or simply send opt-in to existing user
-        /** @var \RKW\RkwRegistration\Tools\Registration $registration */
-        $registration = $this->objectManager->get('RKW\\RkwRegistration\\Tools\\Registration');
-        $registration->register(
-            array(
-                'email' => $order->getEmail(),
-            ),
-            false,
-            $order,
-            'rkwShop',
-            $request
-        );
-
-        return 'orderService.message.createdOptIn';
+//        // handling for new users
+//        // register new user or simply send opt-in to existing user
+//        /** @var \RKW\RkwRegistration\Tools\Registration $registration */
+//        $registration = $this->objectManager->get('RKW\\RkwRegistration\\Tools\\Registration');
+//        $registration->register(
+//            array(
+//                'email' => $order->getEmail(),
+//            ),
+//            false,
+//            $order,
+//            'rkwShop',
+//            $request
+//        );
+//
+//        return 'orderService.message.createdOptIn';
 
     }
 
-
     /**
-     * saveOrder
+     * persistOrder
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser|null $frontendUser
      * @return bool
      * @throws \RKW\RkwShop\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -263,30 +249,30 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
+    protected function persistOrder(\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
-
+        //  @todo: Check state
         // check order
-        if ($order->getStatus() > 0) {
-            throw new Exception('orderService.error.orderAlreadyPersisted');
-        }
+//        if ($order->getStatus() > 0) {
+//            throw new Exception('orderService.error.orderAlreadyPersisted');
+//        }
 
-        // check frontendUser
-        if ($frontendUser->_isNew()) {
-            throw new Exception('orderService.error.frontendUserNotPersisted');
-        }
+//        // check frontendUser
+//        if ($frontendUser->_isNew()) {
+//            throw new Exception('orderService.error.frontendUserNotPersisted');
+//        }
 
-        // add frontendUser to order and shippingAddress
-        $order->setFrontendUser($frontendUser);
-        $order->setFrontendUserSessionHash(''); //  order is processed and no longer available to the cart
         $order->setStatus(50);
-        $order->getShippingAddress()->setFrontendUser($frontendUser);
 
         // save it
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
 
+        //  @todo: $order->getFrontendUser() === $this->getFrontendUser()
+
         // send final confirmation mail to user
+        // @todo: Check, ob diese Events auch tatsächlich ausgelöst bzw. ausgeführt werden!!!
+
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
 
         // send mail to admins
@@ -311,9 +297,10 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
 
         $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Saved order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
-        return true;
-    }
 
+        return true;
+
+    }
 
     /**
      * Intermediate function for saving of orders - used by SignalSlot

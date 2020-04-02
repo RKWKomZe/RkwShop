@@ -16,6 +16,7 @@ namespace RKW\RkwShop\Controller;
  */
 
 use Doctrine\Common\Util\Debug;
+use RKW\RkwBasics\Helper\Common;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
@@ -203,13 +204,17 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         try {
 
-            $message = $this->cartService->orderCart($order);
+            $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
 
-            $this->addFlashMessage(
-                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                    $message, 'rkw_shop'
-                )
-            );
+            $this->cartService->deleteCart($this->cartService->getCart());    //  @todo: Löscht auch das zugehörige OrderItem, dass dann für die Order selbst nicht mehr bereitsteht. Evtl. also alles doppelt anlegen?
+
+//            $this->addFlashMessage(
+//                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+//                    $message, 'rkw_shop'
+//                )
+//            );
+
+            $this->redirect('finishOrder');
 
         } catch (\RKW\RkwShop\Exception $exception) {
             $this->addFlashMessage(
@@ -224,8 +229,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
             //  $this->forward();
 
         }
-
-        $this->redirect('finishOrder');
 
     }
 
@@ -279,5 +282,47 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         return null;
         //===
     }
+
+    /**
+     * Remove ErrorFlashMessage
+     *
+     * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::getErrorFlashMessage()
+     */
+    protected function getErrorFlashMessage()
+    {
+        return false;
+        //===
+    }
+
+    /**
+     * Returns TYPO3 settings
+     *
+     * @param string $which Which type of settings will be loaded
+     * @return array
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     */
+    protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
+    {
+        return Common::getTyposcriptConfiguration('Rkwshop', $which);
+        //===
+    }
+
+
+    /**
+     * Returns logger instance
+     *
+     * @return \TYPO3\CMS\Core\Log\Logger
+     */
+    protected function getLogger()
+    {
+
+        if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {
+            $this->logger = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Core\Log\LogManager')->getLogger(__CLASS__);
+        }
+
+        return $this->logger;
+        //===
+    }
+
 
 }

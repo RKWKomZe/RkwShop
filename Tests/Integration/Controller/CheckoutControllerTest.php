@@ -1,6 +1,8 @@
 <?php
 namespace RKW\RkwShop\Tests\Integration\Controller;
 
+use RKW\RkwShop\Domain\Model\Order;
+use RKW\RkwShop\Domain\Model\ShippingAddress;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwBasics\Helper\Common;
 use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
@@ -197,7 +199,8 @@ class CheckoutControllerTest extends FunctionalTestCase
         $view = $this->getMock(ViewInterface::class);
         $view->expects($this->once())->method('assignMultiple')->with([
             'cart' => $cart,
-            'checkoutPid' => 0
+            'checkoutPid' => 0,
+            'listPid' => 0,
         ]);
         $this->inject($this->subject,'view', $view);
 
@@ -389,6 +392,82 @@ class CheckoutControllerTest extends FunctionalTestCase
         //  validate order
 
         //  assert redirect
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function orderCartRemovesCartAfterCreatingOrderIfUserIsLoggedIn() {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm logged in
+         * Given I enter a valid shippingAddress
+         * Given a product is ordered with amount greater than zero
+         * When I confirm an order
+         * Then the order is saved
+         * Then the existing cart is deleted
+         */
+
+        $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check140.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart  $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setFrontendUser($frontendUser);
+        $order->setRemark('Testen wir das mal');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFrontendUser($frontendUser);
+        $shippingAddress->setFirstName('Karl');
+        $shippingAddress->setLastName('Dall');
+        $shippingAddress->setCompany('Käse-Zentrum');
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        //  set order items from cart
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        foreach ($cart->getOrderItem() as $orderItem) {
+            $order->addOrderItem($orderItem);
+        }
+
+        $this->subject->orderCartAction($order);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
+        $orderDb = $this->orderRepository->findByUid(1);
+
+        $order->getOrderItem()->rewind();
+        $orderDb->getOrderItem()->rewind();
+
+        static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cartDb */
+        $cartDb = $this->cartRepository->findAll();
+
+        static::assertCount(0, $cartDb);
+
     }
 
     /**

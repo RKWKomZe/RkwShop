@@ -1,6 +1,8 @@
 <?php
 namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
+use RKW\RkwBasics\Helper\Common;
+use RKW\RkwRegistration\Tools\Authentication;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwRegistration\Domain\Model\FrontendUser;
 use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
@@ -158,118 +160,6 @@ class OrderServiceTest extends FunctionalTestCase
 
     }
 
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function createOrderChecksForTermsIfNotLoggedIn ()
-    {
-
-        /**
-        * Scenario:
-        *
-        * Given I'm not logged in
-        * Given I do not accept the Terms & Conditions
-        * When I make an order
-        * Then an acceptTerms-error is thrown
-        */
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
-        $request = $this->objectManager->get(Request::class);
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderService.error.acceptTerms');
-
-        $this->subject->createOrder($order, $request, null, false, false);
-
-    }
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function createOrderChecksForTermsIfUserNotRegistered ()
-    {
-
-        /**
-         * Scenario:
-         *
-         * Given I'm not registered
-         * Given I do not accept the Terms & Conditions
-         * When I make an order
-         * Then an acceptTerms-error is thrown
-         */
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
-        $frontendUser = GeneralUtility::makeInstance(FrontendUser::class);
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
-        $request = $this->objectManager->get(Request::class);
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderService.error.acceptTerms');
-
-        $this->subject->createOrder($order, $request, $frontendUser, false, false);
-
-    }
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     */
-    public function createOrderChecksForPrivacyTermsIfNotLoggedIn ()
-    {
-        /**
-         * Scenario:
-         *
-         * Given I'm not logged in
-         * Given I accept the Terms and Conditions
-         * Given I do not accept the Privacy-Terms
-         * When I make an order
-         * Then an acceptPrivacy error is thrown
-         */
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
-        $request = $this->objectManager->get(Request::class);
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderService.error.acceptPrivacy');
-
-        $this->subject->createOrder($order, $request, null, true, false);
-
-    }
-
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
@@ -309,46 +199,6 @@ class OrderServiceTest extends FunctionalTestCase
         static::expectExceptionMessage('orderService.error.acceptPrivacy');
 
         $this->subject->createOrder($order, $request, $frontendUser, true, false);
-
-    }
-
-
-
-     /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-      */
-    public function createOrderChecksForValidEmail ()
-    {
-
-        /**
-         * Scenario:
-         *
-         * Given I accept the Terms & Conditions
-         * Given I accept the Privacy-Terms
-         * Given I have used an invalid email
-         * When I make an order
-         * Then an invalidEmail-error is thrown
-         */
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-        $order->setEmail('invalid-email');
-
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
-        $request = $this->objectManager->get(Request::class);
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderService.error.invalidEmail');
-
-        $this->subject->createOrder($order, $request, null, true, true);
 
     }
 
@@ -639,7 +489,7 @@ class OrderServiceTest extends FunctionalTestCase
       * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
       * @throws \Exception
       */
-    public function createOrderSavesOrderIfUserIsLoggedIn ()
+    public function createOrderPersistsOrderIfUserIsLoggedIn ()
     {
 
         /**
@@ -663,13 +513,18 @@ class OrderServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
+        $order->setFrontendUser($frontendUser);
         $order->setEmail('email@rkw.de');
         $order->setRemark('Testen wir das mal');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
         $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFrontendUser($frontendUser);
         $shippingAddress->setFirstName('Karl');
         $shippingAddress->setLastName('Dall');
         $shippingAddress->setCompany('Käse-Zentrum');
@@ -719,81 +574,13 @@ class OrderServiceTest extends FunctionalTestCase
         static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
         static::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
 
-        /** @var \RKW\RkwRegistration\Domain\Model\Privacy $privacyDb */
-        $privacyDb = $this->privacyRepository->findByUid(1);
-        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacyDb);
-        static::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
+//        @todo: Was muss hier für Privacy gemacht werden?
+//        /** @var \RKW\RkwRegistration\Domain\Model\Privacy $privacyDb */
+//        $privacyDb = $this->privacyRepository->findByUid(1);
+//        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacyDb);
+//        static::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
 
     }
-
-
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     * @throws \Exception
-     */
-    public function createOrderCreatesRegistrationIfUserIsNotLoggedIn ()
-    {
-
-        /**
-         * Scenario:
-         *
-         * Given I'm not logged in
-         * Given I accept the Terms & Conditions
-         * Given I accept the Privacy-Terms
-         * Given I enter a valid shippingAddress
-         * Given an product is ordered with amount greater than zero
-         * When I make an order
-         * Then the order is saved as registration
-         */
-        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check40.xml');
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-        $order->setEmail('email@rkw.de');
-
-        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
-        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
-        $shippingAddress->setAddress('Emmenthaler Allee 15');
-        $shippingAddress->setZip('12345');
-        $shippingAddress->setCity('Gauda');
-        $order->setShippingAddress($shippingAddress);
-
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(1);
-
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
-        $orderItem->setProduct($product);
-        $orderItem->setAmount(10);
-        $order->addOrderItem($orderItem);
-
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
-        $request = $this->objectManager->get(Request::class);
-
-        static::assertEquals(
-            'orderService.message.createdOptIn',
-            $this->subject->createOrder($order, $request, null, true, true)
-        );
-
-        /** @var \RKW\RkwRegistration\Domain\Model\Registration $registration */
-        $registration = $this->registrationRepository->findByUid(1);
-        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Registration', $registration);
-        static::assertEquals(1, $registration->getUser());
-        static::assertEquals('rkwShop', $registration->getCategory());
-
-    }
-
-
 
     //=============================================
 
