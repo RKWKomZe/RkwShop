@@ -15,9 +15,7 @@ namespace RKW\RkwShop\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Doctrine\Common\Util\Debug;
 use RKW\RkwBasics\Helper\Common;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class CheckoutController
@@ -208,11 +206,11 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
             $this->cartService->deleteCart($this->cartService->getCart());    //  @todo: Löscht auch das zugehörige OrderItem, dass dann für die Order selbst nicht mehr bereitsteht. Evtl. also alles doppelt anlegen?
 
-//            $this->addFlashMessage(
-//                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-//                    $message, 'rkw_shop'
-//                )
-//            );
+            $this->addFlashMessage(
+                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                    $message, 'rkw_shop'
+                )
+            );
 
             $this->redirect('finishOrder');
 

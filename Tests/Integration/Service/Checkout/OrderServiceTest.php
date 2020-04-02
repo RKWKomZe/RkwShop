@@ -413,6 +413,95 @@ class OrderServiceTest extends FunctionalTestCase
 
     }
 
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function persistOrderSavesOrder()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm logged in
+         * Given I accept the Terms & Conditions
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered which is out of stock
+         * Given that ordered product can be pre-ordered
+         * When I make an order
+         * Then the order is saved
+         */
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check65.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setFrontendUser($frontendUser);
+        $order->setEmail('email@rkw.de');
+        $order->setRemark('Was ist hier los?');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFrontendUser($frontendUser);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        $this->subject->persistOrder($order, $frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
+        $orderDb = $this->orderRepository->findByUid(1);
+
+        $orderDb->getOrderItem()->rewind();
+        $order->getOrderItem()->rewind();
+
+        static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
+        static::assertEquals($order->getEmail(), $orderDb->getEmail());
+        static::assertEquals($order->getRemark(), $orderDb->getRemark());
+
+        static::assertEquals($frontendUser->getUid(), $orderDb->getFrontendUser()->getUid());
+        static::assertEquals($frontendUser->getUid(), $orderDb->getShippingAddress()->getFrontendUser()->getUid());
+
+        /** ToDo: Check for title object!!!! */
+        static::assertEquals($order->getShippingAddress()->getFirstName(), $orderDb->getShippingAddress()->getFirstName());
+        static::assertEquals($order->getShippingAddress()->getLastName(), $orderDb->getShippingAddress()->getLastName());
+        static::assertEquals($order->getShippingAddress()->getCompany(), $orderDb->getShippingAddress()->getCompany());
+        static::assertEquals($order->getShippingAddress()->getAddress(), $orderDb->getShippingAddress()->getAddress());
+        static::assertEquals($order->getShippingAddress()->getZip(), $orderDb->getShippingAddress()->getZip());
+        static::assertEquals($order->getShippingAddress()->getCity(), $orderDb->getShippingAddress()->getCity());
+
+        static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
+        static::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
+
+    }
 
     /**
      * @test

@@ -2,11 +2,9 @@
 
 namespace RKW\RkwShop\Service\Checkout;
 
-use RKW\RkwShop\Domain\Model\Order;
-use RKW\RkwShop\Domain\Model\ShippingAddress;
 use RKW\RkwShop\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use RKW\RkwShop\Domain\Model\ShippingAddress;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -249,7 +247,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function persistOrder(\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
+    public function persistOrder(\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
         //  @todo: Check state
         // check order
@@ -271,9 +269,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
         //  @todo: $order->getFrontendUser() === $this->getFrontendUser()
 
         // send final confirmation mail to user
-        // @todo: Check, ob diese Events auch tatsächlich ausgelöst bzw. ausgeführt werden!!!
-
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
+        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, [$frontendUser, $order]);
 
         // send mail to admins
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
@@ -348,7 +344,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
         $orders = $this->orderRepository->findByFrontendUser($frontendUser);
         if ($orders) {
 
-            /** @var \RKW\RkwShop\Domain\Model\Order $order $order */
+            /** @var \RKW\RkwShop\Domain\Model\Order $order */
             foreach ($orders as $order) {
 
                 // delete order
@@ -356,7 +352,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
                 $this->persistenceManager->persistAll();
 
                 // send final confirmation mail to user
-                $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_USER, array($frontendUser, $order));
+                $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_DELETED_USER, [$frontendUser, $order]);
 
                 // send mail to admins
                 /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
