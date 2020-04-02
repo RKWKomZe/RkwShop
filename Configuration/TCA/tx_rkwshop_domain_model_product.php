@@ -143,7 +143,7 @@ return [
             ]
 		],
         'ordered_external' => [
-            'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
+            //'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.orderedExternal',
             'config' => [
@@ -163,7 +163,7 @@ return [
                     ['', 0],
                 ],
                 'foreign_table' => 'tx_rkwshop_domain_model_product',
-                'foreign_table_where' => ' AND ((\'###PAGE_TSCONFIG_IDLIST###\' <> \'0\' AND FIND_IN_SET(tx_rkwshop_domain_model_product.pid,\'###PAGE_TSCONFIG_IDLIST###\')) OR (\'###PAGE_TSCONFIG_IDLIST###\' = \'0\')) AND tx_rkwshop_domain_model_product.deleted = 0 AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.record_type = \'\\\\RKW\\\\RkwShop\\\\Domain\\\\Model\\\\ProductBundle\' ORDER BY tx_rkwshop_domain_model_product.title ASC',
+                'foreign_table_where' => ' AND ((\'###PAGE_TSCONFIG_IDLIST###\' <> \'0\' AND FIND_IN_SET(tx_rkwshop_domain_model_product.pid,\'###PAGE_TSCONFIG_IDLIST###\')) OR (\'###PAGE_TSCONFIG_IDLIST###\' = \'0\')) AND tx_rkwshop_domain_model_product.deleted = 0 AND tx_rkwshop_domain_model_product.hidden = 0 AND (tx_rkwshop_domain_model_product.record_type = \'\\\\RKW\\\\RkwShop\\\\Domain\\\\Model\\\\ProductBundle\' OR tx_rkwshop_domain_model_product.record_type = \'\\\\RKW\\\\RkwShop\\\\Domain\\\\Model\\\\ProductSubscription\') ORDER BY tx_rkwshop_domain_model_product.title ASC',
             ]
         ],
         'page' => [

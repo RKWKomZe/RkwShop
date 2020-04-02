@@ -37,7 +37,7 @@ return [
 		],
 		'status' => [
 			'exclude' => 0,
-            'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
+            //'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status',
 			'config' => [
 				'type' => 'select',
