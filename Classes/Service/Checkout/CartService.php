@@ -7,6 +7,7 @@ use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
 use RKW\RkwShop\Exception;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use RKW\RkwShop\Exceptions\CartHashNotFoundException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
@@ -336,6 +337,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     public function orderCart(\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, $privacy = false)
     {
 
+        //  @todo: Bestellnummer generieren!!!
         //  @todo: Wird Privacy überhaupt gebraucht, schließlich arbeiten wir hier nur mit bereits registrierten Benutzern? Nein, denn dies wird ja schon bei der eigentlichen Registrierung bestätigt!!!
 
         //  Check from orderService - how to implement it
@@ -375,6 +377,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         // handling for existing and logged in users
         if ($this->getFrontendUser()) {
 
+            //  @todo: Ist createOrder et. al. eine Aufgabe des orderService (siehe Shopware CheckoutController->order())?
             if ($this->persistOrder($order)) {
                 return 'orderService.message.created';
             }
@@ -402,6 +405,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 //            throw new Exception('orderService.error.orderAlreadyPersisted');
 //        }
 
+
         // save it
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
@@ -410,6 +414,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         $frontendUser = $order->getFrontendUser();
 
         // send final confirmation mail to user
+        // @todo: Check, ob diese Events auch tatsächlich ausgelöst bzw. ausgeführt werden!!!
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
 
         // send mail to admins
@@ -433,7 +438,9 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
         }
         $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
 
-        $this->deleteCart($this->getCart());
+        $this->deleteCart($this->getCart());    //  @todo: Löscht auch das zugehörige OrderItem, dass dann für die Order selbst nicht mehr bereitsteht. Evtl. also alles doppelt anlegen?
+
+
 
         $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Saved order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
 

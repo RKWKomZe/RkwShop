@@ -4,12 +4,17 @@
 
     <p>Bestellung überprüfen</p>
 
+    <!-- Order/Form/ProductList -->
+
     <f:render partial="Checkout/Review/OrderItemList" arguments="{_all}" />
 
     <div class="order-form v320-1">
         <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.checkout.confirm.form.billingaddress" /></h5>
         <f:render partial="Checkout/Review/Addresses" arguments="{_all}" />
     </div>
+
+    <!-- remark -->
+    <f:render partial="Checkout/Review/Remark" arguments="{_all}" />
 
     <p class="v320-1">
         <button class="button" type="submit">

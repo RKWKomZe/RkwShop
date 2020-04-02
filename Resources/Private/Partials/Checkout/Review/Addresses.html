@@ -1,3 +1,4 @@
+
 {namespace rkwShop=RKW\RkwShop\ViewHelpers}
 {namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
 
@@ -10,6 +11,8 @@
             {order.frontendUser.company}<br>
             {order.frontendUser.address}<br>
             {order.frontendUser.zip} {order.frontendUser.city}</p>
+
+        <f:form.hidden property="frontendUser" value="{order.frontendUser}" />
 
     </div>
 
@@ -25,10 +28,19 @@
             {order.shippingAddress.address}<br>
             {order.shippingAddress.zip} {order.shippingAddress.city}</p>
 
+        <!-- @todo: title hinzufügen -->
+        <f:form.hidden property="shippingAddress.gender" value="{order.shippingAddress.gender}" />
+        <f:form.hidden property="shippingAddress.firstName" value="{order.shippingAddress.firstName}" />
+        <f:form.hidden property="shippingAddress.lastName" value="{order.shippingAddress.lastName}" />
+        <f:form.hidden property="shippingAddress.address" value="{order.shippingAddress.address}" />
+        <f:form.hidden property="shippingAddress.zip" value="{order.shippingAddress.zip}" />
+        <f:form.hidden property="shippingAddress.city" value="{order.shippingAddress.city}" />
+
     </div>
 
 </div>
 
+<f:form.hidden property="shippingAddressSameAsBillingAddress" value="{order.shippingAddressSameAsBillingAddress}" />
 
 
 

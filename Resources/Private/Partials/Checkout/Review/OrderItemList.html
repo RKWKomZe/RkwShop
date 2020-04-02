@@ -1,4 +1,4 @@
-<f:for each="{order.orderItem}" as="orderItem">
+<f:for each="{order.orderItem}" as="orderItem" iteration="orderItemIterator">
 
     <div class="order-list__item">
 
@@ -13,7 +13,8 @@
             <p>Bestellmenge: {orderItem.amount}</p>
 
         </div>
-        <f:form.textfield type="hidden" id="txrkwshop-amount-{orderItem.product.uid}" property="orderItem.amount" value="{orderItem.amount}"/>
+
+        <f:form.hidden id="txrkwshop-orderitem-{orderItem.uid}" property="orderItem.{orderItem.uid}" value="{orderItem.uid}"/>
 
     </div>
 

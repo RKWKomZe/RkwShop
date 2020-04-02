@@ -157,8 +157,11 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      */
     public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
     {
-        //  @todo: Warum werden die orderItems nicht aus der confirmAction übergeben, obwohl sie dort richtig gesetzt sind?
-        //  Daher ordne ich sie hier nochmals zu :-(.
+        //  @todo: Ggfs. hier die Adresse des FrontendUsers aktualisieren!!!
+
+        //  @todo: Brauche ich die reviewPage? Ja, denn hier wird auch die Remark (Bemerkung) gesetzt!!! Dann muss ich alle properties in einer hidden form setzen oder die Order in die Session schreiben!!! Denn ich kann nur persisted Objects übergeben.
+
+        //  @todo: Hier nochmals auf die AGB verweisen (siehe rosebikes.de)
 
         $cart = $this->cartService->getCart();
 
@@ -168,7 +171,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         }
 
         $order = $this->orderService->checkShippingAddress($order);
-
 
         // check privacy flag
         //  @todo: müsste hier über die Validierung abgefangen werden, nicht über die Exception!?
@@ -188,13 +190,13 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * action orderCart
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @param integer $privacy
-     * @return void
+//     * @param integer $privacy
      * @todo fix validation
+//     * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
      * @ignorevalidation $order
-    //     * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
+     * @return void
      */
-    public function orderCartAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
+    public function orderCartAction(\RKW\RkwShop\Domain\Model\Order $order)
     {
         //  don't do any implicit sign up through create order, a user has to be registered in an isolated process, so that ordering can be isolated too
 
