@@ -16,11 +16,12 @@
         <tx_rkwregistration_language_key>fr</tx_rkwregistration_language_key>
     </fe_users>
 
-    <!-- cart -->
-    <tx_rkwshop_domain_model_cart>
+    <!-- order -->
+    <tx_rkwshop_domain_model_order>
         <uid>1</uid>
         <pid>1</pid>
         <frontend_user>1</frontend_user>
+        <remark>Toller Hinweis!!! Aber echt!</remark>
         <order_item>0</order_item>
-    </tx_rkwshop_domain_model_cart>
+    </tx_rkwshop_domain_model_order>
 </dataset>

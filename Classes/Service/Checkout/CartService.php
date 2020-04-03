@@ -5,11 +5,9 @@ namespace RKW\RkwShop\Service\Checkout;
 use RKW\RkwShop\Domain\Model\Cart;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
-use RKW\RkwShop\Domain\Model\ShippingAddress;
-use RKW\RkwShop\Exception;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-use RKW\RkwShop\Exceptions\CartHashNotFoundException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use RKW\RkwShop\Domain\Model\ShippingAddress;
+use RKW\RkwShop\Exceptions\CartHashNotFoundException;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*

@@ -1,26 +1,24 @@
 <?php
 namespace RKW\RkwShop\Tests\Integration\Controller;
 
-use RKW\RkwShop\Domain\Model\Order;
-use RKW\RkwShop\Domain\Model\ShippingAddress;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwBasics\Helper\Common;
-use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
-use RKW\RkwRegistration\Domain\Repository\RegistrationRepository;
+use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use RKW\RkwRegistration\Tools\Authentication;
+use RKW\RkwShop\Service\Checkout\CartService;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use RKW\RkwShop\Controller\CheckoutController;
 use RKW\RkwShop\Domain\Repository\CartRepository;
-use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
-use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
+use RKW\RkwShop\Domain\Repository\OrderItemRepository;
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
+use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
 use RKW\RkwShop\Domain\Repository\ShippingAddressRepository;
-use RKW\RkwShop\Service\Checkout\CartService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Request;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use RKW\RkwRegistration\Domain\Repository\RegistrationRepository;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
@@ -300,7 +298,7 @@ class CheckoutControllerTest extends FunctionalTestCase
          * Scenario:
          *
          * Given I am not logged in
-         * Given I already have an order in the cart
+         * Given I already have a cart
          * When I visit the cart confirm page
          * Then I am redirected to the registration page
          */
@@ -311,19 +309,16 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUserSessionHash()->getFirst();
-
         //  this assert redirect
-        $view = $this->getMock(ViewInterface::class);
-        $view->expects(static::once())->method('assignMultiple')->with([
-            'frontendUser' => $order->getFrontendUser(),
-            'order' => $order,
-            'termsPid' => 0,
-            'terms' => null,
-            'privacy' => null,
-        ]);
-        $this->inject($this->subject,'view', $view);
+//        $view = $this->getMock(ViewInterface::class);
+//        $view->expects(static::once())->method('assignMultiple')->with([
+//            'frontendUser' => $order->getFrontendUser(),
+//            'order' => $order,
+//            'termsPid' => 0,
+//            'terms' => null,
+//            'privacy' => null,
+//        ]);
+//        $this->inject($this->subject,'view', $view);
 
         $this->subject->confirmCartAction();
 
@@ -357,8 +352,11 @@ class CheckoutControllerTest extends FunctionalTestCase
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = $this->orderRepository->findByFrontendUser($frontendUser)->getFirst();
+        $order = $this->cartService->convertCart($cart);
 
         /*
         $result = $this->getMock(CheckoutController::class);
@@ -385,42 +383,22 @@ class CheckoutControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function orderCartPersistsOrderToDatabase()
+    public function reviewOrderUpdatesFrontendUserAddressIfChangedInOrderForm()
     {
-        //  /checkout/order -> /checkout/finish
 
-        //  validate order
-
-        //  assert redirect
-    }
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     * @throws \Exception
-     */
-    public function orderCartRemovesCartAfterCreatingOrderIfUserIsLoggedIn() {
+        //  /checkout/review
 
         /**
          * Scenario:
          *
-         * Given I'm logged in
-         * Given I enter a valid shippingAddress
-         * Given a product is ordered with amount greater than zero
-         * When I confirm an order
-         * Then the order is saved
-         * Then the existing cart is deleted
+         * Given I am logged in
+         * Given I already have a cart
+         * Given I change my city to another than previously set
+         * When I visit the order review page
+         * Then my frontend user data set (aka billing address) reflects the change
          */
 
-        $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check140.xml');
+        $this->importDataSet(__DIR__ . '/CheckoutControllerTest/Fixtures/Database/Check35.xml');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
@@ -428,46 +406,33 @@ class CheckoutControllerTest extends FunctionalTestCase
         Common::initFrontendInBackendContext();
         Authentication::loginUser($frontendUser);
 
-        /** @var \RKW\RkwShop\Domain\Model\Cart  $cart */
-        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-        $order->setFrontendUser($frontendUser);
-        $order->setRemark('Testen wir das mal');
+        $order = $this->orderRepository->findByFrontendUser($frontendUser)->getFirst();
 
-        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
-        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
-        $shippingAddress->setFrontendUser($frontendUser);
-        $shippingAddress->setFirstName('Karl');
-        $shippingAddress->setLastName('Dall');
-        $shippingAddress->setCompany('Käse-Zentrum');
-        $shippingAddress->setAddress('Emmenthaler Allee 15');
-        $shippingAddress->setZip('12345');
-        $shippingAddress->setCity('Gauda');
-        $order->setShippingAddress($shippingAddress);
+        $view = $this->getMock(ViewInterface::class);
+        $view->expects($this->once())->method('assignMultiple')->with([
+            'frontendUser' => $frontendUser,
+            'order' => $order,
+            'privacy' => null,
+        ]);
+        $this->inject($this->subject,'view', $view);
 
-        //  set order items from cart
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        foreach ($cart->getOrderItem() as $orderItem) {
-            $order->addOrderItem($orderItem);
-        }
+        $this->subject->reviewOrderAction($order);
 
-        $this->subject->orderCartAction($order);
+    }
 
-        /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
-        $orderDb = $this->orderRepository->findByUid(1);
+    /**
+     * @test
+     */
+    public function orderCartPersistsOrderToDatabase()
+    {
+        //  /checkout/order -> /checkout/finish
 
-        $order->getOrderItem()->rewind();
-        $orderDb->getOrderItem()->rewind();
+        //  validate order
 
-        static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
-
-        /** @var \RKW\RkwShop\Domain\Model\Cart $cartDb */
-        $cartDb = $this->cartRepository->findAll();
-
-        static::assertCount(0, $cartDb);
-
+        //  assert redirect
     }
 
     /**

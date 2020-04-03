@@ -101,6 +101,11 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $backendUserRepository;
 
+    /**
+     * @var \RKW\RkwShop\Service\Checkout\CartService
+     * @inject
+     */
+    protected $cartService;
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
@@ -136,7 +141,6 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      * @var \TYPO3\CMS\Core\Log\Logger
      */
     protected $logger;
-
 
 
     /**
@@ -190,7 +194,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
             if (
                 (! $orderItem->getProduct() instanceof \RKW\RkwShop\Domain\Model\ProductSubscription)
-                && ($orderItem->getProduct()->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')
+                && ($orderItem->getProduct()->getRecordType() !== '\RKW\RkwShop\Domain\Model\ProductSubscription')
             ){
                 $stock = $this->getRemainingStockOfProduct($orderItem->getProduct());
                 $stockPreOrder = $this->getPreOrderStockOfProduct($orderItem->getProduct());
@@ -209,6 +213,8 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
             /// simply save order
             $this->persistOrder($order, $frontendUser);
+
+            $this->cartService->deleteCart($this->cartService->getCart());    //  @todo: Löscht auch das zugehörige OrderItem, dass dann für die Order selbst nicht mehr bereitsteht. Evtl. also alles doppelt anlegen?
 
             // add privacy info
 //            \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($request, $frontendUser, $order, 'new order');

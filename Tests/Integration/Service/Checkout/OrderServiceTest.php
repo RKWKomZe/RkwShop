@@ -2,24 +2,24 @@
 namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
 use RKW\RkwBasics\Helper\Common;
-use RKW\RkwRegistration\Tools\Authentication;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-use RKW\RkwRegistration\Domain\Model\FrontendUser;
-use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
-use RKW\RkwRegistration\Domain\Repository\RegistrationRepository;
+use TYPO3\CMS\Extbase\Mvc\Request;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use RKW\RkwRegistration\Tools\Authentication;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
-use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
-use RKW\RkwShop\Domain\Repository\OrderItemRepository;
+use RKW\RkwShop\Service\Checkout\OrderService;
+use RKW\RkwShop\Domain\Repository\CartRepository;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
+use RKW\RkwShop\Domain\Repository\OrderItemRepository;
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
+use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
 use RKW\RkwShop\Domain\Repository\ShippingAddressRepository;
-use RKW\RkwShop\Service\Checkout\OrderService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Request;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use RKW\RkwRegistration\Domain\Repository\RegistrationRepository;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -80,6 +80,11 @@ class OrderServiceTest extends FunctionalTestCase
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
      */
     private $orderRepository;
+
+    /**
+     * @var \RKW\RkwShop\Domain\Repository\CartRepository
+     */
+    private $cartRepository;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\OrderItemRepository
@@ -151,6 +156,7 @@ class OrderServiceTest extends FunctionalTestCase
         $this->subject = $this->objectManager->get(OrderService::class);
         $this->frontendUserRepository = $this->objectManager->get(FrontendUserRepository::class);
         $this->shippingAddressRepository = $this->objectManager->get(ShippingAddressRepository::class);
+        $this->cartRepository = $this->objectManager->get(CartRepository::class);
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
         $this->orderItemRepository = $this->objectManager->get(OrderItemRepository::class);
         $this->productRepository = $this->objectManager->get(ProductRepository::class);
@@ -500,6 +506,83 @@ class OrderServiceTest extends FunctionalTestCase
 
         static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
         static::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
+    public function createOrderRemovesCartAfterCreatingOrder() {
+
+        /**
+         * Scenario:
+         *
+         * Given I enter a valid shippingAddress
+         * Given a product is ordered with amount greater than zero
+         * When I confirm an order
+         * Then the order is saved
+         * Then the existing cart is deleted
+         */
+
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check190.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart  $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setFrontendUser($frontendUser);
+        $order->setRemark('Testen wir das mal');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFrontendUser($frontendUser);
+        $shippingAddress->setFirstName('Karl');
+        $shippingAddress->setLastName('Dall');
+        $shippingAddress->setCompany('Käse-Zentrum');
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        foreach ($cart->getOrderItem() as $orderItem) {
+            $order->addOrderItem($orderItem);
+        }
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        $this->subject->createOrder($order, $request, $frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
+        $orderDb = $this->orderRepository->findByUid(1);
+
+        $order->getOrderItem()->rewind();
+        $orderDb->getOrderItem()->rewind();
+
+        static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cartDb */
+        $cartDb = $this->cartRepository->findAll();
+
+        static::assertCount(0, $cartDb);
 
     }
 

@@ -113,7 +113,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     {
 
         //  if current user is not logged in yet, take him to mein.rkw
-        //  @todo: and if he is logged in, the cart has to be set to his frontend user id and the hash has to be deleted
         //  @todo: how can I do this kind of redirect back to his cart and next controller action
         if (! $this->getFrontendUser()) {
             $uri = $this->uriBuilder
@@ -151,16 +150,10 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param integer $privacy
      * @return void
-     * @todo fix validation
-     * @ignorevalidation $order
-//     * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
+     * @validate $order \RKW\RkwShop\Validation\Validator\AddressValidator
      */
     public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
     {
-        //  @todo: Ggfs. hier die Adresse des FrontendUsers aktualisieren!!!
-
-        //  @todo: Brauche ich die reviewPage? Ja, denn hier wird auch die Remark (Bemerkung) gesetzt!!! Dann muss ich alle properties in einer hidden form setzen oder die Order in die Session schreiben!!! Denn ich kann nur persisted Objects übergeben.
-
         //  @todo: Hier nochmals auf die AGB verweisen (siehe rosebikes.de)
 
         $cart = $this->cartService->getCart();
@@ -203,8 +196,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         try {
 
             $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
-
-            $this->cartService->deleteCart($this->cartService->getCart());    //  @todo: Löscht auch das zugehörige OrderItem, dass dann für die Order selbst nicht mehr bereitsteht. Evtl. also alles doppelt anlegen?
 
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
