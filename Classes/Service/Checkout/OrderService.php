@@ -164,7 +164,6 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function createOrder (\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null, $terms = false, $privacy = false)
     {
-        //  @todo: Bestellnummer generieren!!!
         //  @todo: Wird Privacy überhaupt gebraucht, schließlich arbeiten wir hier nur mit bereits registrierten Benutzern? Nein, denn dies wird ja schon bei der eigentlichen Registrierung bestätigt!!!
 
 //        // check privacy flag
@@ -267,6 +266,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 //        }
 
         $order->setStatus(50);
+        $order->setOrderNumber($this->createOrderNumber());
 
         // save it
         $this->orderRepository->add($order);
@@ -302,6 +302,23 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
         return true;
 
+    }
+
+    /**
+     * @return string
+     */
+    protected function createOrderNumber()
+    {
+        $newOrderNumber = 1;
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $latestOrder */
+        $latestOrder = $this->orderRepository->findLatestOrder()->getFirst();
+
+        if ($latestOrder) {
+            $newOrderNumber = (int)$latestOrder->getOrderNumber() + 1;
+        }
+
+        return str_pad($newOrderNumber, 5, '0', STR_PAD_LEFT);
     }
 
     /**

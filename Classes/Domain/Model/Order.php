@@ -69,6 +69,14 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $email;
 
     /**
+     * orderNumber
+     *
+     * @var string
+     * @validate NotEmpty
+     */
+    protected $orderNumber;
+
+    /**
      * remark
      *
      * @var string
@@ -417,6 +425,22 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         }
 
         return $existingItem;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderNumber()
+    {
+        return $this->orderNumber;
+    }
+
+    /**
+     * @param string $orderNumber
+     */
+    public function setOrderNumber($orderNumber)
+    {
+        $this->orderNumber = $orderNumber;
     }
 
 }

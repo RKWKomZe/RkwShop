@@ -52,6 +52,30 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
+     * Find latest with orderNumber
+     *
+     * @param integer $timestamp
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
+    public function findLatestOrder()
+    {
+
+        $query = $this->createQuery();
+
+        // $query->getQuerySettings()->setRespectStoragePage(false);
+        $query->getQuerySettings()->setIncludeDeleted(true);
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+        $query->setOrderings([
+            'order_number' => QueryInterface::ORDER_DESCENDING
+        ]);
+        $query->setLimit(1);
+
+        return $query->execute();
+    }
+
+    /**
      * Find all orders that have been updated recently
      *
      * @param integer $timestamp
@@ -99,7 +123,5 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         return $query->execute()->getFirst();
     }
-
-
 
 }

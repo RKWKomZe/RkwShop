@@ -553,11 +553,6 @@ class CartServiceTest extends FunctionalTestCase
 
     }
 
-    //  @todo: Timestamp setzen, wenn die Bestellung tatsächlich abgeschickt wird!!!! Damit kann dann zwischen Warenkörben und Bestellungen unterschieden werden.
-
-    //  @todo: Die nachfolgenden Checks müssen über einen Validator erfolgen!????
-    //  siehe OrderServiceTest
-
     //=============================================
 
     /**

@@ -130,6 +130,52 @@ class OrderRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \Exception
      */
+    public function findLatestOrderReturnsMostRecentOrder()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given two orders exist
+         * When I fetch the latest order
+         * Then I get the order with uid = 2
+         */
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check230.xml');
+
+        $result = $this->subject->findLatestOrder();
+
+        static::assertEquals(1, count($result));
+        static::assertEquals('2', $result[0]->getUid());
+
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findByOrderNumberReturnsCorrectOrder()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given two orders exist
+         * When I fetch the orders by orderNumber of second order
+         * Then I get the order with uid = 2
+         */
+        $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check230.xml');
+
+        $result = $this->subject->findByOrderNumber('00002');
+
+        static::assertEquals(1, count($result));
+        static::assertEquals('2', $result[0]->getUid());
+
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
     public function findByFrontendUserIgnoresDeletedOrders()
     {
         /**

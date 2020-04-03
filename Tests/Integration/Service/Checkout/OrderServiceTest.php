@@ -522,6 +522,90 @@ class OrderServiceTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \Exception
      */
+    public function persistOrderCreatesUniqueIncrementedOrderNumber()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm logged in
+         * Given I accept the Terms & Conditions
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given an product is ordered which is out of stock
+         * Given that ordered product can be pre-ordered
+         * When I make an order
+         * Then the order is saved
+         * Then the order has a unique order number
+         */
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check66.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setFrontendUser($frontendUser);
+        $order->setEmail('email@rkw.de');
+        $order->setRemark('Was ist hier los?');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFrontendUser($frontendUser);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        $this->subject->persistOrder($order, $frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
+        $orderDb = $this->orderRepository->findByUid(2);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $existingOrder */
+        $existingOrder = $this->orderRepository->findByUid(1);
+
+        static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
+        static::assertEquals($order->getEmail(), $orderDb->getEmail());
+        static::assertEquals($order->getRemark(), $orderDb->getRemark());
+
+        static::assertEquals('00002', $orderDb->getOrderNumber());
+
+        static::assertTrue((int)$existingOrder->getOrderNumber() + 1 === (int)$orderDb->getOrderNumber());
+
+        static::assertCount(1, $this->orderRepository->findByOrderNumber('00001'));
+        static::assertEquals(1, $this->orderRepository->findByOrderNumber('00001')->getFirst()->getUid());
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
     public function createOrderRemovesCartAfterCreatingOrder() {
 
         /**
