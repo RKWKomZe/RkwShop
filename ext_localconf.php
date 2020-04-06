@@ -169,6 +169,11 @@ call_user_func(
             = 'RKW\RkwShop\Hook\UpdateProductTypeHook';
 
         //=================================================================
+        // Register update wizard
+        //=================================================================
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\RKW\RkwShop\Updates\GenerateOrderNumberForExistingOrders::class] = \RKW\RkwShop\Updates\GenerateOrderNumberForExistingOrders::class;
+
+        //=================================================================
         // Register Logger
         //=================================================================
         $GLOBALS['TYPO3_CONF_VARS']['LOG']['RKW']['RkwShop']['writerConfiguration'] = array(

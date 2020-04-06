@@ -305,19 +305,30 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @param int $newOrderNumber
      * @return string
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    protected function createOrderNumber()
+    protected function createOrderNumber($newOrderNumber = 1)
     {
-        $newOrderNumber = 1;
-
         /** @var \RKW\RkwShop\Domain\Model\Order $latestOrder */
         $latestOrder = $this->orderRepository->findLatestOrder()->getFirst();
+
+        //  @todo: create order number and set to registry - see https://github.com/extcode/cart/blob/9292a3806cbd5c1e9e88bb73d182567586ba5b91/Classes/Utility/OrderUtility.php#L814
 
         if ($latestOrder) {
             $newOrderNumber = (int)$latestOrder->getOrderNumber() + 1;
         }
 
+        return $this->buildOrderNumber($newOrderNumber);
+    }
+
+    /**
+     * @param int $newOrderNumber
+     * @return string
+     */
+    public function buildOrderNumber($newOrderNumber = 1)
+    {
         return str_pad($newOrderNumber, 5, '0', STR_PAD_LEFT);
     }
 
