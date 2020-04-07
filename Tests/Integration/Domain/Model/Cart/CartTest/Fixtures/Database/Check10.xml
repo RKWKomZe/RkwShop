@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+
+    <tx_rkwshop_domain_model_producttype>
+        <uid>1</uid>
+        <title>Product</title>
+        <model>\RKW\RkwShop\Domain\Model\Product</model>
+        <has_article_number>0</has_article_number>
+    </tx_rkwshop_domain_model_producttype>
+
+    <!-- product 1 -->
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>Leitfaden deluxe</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
+        <stock>1</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+    </tx_rkwshop_domain_model_product>
+    <tx_rkwshop_domain_model_stock>
+        <uid>1</uid>
+        <pid>1</pid>
+        <product>1</product>
+        <amount>100</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+
+    <!-- cart -->
+    <tx_rkwshop_domain_model_cart>
+        <uid>1</uid>
+        <pid>1</pid>
+        <frontend_user>0</frontend_user>
+        <frontend_user_session_hash>12345678</frontend_user_session_hash>
+        <order_item>1</order_item>
+    </tx_rkwshop_domain_model_cart>
+
+    <!-- orderitem -->
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>1</uid>
+        <pid>10000</pid>
+        <amount>1</amount>
+        <product>1</product>
+        <ext_order>1</ext_order>
+    </tx_rkwshop_domain_model_orderitem>
+
+</dataset>

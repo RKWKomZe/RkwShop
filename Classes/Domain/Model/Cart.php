@@ -15,8 +15,6 @@ namespace RKW\RkwShop\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
-
 /**
  * Class Cart
  *
@@ -406,6 +404,7 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function containsProduct(\RKW\RkwShop\Domain\Model\Product $product)
     {
+
         $existingItem = null;
 
         if ($this->orderItem->count() > 0) {

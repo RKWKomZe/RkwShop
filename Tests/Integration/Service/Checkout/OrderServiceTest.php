@@ -179,48 +179,6 @@ class OrderServiceTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \Exception
      */
-    public function createOrderChecksForPrivacyTermIfUserIsLoggedIn ()
-    {
-
-        /**
-         * Scenario:
-         *
-         * Given I'm logged in
-         * Given I do not accept the Privacy-Terms
-         * When I make an order
-         * Then an acceptPrivacy-error is thrown
-         */
-        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check10.xml');
-
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
-        $frontendUser = $this->frontendUserRepository->findByUid(1);
-
-        /** @var \RKW\RkwShop\Domain\Model\Order $order */
-        $order = GeneralUtility::makeInstance(Order::class);
-
-        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
-        $request = $this->objectManager->get(Request::class);
-
-        static::expectException(\RKW\RkwShop\Exception::class);
-        static::expectExceptionMessage('orderService.error.acceptPrivacy');
-
-        $this->subject->createOrder($order, $request, $frontendUser, true, false);
-
-    }
-
-    /**
-     * @test
-     * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     * @throws \Exception
-     */
     public function createOrderChecksForValidShippingAddress ()
     {
 

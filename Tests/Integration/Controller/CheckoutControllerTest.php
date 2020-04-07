@@ -276,9 +276,6 @@ class CheckoutControllerTest extends FunctionalTestCase
         $view->expects($this->once())->method('assignMultiple')->with([
             'frontendUser' => $frontendUser,
             'order' => $order,
-            'termsPid' => 0,
-            'terms' => null,
-            'privacy' => null,
         ]);
         $this->inject($this->subject,'view', $view);
 
@@ -372,7 +369,6 @@ class CheckoutControllerTest extends FunctionalTestCase
         $view->expects($this->once())->method('assignMultiple')->with([
             'frontendUser' => $frontendUser,
             'order' => $order,
-            'privacy' => null,
         ]);
         $this->inject($this->subject,'view', $view);
 
@@ -415,7 +411,6 @@ class CheckoutControllerTest extends FunctionalTestCase
         $view->expects($this->once())->method('assignMultiple')->with([
             'frontendUser' => $frontendUser,
             'order' => $order,
-            'privacy' => null,
         ]);
         $this->inject($this->subject,'view', $view);
 

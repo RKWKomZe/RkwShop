@@ -306,9 +306,10 @@ class CartServiceTest extends FunctionalTestCase
          * Scenario:
          *
          * Given my cart does already exist
-         * Given my cart contains 1 item of a product
-         * When I add 1 additional item of this product
-         * Then the existing cart contains 2
+         * Given my cart contains 1 order item
+         * When I add 1 additional order item of the same product
+         * Then the existing cart still contains 1 order item
+         * Then the amount of the order item is 2
          */
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check30.xml');
@@ -319,7 +320,7 @@ class CartServiceTest extends FunctionalTestCase
         $cartBefore = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
 
         static::assertEquals('1', $cartBefore->getUid());
-        static::assertEquals(1, count($cartBefore->getOrderItem()));
+        static::assertEquals(1, $cartBefore->getOrderItem()->count());
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $selectedProduct = $this->productRepository->findByUid(1);
@@ -329,14 +330,12 @@ class CartServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Cart $cartAfter */
         $cartAfter = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
 
-        static::assertEquals(1, count($cartAfter));
         static::assertEquals('1', $cartAfter->getUid());
         static::assertEquals(1, $cartAfter->getOrderItem()->count());
 
-        $orderItems = $cartAfter->getOrderItem();
-        $orderItems->rewind();
+        $orderItems = $cartAfter->getOrderItem()->toArray();
 
-        static::assertEquals(2, $orderItems->current()->getAmount());
+        static::assertEquals(2, $orderItems[0]->getAmount());
 
     }
 

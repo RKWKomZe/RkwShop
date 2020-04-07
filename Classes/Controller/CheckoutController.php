@@ -105,11 +105,9 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     /**
      * action confirm order
      *
-     * @param integer $terms
-     * @param integer $privacy
      * @return void
      */
-    public function confirmCartAction($terms = null, $privacy = null)
+    public function confirmCartAction()
     {
 
         //  if current user is not logged in yet, take him to mein.rkw
@@ -129,9 +127,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $this->view->assignMultiple([
             'frontendUser'    => $this->getFrontendUser(),
             'order'           => $order,
-            'termsPid'        => (int)$this->settings['termsPid'],
-            'terms'           => $terms,
-            'privacy'         => $privacy,
         ]);
 
     }
@@ -148,12 +143,12 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * action reviewOrder
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @param integer $privacy
      * @return void
      * @validate $order \RKW\RkwShop\Validation\Validator\AddressValidator
      */
-    public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order, $privacy = null)
+    public function reviewOrderAction(\RKW\RkwShop\Domain\Model\Order $order)
     {
+        //  @todo: Terms und Privacy werden nicht benötigt, da diese beim Registrieren bestätigt wurden! Und wir erlauben nur Bestellungen durch registrierte Nutzer!
         //  @todo: Hier nochmals auf die AGB verweisen (siehe rosebikes.de)
 
         $cart = $this->cartService->getCart();
@@ -165,17 +160,12 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         $order = $this->orderService->checkShippingAddress($order);
 
-        // check privacy flag
         //  @todo: müsste hier über die Validierung abgefangen werden, nicht über die Exception!?
-//        if (! $privacy) {
-//            throw new Exception('orderService.error.acceptPrivacy');
-//        }
 
         //  show order review page
         $this->view->assignMultiple([
             'frontendUser'    => $this->getFrontendUser(),
             'order'           => $order,
-            'privacy'         => $privacy
         ]);
     }
 
@@ -183,7 +173,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * action orderCart
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
-//     * @param integer $privacy
      * @todo fix validation
 //     * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
      * @ignorevalidation $order
@@ -195,7 +184,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
 
         try {
 
-            $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
+            $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser());
 
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(

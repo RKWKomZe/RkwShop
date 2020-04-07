@@ -149,8 +149,6 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param \TYPO3\CMS\Extbase\Mvc\Request|null $request
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser|null $frontendUser
-     * @param bool $terms
-     * @param bool $privacy
      * @return string
      * @throws \RKW\RkwShop\Exception
      * @throws \RKW\RkwRegistration\Exception
@@ -162,15 +160,8 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrder (\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null, $terms = false, $privacy = false)
+    public function createOrder (\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null)
     {
-        //  @todo: Wird Privacy überhaupt gebraucht, schließlich arbeiten wir hier nur mit bereits registrierten Benutzern? Nein, denn dies wird ja schon bei der eigentlichen Registrierung bestätigt!!!
-
-//        // check privacy flag
-//        if (! $privacy) {
-//            throw new Exception('orderService.error.acceptPrivacy');
-//        }
-
         // check for shippingAddress
         if (
             (! $order->getShippingAddress())
@@ -215,28 +206,8 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
             $this->cartService->deleteCart($this->cartService->getCart());    //  @todo: Löscht auch das zugehörige OrderItem, dass dann für die Order selbst nicht mehr bereitsteht. Evtl. also alles doppelt anlegen?
 
-            // add privacy info
-//            \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($request, $frontendUser, $order, 'new order');
-
             return 'orderService.message.created';
         }
-
-
-//        // handling for new users
-//        // register new user or simply send opt-in to existing user
-//        /** @var \RKW\RkwRegistration\Tools\Registration $registration */
-//        $registration = $this->objectManager->get('RKW\\RkwRegistration\\Tools\\Registration');
-//        $registration->register(
-//            array(
-//                'email' => $order->getEmail(),
-//            ),
-//            false,
-//            $order,
-//            'rkwShop',
-//            $request
-//        );
-//
-//        return 'orderService.message.createdOptIn';
 
     }
 

@@ -30,7 +30,6 @@ use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
-
     /**
      * productRepository
      *
