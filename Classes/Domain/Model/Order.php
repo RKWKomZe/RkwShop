@@ -72,7 +72,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * orderNumber
      *
      * @var string
-     * @validate NotEmpty
      */
     protected $orderNumber;
 

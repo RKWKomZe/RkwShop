@@ -173,9 +173,8 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      * action orderCart
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @todo fix validation
-//     * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
-     * @ignorevalidation $order
+     *
+     * @validate $order \RKW\RkwShop\Validation\Validator\AddressValidator
      * @return void
      */
     public function orderCartAction(\RKW\RkwShop\Domain\Model\Order $order)

@@ -53,7 +53,7 @@ class AddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
                 ($frontendUser = $order->getFrontendUser())
                 && ($methods = get_class_methods($frontendUser))
             ) {
-                $this->checkFields($requiredFields, $methods, $isValid, $model = $frontendUser);
+                  $this->checkFields($requiredFields, $methods, $isValid, $model = $frontendUser);
             }
 
             if (
@@ -82,6 +82,7 @@ class AddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
         foreach ($requiredFields as $requiredField) {
 
             $getter = 'get' . ucfirst($requiredField);
+
             if (in_array($getter, $methods)) {
 
                 if (
