@@ -58,7 +58,7 @@
         <pid>10000</pid>
         <amount>1</amount>
         <product>1</product>
-        <ext_order>1</ext_order>
+        <ext_cart>1</ext_cart>
     </tx_rkwshop_domain_model_orderitem>
 
 </dataset>

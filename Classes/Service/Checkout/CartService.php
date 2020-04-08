@@ -8,7 +8,6 @@ use RKW\RkwShop\Domain\Model\OrderItem;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
 use RKW\RkwShop\Exceptions\CartHashNotFoundException;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
@@ -208,6 +207,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     {
         $existingCart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash($this->getFrontendUser());
 
+        //  @todo: Was machen wir mit leeren Carts? Beispielsweise ruft jemand den Warenkorb, ist aber noch nicht angemeldet. Dann wird ein leerer Warenkorb mit Hash erzeugt.
         $cart = ($existingCart) ? $existingCart : $this->createCart();
 
         return $this->assignCart($cart);
@@ -318,7 +318,16 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
         foreach ($cart->getOrderItem() as $orderItem) {
-            $order->addOrderItem($orderItem);
+
+            /** @var \RKW\RkwShop\Domain\Model\OrderItem $clonedOrderItem */
+            $clonedOrderItem = GeneralUtility::makeInstance(OrderItem::class);
+
+            //  set same value for all properties, except uid
+            $clonedOrderItem->setProduct($orderItem->getProduct());
+            $clonedOrderItem->setAmount($orderItem->getAmount());
+
+            $order->addOrderItem($clonedOrderItem);
+
         }
 
         return $order;

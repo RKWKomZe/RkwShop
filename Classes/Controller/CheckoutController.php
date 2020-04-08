@@ -151,16 +151,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         //  @todo: Terms und Privacy werden nicht benötigt, da diese beim Registrieren bestätigt wurden! Und wir erlauben nur Bestellungen durch registrierte Nutzer!
         //  @todo: Hier nochmals auf die AGB verweisen (siehe rosebikes.de)
 
-        $cart = $this->cartService->getCart();
-
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        foreach ($cart->getOrderItem() as $orderItem) {
-            $order->addOrderItem($orderItem);
-        }
-
         $order = $this->orderService->checkShippingAddress($order);
-
-        //  @todo: müsste hier über die Validierung abgefangen werden, nicht über die Exception!?
 
         //  show order review page
         $this->view->assignMultiple([
@@ -180,7 +171,6 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
     public function orderCartAction(\RKW\RkwShop\Domain\Model\Order $order)
     {
         //  don't do any implicit sign up through create order, a user has to be registered in an isolated process, so that ordering can be isolated too
-
         try {
 
             $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser());

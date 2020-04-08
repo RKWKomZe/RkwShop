@@ -98,6 +98,7 @@ config.tx_extbase.persistence {
         RKW\RkwShop\Domain\Model\OrderItem {
             mapping {
                 columns {
+                    ext_cart.mapOnProperty = cart
                     ext_order.mapOnProperty = order
                 }
             }

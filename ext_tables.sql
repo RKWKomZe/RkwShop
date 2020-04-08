@@ -63,6 +63,7 @@ CREATE TABLE tx_rkwshop_domain_model_orderitem (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	ext_order int(11) unsigned DEFAULT '0',
+	ext_cart int(11) unsigned DEFAULT '0',
 	product int(11) unsigned DEFAULT '0',
 	amount int(11) unsigned DEFAULT '0',
 	is_pre_order tinyint(4) unsigned DEFAULT '0' NOT NULL,

@@ -515,6 +515,54 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
+    public function convertCartConvertsCartToOrder()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given my cart does already exist
+         * Given I am logged in as a frontend user
+         * When I want to confirm my cart
+         * Then an order is returned
+         * And my shipping address will be set to my billing address
+         * And the order items will be clones of the cart order items
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check70.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
+
+        static::assertEquals(1, count($cart));
+        static::assertEquals('1', $cart->getUid());
+
+        $order = $this->subject->convertCart($cart);
+
+        $cart->getOrderItem()->rewind();
+        $order->getOrderItem()->rewind();
+
+        static::assertEquals($cart->getFrontendUser(), $order->getFrontendUser());
+        static::assertEquals($order->getFrontendUser()->getCity(), $order->getShippingAddress()->getCity());
+        static::assertEquals(1, $order->getShippingAddressSameAsBillingAddress());
+
+        static::assertEquals($cart->getOrderItem()->count(), $order->getOrderItem()->count());
+        static::assertEquals($cart->getOrderItem()->current()->getAmount(), $order->getOrderItem()->current()->getAmount());
+        static::assertEquals($cart->getOrderItem()->current()->getProduct(), $order->getOrderItem()->current()->getProduct());
+
+    }
+
+    /**
+     * @test
+     */
     public function createCartSetsFrontendUserOnCartIfAlreadyLoggedIn()
     {
 

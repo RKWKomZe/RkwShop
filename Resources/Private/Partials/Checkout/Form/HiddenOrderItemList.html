@@ -1,0 +1,5 @@
+<!-- add hidden fields with order item list -->
+<f:for each="{order.orderItem}" as="orderItem" iteration="productIterator">
+    <f:form.hidden property="orderItem.{orderItem.product.uid}.amount" value="{orderItem.amount}" />
+    <f:form.hidden property="orderItem.{orderItem.product.uid}.product" value="{orderItem.product}" />
+</f:for>
