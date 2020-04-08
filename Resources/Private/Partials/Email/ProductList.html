@@ -5,7 +5,6 @@
 
 <f:layout name="Email/{mailType}" />
 
-
 <!-- PLAINTEXT -->
 <f:section name="Plaintext">
 	=============================================================\n
@@ -36,17 +35,20 @@
 
 <!-- HTML -->
 <f:section name="Html">
-	<h2><rkwMailer:frontend.translate key="partials.email.productList.orderDetails" languageKey="{language}" extensionName="rkwShop"/></h2>
+	<h2><rkwMailer:frontend.translate key="partials.email.productList.orderDetails" arguments="{0: order.orderNumber}" languageKey="{language}" extensionName="rkwShop"/></h2>
 
 	<table class="colored-table">
 		<tr>
+            <th><rkwMailer:frontend.translate key="partials.email.productList.headlineAmount" languageKey="{language}" extensionName="rkwShop"/></th>
 			<th><rkwMailer:frontend.translate key="partials.email.productList.headlineProduct" languageKey="{language}" extensionName="rkwShop"/></th>
-			<th><rkwMailer:frontend.translate key="partials.email.productList.headlineAmount" languageKey="{language}" extensionName="rkwShop"/></th>
 			<th><rkwMailer:frontend.translate key="partials.email.productList.headlineType" languageKey="{language}" extensionName="rkwShop"/></th>
 		</tr>
 		<f:for each="{order.orderItem}" as="orderItem" iteration="iterator">
 			<tr class="{f:if(condition: iterator.isEven, then: 'even')}">
-				<td>
+                <td class="align-center">
+                    {orderItem.amount}
+                </td>
+                <td>
                     <f:if condition="{orderItem.product.page}">
                         <f:then>
                             <!-- set link only for admins -->
@@ -69,9 +71,6 @@
                     <f:if condition="{backendUserForProductMap}">
                         <br/><em><rkwMailer:frontend.translate key="partials.email.productList.responsible" languageKey="{language}" extensionName="rkwShop"/>: <rkwShop:GetListOfAdminsForProduct product="{orderItem.product}" backendUserForProductMap="{backendUserForProductMap}" /></em>
                     </f:if>
-				</td>
-				<td class="align-center">
-					{orderItem.amount}
 				</td>
 				<td class="align-center">
 					<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">

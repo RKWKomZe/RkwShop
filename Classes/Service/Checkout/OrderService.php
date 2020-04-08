@@ -201,10 +201,9 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             && (! $frontendUser->_isNew())
         ) {
 
-            /// simply save order
             $this->persistOrder($order, $frontendUser);
 
-            $this->cartService->deleteCart($this->cartService->getCart());    //  @todo: Löscht auch das zugehörige OrderItem, dass dann für die Order selbst nicht mehr bereitsteht. Evtl. also alles doppelt anlegen?
+            $this->cartService->deleteCart($this->cartService->getCart());
 
             return 'orderService.message.created';
         }
@@ -267,7 +266,8 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             }
             $backendUsersForProductMap[$orderItem->getProduct()->getUid()] = implode(', ', $tempBackendUserForProductMap);
         }
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
+
+        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, [array_unique($backendUsersList), $order, $backendUsersForProductMap]);
 
         $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Saved order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
 

@@ -254,7 +254,9 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                     \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
                         'rkwMailService.' . strtolower($action) . 'User.subject',
                         'rkw_shop',
-                        null,
+                        [
+                            $order->getOrderNumber()
+                        ],
                         $frontendUser->getTxRkwregistrationLanguageKey()
                     )
                 );

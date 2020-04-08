@@ -250,8 +250,8 @@
 				<target>Bitte bestätigen Sie Ihre Bestellung</target>
 			</trans-unit>
 			<trans-unit id="rkwMailService.confirmationUser.subject">
-				<source>Thanks for you order</source>
-				<target>Vielen Dank für Ihre Bestellung</target>
+				<source>Thanks for you order %s</source>
+				<target>Vielen Dank für Ihre Bestellung %s</target>
 			</trans-unit>
 			<trans-unit id="rkwMailService.confirmationAdmin.subject">
 				<source>A new order has arrived</source>
@@ -358,7 +358,7 @@
 			<!-- Partials/Email/ProductList.html -->
             <trans-unit id="partials.email.productList.orderDetails">
                 <source>Order Details</source>
-                <target>Details der Bestellung</target>
+                <target>Details der Bestellung %s</target>
             </trans-unit>
             <trans-unit id="partials.email.productList.headlineProduct">
                 <source>Product</source>
