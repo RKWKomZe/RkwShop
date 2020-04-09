@@ -3,7 +3,6 @@
 namespace RKW\RkwShop\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -33,9 +32,10 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * Find all orders of a frontendUser
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param array                                          $ordering
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByFrontendUser($frontendUser)
+    public function findByFrontendUser($frontendUser, $ordering = [])
     {
 
         $query = $this->createQuery();
@@ -46,6 +46,10 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $query->equals('frontendUser', $frontendUser)
             )
         );
+
+        if (! empty($ordering)) {
+            $query->setOrderings($ordering);
+        }
 
         return $query->execute();
         //===

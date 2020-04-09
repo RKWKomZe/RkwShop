@@ -1,0 +1,20 @@
+{namespace vh=RKW\RkwShop\ViewHelpers}
+
+<f:if condition="<f:count>{orders}</f:count>">
+
+    <div class="order-list">
+
+        <f:for each="{orders}" as="order" iteration="orderIterator">
+
+            <p><strong>Ihre Bestellung {order.orderNumber} vom {order.crdate -> f:format.date(format:"d.m.Y H:i")} | Status: <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.{order.status}" /></strong></p>
+            <f:render partial="MyOrder/OrderItemList" arguments="{_all}" />
+            <f:render partial="MyOrder/Addresses" arguments="{_all}" />
+            <f:render partial="MyOrder/Remark" arguments="{_all}" />
+            <p></p>
+
+        </f:for>
+
+    </div>
+
+</f:if>
+R

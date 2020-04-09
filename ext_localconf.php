@@ -22,6 +22,18 @@ call_user_func(
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'RKW.' . $extKey,
+            'MyOrderList',
+            array(
+                'MyOrder' => 'index',
+            ),
+            // non-cacheable actions
+            array(
+                'MyOrder' => 'index',
+            )
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            'RKW.' . $extKey,
             'ProductList',
             array(
                 'Product' => 'index',

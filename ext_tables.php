@@ -16,6 +16,12 @@ call_user_func(
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
             'RKW.' . $extKey,
+            'MyOrderList',
+            'RKW Shop: Meine Bestellungen'
+        );
+
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+            'RKW.' . $extKey,
             'ProductList',
             'RKW Shop: Produktliste'
         );

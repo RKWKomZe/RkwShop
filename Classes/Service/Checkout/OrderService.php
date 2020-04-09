@@ -346,6 +346,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
     public function removeAllOrdersOfFrontendUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
 
+        //  @todo: Wird diese Funktion überhaupt benötigt?
         $orders = $this->orderRepository->findByFrontendUser($frontendUser);
         if ($orders) {
 
