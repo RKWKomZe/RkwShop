@@ -49,6 +49,14 @@
 				<source>open</source>
 				<target>offen</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.status.canceled">
+				<source>canceled</source>
+				<target>storniert</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.status.60">
+				<source>canceled</source>
+				<target>storniert</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.status.exported">
 				<source>exported</source>
 				<target>exportiert</target>

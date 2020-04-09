@@ -24,11 +24,11 @@ call_user_func(
             'RKW.' . $extKey,
             'MyOrderList',
             array(
-                'MyOrder' => 'index',
+                'MyOrder' => 'index, cancel',
             ),
             // non-cacheable actions
             array(
-                'MyOrder' => 'index',
+                'MyOrder' => 'index, cancel',
             )
         );
 

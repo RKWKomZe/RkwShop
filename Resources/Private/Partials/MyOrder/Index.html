@@ -7,6 +7,15 @@
         <f:for each="{orders}" as="order" iteration="orderIterator">
 
             <p><strong>Ihre Bestellung {order.orderNumber} vom {order.crdate -> f:format.date(format:"d.m.Y H:i")} | Status: <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.{order.status}" /></strong></p>
+            <f:comment>
+                @todo: Kann ich stornieren? Bearbeiten ist nur so lange möglich, bis die Bestellung per SOAP abgeholt wird.
+                @todo: Stornieren erfolgt einfach über einen Zeitstempel, die Produkte aus einer stornierten Bestellung fließen wieder dem Stock zu.
+                @todo: Stornierte Bestellungen werden von SOAP ignoriert!
+                @todo: SOAP müsste daher bei jeder abgeholten Bestellung den Status verändern und auf '90', d. h. in Bearbeitung setzen!!! Am besten wäre hier eigentlich auch ein Zeitstempel, um nachvollziehen zu können, wann die Bestellung von SOAP übernommen wurde.
+            </f:comment>
+            <f:if condition="{order.status} == '50'">
+                <f:link.action class="button" action="cancel" controller="MyOrder" pluginName="MyOrderList" extensionName="RkwShop" arguments="{order: order}" title="Bestellung {order.orderNumber} stornieren">Stornieren</f:link.action>
+            </f:if>
             <f:render partial="MyOrder/OrderItemList" arguments="{_all}" />
             <f:render partial="MyOrder/Addresses" arguments="{_all}" />
             <f:render partial="MyOrder/Remark" arguments="{_all}" />

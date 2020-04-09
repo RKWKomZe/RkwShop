@@ -34,6 +34,14 @@ class MyOrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 {
 
     /**
+     * OrderService
+     *
+     * @var \RKW\RkwShop\Service\Checkout\OrderService
+     * @inject
+     */
+    protected $orderService;
+
+    /**
      * productRepository
      *
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
@@ -95,6 +103,19 @@ class MyOrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 'productDetailPid' => (int)$this->settings['showPid']
             ]);
         }
+    }
+
+    /**
+     * action cancel
+     *
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @return void
+     */
+    public function cancelAction(\RKW\RkwShop\Domain\Model\Order $order)
+    {
+        $this->orderService->cancelOrder($order);
+
+        $this->redirect('index');
     }
 
     /**

@@ -9,14 +9,14 @@
         </tr>
         </thead>
         <f:for each="{order.orderItem}" as="orderItem" iteration="orderItemIterator">
-        <tbody>
-        <tr>
-            <td>[Responsive Image]</td>
-            <td>{orderItem.amount}</td>
-            <td><f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{productDetailPid}" arguments="{product: orderItem.product}" title="{orderItem.product.title}">{orderItem.product.title}</f:link.action><br>
-            {orderItem.product.subtitle}</td>
-            <td>{orderItem.product.articleNumber}</td>
-        </tr>
+            <tbody>
+            <tr>
+                <td>[Responsive Image]</td>
+                <td>{orderItem.amount}</td>
+                <td><f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{productDetailPid}" arguments="{product: orderItem.product}" title="{orderItem.product.title}">{orderItem.product.title}</f:link.action><br>
+                {orderItem.product.subtitle}</td>
+                <td>{orderItem.product.articleNumber}</td>
+            </tr>
         </f:for>
         </tbody>
     </table>

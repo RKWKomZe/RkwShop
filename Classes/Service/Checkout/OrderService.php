@@ -211,6 +211,20 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * cancelOrder
+     *
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     */
+    public function cancelOrder(\RKW\RkwShop\Domain\Model\Order $order) {
+
+        $order->setStatus(60);
+        $order->setCanceledAt(time());
+
+        $this->orderRepository->update($order);
+
+    }
+
+    /**
      * persistOrder
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order

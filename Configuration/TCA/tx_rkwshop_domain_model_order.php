@@ -17,10 +17,10 @@ return [
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_order.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'hidden, order_number, status, frontend_user, shipping_address, order_item, remark',
+		'showRecordFieldList' => 'hidden, order_number, status, canceled_at, frontend_user, shipping_address, order_item, remark',
 	],
 	'types' => [
-		'1' => ['showitem' => 'hidden,--palette--;;1, order_number, status, frontend_user, shipping_address, order_item, remark'],
+		'1' => ['showitem' => 'hidden,--palette--;;1, order_number, status, canceled_at, frontend_user, shipping_address, order_item, remark'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -45,6 +45,7 @@ return [
 				'items' => [
 					['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.new', 0],
 					['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.open', 50],
+					['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.canceled', 60],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.exported', 90],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.sent', 100],
                     ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.closed', 200]
@@ -146,6 +147,18 @@ return [
                 'size' => 30,
                 'eval' => 'trim,required,unique',
                 'readOnly' => true
+            ],
+        ],
+        'canceled_at' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.canceled_at',
+            'config' => [
+                'type' => 'input',
+                'size' => 13,
+                'max' => 20,
+                'eval' => 'datetime',
+                'checkbox' => 0,
+                'default' => 0,
             ],
         ],
 	],

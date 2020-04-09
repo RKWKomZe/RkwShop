@@ -52,6 +52,10 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $deleted;
 
+    /**
+     * @var integer
+     */
+    protected $canceledAt;
 
     /**
      * Status
@@ -157,6 +161,22 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getTstamp()
     {
         return $this->tstamp;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCanceledAt()
+    {
+        return $this->canceledAt;
+    }
+
+    /**
+     * @param int $canceledAt
+     */
+    public function setCanceledAt($canceledAt)
+    {
+        $this->canceledAt = $canceledAt;
     }
 
     /**
