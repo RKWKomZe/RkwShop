@@ -5,12 +5,10 @@
     <tx_rkwshop_domain_model_order>
         <uid>1</uid>
         <pid>10000</pid>
-        <email>test1@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <frontend_user>0</frontend_user>
         <order_item>0</order_item>
         <shipping_address>1</shipping_address>
     </tx_rkwshop_domain_model_order>
-
 
 </dataset>

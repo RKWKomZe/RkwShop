@@ -61,14 +61,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $status = 0;
 
     /**
-     * email
-     *
-     * @var string
-     * @validate EmailAddress, NotEmpty
-     */
-    protected $email;
-
-    /**
      * orderNumber
      *
      * @var string
@@ -239,29 +231,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->status;
         //===
     }
-
-    
-    /**
-     * Returns the email
-     *
-     * @return string $email
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Sets the email
-     *
-     * @param string $email
-     * @return void
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
 
     /**
      * Returns the remark

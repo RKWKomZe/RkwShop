@@ -13,14 +13,14 @@ return [
 			'disabled' => 'hidden',
 		],
         'default_sortby' => 'ORDER BY status ASC, crdate ASC',
-        'searchFields' => 'uid,first_name,last_name,address,zip,city,email,frontend_user,pages,remark,order_number',
+        'searchFields' => 'uid,first_name,last_name,address,zip,city,frontend_user,pages,remark,order_number',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_order.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'hidden, status, email, frontend_user, shipping_address, order_item, remark, order_number',
+		'showRecordFieldList' => 'hidden, order_number, status, frontend_user, shipping_address, order_item, remark',
 	],
 	'types' => [
-		'1' => ['showitem' => 'hidden,--palette--;;1, status, email, frontend_user, shipping_address, order_item, remark, order_number'],
+		'1' => ['showitem' => 'hidden,--palette--;;1, order_number, status, frontend_user, shipping_address, order_item, remark'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -64,16 +64,6 @@ return [
                 'readOnly' => true
 			],
 		],
-        'email' => [
-            'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.email',
-            'config' => [
-                'type' => 'input',
-                'size' => 30,
-                'eval' => 'trim,email,required',
-                'readOnly' => true
-            ],
-        ],
         'order_item' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.orderItem',

@@ -55,7 +55,6 @@
     <tx_rkwshop_domain_model_order>
         <uid>1</uid>
         <pid>1</pid>
-        <email>test1@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <frontend_user>1</frontend_user>
         <order_item>0</order_item>
@@ -63,7 +62,6 @@
     <tx_rkwshop_domain_model_order>
         <uid>2</uid>
         <pid>1</pid>
-        <email>test2@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <frontend_user>2</frontend_user>
         <order_item>0</order_item>
@@ -71,7 +69,6 @@
     <tx_rkwshop_domain_model_order>
         <uid>3</uid>
         <pid>1</pid>
-        <email>test3@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <frontend_user>3</frontend_user>
         <order_item>0</order_item>

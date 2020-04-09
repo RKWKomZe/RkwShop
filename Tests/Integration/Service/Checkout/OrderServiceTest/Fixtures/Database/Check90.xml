@@ -36,7 +36,6 @@
         <uid>1</uid>
         <pid>1</pid>
         <order_item>1</order_item>
-        <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <shipping_address>1</shipping_address>
         <frontend_user>1</frontend_user>
@@ -46,7 +45,6 @@
         <uid>2</uid>
         <pid>1</pid>
         <order_item>2</order_item>
-        <email>test@dummy.de</email>
         <remark>Toller Hinweis!!!</remark>
         <shipping_address>1</shipping_address>
         <frontend_user>1</frontend_user>
@@ -56,7 +54,6 @@
         <uid>3</uid>
         <pid>1</pid>
         <order_item>3</order_item>
-        <email>nochmal@dummy.de</email>
         <remark>Toller Hinweis zwei!!!</remark>
         <shipping_address>2</shipping_address>
         <frontend_user>2</frontend_user>

@@ -60,22 +60,6 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $status = 0;
 
     /**
-     * email
-     *
-     * @var string
-     * @validate EmailAddress, NotEmpty
-     */
-    protected $email;
-
-    /**
-     * remark
-     *
-     * @var string
-     */
-    protected $remark = '';
-
-
-    /**
      * frontendUser
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
@@ -89,20 +73,6 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      */
     protected $frontendUserSessionHash = '';
-
-    /**
-     * shippingAddress
-     *
-     * @var \RKW\RkwShop\Domain\Model\ShippingAddress
-     */
-    protected $shippingAddress = null;
-
-    /**
-     * shipping adress is same as billing address
-     *
-     * @var integer
-     */
-    protected $shippingAddressSameAsBillingAddress = 1;
 
     /**
      * orderItem
@@ -209,74 +179,6 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * Sets the status value
-     *
-     * @param integer $status
-     * @api
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-
-    /**
-     * Returns the status value
-     *
-     * @return integer
-     * @api
-     */
-    public function getStatus()
-    {
-        return $this->status;
-        //===
-    }
-
-    
-    /**
-     * Returns the email
-     *
-     * @return string $email
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Sets the email
-     *
-     * @param string $email
-     * @return void
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-
-    /**
-     * Returns the remark
-     *
-     * @return string $remark
-     */
-    public function getRemark()
-    {
-        return $this->remark;
-    }
-
-    /**
-     * Sets the remark
-     *
-     * @param string $remark
-     * @return void
-     */
-    public function setRemark($remark)
-    {
-        $this->remark = $remark;
-    }
-
-    /**
      * Returns the frontendUser
      *
      * @return \RKW\RkwShop\Domain\Model\FrontendUser $frontendUser
@@ -319,44 +221,7 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the frontendUser
-     *
-     * @return \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress
-     */
-    public function getShippingAddress()
-    {
-        return $this->shippingAddress;
-    }
-
-    /**
-     * Sets the frontendUser
-     *
-     * @param \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress
-     * @return void
-     */
-    public function setShippingAddress(\RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress)
-    {
-        $this->shippingAddress = $shippingAddress;
-    }
-
-    /**
-     * @return int
-     */
-    public function getShippingAddressSameAsBillingAddress()
-    {
-        return $this->shippingAddressSameAsBillingAddress;
-    }
-
-    /**
-     * @param int $shippingAddressSameAsBillingAddress
-     */
-    public function setShippingAddressSameAsBillingAddress($shippingAddressSameAsBillingAddress)
-    {
-        $this->shippingAddressSameAsBillingAddress = $shippingAddressSameAsBillingAddress;
-    }
-
-    /**
-     * Adds a orderItem
+     * Adds an orderItem
      *
      * @param \RKW\RkwShop\Domain\Model\OrderItem $orderItem
      * @return void
@@ -367,7 +232,7 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Removes a orderItem
+     * Removes an orderItem
      *
      * @param \RKW\RkwShop\Domain\Model\OrderItem $orderItem
      * @return void

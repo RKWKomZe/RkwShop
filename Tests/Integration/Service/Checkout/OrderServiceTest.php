@@ -187,14 +187,12 @@ class OrderServiceTest extends FunctionalTestCase
          *
          * Given I accept the Terms & Conditions
          * Given I accept the Privacy-Terms
-         * Given I have used a valid email
          * Given shipping address has no city given
          * When I make an order
          * Then an noShippingAddress-error is thrown
          */
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
-        $order->setEmail('email@rkw.de');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
         $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
@@ -243,7 +241,6 @@ class OrderServiceTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
-        $order->setEmail('email@rkw.de');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
         $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
@@ -349,7 +346,6 @@ class OrderServiceTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
-        $order->setEmail('email@rkw.de');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
         $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
@@ -416,7 +412,6 @@ class OrderServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
         $order->setFrontendUser($frontendUser);
-        $order->setEmail('email@rkw.de');
         $order->setRemark('Was ist hier los?');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
@@ -448,7 +443,6 @@ class OrderServiceTest extends FunctionalTestCase
         $order->getOrderItem()->rewind();
 
         static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
-        static::assertEquals($order->getEmail(), $orderDb->getEmail());
         static::assertEquals($order->getRemark(), $orderDb->getRemark());
 
         static::assertEquals($frontendUser->getUid(), $orderDb->getFrontendUser()->getUid());
@@ -507,7 +501,6 @@ class OrderServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
         $order->setFrontendUser($frontendUser);
-        $order->setEmail('email@rkw.de');
         $order->setRemark('Was ist hier los?');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
@@ -539,7 +532,6 @@ class OrderServiceTest extends FunctionalTestCase
         $existingOrder = $this->orderRepository->findByUid(1);
 
         static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
-        static::assertEquals($order->getEmail(), $orderDb->getEmail());
         static::assertEquals($order->getRemark(), $orderDb->getRemark());
 
         static::assertEquals('00002', $orderDb->getOrderNumber());
@@ -660,7 +652,6 @@ class OrderServiceTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
-        $order->setEmail('email@rkw.de');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
         $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
@@ -714,7 +705,7 @@ class OrderServiceTest extends FunctionalTestCase
          * Given an product is ordered with amount greater than zero
          * When I make an order
          * Then the order is saved
-         * Then the email and remark of the order are saved
+         * Then the remark of the order is saved
          * Then the order is linked to the given frontendUser
          * Then the shippingAddress is linked to the given frontendUser
          * Then the shippingAddress is saved correctly
@@ -731,7 +722,6 @@ class OrderServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
         $order->setFrontendUser($frontendUser);
-        $order->setEmail('email@rkw.de');
         $order->setRemark('Testen wir das mal');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
@@ -769,7 +759,6 @@ class OrderServiceTest extends FunctionalTestCase
         $order->getOrderItem()->rewind();
 
         static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
-        static::assertEquals($order->getEmail(), $orderDb->getEmail());
         static::assertEquals($order->getRemark(), $orderDb->getRemark());
 
         static::assertEquals($frontendUser->getUid(), $orderDb->getFrontendUser()->getUid());
@@ -1099,7 +1088,6 @@ class OrderServiceTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = GeneralUtility::makeInstance(Order::class);
-        $order->setEmail('email@rkw.de');
 
         /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
         $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
