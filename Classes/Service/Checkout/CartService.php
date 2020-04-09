@@ -46,7 +46,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @const string
      */
-    const SIGNAL_AFTER_ORDER_CREATED_USER = 'afterOrderCreatedUser';    //  @todo: Ist das die richtige Benennung für dieses Event?
+    const SIGNAL_AFTER_ORDER_CREATED_USER = 'afterOrderCreatedUser';
 
     /**
      * cart

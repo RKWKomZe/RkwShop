@@ -710,7 +710,6 @@ class OrderServiceTest extends FunctionalTestCase
          * Scenario:
          *
          * Given I'm logged in
-         * Given I accept the Privacy-Terms
          * Given I enter a valid shippingAddress
          * Given an product is ordered with amount greater than zero
          * When I make an order
@@ -720,7 +719,6 @@ class OrderServiceTest extends FunctionalTestCase
          * Then the shippingAddress is linked to the given frontendUser
          * Then the shippingAddress is saved correctly
          * Then the ordered product and the given amount is saved correctly
-         * Then the privacy information is saved
          */
         $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check30.xml');
 
@@ -787,12 +785,6 @@ class OrderServiceTest extends FunctionalTestCase
 
         static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
         static::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
-
-//        @todo: Was muss hier für Privacy gemacht werden?
-//        /** @var \RKW\RkwRegistration\Domain\Model\Privacy $privacyDb */
-//        $privacyDb = $this->privacyRepository->findByUid(1);
-//        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacyDb);
-//        static::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
 
     }
 
