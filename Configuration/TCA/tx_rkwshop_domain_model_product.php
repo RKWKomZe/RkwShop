@@ -3,7 +3,7 @@ return [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product',
 		'label' => 'title',
-        'label_userFunc' => \RKW\RkwShop\Utilities\TCA::class . '->productTitle',
+        'label_userFunc' => \RKW\RkwShop\Utilities\TCA::class . '->buildProductTitle',
 		'default_sortby' => 'ORDER BY title',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',

@@ -3,8 +3,7 @@ return [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order',
         'label' => 'status',
-        'label_alt' => 'email',
-        'label_alt_force' => 1,
+        'label_userFunc' => \RKW\RkwShop\Utilities\TCA::class . '->buildOrderTitle',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
@@ -13,8 +12,8 @@ return [
 		'enablecolumns' => [
 			'disabled' => 'hidden',
 		],
-        'default_sortby' => 'ORDER BY status ASC, email ASC',
-        'searchFields' => 'uid, amount,first_name,last_name,address,zip,city,email,frontend_user,pages,remark,order_number',
+        'default_sortby' => 'ORDER BY status ASC, crdate ASC',
+        'searchFields' => 'uid,first_name,last_name,address,zip,city,email,frontend_user,pages,remark,order_number',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_order.gif'
 	],
 	'interface' => [

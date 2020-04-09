@@ -13,6 +13,10 @@
 				<source>E-Mail</source>
 				<target>E-Mail</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.order_number">
+				<source>Ordernumber</source>
+				<target>Bestellnummer</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.remark">
 				<source>Remark</source>
 				<target>Anmerkung</target>

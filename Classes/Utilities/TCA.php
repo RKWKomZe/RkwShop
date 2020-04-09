@@ -28,13 +28,43 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 class TCA
 {
 
-    public function productTitle(&$parameters)
+    public function buildProductTitle(&$parameters)
     {
         $record = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
 
         $recordProductType = BackendUtility::getRecord('tx_rkwshop_domain_model_producttype', $record['product_type']);
 
         $newTitle = $record['title'] . ' [' . $record['article_number'] . ' - ' . $recordProductType['title'] . ']';
+
+        $parameters['title'] = $newTitle;
+    }
+
+
+    public function buildOrderTitle(&$parameters)
+    {
+        $record = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
+        $status = \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+            'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.status.' . $record['status'], 'rkw_shop'
+        );
+
+        $frontendUser = BackendUtility::getRecord('fe_users', $record['frontend_user']);
+
+        $newTitle = date('d.m.Y H:i', $record['crdate']) . ': ' . $record['order_number'] . ' [' . $frontendUser['first_name'] . ' ' . $frontendUser['last_name'] . '] - ' . $status;
+
+        $parameters['title'] = $newTitle;
+    }
+
+    public function buildCartTitle(&$parameters)
+    {
+        $record = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
+
+        $newTitle = date('d.m.Y H:i', $record['crdate']);
+
+        if ($record['frontend_user']) {
+            $frontendUser = BackendUtility::getRecord('fe_users', $record['frontend_user']);
+
+            $newTitle = date('d.m.Y H:i', $record['crdate']) . ': ' . $frontendUser['first_name'] . ' ' . $frontendUser['last_name'];
+        }
 
         $parameters['title'] = $newTitle;
     }

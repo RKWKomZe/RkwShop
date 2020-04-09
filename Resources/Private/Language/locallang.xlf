@@ -8,6 +8,9 @@
 			<trans-unit id="tx_rkwshop_domain_model_order">
 				<source>Order</source>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.order_number">
+				<source>Ordernumber</source>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.email">
 				<source>E-Mail</source>
 			</trans-unit>

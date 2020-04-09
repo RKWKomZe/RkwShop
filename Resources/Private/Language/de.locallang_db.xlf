@@ -3,6 +3,12 @@
 	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-05-04T11:35:59Z" product-name="rkw_shop">
 		<header/>
 		<body>
+
+			<trans-unit id="tx_rkwshop_domain_model_cart">
+				<source>RKW Shop: Carts</source>
+				<target>RKW Shop: Warenkörbe</target>
+			</trans-unit>
+
 			<trans-unit id="tx_rkwshop_domain_model_order">
 				<source>RKW Shop: Order</source>
 				<target>RKW Shop: Bestellungen</target>
@@ -10,6 +16,10 @@
 			<trans-unit id="tx_rkwshop_domain_model_order.email">
 				<source>E-Mail</source>
 				<target>E-Mail</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.order_number">
+				<source>Ordernumber</source>
+				<target>Bestellnummer</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.frontendUser">
 				<source>Frontend User</source>

@@ -3,8 +3,7 @@ return [
 	'ctrl' => [
 		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_cart',
         'label' => 'status',
-        'label_alt' => 'email',
-        'label_alt_force' => 1,
+        'label_userFunc' => \RKW\RkwShop\Utilities\TCA::class . '->buildCartTitle',
 		'tstamp' => 'tstamp',
 		'crdate' => 'crdate',
 		'cruser_id' => 'cruser_id',
@@ -15,7 +14,7 @@ return [
 		],
         'default_sortby' => 'ORDER BY crdate ASC',
         'searchFields' => 'uid,frontend_user,pages,',
-		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_cart.gif'
+		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_cart.gif',
 	],
 	'interface' => [
 		'showRecordFieldList' => 'hidden, frontend_user, order_item',
