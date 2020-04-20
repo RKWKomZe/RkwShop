@@ -33,7 +33,7 @@ CREATE TABLE tx_rkwshop_domain_model_order (
 	frontend_user int(11) unsigned DEFAULT '0',
     frontend_user_session_hash varchar(32) DEFAULT '' NOT NULL,
 
-    order_number varchar(64),
+    order_number varchar(255) DEFAULT '' NOT NULL,
 
 	order_item text NOT NULL,
 	shipping_address int(11) DEFAULT '0' NOT NULL,
