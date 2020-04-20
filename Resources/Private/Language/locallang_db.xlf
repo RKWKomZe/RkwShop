@@ -9,6 +9,9 @@
 			<trans-unit id="tx_rkwshop_domain_model_order.email">
 				<source>E-Mail</source>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.orderedAt">
+				<source>Order date</source>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.order_number">
 				<source>Ordernumber</source>
 			</trans-unit>
@@ -176,6 +179,16 @@
              </trans-unit>
 
 
+            <!-- management -->
+            <trans-unit id="tx_rkwshop.module.main">
+                <source>RKW Shop</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop.module.orders">
+                <source>Orders</source>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop.module.products">
+                <source>Products</source>
+            </trans-unit>
 
             <!-- TCA- Tabs -->
             <trans-unit id="tx_rkwshop_domain_model_product.tab.basics">

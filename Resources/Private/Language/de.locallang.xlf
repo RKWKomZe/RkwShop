@@ -13,6 +13,14 @@
 				<source>E-Mail</source>
 				<target>E-Mail</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.orderedAt">
+				<source>Order date</source>
+				<target>Bestelldatum</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.frontendUser">
+				<source>Frontend User</source>
+				<target>Kunde</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.order_number">
 				<source>Ordernumber</source>
 				<target>Bestellnummer</target>
@@ -77,7 +85,26 @@
 				<source>City</source>
 				<target>Stadt</target>
 			</trans-unit>			
-			
+
+            <!-- tx_rkwshop_domain_model_product -->
+            <trans-unit id="tx_rkwshop_domain_model_product.articleNumber">
+                <source>Article number</source>
+                <target>Artikelnummer</target>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.title">
+                <source>Title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.image">
+				<source>Image</source>
+				<target>Bild</target>
+			</trans-unit>
+
+            <!-- tx_rkwshop_domain_model_orderitem -->
+			<trans-unit id="tx_rkwshop_domain_model_orderitem.amount">
+				<source>Amount</source>
+				<target>Menge</target>
+			</trans-unit>
 
 			<!-- ================================================================================== -->
 

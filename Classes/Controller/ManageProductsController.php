@@ -15,7 +15,9 @@ namespace RKW\RkwShop\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use RKW\RkwShop\Domain\Model\Product;
 use RKW\RkwShop\Helper\DivUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class ManageProductsController
@@ -25,7 +27,7 @@ use RKW\RkwShop\Helper\DivUtility;
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class ProductController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class ManageProductsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     /**
      * productRepository
@@ -40,31 +42,32 @@ class ProductController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @return void
      */
-    public function indexAction()
+    public function listAction()
     {
-        $listItemsPerView = (int)$this->settings['itemsPerPage'] ? (int)$this->settings['itemsPerPage'] : 10;
 
-        $queryResult = $this->productRepository->findAll();
-        $productList = DivUtility::prepareResultsList($queryResult, $listItemsPerView);
+        $products = $this->productRepository->findAll();
 
-        $this->view->assignMultiple([
-            'productList'   => $productList,
-            'showPid'       => (int)$this->settings['showPid']
-        ]);
+        $this->view->assign('products', $products);
+
     }
 
     /**
-     * action show single product
+     * action show
      *
      * @param \RKW\RkwShop\Domain\Model\Product $product
      *
-     * @return void
+     * @ignorevalidation $product
      */
-    public function showAction(\RKW\RkwShop\Domain\Model\Product $product)
+    public function showAction(\RKW\RkwShop\Domain\Model\Product $product = null)
     {
-        $this->view->assignMultiple([
-            'product'   => $product,
-            'cartPid'   => (int)$this->settings['cartPid']
-        ]);
+        if (empty($product)) {
+            $this->forward('list');
+        }
+
+        //  $this->view->assign('user', $GLOBALS['TSFE']->fe_user->user);
+        $this->view->assign('product', $product);
+
+        //  $this->assignCurrencyTranslationData();
     }
+
 }

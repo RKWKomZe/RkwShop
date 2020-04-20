@@ -1,3 +1,46 @@
+module.tx_rkwshop {
+    view {
+        templateRootPaths {
+            0 = EXT:rkw_shop/Resources/Private/Backend/Templates/
+        }
+        partialRootPaths {
+            0 = EXT:rkw_shop/Resources/Private/Backend/Partials/
+        }
+        layoutRootPaths {
+            0 = EXT:rkw_shop/Resources/Private/Backend/Layouts/
+        }
+    }
+
+    /*
+    persistence {
+        storagePid = {$module.tx_rkwshop.persistence.storagePid}
+
+        classes {
+            TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
+                mapping {
+                    tableName = fe_users
+                    recordType = TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+                    columns {
+                        lockToDomain.mapOnProperty = lockToDomain
+                    }
+                }
+            }
+        }
+    }
+
+    settings {
+        format.currency {
+            currencySign       = {$plugin.tx_cart.settings.format.currency.currencySign}
+            decimalSeparator   = {$plugin.tx_cart.settings.format.currency.decimalSeparator}
+            thousandsSeparator = {$plugin.tx_cart.settings.format.currency.thousandsSeparator}
+            prependCurrency    = {$plugin.tx_cart.settings.format.currency.prependCurrency}
+            separateCurrency   = {$plugin.tx_cart.settings.format.currency.separateCurrency}
+            decimals           = {$plugin.tx_cart.settings.format.currency.decimals}
+        }
+    }
+    */
+}
+
 config.tx_extbase.persistence {
 
     classes {

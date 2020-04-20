@@ -1,0 +1,53 @@
+<f:layout name="Default"/>
+
+<f:section name="actions">
+</f:section>
+
+<f:section name="content">
+    <f:flashMessages renderMode="div"/>
+
+    <div class="table-fit">
+        <table class="table table-striped typo3-dblist">
+            <thead>
+            <tr class="t3-row-header">
+                <th style="text-align: left;">
+                    <f:translate key="tx_rkwshop_domain_model_order.orderedAt"/>
+                </th>
+                <th style="text-align: left;">
+                    <f:translate key="tx_rkwshop_domain_model_order.order_number"/>
+                </th>
+                <th style="text-align: left;">
+                    <f:translate key="tx_rkwshop_domain_model_order.frontendUser"/>
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <f:for each="{orders}" as="order">
+                <tr class="db_list_normal">
+                    <td>
+                        <f:link.action action="show" arguments="{order : order}"> {order.crdate -> f:format.date(format:"d.m.Y H:i")}</f:link.action>
+                    </td>
+                    <td>
+                        <f:link.action action="show" arguments="{order : order}"> {order.orderNumber}</f:link.action>
+                    </td>
+                    <td>
+                        <f:link.action action="show" arguments="{order : order}"> {order.frontendUser.lastName}, {order.frontendUser.firstName}</f:link.action>
+                    </td>
+                    <td>
+                        <div class="">
+                            <span class="btn btn-default btn-sm">
+                                <f:be.buttons.icon
+                                    uri="{f:uri.action(action:'show', arguments:{order : order})}"
+                                    icon="actions-view"/>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </f:for>
+            </tbody>
+        </table>
+    </div>
+</f:section>

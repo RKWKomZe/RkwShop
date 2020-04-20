@@ -51,6 +51,59 @@ call_user_func(
         );
 
         //=================================================================
+        // Register BackendModule
+        //=================================================================
+        if (TYPO3_MODE === 'BE') {
+
+            // add Main Module
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+                'RKW.' . $extKey,
+                'Shop',
+                '',
+                '',
+                [],
+                [
+                    'access' => 'user, group',
+                    'icon'   => 'EXT:' . $extKey . '/ext_icon.gif',
+                    'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:tx_rkwshop.module.main',
+                    'navigationComponentId' => 'typo3-pagetree',
+                ]
+            );
+
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+                'RKW.' . $extKey,
+                'Shop',
+                'Orders',
+                '',
+                [
+                    'ManageOrders' => 'list, show',
+                ],
+                [
+                    'access' => 'user, group',
+                    'icon'   => 'EXT:' . $extKey . '/ext_icon.gif',
+                    'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:tx_rkwshop.module.orders',
+                    'navigationComponentId' => 'typo3-pagetree',
+                ]
+            );
+
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+                'RKW.' . $extKey,
+                'Shop',
+                'Products',
+                '',
+                [
+                    'ManageProducts' => 'list, show',
+                ],
+                [
+                    'access' => 'user, group',
+                    'icon'   => 'EXT:' . $extKey . '/ext_icon.gif',
+                    'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:tx_rkwshop.module.products',
+                    'navigationComponentId' => 'typo3-pagetree',
+                ]
+            );
+        }
+
+        //=================================================================
         // Add tables
         //=================================================================
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages(

@@ -1,0 +1,58 @@
+<f:layout name="Default"/>
+
+<f:section name="actions">
+</f:section>
+
+<f:section name="content">
+    <f:flashMessages renderMode="div"/>
+
+    <div class="table-fit">
+        <table class="table table-striped typo3-dblist">
+            <thead>
+            <tr class="t3-row-header">
+                <th style="text-align:left;">
+                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.image"/>
+                </th>
+                <th style="text-align: left;">
+                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.articleNumber"/>
+                </th>
+                <th style="text-align: left;">
+                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.title"/>
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                <f:for each="{products}" as="product">
+                <tr class="db_list_normal">
+                    <td>
+                        <f:if condition="{product.image}">
+                            <f:link.action action="show" arguments="{product : product}">
+                                <f:image src="{product.image.originalResource.originalFile.uid}" title="{product.image.originalResource.title}" alt="{product.image.originalResource.title}" maxWidth="50" maxHeight="50"/>
+                            </f:link.action>
+                        </f:if>
+                    </td>
+
+                    <td>
+                        <f:link.action action="show" arguments="{product : product}"> {product.articleNumber}</f:link.action>
+                    </td>
+                    <td>
+                        <f:link.action action="show" arguments="{product : product}"> {product.title}</f:link.action>
+                    </td>
+                    <td>
+                        <div class="">
+                            <span class="btn btn-default btn-sm">
+                                <f:be.buttons.icon
+                                    uri="{f:uri.action(action:'show', arguments:{product : product})}"
+                                    icon="actions-view"/>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                </f:for>
+            </tbody>
+        </table>
+    </div>
+</f:section>

@@ -1,0 +1,25 @@
+<f:layout name="Default"/>
+
+<f:section name="actions">
+    <span class="btn btn-default btn-sm">
+        <f:be.buttons.icon
+            uri="{f:uri.action(action:'list')}"
+            icon="actions-close"/>
+    </span>
+</f:section>
+
+<f:section name="content">
+    <h1>
+        <f:translate key="tx_cartproduct.module.productController.showAction.header"/>
+    </h1>
+    <h2>{product.title} ({product.articleNumber})</h2>
+
+    <f:if condition="{product.image}">
+        <f:image src="{product.image.originalResource.originalFile.uid}" title="{product.image.originalResource.title}"
+            alt="{product.image.originalResource.title}" maxWidth="200" maxHeight="200"/>
+    </f:if>
+
+    <f:if condition="{product.description}">
+        <div>{product.description}</div>
+    </f:if>
+</f:section>
