@@ -197,6 +197,7 @@ plugin.tx_rkwshop {
         checkoutPid = {$plugin.tx_rkwshop.settings.checkoutPid}
         accountPid = {$plugin.tx_rkwshop.settings.accountPid}
 		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
+		categoriesParent = {$plugin.tx_rkwshop.settings.categoriesParent}
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
 		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}

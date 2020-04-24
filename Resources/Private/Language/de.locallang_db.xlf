@@ -309,8 +309,10 @@
                 <source>Access</source>
                 <target>Zugriff</target>
             </trans-unit>
-
-
+            <trans-unit id="tx_rkwshop_domain_model_product.tab.tags">
+                <source>Tags</source>
+                <target>Schlagworte</target>
+            </trans-unit>
 
 			<!-- flexform -->
 			<trans-unit id="flexform.order.sheetTitle">

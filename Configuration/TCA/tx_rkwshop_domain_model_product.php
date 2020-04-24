@@ -1,7 +1,10 @@
 <?php
+
+$_LLL = 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf';
+
 return [
 	'ctrl' => [
-		'title'	=> 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product',
+		'title'	=> $_LLL . ':tx_rkwshop_domain_model_product',
 		'label' => 'title',
         'label_userFunc' => \RKW\RkwShop\Utilities\TCA::class . '->buildProductTitle',
 		'default_sortby' => 'ORDER BY title',
@@ -22,53 +25,58 @@ return [
         'requestUpdate' => 'product_bundle',
 	],
 	'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, article_number, title, subtitle, description, publishing_date, image, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, article_number, title, subtitle, description, publishing_date, image, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment, tags',
 	],
 	'types' => [
         '\RKW\RkwShop\Domain\Model\Product' => [
             'showitem' => '
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, publishing_date, download, image, page, product_bundle,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, publishing_date, download, image, page, product_bundle,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime
             '
         ],
         '\RKW\RkwShop\Domain\Model\ProductCollection' => [
             'showitem' => '
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, title, subtitle, description, image, page,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime
             '
         ],
         '\RKW\RkwShop\Domain\Model\ProductBundle' => [
             'showitem' => '
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime
             '
         ],
         '\RKW\RkwShop\Domain\Model\ProductSubscription' => [
             'showitem' => '
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime
             '
         ],
         '\RKW\RkwShop\Domain\Model\ProductDownload' => [
             'showitem' => '
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, image, page,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
-                --div--;LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.tab.access, hidden,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.access, hidden,
                 --palette--;;1, starttime, endtime
             '
         ],
@@ -78,23 +86,23 @@ return [
 	],
 	'columns' => [
         'record_type' => [
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.recordType',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.default', '\RKW\RkwShop\Domain\Model\Product'],
-                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.collection', '\RKW\RkwShop\Domain\Model\ProductCollection'],
-                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.bundle', '\RKW\RkwShop\Domain\Model\ProductBundle'],
-                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.subscription', '\RKW\RkwShop\Domain\Model\ProductSubscription'],
-                    ['LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.recordType.download', '\RKW\RkwShop\Domain\Model\ProductDownload'],
+                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.default', '\RKW\RkwShop\Domain\Model\Product'],
+                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.collection', '\RKW\RkwShop\Domain\Model\ProductCollection'],
+                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.bundle', '\RKW\RkwShop\Domain\Model\ProductBundle'],
+                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.subscription', '\RKW\RkwShop\Domain\Model\ProductSubscription'],
+                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.download', '\RKW\RkwShop\Domain\Model\ProductDownload'],
                 ],
                 'default' => '\RKW\RkwShop\Domain\Model\Product'
             ],
         ],
         'product_type' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.productType',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.productType',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -148,7 +156,7 @@ return [
 		],
         'article_number' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.articleNumber',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.articleNumber',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -157,7 +165,7 @@ return [
         ],
 		'title' => [
 			'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.title',
+			'label' => $_LLL . ':tx_rkwshop_domain_model_product.title',
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
@@ -166,7 +174,7 @@ return [
 		],
 		'subtitle' => [
 			'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.subtitle',
+			'label' => $_LLL . ':tx_rkwshop_domain_model_product.subtitle',
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
@@ -175,7 +183,7 @@ return [
 		],
         'description' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.description',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.description',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -185,7 +193,7 @@ return [
         ],
         'publishing_date' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.publishing_date',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.publishing_date',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -201,7 +209,7 @@ return [
                 ]
             ],*/
             'exclude' => 0,
-			'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.stock',
+			'label' => $_LLL . ':tx_rkwshop_domain_model_product.stock',
             'config' => [
                 'type' => 'inline',
                 'size' => 5,
@@ -219,7 +227,7 @@ return [
         'ordered_external' => [
             'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.orderedExternal',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.orderedExternal',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -229,7 +237,7 @@ return [
         ],
         'product_bundle' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.productBundle',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.productBundle',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
@@ -242,7 +250,7 @@ return [
         ],
         'page' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.page',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.page',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -272,7 +280,7 @@ return [
         ],
         'download' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.download',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.download',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'download',
                 [
@@ -284,7 +292,7 @@ return [
         'image' => [
             'exclude' => 0,
             'displayCond' => 'FIELD:download:REQ:FALSE',
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.image',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.image',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'image',
                 [
@@ -330,7 +338,7 @@ return [
         'backend_user' => [
             'displayCond' => 'FIELD:product_bundle:REQ:FALSE',
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.backendUser',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.backendUser',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
@@ -344,7 +352,7 @@ return [
         'admin_email' => [
             'displayCond' => 'FIELD:product_bundle:REQ:FALSE',
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.adminEmail',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.adminEmail',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
@@ -353,7 +361,7 @@ return [
         ],
         'allow_single_order' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.allowSingleOrder',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.allowSingleOrder',
             'config' => [
                 'type' => 'check',
                 'default' => 0
@@ -361,7 +369,7 @@ return [
         ],
         'comment' => [
             'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.comment',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.comment',
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
@@ -370,7 +378,7 @@ return [
             ],
         ],
         'parent_products' => [
-            'label'=>'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.parentProducts',
+            'label'=>'' . $_LLL . ':tx_rkwshop_domain_model_product.parentProducts',
             'exclude' => 0,
             'config' => [
                 'type' => 'select',
@@ -387,7 +395,7 @@ return [
         ],
         'child_products' => [
             'exclude' => false,
-            'label'=>'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.childProducts',
+            'label'=>'' . $_LLL . ':tx_rkwshop_domain_model_product.childProducts',
             'config'  => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',

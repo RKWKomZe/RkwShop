@@ -1,5 +1,8 @@
 <?php
 
+$settings = \RKW\RkwBasics\Helper\Common::getTyposcriptConfiguration('Rkwshop', \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT)['plugin.']['tx_rkwshop.']['settings.'];
+$_LLL = 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf';
+
 // Extend TCA when rkw_authors is available
 if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_authors')) {
 
@@ -18,3 +21,20 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_authors'))
     ];
     $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['types'][0]['showitem'] = str_replace(', publishing_date,', ', publishing_date, author,', $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['types'][0]['showitem']);
 }
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+    'rkwshop',
+    'tx_rkwshop_domain_model_product',
+    'tags',
+    [
+        'label' => $_LLL . ':tags',
+        'exclude' => FALSE,
+        'fieldConfiguration' => [
+            'renderType' => 'selectMultipleSideBySide',
+            'foreign_table_where' => ' AND sys_category.pid = 2729 AND sys_category.parent IN (' . $settings['categoriesParent'] . ') ORDER BY sys_category.title ASC',
+            'minitems' => 1,
+        ],
+        'l10n_mode' => 'exclude',
+        'l10n_display' => 'hideDiff',
+    ]
+);
