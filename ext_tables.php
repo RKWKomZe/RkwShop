@@ -5,6 +5,9 @@ call_user_func(
     function($extKey)
     {
 
+        $settings = \RKW\RkwBasics\Helper\Common::getTyposcriptConfiguration('Rkwshop', \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT)['plugin.']['tx_rkwshop.']['settings.'];
+        $_LLL = 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf';
+
         //=================================================================
         // Register Plugin
         //=================================================================
@@ -140,6 +143,22 @@ call_user_func(
             'FILE:EXT:'. $extKey . '/Configuration/FlexForms/ItemList.xml'
         );
 
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+            'rkwshop',
+            'tx_rkwshop_domain_model_product',
+            'tags',
+            [
+                'label' => $_LLL . ':tx_rkwshop_domain_model_product.tab.tags',
+                'exclude' => FALSE,
+                'fieldConfiguration' => [
+                    'renderType' => 'selectMultipleSideBySide',
+                    'foreign_table_where' => ' AND sys_category.pid = 2729 AND sys_category.parent IN (' . $settings['categoriesParent'] . ') ORDER BY sys_category.title ASC',
+                    'minitems' => 1,
+                ],
+                'l10n_mode' => 'exclude',
+                'l10n_display' => 'hideDiff',
+            ]
+        );
 
     },
     $_EXTKEY
