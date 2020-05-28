@@ -261,6 +261,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                     )
                 );
 
+                var_dump($settingsDefault);
+
+                $mailService->getQueueMail()->setFromName($settingsDefault['mail']['fromName']);
+                $mailService->getQueueMail()->setFromAddress($settingsDefault['mail']['fromAddress']);
+
                 $mailService->getQueueMail()->addTemplatePaths($settings['view']['templateRootPaths']);
                 $mailService->getQueueMail()->addPartialPaths($settings['view']['partialRootPaths']);
 
@@ -387,4 +392,5 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         return Common::getTyposcriptConfiguration('Rkwshop', $which);
         //===
     }
+
 }

@@ -143,10 +143,9 @@ class OrderServiceTest extends FunctionalTestCase
                 'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_shop/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_shop/Tests/Functional/Orders/Fixtures/Frontend/Configuration/Rootpage.typoscript',
+                'EXT:rkw_shop/Tests/Integration/Service/Checkout/Fixtures/Frontend/Configuration/Rootpage.typoscript',
             ]
         );
-
 
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 

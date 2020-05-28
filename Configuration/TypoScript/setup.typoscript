@@ -201,6 +201,12 @@ plugin.tx_rkwshop {
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
 		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
+        mail {
+            # cat=plugin.tx_rkwshop//a; type=string; label=global mail from address
+            fromAddress = {$plugin.tx_rkwshop.settings.mail.fromAddress}
+            # cat=plugin.tx_rkwshop//a; type=string; label=global mail from name
+            fromName = {$plugin.tx_rkwshop.settings.mail.fromName}
+        }
 	}
 
 }
