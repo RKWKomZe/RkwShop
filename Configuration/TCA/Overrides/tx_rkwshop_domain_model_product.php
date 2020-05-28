@@ -21,3 +21,20 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('rkw_authors'))
     ];
     $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['types'][0]['showitem'] = str_replace(', publishing_date,', ', publishing_date, author,', $GLOBALS['TCA']['tx_rkwshop_domain_model_product']['types'][0]['showitem']);
 }
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+    'rkwshop',
+    'tx_rkwshop_domain_model_product',
+    'tags',
+    [
+        'label' => $_LLL . ':tx_rkwshop_domain_model_product.tab.tags',
+        'exclude' => FALSE,
+        'fieldConfiguration' => [
+            'renderType' => 'selectMultipleSideBySide',
+            'foreign_table_where' => ' AND sys_category.pid = 2729 AND sys_category.parent IN (' . $settings['categoriesParent'] . ') ORDER BY sys_category.title ASC',
+            'minitems' => 1,
+        ],
+        'l10n_mode' => 'exclude',
+        'l10n_display' => 'hideDiff',
+    ]
+);
