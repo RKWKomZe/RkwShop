@@ -202,6 +202,32 @@ class ProductControllerTest extends FunctionalTestCase
     }
 
     /**
+     * @test
+     */
+    public function showProductWithNoRemainingStockReturnsToViewWithDeliveryStateMessage()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I already have a product
+         * Given this product has a stock of 5
+         * Given there is an order containing this product with the amout of 5
+         * Given there is no additional stock
+         * When I visit the product list page
+         * Then the product is returned to the view
+         * Then the output shows "undeliverable"
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductControllerTest/Fixtures/Database/Check30.xml');
+
+        $response = $this->getFrontendResponse(1);
+
+        $this->assertContains("Leider derzeit vergriffen.", $response->getContent());
+
+    }
+
+    /**
      * TearDown
      */
     protected function tearDown()

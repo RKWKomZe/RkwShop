@@ -22,35 +22,38 @@
                     </f:if>
 
                     <!-- product is a standalone product -->
+                    <f:if condition="{product.productType.model} == '\\RKW\\RkwShop\\Domain\\Model\\Product'">
+                        <p>standalone</p>
+                    </f:if>
+
+                    <f:if condition="<rkwShop:ProductStock product='{product}' />">
+                        <f:then>
+                            <p class="order-list__status">
+                                <f:comment>
+                                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.stockLeft" arguments="{0: '{rkwShop:ProductStock(product: product)}'}"/>
+                                </f:comment>
+                                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.inStock" />
+                            </p>
+                        </f:then>
+                        <f:else>
+                            <f:if condition="<rkwShop:ProductStock product='{product}' preOrder='1' />">
+                                <f:then>
+                                    <p class="order-list__status order-list__status--warn">
+                                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStockPreOrder" />
+                                    </p>
+                                </f:then>
+                                <f:else>
+                                    <p class="order-list__status order-list__status--warn">
+                                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStock" />
+                                    </p>
+                                </f:else>
+                            </f:if>
+                        </f:else>
+                    </f:if>
 
                     <!-- product is a collection product -->
+
                     <f:if condition="<f:count>{product.childProducts}</f:count>">
-
-                        <f:if condition="<rkwShop:ProductStock product='{product}' />">
-                            <f:then>
-                                <p class="order-list__status">
-                                    <f:comment>
-                                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.stockLeft" arguments="{0: '{rkwShop:ProductStock(product: product)}'}"/>
-                                    </f:comment>
-                                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.inStock" />
-                                </p>
-                            </f:then>
-                            <f:else>
-                                <f:if condition="<rkwShop:ProductStock product='{product}' preOrder='1' />">
-                                    <f:then>
-                                        <p class="order-list__status order-list__status--warn">
-                                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStockPreOrder" />
-                                        </p>
-                                    </f:then>
-                                    <f:else>
-                                        <p class="order-list__status order-list__status--warn">
-                                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStock" />
-                                        </p>
-                                    </f:else>
-                                </f:if>
-                            </f:else>
-                        </f:if>
-
                         <f:render partial="Product/List/BundleOptions" section="isBundle" arguments="{product: product, showPid: showPid}" />
                     </f:if>
 
@@ -58,6 +61,8 @@
                     <f:if condition="<f:count>{product.parentProducts}</f:count>">
 
                         <f:for each="{product.parentProducts}" as="parentProduct">
+
+                            <p class="small">!!!Check parentProduct Stock!!!</p>
 
                             <f:if condition="<rkwShop:ProductStock product='{parentProduct}' />">
                                 <f:then>
