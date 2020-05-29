@@ -34,7 +34,7 @@ class TCA
 
         $recordProductType = BackendUtility::getRecord('tx_rkwshop_domain_model_producttype', $record['product_type']);
 
-        $newTitle = $record['title'] . ' [' . $record['article_number'] . ' - ' . $recordProductType['title'] . ']';
+        $newTitle = $record['title'] . ' [' . $record['sku'] . ' - ' . $recordProductType['title'] . ']';
 
         $parameters['title'] = $newTitle;
     }

@@ -68,6 +68,21 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
     /**
+     * Get product by sku
+     *
+     * @param $sku
+     * @return \RKW\RkwShop\Domain\Model\Product
+     */
+    public function findBySku($sku)
+    {
+        $query = $this->createQuery();
+        $query->matching($query->equals('sku', $sku));
+
+        return $query->execute()->getFirst();
+        //===
+    }
+
+    /**
      * Find all products by a list of uids
      *
      * @param string $uidList
@@ -198,6 +213,5 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         return $order;
         //===
     }
-
 
 }

@@ -24,7 +24,7 @@
                             <f:translate key="tx_rkwshop_domain_model_product.image"/>
                         </th>
                         <th style="width: 75px;">
-                            <f:translate key="tx_rkwshop_domain_model_product.articleNumber"/>
+                            <f:translate key="tx_rkwshop_domain_model_product.sku"/>
                         </th>
                         <th>
                             <f:translate key="tx_rkwshop_domain_model_product.title"/>
@@ -40,7 +40,7 @@
                         <td>
                             <f:image src="{orderItem.product.image.originalResource.originalFile.uid}" title="{orderItem.product.image.originalResource.title}" alt="{orderItem.product.image.originalResource.title}" maxWidth="50" maxHeight="50"/>
                         </td>
-                        <td style="text-align: left;">{orderItem.product.articleNumber}</td>
+                        <td style="text-align: left;">{orderItem.product.sku}</td>
                         <td style="text-align: left;">{orderItem.product.title}</td>
                         <td style="text-align: right;">{orderItem.amount}</td>
                     </tr>

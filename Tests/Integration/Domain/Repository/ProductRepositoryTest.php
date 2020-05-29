@@ -360,6 +360,29 @@ class ProductRepositoryTest extends FunctionalTestCase
     }
 
     /**
+     * @test
+     * @throws \Exception
+     */
+    public function findProductBySku()
+    {
+        /**
+         * Scenario:
+         *
+         * Given there is a single product
+         * Given that product's sku is '9999'
+         * When I want to find a product by this sku
+         * Then the returned product is our single product
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check90.xml');
+
+        $result = $this->subject->findBySku('9999');
+
+        static::assertEquals('9999', $result->getSku());
+
+    }
+
+    /**
      * TearDown
      */
     protected function tearDown()

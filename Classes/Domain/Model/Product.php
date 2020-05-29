@@ -62,11 +62,11 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $deleted;
 
     /**
-     * articleNumber
+     * sku
      *
      * @var string
      */
-    protected $articleNumber;
+    protected $sku = '';
 
     /**
      * title
@@ -339,24 +339,24 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * Returns the articleNumber
+     * Returns the sku
      *
-     * @return string $articleNumber
+     * @return string $sku
      */
-    public function getArticleNumber()
+    public function getSku()
     {
-        return $this->articleNumber;
+        return $this->sku;
     }
 
     /**
-     * Sets the articleNumber
+     * Sets the sku
      *
-     * @param string $articleNumber
+     * @param string $sku
      * @return void
      */
-    public function setArticleNumber($articleNumber)
+    public function setSku($sku)
     {
-        $this->articleNumber = $articleNumber;
+        $this->sku = $sku;
     }
 
     /**

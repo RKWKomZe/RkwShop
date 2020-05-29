@@ -91,7 +91,7 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 	record_type varchar(255) DEFAULT '0' NOT NULL,
     product_type int(11) unsigned DEFAULT '0',
 
-	article_number varchar(255) DEFAULT '' NOT NULL,
+	sku varchar(255) DEFAULT '' NOT NULL,
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	subtitle varchar(255) DEFAULT '' NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE tx_rkwshop_domain_model_producttype (
 	title varchar(255) DEFAULT '' NOT NULL,
     description text,
 	model varchar(255) DEFAULT '' NOT NULL,
-	has_article_number tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	has_sku tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,

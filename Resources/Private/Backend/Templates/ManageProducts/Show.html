@@ -12,7 +12,7 @@
     <h1>
         <f:translate key="tx_cartproduct.module.productController.showAction.header"/>
     </h1>
-    <h2>{product.title} ({product.articleNumber})</h2>
+    <h2>{product.title} ({product.sku})</h2>
 
     <f:if condition="{product.image}">
         <f:image src="{product.image.originalResource.originalFile.uid}" title="{product.image.originalResource.title}"

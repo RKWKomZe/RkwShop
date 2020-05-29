@@ -5,7 +5,7 @@
         <uid>1</uid>
         <title>ProductBundle</title>
         <model>\RKW\RkwShop\Domain\Model\ProductBundle</model>
-        <has_article_number>0</has_article_number>
+        <has_sku>0</has_sku>
     </tx_rkwshop_domain_model_producttype>
 
     <tx_rkwshop_domain_model_product>

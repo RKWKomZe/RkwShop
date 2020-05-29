@@ -19,18 +19,18 @@ return [
 		'enablecolumns' => [
 			'disabled' => 'hidden',
 		],
-		'searchFields' => 'uid, article_number, title, subtitle, description, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment',
+		'searchFields' => 'uid, sku, title, subtitle, description, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_product.gif',
         'type' => 'record_type',
         'requestUpdate' => 'product_bundle',
 	],
 	'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, article_number, title, subtitle, description, publishing_date, image, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment, tags',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, sku, title, subtitle, description, publishing_date, image, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment, tags',
 	],
 	'types' => [
         '\RKW\RkwShop\Domain\Model\Product' => [
             'showitem' => '
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, publishing_date, download, image, page, product_bundle,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, sku, title, subtitle, description, publishing_date, download, image, page, product_bundle,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
@@ -51,7 +51,7 @@ return [
         ],
         '\RKW\RkwShop\Domain\Model\ProductBundle' => [
             'showitem' => '
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, sku, title, subtitle, description, image, page,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
@@ -62,7 +62,7 @@ return [
         ],
         '\RKW\RkwShop\Domain\Model\ProductSubscription' => [
             'showitem' => '
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, article_number, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, sku, title, subtitle, description, image, page,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
@@ -72,7 +72,7 @@ return [
         ],
         '\RKW\RkwShop\Domain\Model\ProductDownload' => [
             'showitem' => '
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, article_number, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, sku, title, subtitle, description, image, page,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
@@ -154,9 +154,9 @@ return [
 				'type' => 'check',
 			],
 		],
-        'article_number' => [
+        'sku' => [
             'exclude' => 0,
-            'label' => $_LLL . ':tx_rkwshop_domain_model_product.articleNumber',
+            'label' => $_LLL . ':tx_rkwshop_domain_model_product.sku',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

@@ -48,11 +48,11 @@ class ProductType extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $model;
 
     /**
-     * hasArticleNumber
+     * hasSku
      *
      * @var boolean
      */
-    protected $hasArticleNumber = true;
+    protected $hasSku = true;
 
     /**
      * allowSingleOrder
@@ -112,17 +112,17 @@ class ProductType extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return bool
      */
-    public function getHasArticleNumber()
+    public function getHasSku()
     {
-        return $this->hasArticleNumber;
+        return $this->hasSku;
     }
 
     /**
-     * @param bool $hasArticleNumber
+     * @param bool $hasSku
      */
-    public function setHasArticleNumber($hasArticleNumber)
+    public function setHasSku($hasSku)
     {
-        $this->hasArticleNumber = $hasArticleNumber;
+        $this->hasSku = $hasSku;
     }
 
     /**

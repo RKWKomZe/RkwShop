@@ -169,7 +169,7 @@
                 <source>Download</source>
                 <target>Download</target>
             </trans-unit>
-            <trans-unit id="tx_rkwshop_domain_model_product.articleNumber">
+            <trans-unit id="tx_rkwshop_domain_model_product.sku">
                 <source>Article number</source>
                 <target>Artikelnummer</target>
             </trans-unit>
@@ -247,7 +247,7 @@
                 <source>Description</source>
                 <target>Beschreibung</target>
             </trans-unit>
-            <trans-unit id="tx_rkwshop_domain_model_producttype.hasArticleNumber">
+            <trans-unit id="tx_rkwshop_domain_model_producttype.hasSku">
                 <source>Products of this type need an article number</source>
                 <target>Produkte dieses Typs benötigen eine Artikelnummer</target>
             </trans-unit>
