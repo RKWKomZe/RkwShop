@@ -27,13 +27,13 @@ page {
     20 {
         userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
         extensionName = RkwShop
-        pluginName = ProductDetail
+        pluginName = ProductList
         vendorName = RKW
         controller = Product
         switchableControllerActions {
             // Again: Controller-Name and Action
             Product {
-                1 = index
+                1 = list
             }
         }
     }

@@ -36,11 +36,11 @@ call_user_func(
             'RKW.' . $extKey,
             'ProductList',
             array(
-                'Product' => 'index',
+                'Product' => 'list',
             ),
             // non-cacheable actions
             array(
-                'Product' => 'index',
+                'Product' => 'list',
             )
         );
 
