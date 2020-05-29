@@ -161,6 +161,10 @@
                 <source>Bundle</source>
                 <target>Bundle</target>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.recordType.series">
+                <source>Series</source>
+                <target>Reihe</target>
+            </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.recordType.subscription">
                 <source>Subscription</source>
                 <target>Abonnement</target>

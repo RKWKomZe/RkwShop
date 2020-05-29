@@ -90,7 +90,7 @@ class UpdateProductTypeHook
 
         $productType = $this->productTypeRepository->findByModel($fieldArray['record_type'])->getFirst();
 
-        $id = (is_int($id)) ?: $pObj->substNEWwithIDs[$id];
+        $id = (is_int($id)) ? $id : $pObj->substNEWwithIDs[$id];
 
         $product = $this->productRepository->findByUid($id);
         $product->setProductType($productType);

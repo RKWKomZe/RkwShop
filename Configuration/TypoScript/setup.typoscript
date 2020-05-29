@@ -123,8 +123,17 @@ config.tx_extbase.persistence {
                 }
             }
             subclasses {
-                \RKW\RkwShop\Domain\Model\ProductCollection = RKW\RkwShop\Domain\Model\ProductCollection
                 \RKW\RkwShop\Domain\Model\ProductDownload = RKW\RkwShop\Domain\Model\ProductDownload
+                \RKW\RkwShop\Domain\Model\ProductCollection = RKW\RkwShop\Domain\Model\ProductCollection
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\ProductDownload {
+            mapping {
+                recordType = \RKW\RkwShop\Domain\Model\ProductDownload
+                tableName = tx_rkwshop_domain_model_product
             }
         }
 
@@ -137,6 +146,7 @@ config.tx_extbase.persistence {
             }
             subclasses {
                 \RKW\RkwShop\Domain\Model\ProductBundle = RKW\RkwShop\Domain\Model\ProductBundle
+                \RKW\RkwShop\Domain\Model\ProductSeries = RKW\RkwShop\Domain\Model\ProductSeries
             }
         }
 
@@ -145,6 +155,15 @@ config.tx_extbase.persistence {
         RKW\RkwShop\Domain\Model\ProductBundle {
             mapping {
                 recordType = \RKW\RkwShop\Domain\Model\ProductBundle
+                tableName = tx_rkwshop_domain_model_product
+            }
+        }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\ProductSeries {
+            mapping {
+                recordType = \RKW\RkwShop\Domain\Model\ProductSeries
                 tableName = tx_rkwshop_domain_model_product
             }
             subclasses {
@@ -161,14 +180,6 @@ config.tx_extbase.persistence {
             }
         }
 
-        #===============================================
-
-        RKW\RkwShop\Domain\Model\ProductDownload {
-            mapping {
-                recordType = \RKW\RkwShop\Domain\Model\ProductDownload
-                tableName = tx_rkwshop_domain_model_product
-            }
-        }
     }
 }
 

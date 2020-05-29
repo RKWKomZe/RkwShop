@@ -4,6 +4,7 @@ namespace RKW\RkwShop\Tests\Integration\Domain\Repository;
 
 use RKW\RkwShop\Domain\Model\Product;
 use RKW\RkwShop\Domain\Model\ProductBundle;
+use RKW\RkwShop\Domain\Model\ProductSeries;
 use RKW\RkwShop\Domain\Model\ProductDownload;
 use RKW\RkwShop\Domain\Model\ProductCollection;
 use RKW\RkwShop\Domain\Model\ProductSubscription;
@@ -263,6 +264,31 @@ class ProductRepositoryTest extends FunctionalTestCase
 
     }
 
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function findAllReturnsInstanceOfProductDownload()
+    {
+        /**
+         * Scenario:
+         *
+         * Given there is a single product
+         * Given that product's recordType is 'ProductDownload'
+         * When I fetch all products
+         * Then the returned product is an instance of 'ProductDownload'
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check80.xml');
+
+        $result = $this->subject->findAll();
+
+        static::assertEquals(1, count($result));
+        static::assertInstanceOf(ProductDownload::class, $result[0]);
+
+    }
+
     /**
      * @test
      * @throws \Exception
@@ -315,6 +341,30 @@ class ProductRepositoryTest extends FunctionalTestCase
      * @test
      * @throws \Exception
      */
+    public function findAllReturnsInstanceOfProductSeries()
+    {
+        /**
+         * Scenario:
+         *
+         * Given there is a single product
+         * Given that product's recordType is 'ProductSeries'
+         * When I fetch all products
+         * Then the returned product is an instance of 'ProductSeries'
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check75.xml');
+
+        $result = $this->subject->findAll();
+
+        static::assertEquals(1, count($result));
+        static::assertInstanceOf(ProductSeries::class, $result[0]);
+
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
     public function findAllReturnsInstanceOfProductSubscription()
     {
         /**
@@ -335,29 +385,6 @@ class ProductRepositoryTest extends FunctionalTestCase
 
     }
 
-    /**
-     * @test
-     * @throws \Exception
-     */
-    public function findAllReturnsInstanceOfProductDownload()
-    {
-        /**
-         * Scenario:
-         *
-         * Given there is a single product
-         * Given that product's recordType is 'ProductDownload'
-         * When I fetch all products
-         * Then the returned product is an instance of 'ProductDownload'
-         */
-
-        $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check80.xml');
-
-        $result = $this->subject->findAll();
-
-        static::assertEquals(1, count($result));
-        static::assertInstanceOf(ProductDownload::class, $result[0]);
-
-    }
 
     /**
      * @test

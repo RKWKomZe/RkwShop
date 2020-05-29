@@ -39,10 +39,10 @@ return [
                 --palette--;;1, starttime, endtime
             '
         ],
-        '\RKW\RkwShop\Domain\Model\ProductCollection' => [
+        '\RKW\RkwShop\Domain\Model\ProductDownload' => [
             'showitem' => '
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, title, subtitle, description, image, page,
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, sku, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.access, hidden,
@@ -50,6 +50,17 @@ return [
             '
         ],
         '\RKW\RkwShop\Domain\Model\ProductBundle' => [
+            'showitem' => '
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, sku, title, subtitle, description, image, page,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.access, hidden,
+                --palette--;;1, starttime, endtime
+            '
+        ],
+        '\RKW\RkwShop\Domain\Model\ProductSeries' => [
             'showitem' => '
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, child_products, sku, title, subtitle, description, image, page,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.stock, stock, ordered_external,
@@ -70,16 +81,6 @@ return [
                 --palette--;;1, starttime, endtime
             '
         ],
-        '\RKW\RkwShop\Domain\Model\ProductDownload' => [
-            'showitem' => '
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, sku, title, subtitle, description, image, page,
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.tags, categories,
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.access, hidden,
-                --palette--;;1, starttime, endtime
-            '
-        ],
     ],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -92,10 +93,10 @@ return [
                 'renderType' => 'selectSingle',
                 'items' => [
                     [$_LLL . ':tx_rkwshop_domain_model_product.recordType.default', '\RKW\RkwShop\Domain\Model\Product'],
-                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.collection', '\RKW\RkwShop\Domain\Model\ProductCollection'],
-                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.bundle', '\RKW\RkwShop\Domain\Model\ProductBundle'],
-                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.subscription', '\RKW\RkwShop\Domain\Model\ProductSubscription'],
                     [$_LLL . ':tx_rkwshop_domain_model_product.recordType.download', '\RKW\RkwShop\Domain\Model\ProductDownload'],
+                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.bundle', '\RKW\RkwShop\Domain\Model\ProductBundle'],
+                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.series', '\RKW\RkwShop\Domain\Model\ProductSeries'],
+                    [$_LLL . ':tx_rkwshop_domain_model_product.recordType.subscription', '\RKW\RkwShop\Domain\Model\ProductSubscription'],
                 ],
                 'default' => '\RKW\RkwShop\Domain\Model\Product'
             ],

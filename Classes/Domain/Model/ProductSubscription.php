@@ -23,7 +23,7 @@ namespace RKW\RkwShop\Domain\Model;
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class ProductSubscription extends ProductBundle
+class ProductSubscription extends ProductSeries
 {
 
 

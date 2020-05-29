@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+
+    <tx_rkwshop_domain_model_producttype>
+        <uid>1</uid>
+        <title>ProductSeries</title>
+        <model>\RKW\RkwShop\Domain\Model\ProductSeries</model>
+        <has_sku>0</has_sku>
+    </tx_rkwshop_domain_model_producttype>
+
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>ProductSeries</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
+        <stock>2</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\ProductSeries</record_type>
+        <child_products>1</child_products>
+    </tx_rkwshop_domain_model_product>
+
+</dataset>

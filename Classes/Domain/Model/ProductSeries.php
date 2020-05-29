@@ -16,14 +16,14 @@ namespace RKW\RkwShop\Domain\Model;
  */
 
 /**
- * Class ProductBundle
+ * Class ProductSeries
  *
- * @author Steffen Kroggel <developer@steffenkroggel.de>
+ * @author Christian Dilger <c.dilger@addorange.de>
  * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class ProductBundle extends ProductCollection
+class ProductSeries extends ProductCollection
 {
 
 
