@@ -95,6 +95,10 @@
                 <source>Title</source>
                 <target>Titel</target>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.edition">
+                <source>Edition</source>
+                <target>Auflage</target>
+            </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.image">
 				<source>Image</source>
 				<target>Bild</target>
@@ -235,6 +239,10 @@
             <trans-unit id="partials.order.form.productList.input.stockLeft">
                 <source>Still %s in stock.</source>
                 <target>Noch %s auf Lager.</target>
+            </trans-unit>
+            <trans-unit id="partials.order.form.productList.sku">
+                <source>Art.No. %s</source>
+                <target>Art.Nr. %s</target>
             </trans-unit>
             <trans-unit id="partials.order.form.productList.input.inStock">
                 <source>In stock.</source>

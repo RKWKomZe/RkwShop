@@ -74,6 +74,9 @@
             <trans-unit id="tx_rkwshop_domain_model_product.title">
                 <source>Title</source>
             </trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.edition">
+                <source>Edition</source>
+            </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.image">
 				<source>Image</source>
 			</trans-unit>
@@ -184,6 +187,9 @@
             </trans-unit>
             <trans-unit id="partials.order.form.productList.input.stockLeft">
                 <source>Still %s in stock.</source>
+            </trans-unit>
+            <trans-unit id="partials.order.form.productList.sku">
+                <source>Art.No. %s</source>
             </trans-unit>
             <trans-unit id="partials.order.form.productList.input.inStock">
                 <source>In stock.</source>

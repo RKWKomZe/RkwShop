@@ -181,6 +181,10 @@
 				<source>Title</source>
 				<target>Titel</target>
 			</trans-unit>
+            <trans-unit id="tx_rkwshop_domain_model_product.edition">
+                <source>Edition</source>
+                <target>Auflage</target>
+            </trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.subtitle">
 				<source>Subtitle</source>
 				<target>Untertitel</target>

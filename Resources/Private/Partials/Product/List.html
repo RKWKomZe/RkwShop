@@ -11,21 +11,20 @@
 
                 <div class="order-list__details">
                     <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : product}" title="{product.title}">
-                        <h4 class="order-list__title">{product.title}</h4>
+                        <h4 class="order-list__title">{product.title} <f:if condition="{product.sku}">- <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.sku" arguments="{0: '{product.sku}'}"/></f:if></h4>
                     </f:link.action>
-                    <p>{product.productType.model} {product.sku}</p>
-                    <p>{product.edition}</p>
+                    <p>{product.productType.model}</p>
                     <f:if condition="{product.subtitle}">
                         <p class="order-list__subtitle">{product.subtitle}</p>
+                    </f:if>
+                    <f:if condition="{product.edition}">
+                        <p class="order-list__subtitle">{product.edition}</p>
                     </f:if>
 
                     <!-- product is a standalone product -->
 
                     <!-- product is a collection product -->
                     <f:if condition="<f:count>{product.childProducts}</f:count>">
-
-                        Wenn das Produkt selbst aber vom Typ "Product" ist, dann ist ein Status "vergriffen" nur notwendig, wenn die Kindelemente vergriffen sein sollten.
-                        Wenn das Produkt selbst aber vom Typ "ProductCollection" ist, dann ist ein Status "vergriffen" nur notwendig, wenn die Kindelemente vergriffen sein sollten.
 
                         <f:if condition="<rkwShop:ProductStock product='{product}' />">
                             <f:then>
@@ -57,8 +56,6 @@
 
                     <!-- product belongs to a collection product -->
                     <f:if condition="<f:count>{product.parentProducts}</f:count>">
-
-                        belongs to a collection product
 
                         <f:for each="{product.parentProducts}" as="parentProduct">
 
