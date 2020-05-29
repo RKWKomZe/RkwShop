@@ -83,6 +83,13 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $subtitle;
 
     /**
+     * edition
+     *
+     * @var string
+     */
+    protected $edition = '';
+
+    /**
      * description
      *
      * @var string
@@ -358,6 +365,28 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->sku = $sku;
     }
+
+    /**
+     * Returns the edition
+     *
+     * @return string $edition
+     */
+    public function getEdition()
+    {
+        return $this->edition;
+    }
+
+    /**
+     * Sets the edition
+     *
+     * @param string $edition
+     * @return void
+     */
+    public function setEdition($edition)
+    {
+        $this->edition = $edition;
+    }
+
 
     /**
      * Returns the title

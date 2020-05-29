@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>ProductWithEdition</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
+        <edition>2. überarbeitete Auflage</edition>
+        <stock>2</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+    </tx_rkwshop_domain_model_product>
+</dataset>

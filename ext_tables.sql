@@ -95,6 +95,9 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	subtitle varchar(255) DEFAULT '' NOT NULL,
+
+	edition varchar(255) DEFAULT '' NOT NULL,
+
     description text,
 	publishing_date int(11) unsigned DEFAULT '0' NOT NULL,
 	author varchar(255) DEFAULT '' NOT NULL,

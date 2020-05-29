@@ -163,7 +163,7 @@ class ProductControllerTest extends FunctionalTestCase
          * Scenario:
          *
          * Given I already have a product
-         * When I visit the product page
+         * When I visit the product list page
          * Then the product is returned to the view
          * Then the product's sku is shown on the html output
          */
@@ -174,6 +174,30 @@ class ProductControllerTest extends FunctionalTestCase
 
         $this->assertContains("Hallo Welt!", $response->getContent());
         $this->assertContains("9999", $response->getContent());
+
+    }
+
+    /**
+     * @test
+     */
+    public function showProductWithGivenEditionReturnsProductToViewWithEdition()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I already have a product
+         * When I visit the product list page
+         * Then the product is returned to the view
+         * Then the product's edition is shown on the html output
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductControllerTest/Fixtures/Database/Check20.xml');
+
+        $response = $this->getFrontendResponse(1);
+
+        $this->assertContains("Hallo Welt!", $response->getContent());
+        $this->assertContains("2. überarbeitete Auflage", $response->getContent());
 
     }
 

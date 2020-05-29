@@ -51,6 +51,33 @@ class TestCase extends UnitTestCase {
     }
 
     /**
+     * @test
+     */
+    public function getEditionReturnsInitialValueForEdition()
+    {
+        self::assertSame(
+            '',
+            $this->subject->getEdition()
+        );
+
+    }
+
+    /**
+     * @test
+     */
+    public function setEditionForStringSetsEdition()
+    {
+        $this->subject->setEdition('Edition');
+
+        self::assertAttributeEquals(
+            'Edition',
+            'edition',
+            $this->subject
+        );
+
+    }
+
+    /**
      * TearDown
      */
     protected function tearDown()
