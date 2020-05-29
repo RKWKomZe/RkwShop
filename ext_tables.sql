@@ -161,6 +161,7 @@ CREATE TABLE tx_rkwshop_domain_model_producttype (
     description text,
 	model varchar(255) DEFAULT '' NOT NULL,
 	has_sku tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	is_collection tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
 	deleted tinyint(4) unsigned DEFAULT '0' NOT NULL,

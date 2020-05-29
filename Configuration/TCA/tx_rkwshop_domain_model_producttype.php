@@ -103,6 +103,14 @@ return [
                 'default' => 0
             ]
         ],
+        'is_collection' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_producttype.isCollection',
+            'config' => [
+                'type' => 'check',
+                'default' => 0
+            ]
+        ],
         'allow_single_order' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_producttype.allowSingleOrder',

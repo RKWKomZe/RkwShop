@@ -394,7 +394,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'tx_rkwshop_domain_model_product',
-                'foreign_table_where' => 'AND tx_rkwshop_domain_model_product.uid != ###THIS_UID### AND tx_rkwshop_domain_model_product.product_type IN (2,3) AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.deleted = 0 ORDER BY title ASC',
+                'foreign_table_where' => 'AND tx_rkwshop_domain_model_product.uid != ###THIS_UID### AND tx_rkwshop_domain_model_product.product_type IN (SELECT uid FROM tx_rkwshop_domain_model_producttype WHERE is_collection = 1) AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.deleted = 0 ORDER BY title ASC',
                 'MM' => 'tx_rkwshop_domain_model_product_product_mm',
                 'size' => 10,
                 'autoSizeMax' => 30,
