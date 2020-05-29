@@ -231,7 +231,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     {
         // get settings
         $settings = $this->getSettings(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $settingsDefault = $this->getSettings();
+        $settingsDefault = $this->getSettings(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT)['plugin.']['tx_rkwshop.']['settings.'];
 
         if ($frontendUser->getEmail()) {
             if ($settings['view']['templateRootPaths'][0]) {
@@ -261,10 +261,8 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                     )
                 );
 
-                var_dump($settingsDefault);
-
-                $mailService->getQueueMail()->setFromName($settingsDefault['mail']['fromName']);
-                $mailService->getQueueMail()->setFromAddress($settingsDefault['mail']['fromAddress']);
+                $mailService->getQueueMail()->setFromName($settingsDefault['mail.']['fromName']);
+                $mailService->getQueueMail()->setFromAddress($settingsDefault['mail.']['fromAddress']);
 
                 $mailService->getQueueMail()->addTemplatePaths($settings['view']['templateRootPaths']);
                 $mailService->getQueueMail()->addPartialPaths($settings['view']['partialRootPaths']);
