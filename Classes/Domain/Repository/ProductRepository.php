@@ -3,6 +3,7 @@
 namespace RKW\RkwShop\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -66,8 +67,16 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $constraints[] =  $query->equals('uid', $value);
         }
 
-        // we have to keep the order given by the comma-list
-        $query->setOrderings($this->orderByKey('uid', $uidArray));
+        /**
+         * @toDo not working with TYPO3 8.7 and above
+         * @see https://stackoverflow.com/questions/56148787/typo3-9-5-custom-flexform-ordering-wrong-backquotes-in-sql
+         */
+        $currentVersion = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version);
+        if ($currentVersion < 8000000) {
+
+            // we have to keep the order given by the comma-list
+            $query->setOrderings($this->orderByKey('uid', $uidArray));
+        }
 
         $products = $query->matching(
             $query->logicalOr(
