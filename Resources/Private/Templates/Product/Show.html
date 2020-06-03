@@ -40,6 +40,11 @@ Otherwise your changes will be overwritten the next time you save the extension 
                     </button>
                 </p>
 
+                <!-- product is of type collection -->
+                <f:if condition="<f:count>{product.childProducts}</f:count>">
+                    <f:render partial="Product/List/BundleOptions" section="isBundle" arguments="{product: product, showPid: showPid}" />
+                </f:if>
+
             </div>
 
         </div>
