@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>ProductWithEdition</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
+        <edition>2. überarbeitete Auflage</edition>
+        <stock>0</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+    </tx_rkwshop_domain_model_product>
+
+    <!-- stocks -->
+    <tx_rkwshop_domain_model_stock>
+        <uid>1</uid>
+        <pid>1</pid>
+        <product>1</product>
+        <amount>5</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+
+    <tx_rkwshop_domain_model_orderitem>
+        <uid>1</uid>
+        <pid>1</pid>
+        <amount>5</amount>
+        <product>1</product>
+    </tx_rkwshop_domain_model_orderitem>
+
+</dataset>

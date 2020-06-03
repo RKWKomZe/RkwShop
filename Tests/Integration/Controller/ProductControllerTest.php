@@ -204,7 +204,7 @@ class ProductControllerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function showProductWithNoRemainingStockReturnsToViewWithDeliveryStateMessage()
+    public function showProductWithNoRemainingStockReturnsToViewWithNotDeliverableMessage()
     {
 
         /**
@@ -212,7 +212,7 @@ class ProductControllerTest extends FunctionalTestCase
          *
          * Given I already have a product
          * Given this product has a stock of 5
-         * Given there is an order containing this product with the amout of 5
+         * Given there is an order containing this product with the amount of 5
          * Given there is no additional stock
          * When I visit the product list page
          * Then the product is returned to the view

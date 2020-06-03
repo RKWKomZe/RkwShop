@@ -17,6 +17,8 @@ config {
     sendCacheHeaders = 0
     absRefPrefix = /
     contentObjectExceptionHandler = 0
+
+    language = de
 }
 
 page = PAGE
