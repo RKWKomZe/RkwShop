@@ -28,8 +28,27 @@
         <p class="order-list__belongs">
             <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleOptions.belongsToBundle" />
         </p>
+
         <div class="order-list__details order-list__details--sub">
             <h4 class="order-list__title">{product.title}</h4>
+            <f:if condition="<rkwShop:ProductStock product='{product}' />">
+                <f:then>
+                    <p class="order-list__{f:format.case(mode: 'lower', value: '{product.productType.title}')} order-list__status">
+                        <!-- @todo: Wann soll das eingesetzt werden? Geht eigentlich nur um Abverkauf, wenn ich weiß, wie der tatsächliche aktuelle Bestand ist!!!-->
+                        <f:comment>
+                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.stockLeft" arguments="{0: '{rkwShop:ProductStock(product: product)}'}"/>
+                        </f:comment>
+                        <!-- /@todo -->
+
+                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.inStock" />
+                    </p>
+                </f:then>
+                <f:else>
+                    <p class="order-list__{f:format.case(mode: 'lower', value: '{product.productType.title}')} order-list__status order-list__status--warn">
+                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStock" />
+                    </p>
+                </f:else>
+            </f:if>
             <f:render partial="Product/List/BundleItems" arguments="{product: product, showPid: showPid}" />
         </div>
     </div>

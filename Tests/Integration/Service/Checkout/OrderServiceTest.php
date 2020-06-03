@@ -895,6 +895,7 @@ class OrderServiceTest extends FunctionalTestCase
      */
     public function getRemainingStockReturnsStockOfProductBundle()
     {
+        /* @todo: Fix this test, do not forget that even products assigned to a bundle can exist as separate orderable products. */
 
         /**
          * Scenario:
@@ -913,6 +914,31 @@ class OrderServiceTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
         self::assertEquals(21, $this->subject->getRemainingStockOfProduct($product));
+    }
+
+    /**
+     * @test
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \Exception
+     */
+    public function getRemainingStockReturnsMaxDeliverableStockOfProductBundleBasedOnContainedSubItemsMaxDeliverableStock()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given a product is of type "ProductBundle"
+         * Given the product bundle contains a first product with a stock of 10
+         * Given the product bundle contains a second product with a stock of 5
+         * When I fetch the remaining stock
+         * Then the stock of the product bundle is returned as 5
+         */
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check125.xml');
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product =$this->productRepository->findByUid(1);
+        self::assertEquals(5, $this->subject->getRemainingStockOfProduct($product));
     }
 
 

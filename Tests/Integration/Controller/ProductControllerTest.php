@@ -228,6 +228,66 @@ class ProductControllerTest extends FunctionalTestCase
     }
 
     /**
+     * @test
+     */
+    public function showProductBundleWithSubItemWithNoRemainingStockReturnsToViewWithNotDeliverableMessage()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I already have a product
+         * Given this product is of type "ProductBundle"
+         * Given it contains a first product of type "Product"
+         * Given this first product has a stock of 10
+         * Given it contains a second product of type "Product"
+         * Given this second product has a stock of 5
+         * Given there is an order containing this second product with the amount of 5
+         * Given there is no additional stock
+         * When I visit the product list page
+         * Then the product of type "ProductBundle" is returned to the view
+         * Then the output of this product bundle shows "status--warn"
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductControllerTest/Fixtures/Database/Check40.xml');
+
+        $response = $this->getFrontendResponse(1);
+
+        $this->assertContains("order-list__productbundle order-list__status order-list__status--warn", $response->getContent());
+
+    }
+
+    /**
+     * @test
+     */
+    public function showProductBundleWithSubItemWithRemainingStockReturnsToViewWithoutNotDeliverableMessage()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I already have a product
+         * Given this product is of type "ProductBundle"
+         * Given it contains a first product of type "Product"
+         * Given this first product has a stock of 10
+         * Given it contains a second product of type "Product"
+         * Given this second product has a stock of 5
+         * Given there is an order containing this second product with the amount of 1
+         * Given there is no additional stock
+         * When I visit the product list page
+         * Then the product of type "ProductBundle" is returned to the view
+         * Then the output of this product bundle does not show "status--warn"
+         */
+
+        $this->importDataSet(__DIR__ . '/ProductControllerTest/Fixtures/Database/Check50.xml');
+
+        $response = $this->getFrontendResponse(1);
+
+        $this->assertNotContains("order-list__productbundle order-list__status order-list__status--warn", $response->getContent());
+
+    }
+
+    /**
      * TearDown
      */
     protected function tearDown()

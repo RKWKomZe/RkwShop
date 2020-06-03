@@ -7,7 +7,7 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
         <edition>2. überarbeitete Auflage</edition>
-        <stock>0</stock>
+        <stock>1</stock>
         <comment></comment>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>

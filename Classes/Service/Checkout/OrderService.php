@@ -455,10 +455,33 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             $product = $product->getProductBundle();
         }
 
-        $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product);
-        $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product);
+        if (
+            ($product instanceof \RKW\RkwShop\Domain\Model\ProductBundle)
+            && ($product->getRecordType() === '\RKW\RkwShop\Domain\Model\ProductBundle')
+        ){
 
-        $remainingStock = intval($stockSum) - (intval($orderedSum) + intval($product->getOrderedExternal()));
+            $children = $product->getChildProducts();
+            $availableChildren = [];
+
+            foreach($children as $childProduct) {
+
+                $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($childProduct);
+                $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($childProduct);
+                $availableChildren[] = intval($stockSum) - (intval($orderedSum) + intval($childProduct->getOrderedExternal()));
+
+            }
+
+            $remainingStock = min($availableChildren);
+
+        } else {
+
+            $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product);
+            $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product);
+
+            $remainingStock = intval($stockSum) - (intval($orderedSum) + intval($product->getOrderedExternal()));
+
+        }
+
         return (($remainingStock > 0) ? $remainingStock : 0);
     }
 
