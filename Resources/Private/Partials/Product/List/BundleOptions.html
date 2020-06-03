@@ -30,7 +30,11 @@
         </p>
 
         <div class="order-list__details order-list__details--sub">
-            <h4 class="order-list__title">{product.title}</h4>
+            <h4 class="order-list__title">
+                <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : product}" title="{product.title}">
+                    {product.title}
+                </f:link.action>
+            </h4>
             <f:if condition="<rkwShop:ProductStock product='{product}' />">
                 <f:then>
                     <p class="order-list__{f:format.case(mode: 'lower', value: '{product.productType.title}')} order-list__status">
