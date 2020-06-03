@@ -5,7 +5,6 @@
         <uid>1</uid>
         <title>ProductSeries</title>
         <model>\RKW\RkwShop\Domain\Model\ProductSeries</model>
-        <has_sku>0</has_sku>
     </tx_rkwshop_domain_model_producttype>
 
     <tx_rkwshop_domain_model_product>

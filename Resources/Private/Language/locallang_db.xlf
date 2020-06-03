@@ -163,9 +163,6 @@
             <trans-unit id="tx_rkwshop_domain_model_producttype.description">
                 <source>Description</source>
             </trans-unit>
-            <trans-unit id="tx_rkwshop_domain_model_producttype.hasSku">
-                <source>Products of this type need an article number</source>
-            </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_producttype.allowSingleOrder">
                 <source>Allow Single Order</source>
             </trans-unit>

@@ -95,14 +95,6 @@ return [
                 'eval' => 'trim,required'
             ],
         ],
-        'has_sku' => [
-            'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_producttype.hasSku',
-            'config' => [
-                'type' => 'check',
-                'default' => 0
-            ]
-        ],
         'is_collection' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_producttype.isCollection',

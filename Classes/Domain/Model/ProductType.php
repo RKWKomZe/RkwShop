@@ -48,13 +48,6 @@ class ProductType extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $model;
 
     /**
-     * hasSku
-     *
-     * @var boolean
-     */
-    protected $hasSku = true;
-
-    /**
      * allowSingleOrder
      *
      * @var boolean
@@ -107,22 +100,6 @@ class ProductType extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setModel($model)
     {
         $this->model = $model;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getHasSku()
-    {
-        return $this->hasSku;
-    }
-
-    /**
-     * @param bool $hasSku
-     */
-    public function setHasSku($hasSku)
-    {
-        $this->hasSku = $hasSku;
     }
 
     /**
