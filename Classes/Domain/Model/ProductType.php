@@ -55,6 +55,13 @@ class ProductType extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $allowSingleOrder = true;
 
     /**
+     * isCollection
+     *
+     * @var boolean
+     */
+    protected $isCollection = false;
+
+    /**
      * @return string
      */
     public function getTitle()
@@ -116,6 +123,22 @@ class ProductType extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setAllowSingleOrder($allowSingleOrder)
     {
         $this->allowSingleOrder = $allowSingleOrder;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsCollection()
+    {
+        return $this->isCollection;
+    }
+
+    /**
+     * @param bool $isCollection
+     */
+    public function setIsCollection($isCollection)
+    {
+        $this->isCollection = $isCollection;
     }
 
 

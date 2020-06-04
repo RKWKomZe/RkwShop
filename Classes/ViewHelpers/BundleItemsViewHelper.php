@@ -37,6 +37,7 @@ class BundleItemsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
     {
         $results = $product->getChildProducts();
 
+        //  show results only necessary, if the collection contains more than the current product
         if (count($results->toArray()) > 1) {
             return $results;
         }

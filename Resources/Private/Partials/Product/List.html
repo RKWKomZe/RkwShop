@@ -48,7 +48,7 @@
                     </f:if>
 
                     <!-- product is of type collection -->
-                    <f:if condition="<f:count>{product.childProducts}</f:count>">
+                    <f:if condition="{product.productType.isCollection}">
                         <f:render partial="Product/List/BundleOptions" section="isBundle" arguments="{product: product, showPid: showPid}" />
                     </f:if>
 

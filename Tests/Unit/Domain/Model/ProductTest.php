@@ -6,11 +6,11 @@ use RKW\RkwShop\Domain\Model\Product;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 /**
- * Test case.
+ * Product test
  *
  * @author Christian Dilger <c.dilger@addorange.de>
  */
-class TestCase extends UnitTestCase {
+class ProductTest extends UnitTestCase {
 
     /**
      * @var Product
