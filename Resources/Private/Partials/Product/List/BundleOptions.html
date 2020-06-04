@@ -27,6 +27,7 @@
                     {product.title}
                 </f:link.action>
             </h4>
+            <f:render partial="Product/List/BundleItems" arguments="{product: product, showPid: showPid}" />
             <f:if condition="<rkwShop:ProductStock product='{product}' />">
                 <f:then>
                     <p class="order-list__{f:format.case(mode: 'lower', value: '{product.productType.title}')} order-list__status">
@@ -45,7 +46,14 @@
                     </p>
                 </f:else>
             </f:if>
-            <f:render partial="Product/List/BundleItems" arguments="{product: product, showPid: showPid}" />
+
+            <f:if condition="{showAddToCart} == 1">
+                <!-- form -->
+                <f:form action="addCartItem" controller="CartItem" name="product" id="product-{product.sku}" object="{product}">
+                    <f:render partial="Product/Detail/Input" arguments="{product: product}" section="FieldOnly"/>
+                </f:form>
+            </f:if>
+
         </div>
     </div>
 

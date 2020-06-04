@@ -15,8 +15,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <f:section name="main">
 
-    <!-- form -->
-    <f:form action="addCartItem" controller="CartItem" name="product" object="{product}" class="form-fields order-list" >
+    <div class="order-list form-fields">
 
         <div class="order-list__item">
 
@@ -34,21 +33,24 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
                 <f:render partial="Product/Detail/Input" arguments="{product: product}" />
 
-                <p class="v320-1">
-                    <button class="button" type="submit">
-                        <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.product.detail.form.addToCartButton" /></span>
-                    </button>
-                </p>
-
                 <!-- product is of type collection -->
-                <f:if condition="<f:count>{product.childProducts}</f:count>">
+                <f:if condition="{product.productType.isCollection}">
                     <f:render partial="Product/List/BundleOptions" section="isBundle" arguments="{product: product, showPid: showPid}" />
+                </f:if>
+
+                <!-- product is part of collection product -->
+                <f:if condition="<f:count>{product.parentProducts}</f:count>">
+                    <f:for each="{product.parentProducts}" as="parentProduct">
+                        <f:if condition="{parentProduct.productType.model} instanceof '\RKW\RkwShop\Domain\Model\ProductCollection'">
+                            <f:render partial="Product/List/BundleOptions" section="belongsToBundle" arguments="{product: parentProduct, showPid: showPid, showAddToCart: 1}" />
+                        </f:if>
+                    </f:for>
                 </f:if>
 
             </div>
 
         </div>
 
-    </f:form>
+    </div>
 
 </f:section>
