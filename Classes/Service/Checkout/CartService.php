@@ -2,6 +2,7 @@
 
 namespace RKW\RkwShop\Service\Checkout;
 
+use RKW\RkwBasics\Helper\Common;
 use RKW\RkwShop\Domain\Model\Cart;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
@@ -9,6 +10,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
 use RKW\RkwShop\Exceptions\CartHashNotFoundException;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -153,21 +155,6 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     protected $logger;
 
     /**
-     * Returns TYPO3 settings
-     *
-     * @return array
-     */
-    protected function getSettings()
-    {
-        $settings = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
-            'Rkwshop'
-        );
-
-        return $settings['plugin.']['tx_rkwshop.']['settings.'];
-    }
-
-    /**
      * Returns logger instance
      *
      * @return \TYPO3\CMS\Core\Log\Logger
@@ -265,24 +252,48 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     public function add(\RKW\RkwShop\Domain\Model\Cart $cart, \RKW\RkwShop\Domain\Model\Product $product, $amount)
     {
 
-        foreach ($this->resolve($product) as $singleProduct) {
+        $settings = $this->getSettings();
 
-            $orderItem = $cart->containsProduct($singleProduct);
+        if ($settings['resolveCollection']) {
 
-            if ($orderItem) {
-                $this->changeQuantity($cart, $orderItem, $amount + $orderItem->getAmount());
-            } else {
-                $orderItem = new OrderItem();
-                $orderItem->setProduct($singleProduct);
-                $orderItem->setAmount($amount);
-                $cart->addOrderItem($orderItem);
+            foreach ($this->resolve($product) as $resolvedProduct) {
 
-                $this->cartRepository->update($cart);
+                $this->addProduct($cart, $resolvedProduct, $amount);
+
             }
+
+        } else {
+
+            $this->addProduct($cart, $product, $amount);
 
         }
 
     }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Cart    $cart
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @param                                   $amount
+     */
+    public function addProduct(\RKW\RkwShop\Domain\Model\Cart $cart, \RKW\RkwShop\Domain\Model\Product $product, $amount)
+    {
+
+        $orderItem = $cart->containsProduct($product);
+
+        if ($orderItem) {
+            $this->changeQuantity($cart, $orderItem, $amount + $orderItem->getAmount());
+        } else {
+            $orderItem = new OrderItem();
+            $orderItem->setProduct($product);
+            $orderItem->setAmount($amount);
+            $cart->addOrderItem($orderItem);
+
+            $this->cartRepository->update($cart);
+        }
+
+    }
+
+
 
     /**
      * @param Cart     $cart
@@ -423,6 +434,18 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
         return null;
         //===
+    }
+
+    /**
+     * Returns TYPO3 settings
+     *
+     * @param string $which Which type of settings will be loaded
+     * @return array
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     */
+    protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
+    {
+        return Common::getTyposcriptConfiguration('Rkwshop', $which);
     }
 
 }

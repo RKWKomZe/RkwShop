@@ -207,17 +207,21 @@ plugin.tx_rkwshop {
         cartPid = {$plugin.tx_rkwshop.settings.cartPid}
         checkoutPid = {$plugin.tx_rkwshop.settings.checkoutPid}
         accountPid = {$plugin.tx_rkwshop.settings.accountPid}
+        reviewPid = {$plugin.tx_rkwshop.settings.reviewPid}
 		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
 		categoriesParent = {$plugin.tx_rkwshop.settings.categoriesParent}
+		resolveCollection = {$plugin.tx_rkwshop.settings.resolveCollection}
+        maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
+        requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
+		disableAdminMails = {$plugin.tx_rkwshop.settings.disableAdminMails}
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
-		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
-		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
         mail {
             # cat=plugin.tx_rkwshop//a; type=string; label=global mail from address
             fromAddress = {$plugin.tx_rkwshop.settings.mail.fromAddress}
             # cat=plugin.tx_rkwshop//a; type=string; label=global mail from name
             fromName = {$plugin.tx_rkwshop.settings.mail.fromName}
         }
+        includeJQuery = {$plugin.tx_rkwshop.settings.includeJQuery}
 	}
 
 }
