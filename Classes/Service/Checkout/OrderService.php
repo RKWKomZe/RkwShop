@@ -448,12 +448,36 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
     {
+
+        //  @todo: If a order is created, the availableStock of all contained products must be updated by decreasing the amount according to the order amount of the product or its parent product collection.
+        //  @todo: If a order is updated, the availableStock of all contained products must be updated by decreasing the amount according to the order amount of the product or its parent product collection.
+        //  @todo: If an order is cancelled, the availableStock of all contained products must be updated by increasing the amount according to the order amount of the product or its parent product collection.
+        //  @todo: If an order is completed, the availableStock and stock itself have to be updated.
+        //  @todo: Before completing an order there has to be a last check, that everything is available, because there could be new data from synchronizing by SOAP.
+        //  @todo: SOAP must update the stock whenever it synchronizes. What happens to availableStock?
+        //  @todo: All orders, even external ones, have to reflect the change of stock on the contained items.
+        //  @todo: External orders have to be removed completely as these are not necessary anymore, when stock itself is updated by synchronizing. If somebody does not use a WaWi and wants to get items from stock for internal use, he preferably has to place an order himself.
+
+        //  @todo: remove external_order, Stock entity, allowSingleOrder?
+
+        //  @todo: After initially passing a new product to AVS including an initial stock, then AVS should stay responsible for increasing or decreasing stock except of course all regular orders on the website.
+
+        //  @todo: If a product could be sold independently from a collection, should be decided on the product itself.
+
+        //  @todo: If a product collection is ordered, only the product collection should be an orderItem. BUT: In the background the contained products and their stock should be updated. QUESTION: What happens to the stock of these contained items on behalf of AVS? Does their stock reflect the order as part of a collection?
+
+        //  @todo: Is a pre-order flag necessary? If there is a product out of stock, I cannot order it, but if it would be stocked up, how could I know? Is this the reason for the model "Stock"? Is PreOrder a real action? If a product is out of stock, nobody can buy it, but if a product is out of stock and there is an information, when the next charge will be available, one can order it. So I think, different stocks should be possible (if it could happen, that a new charge could be sold out in one pre-order, maybe there should be a restriction to maximum x pre-orders?), but "pre-order" is not necessary. Shouldn't be AVS responsible for providing new charges?
+        //  @todo: Solution => "Stock" remains in place to provide pre-order, but "Stock" is a property of notCollection-Items.
+        //  @todo: availability and thereby preordering of a collectionItem must be determined by checking its children. BUT: bewware of ProductSeries as it is an open concept.
+
         if (
             ($product->getProductBundle())
             && (! $product->getProductBundle()->getAllowSingleOrder())
         ){
             $product = $product->getProductBundle();
         }
+
+        var_dump($product->getProductType()->getTitle());
 
         if (
             ($product instanceof \RKW\RkwShop\Domain\Model\ProductBundle)
@@ -463,7 +487,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             $children = $product->getChildProducts();
             $availableChildren = [];
 
-            foreach($children as $childProduct) {
+            foreach ($children as $childProduct) {
 
                 $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($childProduct);
                 $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($childProduct);

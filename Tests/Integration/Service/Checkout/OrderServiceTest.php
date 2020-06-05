@@ -895,7 +895,7 @@ class OrderServiceTest extends FunctionalTestCase
      */
     public function getRemainingStockReturnsStockOfProductBundle()
     {
-        /* @todo: Fix this test, do not forget that even products assigned to a bundle can exist as separate orderable products. */
+        /* @todo: Fix this test, do not forget that products assigned to a bundle exist as single products and may be even orderable. */
 
         /**
          * Scenario:
@@ -912,7 +912,7 @@ class OrderServiceTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check120.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(1);
+        $product = $this->productRepository->findByUid(1);
         self::assertEquals(21, $this->subject->getRemainingStockOfProduct($product));
     }
 
