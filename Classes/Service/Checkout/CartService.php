@@ -245,23 +245,41 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     */
+    public function resolve(\RKW\RkwShop\Domain\Model\Product $product)
+    {
+        if ($product->getProductType()->getIsCollection()) {
+
+            return $product->getChildProducts();
+        }
+
+        return [$product];
+    }
+
+    /**
      * @param \RKW\RkwShop\Domain\Model\Cart   $cart
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param                                   $amount
      */
     public function add(\RKW\RkwShop\Domain\Model\Cart $cart, \RKW\RkwShop\Domain\Model\Product $product, $amount)
     {
-        $orderItem = $cart->containsProduct($product);
 
-        if ($orderItem) {
-            $this->changeQuantity($cart, $orderItem, $amount + $orderItem->getAmount());
-        } else {
-            $orderItem = new OrderItem();
-            $orderItem->setProduct($product);
-            $orderItem->setAmount($amount);
-            $cart->addOrderItem($orderItem);
+        foreach ($this->resolve($product) as $singleProduct) {
 
-            $this->cartRepository->update($cart);
+            $orderItem = $cart->containsProduct($singleProduct);
+
+            if ($orderItem) {
+                $this->changeQuantity($cart, $orderItem, $amount + $orderItem->getAmount());
+            } else {
+                $orderItem = new OrderItem();
+                $orderItem->setProduct($singleProduct);
+                $orderItem->setAmount($amount);
+                $cart->addOrderItem($orderItem);
+
+                $this->cartRepository->update($cart);
+            }
+
         }
 
     }

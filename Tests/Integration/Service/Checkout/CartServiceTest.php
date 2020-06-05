@@ -299,6 +299,34 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
+    public function resolveProductCollectionReturnsAllContainedProductsToCart()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given a product of type collection exists
+         * Given it contains 2 products
+         * When I resolve this product collection
+         * Then the two contained products are returned
+         */
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check90.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $productCollection = $this->productRepository->findByUid(1);
+
+        $containedProducts = $this->subject->resolve($productCollection);
+
+        static::assertEquals(2, count($containedProducts));
+
+    }
+
+    /**
+     * @test
+     */
     public function addSameProductUpdatesQuantityForProductPlusOne()
     {
 
