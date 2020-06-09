@@ -33,6 +33,7 @@
         <comment></comment>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+        <product_type>1</product_type>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_stock>
         <uid>1</uid>

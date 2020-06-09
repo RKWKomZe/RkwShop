@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dataset>
-        <!-- product -->
+
+    <tx_rkwshop_domain_model_producttype>
+        <uid>1</uid>
+        <title>Product</title>
+        <model>\RKW\RkwShop\Domain\Model\Product</model>
+    </tx_rkwshop_domain_model_producttype>
+
+    <!-- product -->
     <tx_rkwshop_domain_model_product>
         <uid>1</uid>
         <pid>1</pid>
@@ -10,6 +17,7 @@
         <stock>1,2,3</stock>
         <ordered_external>200</ordered_external>
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+        <product_type>1</product_type>
     </tx_rkwshop_domain_model_product>
 
     <!-- stock -->

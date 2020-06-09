@@ -15,6 +15,13 @@
         <tx_rkwregistration_title>0</tx_rkwregistration_title>
         <tx_rkwregistration_language_key>fr</tx_rkwregistration_language_key>
     </fe_users>
+
+    <tx_rkwshop_domain_model_producttype>
+        <uid>1</uid>
+        <title>Product</title>
+        <model>\RKW\RkwShop\Domain\Model\Product</model>
+    </tx_rkwshop_domain_model_producttype>
+
     <tx_rkwshop_domain_model_product>
         <uid>1</uid>
         <pid>1</pid>
@@ -24,6 +31,7 @@
         <stock>1</stock>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+        <product_type>1</product_type>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_stock>
         <uid>1</uid>
