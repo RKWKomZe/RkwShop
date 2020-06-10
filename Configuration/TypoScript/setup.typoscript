@@ -211,6 +211,7 @@ plugin.tx_rkwshop {
 		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
 		categoriesParent = {$plugin.tx_rkwshop.settings.categoriesParent}
 		resolveCollection = {$plugin.tx_rkwshop.settings.resolveCollection}
+		useWaWi = {$plugin.tx_rkwshop.settings.useWaWi}
         maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
         requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
 		disableAdminMails = {$plugin.tx_rkwshop.settings.disableAdminMails}
