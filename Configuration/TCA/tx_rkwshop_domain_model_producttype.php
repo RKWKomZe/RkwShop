@@ -103,13 +103,5 @@ return [
                 'default' => 0
             ]
         ],
-        'allow_single_order' => [
-            'exclude' => 0,
-            'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_producttype.allowSingleOrder',
-            'config' => [
-                'type' => 'check',
-                'default' => 0
-            ]
-        ],
     ],
 ];
