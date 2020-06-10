@@ -131,9 +131,6 @@
             <trans-unit id="tx_rkwshop_domain_model_product.stock">
                 <source>Stock</source>
             </trans-unit>
-            <trans-unit id="tx_rkwshop_domain_model_product.orderedExternal">
-                <source>Sum Of External Orders</source>
-            </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.page">
                 <source>Page</source>
             </trans-unit>

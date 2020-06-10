@@ -473,6 +473,94 @@ class OrderServiceTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \Exception
      */
+    public function persistOrderContainingProductCollectionResolvesOrderToContainedProducts()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given I'm logged in
+         * Given I accept the Terms & Conditions
+         * Given I accept the Privacy-Terms
+         * Given I enter a valid shippingAddress
+         * Given a product collection is ordered
+         * When I make an order
+         * Then the order is saved
+         * Then the order contains
+         */
+        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check65.xml');
+
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        $frontendUser = $this->frontendUserRepository->findByUid(1);
+
+        Common::initFrontendInBackendContext();
+        Authentication::loginUser($frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $order */
+        $order = GeneralUtility::makeInstance(Order::class);
+        $order->setFrontendUser($frontendUser);
+        $order->setRemark('Was ist hier los?');
+
+        /** @var \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress */
+        $shippingAddress = GeneralUtility::makeInstance(ShippingAddress::class);
+        $shippingAddress->setFrontendUser($frontendUser);
+        $shippingAddress->setAddress('Emmenthaler Allee 15');
+        $shippingAddress->setZip('12345');
+        $shippingAddress->setCity('Gauda');
+        $order->setShippingAddress($shippingAddress);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        $orderItem = GeneralUtility::makeInstance(OrderItem::class);
+        $orderItem->setProduct($product);
+        $orderItem->setAmount(10);
+        $order->addOrderItem($orderItem);
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
+        $request = $this->objectManager->get(Request::class);
+
+        $this->subject->persistOrder($order, $frontendUser);
+
+        /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
+        $orderDb = $this->orderRepository->findByUid(1);
+
+        $orderDb->getOrderItem()->rewind();
+        $order->getOrderItem()->rewind();
+
+        static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
+        static::assertEquals($order->getRemark(), $orderDb->getRemark());
+
+        static::assertEquals($frontendUser->getUid(), $orderDb->getFrontendUser()->getUid());
+        static::assertEquals($frontendUser->getUid(), $orderDb->getShippingAddress()->getFrontendUser()->getUid());
+
+        /** ToDo: Check for title object!!!! */
+        static::assertEquals($order->getShippingAddress()->getFirstName(), $orderDb->getShippingAddress()->getFirstName());
+        static::assertEquals($order->getShippingAddress()->getLastName(), $orderDb->getShippingAddress()->getLastName());
+        static::assertEquals($order->getShippingAddress()->getCompany(), $orderDb->getShippingAddress()->getCompany());
+        static::assertEquals($order->getShippingAddress()->getAddress(), $orderDb->getShippingAddress()->getAddress());
+        static::assertEquals($order->getShippingAddress()->getZip(), $orderDb->getShippingAddress()->getZip());
+        static::assertEquals($order->getShippingAddress()->getCity(), $orderDb->getShippingAddress()->getCity());
+
+        static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
+        static::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
+
+    }
+
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+     */
     public function persistOrderCreatesUniqueIncrementedOrderNumber()
     {
 
@@ -833,18 +921,17 @@ class OrderServiceTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \Exception
      */
-    public function getRemainingStockSubstractsOrderedAndOrderedExternalFromStock ()
+    public function getRemainingStockSubstractsOrderedFromStock ()
     {
 
         /**
          * Scenario:
          *
-         * Given a product has been ordered from external
          * Given the same product has been ordered via shop
          * Given the same product as a pre-order-stock
          * Given the same product has been pre-ordered via shop
          * When I fetch the remaining stock
-         * Then external and internal orders are substracted from the available stock
+         * Then orders are substracted from the available stock
          * Then pre-order-stocks are excluded from calculation
          * Then pre-orders are excluded from calculation
          */
@@ -852,7 +939,7 @@ class OrderServiceTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
-        self::assertEquals(65, $this->subject->getRemainingStockOfProduct($product));
+        self::assertEquals(85, $this->subject->getRemainingStockOfProduct($product));
 
     }
 
@@ -868,12 +955,10 @@ class OrderServiceTest extends FunctionalTestCase
         /**
          * Scenario:
          *
-         * Given a product has been ordered from external
-         * Given the same product has been ordered via shop
-         * Given the same product has been pre-ordered via shop
+         * Given a product has been ordered
+         * Given the same product has been pre-ordered
          * Given the amount of orders exceeds the available stock
          * When I fetch the remaining stock
-         * Then external orders are included in calculation
          * Then pre-order-stocks are excluded from calculation
          * Then pre-orders are excluded from calculation
          * Then a value of zero is returned
@@ -885,35 +970,6 @@ class OrderServiceTest extends FunctionalTestCase
 
         self::assertEquals(0, $this->subject->getRemainingStockOfProduct($product));
 
-    }
-
-    /**
-     * @test
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \Exception
-     */
-    public function getRemainingStockReturnsStockOfProductBundle()
-    {
-        /* @todo: Fix this test, do not forget that products assigned to a bundle exist as single products and may be even orderable. */
-
-        /**
-         * Scenario:
-         *
-         * Given a product is part of a product bundle
-         * Given the product bundle has been ordered from external
-         * Given the product bundle has been ordered via shop
-         * Given the product bundle has been pre-ordered via shop
-         * When I fetch the remaining stock
-         * Then the stock of the product bundle is returned
-         * Then pre-order-stocks of the product bundle are excluded from calculation
-         * Then pre-orders of the product bundle are excluded from calculation
-         */
-        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check120.xml');
-
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product = $this->productRepository->findByUid(1);
-        self::assertEquals(21, $this->subject->getRemainingStockOfProduct($product));
     }
 
     /**
@@ -951,12 +1007,13 @@ class OrderServiceTest extends FunctionalTestCase
     public function getRemainingStockReturnsStockOfProductIfSingleOrderIsAllowed()
     {
 
+        //  @todo: rework dependency on product bundle
+
         /**
          * Scenario:
          *
          * Given a product is part of a product bundle
-         * Given in that the product bundle allows single orders
-         * Given the same product has been ordered from external
+         * Given that product bundle allows single orders
          * Given the same product has been ordered via shop
          * Given the same product has been pre-ordered via shop*
          * When I fetch the remaining stock
@@ -968,7 +1025,7 @@ class OrderServiceTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         $product =$this->productRepository->findByUid(1);
-        self::assertEquals(68, $this->subject->getRemainingStockOfProduct($product));
+        self::assertEquals(88, $this->subject->getRemainingStockOfProduct($product));
     }
 
 
@@ -981,16 +1038,14 @@ class OrderServiceTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \Exception
      */
-    public function getPreOrderStockSubstractsOrderedAndOrderedExternalFromStock ()
+    public function getPreOrderStockSubstractsOrderedFromStock ()
     {
 
         /**
          * Scenario:
          *
-         * Given a product has been ordered from external
-         * Given the same product has been pre-ordered via shop
+         * Given a product has been pre-ordered via shop
          * When I fetch the remaining stock
-         * Then external orders are ignored
          * Then normal order-stocks are excluded from calculation
          * Then normal orders are excluded from calculation
          */
@@ -1014,12 +1069,10 @@ class OrderServiceTest extends FunctionalTestCase
         /**
          * Scenario:
          *
-         * Given a product has been ordered from external
-         * Given the same product has been ordered via shop
-         * Given the same product has been pre-ordered via shop
+         * Given a product has been ordered
+         * Given the same product has been pre-ordered
          * Given the amount of pre-orders exceeds the available stock
          * When I fetch the remaining stock
-         * Then external orders are ignored
          * Then normal order-stocks are excluded from calculation
          * Then normal orders are excluded from calculation
          * Then a value of zero is returned
@@ -1039,42 +1092,13 @@ class OrderServiceTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \Exception
      */
-    public function getPreOrderStockReturnsStockOfProductBundle ()
-    {
-        /**
-         * Scenario:
-         *
-         * Given a product is part of a product bundle
-         * Given the product bundle has been ordered from external
-         * Given the product bundle has been ordered via shop
-         * Given the product bundle has been pre-ordered via shop
-         * When I fetch the remaining stock
-         * Then the stock of the product bundle is returned
-         * Then normal order-stocks of the product bundle are excluded from calculation
-         * Then normal orders of the product bundle are excluded from calculation
-         */
-        $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check120.xml');
-
-        /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(1);
-        self::assertEquals(24, $this->subject->getPreOrderStockOfProduct($product));
-    }
-
-
-    /**
-     * @test
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \Exception
-     */
     public function getPreOrderStockReturnsStockOfProductIfSingleOrderIsAllowed()
     {
         /**
          * Scenario:
          *
          * Given a product is part of a product bundle
-         * Given in that the product bundle allows single orders
-         * Given the same product has been ordered from external
+         * Given the product bundle allows single orders
          * Given the same product has been ordered via shop
          * Given the same product has been pre-ordered via shop
          * When I fetch the remaining stock

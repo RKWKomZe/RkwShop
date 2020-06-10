@@ -175,13 +175,6 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * orderedExternal
-     *
-     * @var int
-     */
-    protected $orderedExternal;
-
-    /**
      * backendUser
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\BackendUser>
@@ -697,30 +690,6 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->stock = $stock;
     }
-
-
-    /**
-     * Returns the orderedExternal
-     *
-     * @return int $orderedExternal
-     */
-    public function getOrderedExternal()
-    {
-        return $this->orderedExternal;
-    }
-
-
-    /**
-     * Sets the orderedExternal
-     *
-     * @param int $orderedExternal
-     * @return void
-     */
-    public function setOrderedExternal($orderedExternal)
-    {
-        $this->orderedExternal = $orderedExternal;
-    }
-
 
     /**
      * Adds a backendUser

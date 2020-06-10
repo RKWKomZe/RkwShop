@@ -213,10 +213,6 @@
 				<source>Stock</source>
 				<target>Bestand</target>
 			</trans-unit>
-			<trans-unit id="tx_rkwshop_domain_model_product.orderedExternal">
-				<source>Sum Of External Orders</source>
-				<target>Menge der externen Bestellungen</target>
-			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.page">
 				<source>Page</source>
 				<target>Produkt-Seite</target>

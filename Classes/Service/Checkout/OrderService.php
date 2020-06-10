@@ -449,11 +449,14 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
     public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
     {
 
-        //  @todo: If a order is created, the availableStock of all contained products must be updated by decreasing the amount according to the order amount of the product or its parent product collection.
-        //  @todo: If a order is updated, the availableStock of all contained products must be updated by decreasing the amount according to the order amount of the product or its parent product collection.
+        //  @todo: availableStock holds stock minus currently reserved items, stock holds stock minus sold items.
+
+        //  @todo: If an order is created, the availableStock of all contained products must be updated by decreasing the amount according to the order amount of the product or its parent product collection.
+        //  @todo: If an order is updated, the availableStock of all contained products must be updated by decreasing the amount according to the order amount of the product or its parent product collection.
         //  @todo: If an order is cancelled, the availableStock of all contained products must be updated by increasing the amount according to the order amount of the product or its parent product collection.
         //  @todo: If an order is completed, the availableStock and stock itself have to be updated.
-        //  @todo: Before completing an order there has to be a last check, that everything is available, because there could be new data from synchronizing by SOAP.
+
+        //  @todo: If an order is completed, there has to be a last check, that everything is available, because there could be new data from synchronizing by SOAP.
         //  @todo: SOAP must update the stock whenever it synchronizes. What happens to availableStock?
         //  @todo: All orders, even external ones, have to reflect the change of stock on the contained items.
         //  @todo: External orders have to be removed completely as these are not necessary anymore, when stock itself is updated by synchronizing. If somebody does not use a WaWi and wants to get items from stock for internal use, he preferably has to place an order himself.
@@ -477,8 +480,6 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             $product = $product->getProductBundle();
         }
 
-        var_dump($product->getProductType()->getTitle());
-
         if (
             ($product instanceof \RKW\RkwShop\Domain\Model\ProductBundle)
             && ($product->getRecordType() === '\RKW\RkwShop\Domain\Model\ProductBundle')
@@ -491,7 +492,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
                 $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($childProduct);
                 $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($childProduct);
-                $availableChildren[] = intval($stockSum) - (intval($orderedSum) + intval($childProduct->getOrderedExternal()));
+                $availableChildren[] = intval($stockSum) - intval($orderedSum);
 
             }
 
@@ -502,7 +503,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
             $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product);
             $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product);
 
-            $remainingStock = intval($stockSum) - (intval($orderedSum) + intval($product->getOrderedExternal()));
+            $remainingStock = intval($stockSum) - intval($orderedSum);
 
         }
 

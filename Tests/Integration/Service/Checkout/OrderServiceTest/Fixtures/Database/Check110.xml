@@ -15,7 +15,6 @@
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test10@test.de</admin_email>
         <stock>1,2,3</stock>
-        <ordered_external>200</ordered_external>
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
         <product_type>1</product_type>
     </tx_rkwshop_domain_model_product>
@@ -48,13 +47,13 @@
     <tx_rkwshop_domain_model_orderitem>
         <uid>1</uid>
         <pid>1</pid>
-        <amount>10</amount>
+        <amount>50</amount>
         <product>1</product>
     </tx_rkwshop_domain_model_orderitem>
     <tx_rkwshop_domain_model_orderitem>
         <uid>2</uid>
         <pid>1</pid>
-        <amount>5</amount>
+        <amount>55</amount>
         <product>1</product>
     </tx_rkwshop_domain_model_orderitem>
     <tx_rkwshop_domain_model_orderitem>
