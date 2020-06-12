@@ -1002,16 +1002,13 @@ class OrderServiceTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \Exception
      */
-    public function getRemainingStockReturnsStockOfProductIfSingleOrderIsAllowed()
+    public function getRemainingStockReturnsStockOfProduct()
     {
-
-        //  @todo: rework dependency on product bundle
 
         /**
          * Scenario:
          *
          * Given a product is part of a product bundle
-         * Given that product bundle allows single orders
          * Given the same product has been ordered via shop
          * Given the same product has been pre-ordered via shop*
          * When I fetch the remaining stock
@@ -1090,13 +1087,12 @@ class OrderServiceTest extends FunctionalTestCase
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \Exception
      */
-    public function getPreOrderStockReturnsStockOfProductIfSingleOrderIsAllowed()
+    public function getPreOrderStockReturnsStockOfProduct()
     {
         /**
          * Scenario:
          *
          * Given a product is part of a product bundle
-         * Given the product bundle allows single orders
          * Given the same product has been ordered via shop
          * Given the same product has been pre-ordered via shop
          * When I fetch the remaining stock

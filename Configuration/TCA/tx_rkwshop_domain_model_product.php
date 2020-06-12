@@ -350,7 +350,7 @@ return [
             'label' => $_LLL . ':tx_rkwshop_domain_model_product.allowSingleOrder',
             'config' => [
                 'type' => 'check',
-                'default' => 0
+                'default' => 1
             ]
         ],
         'comment' => [

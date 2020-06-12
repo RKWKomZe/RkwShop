@@ -459,9 +459,8 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
         //  @todo: If an order is completed, there has to be a last check, that everything is available, because there could be new data from synchronizing by SOAP.
         //  @todo: SOAP must update the stock whenever it synchronizes. What happens to availableStock?
         //  @todo: All orders, even external ones, have to reflect the change of stock on the contained items.
-        //  @todo: External orders have to be removed completely as these are not necessary anymore, when stock itself is updated by synchronizing. If somebody does not use a WaWi and wants to get items from stock for internal use, he preferably has to place an order himself.
 
-        //  @todo: remove external_order, Stock entity, allowSingleOrder?
+        //  @todo: remove Stock entity?
 
         //  @todo: After initially passing a new product to AVS including an initial stock, then AVS should stay responsible for increasing or decreasing stock except of course all regular orders on the website.
 
