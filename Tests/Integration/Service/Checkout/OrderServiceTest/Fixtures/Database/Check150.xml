@@ -9,7 +9,7 @@
         <admin_email>test3@test.de</admin_email>
         <stock>1</stock>
         <backend_user>1,2</backend_user>
-        <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
     </tx_rkwshop_domain_model_product>
 
     <!-- BE-Users -->

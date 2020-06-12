@@ -104,7 +104,6 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 	page varchar(255) DEFAULT '' NOT NULL,
 	image int(11) unsigned NOT NULL default '0',
 	download int(11) unsigned NOT NULL default '0',
-	product_bundle int(11) unsigned DEFAULT '0',
 	allow_single_order tinyint(4) unsigned DEFAULT '0' NOT NULL,
 
 	parent_products int(11) unsigned DEFAULT '0' NOT NULL,

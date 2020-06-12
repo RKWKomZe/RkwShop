@@ -136,14 +136,6 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $download = null;
 
-
-    /**
-     * productBundle
-     *
-     * @var \RKW\RkwShop\Domain\Model\ProductBundle
-     */
-    protected $productBundle;
-
     /**
      * parentProducts
      *
@@ -514,27 +506,6 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the productBundle
-     *
-     * @return \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
-     */
-    public function getProductBundle()
-    {
-        return $this->productBundle;
-    }
-
-    /**
-     * Sets the productBundle
-     *
-     * @param \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
-     * @return void
-     */
-    public function setProductBundle(\RKW\RkwShop\Domain\Model\ProductBundle $productBundle)
-    {
-        $this->productBundle = $productBundle;
-    }
-
-    /**
      * Returns the allowSingleOrder
      *
      * @return boolean $bundleOnly
@@ -795,6 +766,16 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setChildProducts($childProducts)
     {
         $this->childProducts = $childProducts;
+    }
+
+    /**
+     * Returns flag if product belongs to product collections.
+     *
+     * @return bool
+     */
+    public function hasParentProducts()
+    {
+        return ($this->parentProducts->count() > 0);
     }
 
 }

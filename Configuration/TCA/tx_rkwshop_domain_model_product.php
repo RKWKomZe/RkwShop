@@ -19,18 +19,18 @@ return [
 		'enablecolumns' => [
 			'disabled' => 'hidden',
 		],
-		'searchFields' => 'uid, sku, title, subtitle, edition, description, stock, page, product_bundle, backend_user, admin_email, comment',
+		'searchFields' => 'uid, sku, title, subtitle, edition, description, stock, page, backend_user, admin_email, comment',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_product.gif',
         'type' => 'record_type',
-        'requestUpdate' => 'product_bundle',
+        'requestUpdate' => 'parent_products',
 	],
 	'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, sku, title, subtitle, edition, description, publishing_date, image, stock, ordered_external, page, product_bundle, backend_user, admin_email, comment, tags',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, sku, title, subtitle, edition, description, publishing_date, image, stock, ordered_external, page, backend_user, admin_email, comment, tags',
 	],
 	'types' => [
         '\RKW\RkwShop\Domain\Model\Product' => [
             'showitem' => '
-                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, sku, title, subtitle, edition, description, publishing_date, download, image, page, product_bundle,
+                --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.basics, record_type, parent_products, sku, title, subtitle, edition, description, publishing_date, download, image, page,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.stock, stock,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.order, backend_user, admin_email, comment, allow_single_order,
                 --div--;' . $_LLL . ':tx_rkwshop_domain_model_product.tab.language, sys_language_uid, l10n_parent, l10n_diffsource,
@@ -234,19 +234,6 @@ return [
                 ],
             ]
 		],
-        'product_bundle' => [
-            'exclude' => 0,
-            'label' => $_LLL . ':tx_rkwshop_domain_model_product.productBundle',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'items' => [
-                    ['', 0],
-                ],
-                'foreign_table' => 'tx_rkwshop_domain_model_product',
-                'foreign_table_where' => ' AND ((\'###PAGE_TSCONFIG_IDLIST###\' <> \'0\' AND FIND_IN_SET(tx_rkwshop_domain_model_product.pid,\'###PAGE_TSCONFIG_IDLIST###\')) OR (\'###PAGE_TSCONFIG_IDLIST###\' = \'0\')) AND tx_rkwshop_domain_model_product.deleted = 0 AND tx_rkwshop_domain_model_product.hidden = 0 AND tx_rkwshop_domain_model_product.record_type = \'\\\\RKW\\\\RkwShop\\\\Domain\\\\Model\\\\ProductBundle\' ORDER BY tx_rkwshop_domain_model_product.title ASC',
-            ]
-        ],
         'page' => [
             'exclude' => false,
             'label' => $_LLL . ':tx_rkwshop_domain_model_product.page',
@@ -335,7 +322,7 @@ return [
             ),
         ],        
         'backend_user' => [
-            'displayCond' => 'FIELD:product_bundle:REQ:FALSE',
+            'displayCond' => 'FIELD:parent_products:REQ:FALSE',
             'exclude' => 0,
             'label' => $_LLL . ':tx_rkwshop_domain_model_product.backendUser',
             'config' => [
@@ -349,7 +336,7 @@ return [
             ]
         ],
         'admin_email' => [
-            'displayCond' => 'FIELD:product_bundle:REQ:FALSE',
+            'displayCond' => 'FIELD:parent_products:REQ:FALSE',
             'exclude' => 0,
             'label' => $_LLL . ':tx_rkwshop_domain_model_product.adminEmail',
             'config' => [

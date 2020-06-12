@@ -10,7 +10,6 @@
         <uid>2</uid>
         <title>ProductBundle</title>
         <model>\RKW\RkwShop\Domain\Model\ProductBundle</model>
-        <is_collection>1</is_collection>
     </tx_rkwshop_domain_model_producttype>
 
     <!-- products -->
@@ -20,7 +19,6 @@
         <title>ProductBundle</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
-        <stock>1</stock>
         <comment></comment>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
@@ -34,7 +32,6 @@
         <title>DeliverableProduct</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
-        <stock>1</stock>
         <comment></comment>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
@@ -47,7 +44,6 @@
         <title>NotDeliverableProduct</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
-        <stock>2</stock>
         <comment></comment>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
@@ -64,22 +60,5 @@
         <uid_local>3</uid_local>
         <uid_foreign>1</uid_foreign>
     </tx_rkwshop_domain_model_product_product_mm>
-
-    <!-- stocks -->
-    <tx_rkwshop_domain_model_stock>
-        <uid>1</uid>
-        <pid>1</pid>
-        <product>2</product>
-        <amount>10</amount>
-        <comment>Auf- und Unterlage</comment>
-    </tx_rkwshop_domain_model_stock>
-
-    <tx_rkwshop_domain_model_stock>
-        <uid>2</uid>
-        <pid>1</pid>
-        <product>3</product>
-        <amount>5</amount>
-        <comment>Auf- und Unterlage</comment>
-    </tx_rkwshop_domain_model_stock>
 
 </dataset>

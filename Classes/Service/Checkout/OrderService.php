@@ -473,17 +473,7 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
         //  @todo: Solution => "Stock" remains in place to provide pre-order, but "Stock" is a property of notCollection-Items.
         //  @todo: availability and thereby preordering of a collectionItem must be determined by checking its children. BUT: bewware of ProductSeries as it is an open concept.
 
-        if (
-            ($product->getProductBundle())
-            && (! $product->getProductBundle()->getAllowSingleOrder())
-        ){
-            $product = $product->getProductBundle();
-        }
-
-        if (
-            ($product instanceof \RKW\RkwShop\Domain\Model\ProductBundle)
-            && ($product->getRecordType() === '\RKW\RkwShop\Domain\Model\ProductBundle')
-        ){
+        if ($product->getProductType()->getIsCollection()) {
 
             $children = $product->getChildProducts();
             $availableChildren = [];
@@ -520,18 +510,32 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function getPreOrderStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
     {
-        if (
-            ($product->getProductBundle())
-            && (! $product->getProductBundle()->getAllowSingleOrder())
-        ){
-            $product = $product->getProductBundle();
+        if ($product->getProductType()->getIsCollection()) {
+
+            $children = $product->getChildProducts();
+            $availableChildren = [];
+
+            foreach ($children as $childProduct) {
+
+                $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($childProduct, true);
+                $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($childProduct, true);
+                $availableChildren[] = intval($stockSum) - intval($orderedSum);
+
+            }
+
+            $preOrderStock = min($availableChildren);
+
+        } else {
+
+            $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product, true);
+            $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product, true);
+
+            $preOrderStock = intval($stockSum) - intval($orderedSum);
+
         }
 
-        $orderedSum = $this->orderItemRepository->getOrderedSumByProductAndPreOrder($product, true);
-        $stockSum = $this->stockRepository->getStockSumByProductAndPreOrder($product, true);
-
-        $preOrderStock = intval($stockSum) - intval($orderedSum);
         return (($preOrderStock > 0) ? $preOrderStock : 0);
+
     }
 
 
@@ -564,49 +568,59 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
     {
 
         $backendUsers = [];
+        $notifiableProducts = [];
+
         $settings = $this->getSettings();
         if (! $settings['disableAdminMails']) {
 
-            $productTemp = $product;
-            if ($product->getProductBundle()) {
-                $productTemp  = $product->getProductBundle();
-            }
-
-            // go through ObjectStorage
-            foreach ($productTemp->getBackendUser() as $backendUser) {
-                if ((\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))) {
-                    $backendUsers[] = $backendUser;
+            if ($product->hasParentProducts()) {
+                foreach ($product->getParentProducts() as $singleProduct) {
+                    $notifiableProducts[] = $singleProduct;
                 }
+            } else {
+                $notifiableProducts[] = $product;
             }
 
-            // get field for alternative e-emails
-            if ($email = $productTemp->getAdminEmail()) {
+            foreach ($notifiableProducts as $productTemp) {
 
-                /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
-                $backendUser = $this->backendUserRepository->findOneByEmail($email);
+                // go through ObjectStorage
+                foreach ($productTemp->getBackendUser() as $backendUser) {
+                    if ((\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))) {
+                        $backendUsers[] = $backendUser;
+                    }
+                }
+
+                // get field for alternative e-emails
+                if ($email = $productTemp->getAdminEmail()) {
+
+                    /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
+                    $backendUser = $this->backendUserRepository->findOneByEmail($email);
+                    if (
+                        ($backendUser)
+                        && (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))
+                    ) {
+                        $backendUsers[] = $backendUser;
+                    }
+                }
+
+                // fallback-handling
                 if (
-                    ($backendUser)
-                    && (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))
+                    (count($backendUsers) < 1)
+                    && ($fallbackBeUser = $settings['fallbackBackendUserForAdminMails'])
                 ) {
-                    $backendUsers[] = $backendUser;
+
+                    /** @var \RKW\RkwShop\Domain\Model\BackendUser $beUser */
+                    $backendUser = $this->backendUserRepository->findOneByUsername($fallbackBeUser);
+                    if (
+                        ($backendUser)
+                        && (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))
+                    ) {
+                        $backendUsers[] = $backendUser;
+                    }
                 }
+
             }
 
-            // fallback-handling
-            if (
-                (count($backendUsers) < 1)
-                && ($fallbackBeUser = $settings['fallbackBackendUserForAdminMails'])
-            ) {
-
-                /** @var \RKW\RkwShop\Domain\Model\BackendUser $beUser */
-                $backendUser = $this->backendUserRepository->findOneByUsername($fallbackBeUser);
-                if (
-                    ($backendUser)
-                    && (\TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($backendUser->getEmail()))
-                ) {
-                    $backendUsers[] = $backendUser;
-                }
-            }
         }
 
         return $backendUsers;

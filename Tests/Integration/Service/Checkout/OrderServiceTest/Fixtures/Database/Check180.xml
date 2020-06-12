@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dataset>
+
+    <!-- product_type -->
+    <tx_rkwshop_domain_model_producttype>
+        <uid>1</uid>
+        <title>Product</title>
+        <model>\RKW\RkwShop\Domain\Model\Product</model>
+    </tx_rkwshop_domain_model_producttype>
+    <tx_rkwshop_domain_model_producttype>
+        <uid>2</uid>
+        <title>ProductBundle</title>
+        <model>\RKW\RkwShop\Domain\Model\ProductBundle</model>
+    </tx_rkwshop_domain_model_producttype>
+
      <!-- product -->
     <tx_rkwshop_domain_model_product>
         <uid>1</uid>
@@ -9,8 +22,8 @@
         <admin_email>test4@test.de</admin_email>
         <stock>4</stock>
         <backend_user>5</backend_user>
-        <product_bundle>2</product_bundle>
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+        <product_type>1</product_type>
     </tx_rkwshop_domain_model_product>
     <tx_rkwshop_domain_model_product>
         <uid>2</uid>
@@ -21,7 +34,14 @@
         <stock>1</stock>
         <backend_user>1,2</backend_user>
         <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+        <product_type>2</product_type>
     </tx_rkwshop_domain_model_product>
+
+    <!-- product_product_mm -->
+    <tx_rkwshop_domain_model_product_product_mm>
+        <uid_local>1</uid_local>
+        <uid_foreign>2</uid_foreign>
+    </tx_rkwshop_domain_model_product_product_mm>
 
     <!-- BE-Users -->
     <be_users>

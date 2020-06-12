@@ -10,6 +10,7 @@
         <uid>2</uid>
         <title>ProductBundle</title>
         <model>\RKW\RkwShop\Domain\Model\ProductBundle</model>
+        <is_collection>1</is_collection>
     </tx_rkwshop_domain_model_producttype>
 
     <!-- products -->

@@ -33,27 +33,45 @@ class BundleContentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractV
      */
     public function render(\RKW\RkwShop\Domain\Model\Product $product)
     {
-        $productForList = $product->getProductBundle();
+        $parentProducts = $product->getParentProducts();
+
+        // @todo: Was passiert, wenn ein Produkt in mehreren Collections enthalten ist?
+
+        /*
         if ($product->getRecordType() == '\RKW\RkwShop\Domain\Model\ProductBundle') {
-            $productForList = $product;
+            $parentProducts = $product;
         }
-        
+        */
+
+        /*
         if (
-            ($productForList)
-            && ($productForList->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')
+            ($parentProducts)
+            && ($parentProducts->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')
         ){
+        */
+
+        if ($parentProducts) {
+
             $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 
             /** @var \RKW\RkwShop\\Domain\Repository\ProductRepository $orderRepository */
             $productRepository = $objectManager->get('RKW\\RkwShop\\Domain\\Repository\\ProductRepository');
 
-            /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $results */
-            $results = $productRepository->findByProductBundle($productForList);
+            $results = [];
 
-            // only if there are more than the one we triggered this helper with
-            if (count($results->toArray()) > 1) {
-                return $results;
+            foreach ($parentProducts as $parentProduct) {
+
+                /** @var \TYPO3\CMS\Extbase\Persistence\QueryResultInterface $results */
+                $children = $parentProduct->getChildProducts();
+
+                // only if there are more than the one we triggered this helper with
+                if (count($children) > 1) {
+                    $results[$parentProduct->getUid()] = $children;
+                }
             }
+
+            return $results;
+
         }
 
         return null;

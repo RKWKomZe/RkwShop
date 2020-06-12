@@ -117,34 +117,6 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         foreach ($products as $product) {
 
-            /*
-            // check for getAllowSingleOrder = false
-            // --> add productBundle instead of given product in some cases
-
-            if (
-                ($product->getProductBundle())
-                && (! $product->getProductBundle()->getAllowSingleOrder())
-                && ($parentId = $product->getProductBundle()->getUid())
-            ) {
-
-                if (! in_array($parentId, $uidList)) {
-
-                    $query = $this->createQuery();
-                    $query->matching(
-                        $query->equals('uid', $parentId)
-                    );
-
-                    $result[] = $query->execute()->getFirst();
-                    $uidList[] = $parentId;
-                }
-
-            } else if (! in_array($product->getUid(), $uidList)) {
-
-                $result[] = $product;
-                $uidList[] = $product->getUid();
-            }
-            */
-
             if (! in_array($product->getUid(), $uidList)) {
 
                 if ($product->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductDownload') {

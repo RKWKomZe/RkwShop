@@ -766,21 +766,19 @@ class OrderServiceTest extends FunctionalTestCase
 
     }
 
-
-
-     /**
-      * @test
-      * @throws \RKW\RkwShop\Exception
-      * @throws \RKW\RkwRegistration\Exception
-      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
-      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
-      * @throws \Exception
-      */
+    /**
+     * @test
+     * @throws \RKW\RkwShop\Exception
+     * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
+     * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \Exception
+    */
     public function createOrderPersistsOrderIfUserIsLoggedIn ()
     {
 
@@ -993,7 +991,7 @@ class OrderServiceTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderServiceTest/Fixtures/Database/Check125.xml');
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
-        $product =$this->productRepository->findByUid(1);
+        $product = $this->productRepository->findByUid(1);
         self::assertEquals(5, $this->subject->getRemainingStockOfProduct($product));
     }
 

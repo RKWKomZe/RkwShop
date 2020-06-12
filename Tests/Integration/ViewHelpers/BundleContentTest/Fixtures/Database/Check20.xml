@@ -10,17 +10,15 @@
         <uid>2</uid>
         <title>ProductBundle</title>
         <model>\RKW\RkwShop\Domain\Model\ProductBundle</model>
-        <is_collection>1</is_collection>
     </tx_rkwshop_domain_model_producttype>
 
     <!-- products -->
     <tx_rkwshop_domain_model_product>
         <uid>1</uid>
         <pid>1</pid>
-        <title>ProductBundle</title>
+        <title>First ProductBundle</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
-        <stock>1</stock>
         <comment></comment>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
@@ -31,10 +29,22 @@
     <tx_rkwshop_domain_model_product>
         <uid>2</uid>
         <pid>1</pid>
-        <title>DeliverableProduct</title>
+        <title>Second ProductBundle</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
-        <stock>1</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\ProductBundle</record_type>
+        <product_type>2</product_type>
+        <child_products>2</child_products>
+    </tx_rkwshop_domain_model_product>
+
+    <tx_rkwshop_domain_model_product>
+        <uid>3</uid>
+        <pid>1</pid>
+        <title>Belongs to both product bundles</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
         <comment></comment>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
@@ -42,12 +52,23 @@
     </tx_rkwshop_domain_model_product>
 
     <tx_rkwshop_domain_model_product>
-        <uid>3</uid>
+        <uid>4</uid>
         <pid>1</pid>
-        <title>NotDeliverableProduct</title>
+        <title>BelongsToFirstProductBundle</title>
         <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
         <admin_email>test3@test.de</admin_email>
-        <stock>2</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+        <product_type>1</product_type>
+    </tx_rkwshop_domain_model_product>
+
+    <tx_rkwshop_domain_model_product>
+        <uid>5</uid>
+        <pid>1</pid>
+        <title>BelongsToSecondProductBundle</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
         <comment></comment>
         <backend_user />
         <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
@@ -56,30 +77,20 @@
 
     <!-- product_product_mm -->
     <tx_rkwshop_domain_model_product_product_mm>
-        <uid_local>2</uid_local>
-        <uid_foreign>1</uid_foreign>
-    </tx_rkwshop_domain_model_product_product_mm>
-
-    <tx_rkwshop_domain_model_product_product_mm>
         <uid_local>3</uid_local>
         <uid_foreign>1</uid_foreign>
     </tx_rkwshop_domain_model_product_product_mm>
-
-    <!-- stocks -->
-    <tx_rkwshop_domain_model_stock>
-        <uid>1</uid>
-        <pid>1</pid>
-        <product>2</product>
-        <amount>10</amount>
-        <comment>Auf- und Unterlage</comment>
-    </tx_rkwshop_domain_model_stock>
-
-    <tx_rkwshop_domain_model_stock>
-        <uid>2</uid>
-        <pid>1</pid>
-        <product>3</product>
-        <amount>5</amount>
-        <comment>Auf- und Unterlage</comment>
-    </tx_rkwshop_domain_model_stock>
+    <tx_rkwshop_domain_model_product_product_mm>
+        <uid_local>3</uid_local>
+        <uid_foreign>2</uid_foreign>
+    </tx_rkwshop_domain_model_product_product_mm>
+    <tx_rkwshop_domain_model_product_product_mm>
+        <uid_local>4</uid_local>
+        <uid_foreign>1</uid_foreign>
+    </tx_rkwshop_domain_model_product_product_mm>
+    <tx_rkwshop_domain_model_product_product_mm>
+        <uid_local>5</uid_local>
+        <uid_foreign>2</uid_foreign>
+    </tx_rkwshop_domain_model_product_product_mm>
 
 </dataset>
