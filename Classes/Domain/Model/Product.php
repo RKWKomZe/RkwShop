@@ -110,7 +110,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Author>
      */
-    protected $author = null;
+    protected $author;
     
     
     /**
@@ -126,7 +126,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \RKW\RkwBasics\Domain\Model\FileReference
      */
-    protected $image = null;
+    protected $image;
     
 
     /**
@@ -134,21 +134,21 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \RKW\RkwBasics\Domain\Model\FileReference
      */
-    protected $download = null;
+    protected $download;
 
     /**
      * parentProducts
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Product>
      */
-    protected $parentProducts = null;
+    protected $parentProducts;
 
     /**
      * childProducts
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Product>
      */
-    protected $childProducts = null;
+    protected $childProducts;
 
     /**
      * allowSingleOrder
@@ -513,8 +513,10 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function getAllowSingleOrder()
     {
         if (
-            ($this->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductBundle')
-            && ($this->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')
+            (! in_array($this->getRecordType(), [
+                '\RKW\RkwShop\Domain\Model\ProductBundle',
+                '\RKW\RkwShop\Domain\Model\ProductSubscription'
+            ]))
         ){
             return 99;
         }

@@ -63,7 +63,7 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @var \RKW\RkwShop\Service\Checkout\CartService
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
@@ -629,13 +629,5 @@ class CartServiceTest extends FunctionalTestCase
     }
 
     //=============================================
-
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
 
 }

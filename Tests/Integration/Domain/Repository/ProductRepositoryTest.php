@@ -54,17 +54,17 @@ class ProductRepositoryTest extends FunctionalTestCase
     /**
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      */
-    private $persistenceManager = null;
+    private $persistenceManager;
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
-    private $objectManager = null;
+    private $objectManager;
 
     /**
      * Setup
@@ -409,11 +409,4 @@ class ProductRepositoryTest extends FunctionalTestCase
 
     }
 
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
 }

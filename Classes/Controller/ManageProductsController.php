@@ -35,7 +35,7 @@ class ManageProductsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      * @inject
      */
-    protected $productRepository = null;
+    protected $productRepository;
 
     /**
      * action list products
@@ -60,7 +60,7 @@ class ManageProductsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionC
      */
     public function showAction(\RKW\RkwShop\Domain\Model\Product $product = null)
     {
-        if (empty($product)) {
+        if ($product === null) {
             $this->forward('list');
         }
 

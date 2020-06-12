@@ -537,8 +537,6 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
     }
 
-
-
     /**
      * Clean up order product list
      *
@@ -604,8 +602,8 @@ class OrderService implements \TYPO3\CMS\Core\SingletonInterface
 
                 // fallback-handling
                 if (
-                    (count($backendUsers) < 1)
-                    && ($fallbackBeUser = $settings['fallbackBackendUserForAdminMails'])
+                    ($fallbackBeUser = $settings['fallbackBackendUserForAdminMails'])
+                    && (count($backendUsers) < 1)
                 ) {
 
                     /** @var \RKW\RkwShop\Domain\Model\BackendUser $beUser */

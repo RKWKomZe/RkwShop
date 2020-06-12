@@ -42,7 +42,7 @@ class IsRequiredFieldViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstrac
         $settings = $this->getSettings();
 
         if ($requiredFields = GeneralUtility::trimExplode(',', $settings['requiredFields'])) {
-            return in_array($field, $requiredFields);
+            return in_array($field, $requiredFields, true);
         }
 
         return false;

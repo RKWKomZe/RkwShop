@@ -52,7 +52,7 @@ class CartRepositoryTest extends FunctionalTestCase
     /**
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
@@ -62,12 +62,12 @@ class CartRepositoryTest extends FunctionalTestCase
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      */
-    private $persistenceManager = null;
+    private $persistenceManager;
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
-    private $objectManager = null;
+    private $objectManager;
 
     /**
      * Setup
@@ -210,11 +210,4 @@ class CartRepositoryTest extends FunctionalTestCase
 
     }
 
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
 }

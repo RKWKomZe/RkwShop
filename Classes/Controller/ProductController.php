@@ -33,7 +33,7 @@ class ProductController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      * @inject
      */
-    protected $productRepository = null;
+    protected $productRepository;
 
     /**
      * action list products

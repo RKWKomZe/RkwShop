@@ -64,7 +64,7 @@ class CheckoutControllerTest extends FunctionalTestCase
     /**
      * @var \RKW\RkwShop\Controller\CheckoutController
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
@@ -439,20 +439,5 @@ class CheckoutControllerTest extends FunctionalTestCase
     }
 
     //=============================================
-
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
-
-
-
-
-
-
 
 }

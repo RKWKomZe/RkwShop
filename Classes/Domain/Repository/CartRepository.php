@@ -61,7 +61,7 @@ class CartRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     public function findByFrontendUserOrFrontendUserSessionHash($frontendUser = null, $hash = '')
     {
 
-        $hash = ($hash != '') ? $hash : $_COOKIE[FrontendUserAuthentication::getCookieName()];
+        $hash = ($hash !== '') ? $hash : $_COOKIE[FrontendUserAuthentication::getCookieName()];
 
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);

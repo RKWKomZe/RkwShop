@@ -84,7 +84,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
      */
-    protected $frontendUser = null;
+    protected $frontendUser;
 
 
     /**
@@ -99,7 +99,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \RKW\RkwShop\Domain\Model\ShippingAddress
      */
-    protected $shippingAddress = null;
+    protected $shippingAddress;
 
     /**
      * shipping adress is same as billing address
@@ -114,7 +114,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\OrderItem>
      * @cascade remove
      */
-    protected $orderItem = null;
+    protected $orderItem;
 
 
     /**

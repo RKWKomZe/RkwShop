@@ -64,7 +64,7 @@ class ProductControllerTest extends FunctionalTestCase
     /**
      * @var \RKW\RkwShop\Controller\ProductController
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
@@ -285,14 +285,6 @@ class ProductControllerTest extends FunctionalTestCase
 
         $this->assertNotContains("order-list__productbundle order-list__status order-list__status--warn", $response->getContent());
 
-    }
-
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
     }
 
 }

@@ -47,7 +47,7 @@ class MyOrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      * @inject
      */
-    protected $productRepository = null;
+    protected $productRepository;
 
     /**
      * OrderRepository
@@ -70,7 +70,7 @@ class MyOrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
      */
-    protected $frontendUser = null;
+    protected $frontendUser;
 
     /**
      * @var \TYPO3\CMS\Core\Log\Logger

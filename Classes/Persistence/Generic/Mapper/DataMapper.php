@@ -86,7 +86,7 @@ class DataMapper extends \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMappe
             ($list = $this->getPermanentProperties())
             && (isset($list[$classNameParent]))
             && ($listOfProperties = GeneralUtility::trimExplode(',', $list[$classNameParent], true))
-            && (in_array($propertyName, $listOfProperties))
+            && (in_array($propertyName, $listOfProperties, true))
         ){
             return true;
         } else {

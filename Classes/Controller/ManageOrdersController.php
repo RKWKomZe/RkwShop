@@ -35,7 +35,7 @@ class ManageOrdersController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
      * @inject
      */
-    protected $orderRepository = null;
+    protected $orderRepository;
 
     /**
      * action list products
@@ -60,7 +60,7 @@ class ManageOrdersController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function showAction(\RKW\RkwShop\Domain\Model\Order $order = null)
     {
-        if (empty($order)) {
+        if ($order === null) {
             $this->forward('list');
         }
 

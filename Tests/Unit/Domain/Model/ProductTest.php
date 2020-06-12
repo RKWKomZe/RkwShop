@@ -77,12 +77,4 @@ class ProductTest extends UnitTestCase {
 
     }
 
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
 }

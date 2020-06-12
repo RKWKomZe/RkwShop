@@ -64,7 +64,7 @@ class OrderServiceTest extends FunctionalTestCase
     /**
      * @var \RKW\RkwShop\Service\Checkout\OrderService
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
@@ -205,7 +205,7 @@ class OrderServiceTest extends FunctionalTestCase
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderService.error.noShippingAddress');
 
-        $this->subject->createOrder($order, $request, null, true, true);
+        $this->subject->createOrder($order, $request, null);
 
     }
 
@@ -263,7 +263,7 @@ class OrderServiceTest extends FunctionalTestCase
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderService.error.outOfStock');
 
-        $this->subject->createOrder($order, $request, null, true, true);
+        $this->subject->createOrder($order, $request, null);
 
     }
 
@@ -308,7 +308,7 @@ class OrderServiceTest extends FunctionalTestCase
         static::expectException(\RKW\RkwShop\Exception::class);
         static::expectExceptionMessage('orderService.error.orderAlreadyPersisted');
 
-        $this->subject->createOrder($order, $request, $frontendUser, true, true);
+        $this->subject->createOrder($order, $request, $frontendUser);
 
     }    
 
@@ -367,7 +367,7 @@ class OrderServiceTest extends FunctionalTestCase
 
         static::assertEquals(
             'orderService.message.createdOptIn',
-            $this->subject->createOrder($order, $request, null, true, true)
+            $this->subject->createOrder($order, $request, null)
         );
 
     }
@@ -761,7 +761,7 @@ class OrderServiceTest extends FunctionalTestCase
 
         static::assertEquals(
             'orderService.message.createdOptIn',
-            $this->subject->createOrder($order, $request, null, true, true)
+            $this->subject->createOrder($order, $request, null)
         );
 
     }
@@ -834,7 +834,7 @@ class OrderServiceTest extends FunctionalTestCase
 
         static::assertEquals(
             'orderService.message.created',
-            $this->subject->createOrder($order, $request, $frontendUser, false, true)
+            $this->subject->createOrder($order, $request, $frontendUser)
         );
 
         /** @var \RKW\RkwShop\Domain\Model\Order $orderDb */
@@ -1309,20 +1309,5 @@ class OrderServiceTest extends FunctionalTestCase
 
 
     //=============================================
-
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
-
-
-
-
-
-
 
 }

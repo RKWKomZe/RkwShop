@@ -90,7 +90,7 @@ class GenerateOrderNumberForExistingOrders extends AbstractUpdate
     {
 
         if ($this->hasLock(__FUNCTION__)) {
-            return;
+            return false;
         }
 
         $ordersNeedingUpdate = $this->getUpdatableOrders();

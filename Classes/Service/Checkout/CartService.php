@@ -119,7 +119,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
      */
-    protected $frontendUser = null;
+    protected $frontendUser;
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
@@ -210,7 +210,8 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * @param \RKW\RkwShop\Domain\Model\Cart   $cart
+     * @param \RKW\RkwShop\Domain\Model\Cart $cart
+     * @return Cart
      */
     public function assignCart(\RKW\RkwShop\Domain\Model\Cart $cart)
     {
@@ -233,6 +234,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
     /**
      * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @return \RKW\RkwShop\Domain\Model\Product[]|\TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
     public function resolve(\RKW\RkwShop\Domain\Model\Product $product)
     {

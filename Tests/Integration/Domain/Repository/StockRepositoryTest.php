@@ -49,7 +49,7 @@ class StockRepositoryTest extends FunctionalTestCase
     /**
      * @var \RKW\RkwShop\Domain\Repository\StockRepository
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
@@ -59,12 +59,12 @@ class StockRepositoryTest extends FunctionalTestCase
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      */
-    private $persistenceManager = null;
+    private $persistenceManager;
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
-    private $objectManager = null;
+    private $objectManager;
 
     /**
      * Setup
@@ -178,11 +178,4 @@ class StockRepositoryTest extends FunctionalTestCase
     }
 
 
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
 }

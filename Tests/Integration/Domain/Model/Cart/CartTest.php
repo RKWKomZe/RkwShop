@@ -150,12 +150,4 @@ class CartTest extends FunctionalTestCase
 
     //=============================================
 
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
 }

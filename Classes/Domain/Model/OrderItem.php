@@ -49,7 +49,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \RKW\RkwShop\Domain\Model\Order
      */
-    protected $order = null;
+    protected $order;
 
 
     /**
@@ -57,7 +57,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \RKW\RkwShop\Domain\Model\Product
      */
-    protected $product = null;
+    protected $product;
 
     /**
      * amount

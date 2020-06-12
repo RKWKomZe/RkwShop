@@ -57,7 +57,7 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
      */
-    protected $frontendUser = null;
+    protected $frontendUser;
 
     /**
      * action show cart

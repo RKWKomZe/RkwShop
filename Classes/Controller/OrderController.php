@@ -36,7 +36,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      * @inject
      */
-    protected $productRepository = null;
+    protected $productRepository;
 
 
     /**
@@ -53,7 +53,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
      */
-    protected $frontendUser = null;
+    protected $frontendUser;
 
 
     /**
@@ -95,9 +95,9 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if ($this->request->hasArgument('uid')) {
 
             if (
-                ($uid = $this->request->getArgument('uid'))
-                && ($frontendController = $GLOBALS['TSFE'])
+                ($frontendController = $GLOBALS['TSFE'])
                 && ($frontendController instanceof \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController)
+                && ($uid = $this->request->getArgument('uid'))
             ) {
 
                 // Get flexform data by content-uid
@@ -241,7 +241,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         try {
 
-            $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
+            $message = $this->orderService->createOrder($order, $this->request, $this->getFrontendUser());
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     $message, 'rkw_shop'

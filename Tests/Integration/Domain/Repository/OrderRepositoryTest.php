@@ -53,7 +53,7 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
@@ -63,12 +63,12 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      */
-    private $persistenceManager = null;
+    private $persistenceManager;
 
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
-    private $objectManager = null;
+    private $objectManager;
 
     /**
      * Setup
@@ -430,11 +430,4 @@ class OrderRepositoryTest extends FunctionalTestCase
 
     }
 
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
 }

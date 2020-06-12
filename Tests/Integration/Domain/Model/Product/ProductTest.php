@@ -140,12 +140,4 @@ class ProductTest extends FunctionalTestCase
 
     //=============================================
 
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
 }

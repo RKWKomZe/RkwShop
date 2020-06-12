@@ -83,7 +83,7 @@ class AddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractV
 
             $getter = 'get' . ucfirst($requiredField);
 
-            if (in_array($getter, $methods)) {
+            if (in_array($getter, $methods, true)) {
 
                 if (
                     (

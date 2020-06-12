@@ -117,9 +117,9 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         foreach ($products as $product) {
 
-            if (! in_array($product->getUid(), $uidList)) {
+            if (!in_array($product->getUid(), $uidList, true)) {
 
-                if ($product->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductDownload') {
+                if ($product->getRecordType() !== '\RKW\RkwShop\Domain\Model\ProductDownload') {
                     $result[] = $product;
                     $uidList[] = $product->getUid();
                 }

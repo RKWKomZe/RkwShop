@@ -64,7 +64,7 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
      */
-    protected $frontendUser = null;
+    protected $frontendUser;
 
 
     /**
@@ -80,7 +80,7 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\OrderItem>
      * @cascade remove
      */
-    protected $orderItem = null;
+    protected $orderItem;
 
 
     /**

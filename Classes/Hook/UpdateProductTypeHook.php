@@ -67,13 +67,16 @@ class UpdateProductTypeHook
      * Note: When using the hook after INSERT operations, you will only get the temporary NEW... id passed to your hook as $id,
      * but you can easily translate it to the real uid of the inserted record using the $this->substNEWwithIDs array.
      *
-     * @param string $status (reference) Status of the current operation, 'new' or 'update
-     * @param string $table (reference) The table currently processing data for
-     * @param string $id (reference) The record uid currently processing data for, [integer] or [string] (like 'NEW...')
-     * @param array $fieldArray (reference) The field array of a record
+     * @param string                                   $status (reference) Status of the current operation, 'new' or 'update
+     * @param string                                   $table (reference) The table currently processing data for
+     * @param string                                   $id (reference) The record uid currently processing data for, [integer] or [string] (like 'NEW...')
+     * @param array                                    $fieldArray (reference) The field array of a record
+     * @param \TYPO3\CMS\Core\DataHandling\DataHandler $pObj
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, \TYPO3\CMS\Core\DataHandling\DataHandler &$pObj)
+    public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, \TYPO3\CMS\Core\DataHandling\DataHandler $pObj)
     {
 
         if (! isset($fieldArray['record_type'])) {

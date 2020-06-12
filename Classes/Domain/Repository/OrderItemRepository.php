@@ -55,7 +55,7 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         ');
 
         $result = $query->execute(true);
-        return intval($result[0]['sum']);
+        return (int)$result[0]['sum'];
     }
 
     /**

@@ -1,20 +1,21 @@
-var RkwShop = RkwShop || {};
+const RkwShop = RkwShop || {};
 
 RkwShop.handle = (function ($) {
 
-	var $orderContainer;
+    let $orderContainer;
 
-	var $quantities;
+    let $quantities;
 
-	var $sameAsBilling;
+    let $sameAsBilling;
 
-	var $shippingAddressForm;
+    let $shippingAddressForm;
 
-	var _init = function(){
-		$(document).ready(_onReady);
-	};
+    const _init = function () {
+        $(document)
+            .ready(_onReady);
+    };
 
-	var _onReady = function(){
+    let _onReady = function(){
 		$orderContainer = $('#rkw-order-container');
 		_getContent();
 
@@ -32,36 +33,37 @@ RkwShop.handle = (function ($) {
         }
 	};
 
-	var _changeQuantity = function() {
+	let _changeQuantity = function() {
 
 		$quantities.on('change', function () {
-			var changeUrl = $(this)
-				.closest('.order-list__item')
-				.find('.js-change-quantity-url')
-				.val()
-			;
-			window.location.href = changeUrl + encodeURI('&tx_rkwshop_cart[amount]=') + $(this).val();
+            const changeUrl = $(this)
+                .closest('.order-list__item')
+                .find('.js-change-quantity-url')
+                .val()
+            ;
+            window.location.href = changeUrl + encodeURI('&tx_rkwshop_cart[amount]=') + $(this).val();
 		});
 
 	};
 
-	var _showShippingAddressForm = function() {
+	let _showShippingAddressForm = function() {
 
 	    $sameAsBilling.on('change', function () {
 
-	        var $jcfCheckbox = $(this).closest('.jcf-checkbox');
+            const $jcfCheckbox = $(this)
+                .closest('.jcf-checkbox');
 
             ($jcfCheckbox.hasClass('jcf-checked')) ? $shippingAddressForm.removeClass('hide') : $shippingAddressForm.addClass('hide');
         });
 
     };
 
-	var _getContent = function(e){
+	let _getContent = function(e){
 
 		if ($orderContainer.attr('data-url')) {
 
-			var url =  $orderContainer.attr('data-url');
-			if($orderContainer.attr('data-url').indexOf('?') === -1){
+            let url = $orderContainer.attr('data-url');
+            if($orderContainer.attr('data-url').indexOf('?') === -1){
 				url += '?v=' + jQuery.now();
 			} else {
 				url += '&v=' + jQuery.now();
@@ -77,30 +79,30 @@ RkwShop.handle = (function ($) {
 
 					try {
 						if (json) {
-							for (var property in json) {
+							for (let property in json) {
 
 								if (property === 'html') {
 
-									var htmlObject = json[property];
-									for (parent in htmlObject) {
+                                    const htmlObject = json[property];
+                                    for (parent in htmlObject) {
 
 										targetObject = jQuery('#' + parent);
 										if (targetObject.length) {
-											for (var method in htmlObject[parent]) {
+											for (let method in htmlObject[parent]) {
 												if (method === 'append') {
-													var newContent = jQuery(htmlObject[parent][method]).appendTo(targetObject);
+													let newContent = jQuery(htmlObject[parent][method]).appendTo(targetObject);
                                                     // jQuery(document).trigger('ajax-api-content-changed', newContent);
 													jQuery(document).trigger('rkw-ajax-api-content-changed', newContent);
 
                                                 } else
 												if (method === 'prepend') {
-                                                    var newContent = jQuery(htmlObject[parent][method]).prependTo(targetObject);
+                                                    let newContent = jQuery(htmlObject[parent][method]).prependTo(targetObject);
                                                     // jQuery(document).trigger('ajax-api-content-changed', newContent);
 													jQuery(document).trigger('rkw-ajax-api-content-changed', newContent);
 												} else
 												if (method === 'replace') {
 													targetObject.empty();
-                                                    var newContent = jQuery(htmlObject[parent][method]).prependTo(targetObject);
+                                                    let newContent = jQuery(htmlObject[parent][method]).prependTo(targetObject);
                                                     // jQuery(document).trigger('ajax-api-content-changed', newContent);
 													jQuery(document).trigger('rkw-ajax-api-content-changed', newContent);
 												}
