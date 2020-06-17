@@ -115,8 +115,8 @@
 				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
 			</trans-unit>
 			<trans-unit id="orderManager.message.createdOptIn">
-				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href=mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
-				<target><![CDATA[Fast geschafft! Eine E-Mail mit einem Bestätigungslink ist auf dem Weg zu Ihnen. Sollten Sie innerhalb der nächsten 2-3 Minuten keine E-Mail von uns erhalten, prüfen Sie Ihren Spam-Filter. Selbstverständlich steht Ihnen aber auch unser <a href=mailto:service@rkw.de">Support</a> bei Problemen jederzeit gerne mit Rat und Tat zur Seite.]]></target>
+				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href="mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
+				<target><![CDATA[Fast geschafft! Eine E-Mail mit einem Bestätigungslink ist auf dem Weg zu Ihnen. Sollten Sie innerhalb der nächsten 2-3 Minuten keine E-Mail von uns erhalten, prüfen Sie Ihren Spam-Filter. Selbstverständlich steht Ihnen aber auch unser <a href="mailto:service@rkw.de">Support</a> bei Problemen jederzeit gerne mit Rat und Tat zur Seite.]]></target>
 			</trans-unit>
 
 

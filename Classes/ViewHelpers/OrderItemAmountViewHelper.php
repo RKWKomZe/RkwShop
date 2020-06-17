@@ -29,7 +29,7 @@ class OrderItemAmountViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstrac
     /**
      * Returns ordered amount of given product
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\OrderItem> $orderItemList
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage <\RKW\RkwShop\Domain\Model\OrderItem> $orderItemList
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @return int
      */
