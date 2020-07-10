@@ -15,7 +15,6 @@
 </f:section>
 
 <f:section name="belongsToBundle">
-
     <div class="order-list__item order-list__item--sub">
         <p class="order-list__belongs">
             <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleOptions.belongsToBundle" />
@@ -38,6 +37,11 @@
                         <!-- /@todo -->
 
                         <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.inStock" />
+                        <f:if condition="{showAddToCart} == 1">
+                            <f:form action="addCartItem" controller="CartItem" name="product" id="product-{product.sku}" object="{product}">
+                                <f:render partial="Product/Detail/Input" arguments="{product: product}" section="FieldOnly"/>
+                            </f:form>
+                        </f:if>
                     </p>
                 </f:then>
                 <f:else>
@@ -46,14 +50,6 @@
                     </p>
                 </f:else>
             </f:if>
-
-            <f:if condition="{showAddToCart} == 1">
-                <!-- form -->
-                <f:form action="addCartItem" controller="CartItem" name="product" id="product-{product.sku}" object="{product}">
-                    <f:render partial="Product/Detail/Input" arguments="{product: product}" section="FieldOnly"/>
-                </f:form>
-            </f:if>
-
         </div>
     </div>
 
