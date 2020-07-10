@@ -76,7 +76,8 @@ class CheckoutController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControl
         $this->view->assignMultiple([
             'cart'   => $cart,
             'checkoutPid'   => (int)$this->settings['checkoutPid'],
-            'listPid'   => (int)$this->settings['listPid']
+            'listPid'   => (int)$this->settings['listPid'],
+            'showPid'   => (int)$this->settings['showPid'],
         ]);
 
     }

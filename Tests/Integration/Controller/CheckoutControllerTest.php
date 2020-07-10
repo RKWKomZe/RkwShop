@@ -199,6 +199,7 @@ class CheckoutControllerTest extends FunctionalTestCase
             'cart' => $cart,
             'checkoutPid' => 0,
             'listPid' => 0,
+            'showPid' => 0,
         ]);
         $this->inject($this->subject,'view', $view);
 

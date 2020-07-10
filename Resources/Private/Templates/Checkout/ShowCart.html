@@ -30,7 +30,9 @@ Otherwise your changes will be overwritten the next time you save the extension 
                         <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: orderItem.product}" />
 
                         <div class="order-list__details">
-                            <h4 class="order-list__title">{orderItem.product.title}</h4>
+                            <f:link.action action="show" controller="Product" pluginName="ProductDetail" extensionName="RkwShop" pageUid="{showPid}" arguments="{product : orderItem.product}" title="{orderItem.product.title}">
+                                <h4 class="order-list__title">{orderItem.product.title} <f:if condition="{orderItem.product.sku}">- <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.sku" arguments="{0: '{orderItem.product.sku}'}"/></f:if></h4>
+                            </f:link.action>
                             <f:if condition="{orderItem.product.subtitle}">
                                 <p class="order-list__subtitle">{orderItem.product.subtitle}</p>
                             </f:if>
