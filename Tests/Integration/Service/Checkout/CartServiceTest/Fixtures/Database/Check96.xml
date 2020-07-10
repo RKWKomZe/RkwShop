@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <!-- product_type -->
+    <tx_rkwshop_domain_model_producttype>
+        <uid>1</uid>
+        <title>Product</title>
+        <model>\RKW\RkwShop\Domain\Model\Product</model>
+    </tx_rkwshop_domain_model_producttype>
+
+    <!-- products -->
+    <tx_rkwshop_domain_model_product>
+        <uid>1</uid>
+        <pid>1</pid>
+        <title>DeliverableProduct</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
+        <stock>1</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+        <product_type>1</product_type>
+    </tx_rkwshop_domain_model_product>
+
+    <tx_rkwshop_domain_model_product>
+        <uid>2</uid>
+        <pid>1</pid>
+        <title>NotDeliverableProduct</title>
+        <subtitle>Mit Unterüberschriften kann man alles länger machen</subtitle>
+        <admin_email>test3@test.de</admin_email>
+        <stock>2</stock>
+        <comment></comment>
+        <backend_user />
+        <record_type>\RKW\RkwShop\Domain\Model\Product</record_type>
+        <product_type>1</product_type>
+    </tx_rkwshop_domain_model_product>
+
+    <!-- stocks -->
+    <tx_rkwshop_domain_model_stock>
+        <uid>1</uid>
+        <pid>1</pid>
+        <product>2</product>
+        <amount>10</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+    <tx_rkwshop_domain_model_stock>
+        <uid>2</uid>
+        <pid>1</pid>
+        <product>3</product>
+        <amount>5</amount>
+        <comment>Auf- und Unterlage</comment>
+    </tx_rkwshop_domain_model_stock>
+
+    <!-- cart -->
+    <tx_rkwshop_domain_model_cart>
+        <uid>1</uid>
+        <pid>1</pid>
+        <frontend_user>0</frontend_user>
+        <frontend_user_session_hash>12345678</frontend_user_session_hash>
+        <order_item>1</order_item>
+    </tx_rkwshop_domain_model_cart>
+
+</dataset>

@@ -2,6 +2,7 @@
 
 namespace RKW\RkwShop\Tests\Integration\Service\Checkout;
 
+use Psr\Log\NullLogger;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use RKW\RkwBasics\Helper\Common;
 use RKW\RkwRegistration\Tools\Authentication;
@@ -113,6 +114,23 @@ class CartServiceTest extends FunctionalTestCase
     protected function setUp()
     {
         parent::setUp();
+    }
+
+    /**
+     * @param array $additionalConfig
+     * @throws \Nimut\TestingFramework\Exception\Exception
+     */
+    protected function setUpInstance($additionalConfig = []) {
+
+        $config = [
+            'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
+            'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
+            'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
+            'EXT:rkw_shop/Configuration/TypoScript/setup.txt',
+            'EXT:rkw_shop/Tests/Functional/Orders/Fixtures/Frontend/Configuration/Rootpage.typoscript',
+        ];
+
+        $config = array_merge($config, $additionalConfig);
 
         /*$this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/BeUsers.xml');
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/FeUsers.xml');
@@ -122,20 +140,13 @@ class CartServiceTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/OrderItem.xml');
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/ShippingAddress.xml');
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Stock.xml');
-*/
+        */
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Global.xml');
         $this->setUpFrontendRootPage(
             1,
-            [
-                'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_shop/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_shop/Tests/Functional/Orders/Fixtures/Frontend/Configuration/Rootpage.typoscript',
-            ]
+            $config
         );
-
 
         $this->persistenceManager = GeneralUtility::makeInstance(PersistenceManager::class);
 
@@ -169,6 +180,8 @@ class CartServiceTest extends FunctionalTestCase
          * When I get the cart
          * Then a new cart is created
          */
+
+        $this->setUpInstance();
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check10.xml');
 
@@ -204,6 +217,8 @@ class CartServiceTest extends FunctionalTestCase
          * Then a new cart is created
          * And can be retrieved by frontend user
          */
+
+        $this->setUpInstance();
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check11.xml');
 
@@ -243,6 +258,8 @@ class CartServiceTest extends FunctionalTestCase
          * Then the existing cart is returned
          */
 
+        $this->setUpInstance();
+
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check15.xml');
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
@@ -272,6 +289,8 @@ class CartServiceTest extends FunctionalTestCase
          * When I add a product
          * Then the existing cart is updated
          */
+
+        $this->setUpInstance();
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check20.xml');
 
@@ -311,6 +330,8 @@ class CartServiceTest extends FunctionalTestCase
          * Then the two contained products are returned
          */
 
+        $this->setUpInstance();
+
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check90.xml');
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
@@ -321,6 +342,89 @@ class CartServiceTest extends FunctionalTestCase
         $containedProducts = $this->subject->resolve($productCollection);
 
         static::assertEquals(2, count($containedProducts));
+
+    }
+
+    /**
+     * @test
+     */
+    public function addProductCollectionToCartAddsAllContainedProductsToCartAndAddsCollectionIdToEachOrderItem()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given a product of type collection exists
+         * Given it contains 2 products
+         * Given $setting['resolveCollection'] is true
+         * When I add this product collection to cart
+         * Then the two contained products are returned as separate order items
+         * Then each contained order item has a property parentCollection set to collection id
+         */
+
+        $this->setUpInstance();
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check95.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $productCollection */
+        $productCollection = $this->productRepository->findByUid(1);
+
+        $this->subject->add($cart, $productCollection, $amount = 1);
+
+        static::assertEquals(2, $cart->getOrderItem()->count());
+
+        $orderItems = $cart->getOrderItem()->toArray();
+
+        static::assertEquals($productCollection->getUid(), $orderItems[0]->getParentCollection());
+        static::assertEquals($productCollection->getUid(), $orderItems[1]->getParentCollection());
+
+    }
+
+    /**
+     * @test
+     */
+    public function addProductsToCartAddsProductToCartAndDoesNotSetAnyParentCollectionToEachOrderItem()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given 2 products exist
+         * Given $setting['resolveCollection'] is true
+         * When I add these 2 products to cart
+         * Then the two contained products are returned as separate order items
+         * Then each contained order item has a property parentCollection set to NULL
+         */
+
+        $this->setUpInstance();
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check96.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cart */
+        $cart = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->productRepository->findByUid(1);
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product2 = $this->productRepository->findByUid(2);
+
+        $this->subject->add($cart, $product, $amount = 1);
+        $this->subject->add($cart, $product2, $amount = 1);
+
+        static::assertEquals(2, $cart->getOrderItem()->count());
+
+        $orderItems = $cart->getOrderItem()->toArray();
+
+        static::assertEquals(Null, $orderItems[0]->getParentCollection());
+        static::assertEquals(Null, $orderItems[1]->getParentCollection());
 
     }
 
@@ -339,6 +443,8 @@ class CartServiceTest extends FunctionalTestCase
          * Then the existing cart still contains 1 order item
          * Then the amount of the order item is 2
          */
+
+        $this->setUpInstance();
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check30.xml');
 
@@ -370,6 +476,57 @@ class CartServiceTest extends FunctionalTestCase
     /**
      * @test
      */
+    public function addSingleProductAlreadyContainedInAnAddedCollectionDoesAddTheSingleProductAsSeparateOrderItem()
+    {
+
+        /**
+         * Scenario:
+         *
+         * Given my cart does already exist
+         * Given my cart contains 2 order items as part of a complete collection
+         * Given the setting "resolveCollection" is true
+         * When I add 1 of these 2 order items as a separate item
+         * Then the existing cart still contains 2 order items as part of a complete collection
+         * Then the existing cart contains additionally 1 order item representing the separately added item
+         */
+
+//        $this->setUpInstance([
+//            __DIR__ . '/CartServiceTest/Fixtures/Database/Frontend/Configuration/35.typoscript'
+//        ]);
+        $this->setUpInstance();
+
+        $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check35.xml');
+
+        $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cartBefore */
+        $cartBefore = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
+
+        static::assertEquals('1', $cartBefore->getUid());
+        static::assertEquals(2, $cartBefore->getOrderItem()->count());
+
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $selectedProduct = $this->productRepository->findByUid(2);
+
+        $this->subject->add($cartBefore, $selectedProduct, $amount = 1);
+
+        /** @var \RKW\RkwShop\Domain\Model\Cart $cartAfter */
+        $cartAfter = $this->cartRepository->findByFrontendUserOrFrontendUserSessionHash();
+
+        static::assertEquals('1', $cartAfter->getUid());
+        static::assertEquals(3, $cartAfter->getOrderItem()->count());
+
+        $orderItems = $cartAfter->getOrderItem()->toArray();
+
+        static::assertEquals(1, $orderItems[0]->getAmount());
+        static::assertEquals(1, $orderItems[1]->getAmount());
+        static::assertEquals(1, $orderItems[2]->getAmount());
+
+    }
+
+    /**
+     * @test
+     */
     public function removeRemovesOrderItemFromCartForSessionUser()
     {
 
@@ -382,6 +539,8 @@ class CartServiceTest extends FunctionalTestCase
          * Then the cart will be updated
          * And will contain only the first order item
          */
+
+        $this->setUpInstance();
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check40.xml');
 
@@ -425,6 +584,8 @@ class CartServiceTest extends FunctionalTestCase
          * When I change the quantity of this item to 5
          * Then the existing cart should show a quantity of 5 for this existing product
          */
+
+        $this->setUpInstance();
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check50.xml');
 
@@ -473,6 +634,8 @@ class CartServiceTest extends FunctionalTestCase
          * Then the order item will be removed from the cart
          */
 
+        $this->setUpInstance();
+
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check60.xml');
 
         $_COOKIE[FrontendUserAuthentication::getCookieName()] = '12345678';
@@ -514,6 +677,8 @@ class CartServiceTest extends FunctionalTestCase
          * Then an order is returned
          * And my shipping address will be set to my billing address
          */
+
+        $this->setUpInstance();
 
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check70.xml');
 
@@ -557,6 +722,8 @@ class CartServiceTest extends FunctionalTestCase
          * And the order items will be clones of the cart order items
          */
 
+        $this->setUpInstance();
+
         $this->importDataSet(__DIR__ . '/CartServiceTest/Fixtures/Database/Check70.xml');
 
         /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
@@ -593,6 +760,8 @@ class CartServiceTest extends FunctionalTestCase
      */
     public function createCartSetsFrontendUserOnCartIfAlreadyLoggedIn()
     {
+
+        $this->setUpInstance();
 
         /**
          * Scenario:

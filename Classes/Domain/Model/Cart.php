@@ -281,6 +281,12 @@ class Cart extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             }
         }
 
+        //  check, if $existingItem is part
+
+
+
+
+
         return $existingItem;
     }
 

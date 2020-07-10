@@ -8,6 +8,7 @@ use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use RKW\RkwShop\Exceptions\CartHashNotFoundException;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -260,7 +261,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
 
             foreach ($this->resolve($product) as $resolvedProduct) {
 
-                $this->addProduct($cart, $resolvedProduct, $amount);
+                $this->addProduct($cart, $resolvedProduct, $amount, $collectionId = $product->getUid());
 
             }
 
@@ -276,8 +277,9 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Cart    $cart
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @param                                   $amount
+     * @param \RKW\RkwShop\Domain\Model\ProductCollection $parentCollection
      */
-    public function addProduct(\RKW\RkwShop\Domain\Model\Cart $cart, \RKW\RkwShop\Domain\Model\Product $product, $amount)
+    public function addProduct(\RKW\RkwShop\Domain\Model\Cart $cart, \RKW\RkwShop\Domain\Model\Product $product, $amount, $parentCollection)
     {
 
         $orderItem = $cart->containsProduct($product);
@@ -288,6 +290,7 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
             $orderItem = new OrderItem();
             $orderItem->setProduct($product);
             $orderItem->setAmount($amount);
+            $orderItem->setParentCollection($parentCollection);
             $cart->addOrderItem($orderItem);
 
             $this->cartRepository->update($cart);
@@ -447,7 +450,9 @@ class CartService implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
     {
-        return Common::getTyposcriptConfiguration('Rkwshop', $which);
+        $settings = Common::getTyposcriptConfiguration('Rkwshop', $which);
+
+        return $settings;
     }
 
 }

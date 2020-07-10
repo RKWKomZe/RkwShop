@@ -68,6 +68,7 @@ CREATE TABLE tx_rkwshop_domain_model_orderitem (
 	product int(11) unsigned DEFAULT '0',
 	amount int(11) unsigned DEFAULT '0',
 	is_pre_order tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	parent_collection int(11) unsigned DEFAULT '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

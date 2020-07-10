@@ -1,0 +1,6 @@
+plugin.tx_rkwshop {
+    settings {
+        resolveCollection = 1
+    }
+}
+		

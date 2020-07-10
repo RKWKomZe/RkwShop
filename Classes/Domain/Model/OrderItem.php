@@ -60,6 +60,13 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $product;
 
     /**
+     * product
+     *
+     * @var \RKW\RkwShop\Domain\Model\ProductCollection
+     */
+    protected $parentCollection;
+
+    /**
      * amount
      *
      * @var int
@@ -242,5 +249,25 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         //===
     }
 
+    /**
+     * Sets the parentCollection
+     *
+     * @param integer $parentCollection
+     */
+    public function setParentCollection($parentCollection)
+    {
+        $this->parentCollection = $parentCollection;
+    }
 
+
+    /**
+     * Returns the parentCollection
+     *
+     * @return integer|null
+     */
+    public function getParentCollection()
+    {
+        return $this->parentCollection;
+        //===
+    }
 }
