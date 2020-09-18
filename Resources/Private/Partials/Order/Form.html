@@ -6,11 +6,9 @@
         <h5 class="h4 order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress" /></h5>
 
         <div class="flex-container">
-            <div class="flex-basis-8 full-width-medium">
-                <div class="form flex space-between">
-                    <f:render partial="Order/Form/UserData" arguments="{_all}" />
-                    <f:render partial="Order/Form/Terms" arguments="{_all}" />
-                </div>
+            <div class="form flex flex-basis-8 full-width-medium space-between">
+                <f:render partial="Order/Form/UserData" arguments="{_all}" />
+                <f:render partial="Order/Form/Terms" arguments="{_all}" />
             </div>
         </div>
     </div>
