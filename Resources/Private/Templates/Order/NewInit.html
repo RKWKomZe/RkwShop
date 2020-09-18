@@ -1,16 +1,17 @@
-{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:layout name="Default" />
+    <f:layout name="Default" />
 
-<f:section name="main">
+    <f:section name="main">
 
-    <f:render partial="FlashMessages"  arguments="{_all}" />
+        <f:render partial="FlashMessages"  arguments="{_all}" />
 
-    <f:if condition="{products}">
-        <div id="rkw-order-wrap">
-            <div id="rkw-order-container" data-url="{f:uri.page(pageUid:'{pageUid}', additionalParams: '{type: \'1510210402\', tx_rkwshop_itemlist: {uid: \'{contentUid}\'}}')}">
-                <p class="rkw-order__loading"><f:image alt="Loading..." src="EXT:rkw_shop/Resources/Public/Images/ajax-loader.gif" /></p>
+        <f:if condition="{products}">
+            <div id="rkw-order-wrap">
+                <div id="rkw-order-container" data-url="{f:uri.page(pageUid:'{pageUid}', additionalParams: '{type: \'1510210402\', tx_rkwshop_itemlist: {uid: \'{contentUid}\'}}')}">
+                    <p class="rkw-order__loading"><f:image alt="Loading..." src="EXT:rkw_shop/Resources/Public/Images/ajax-loader.gif" /></p>
+                </div>
             </div>
-        </div>
-    </f:if>
-</f:section>
+        </f:if>
+    </f:section>
+</html>

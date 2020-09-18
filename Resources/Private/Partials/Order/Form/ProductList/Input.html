@@ -1,56 +1,58 @@
-{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:rkwShop="http://typo3.org/ns/RKW/RkwShop/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+    <f:if condition="<rkwShop:ProductStock product='{product}' />">
+        <f:then>
+            <p class="order-list__status">
+                <f:comment>
+                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.stockLeft" arguments="{0: '{rkwShop:ProductStock(product: product)}'}"/>
+                </f:comment>
+                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.inStock" />
+            </p>
+            <f:render section="FieldOnly" arguments="{_all}" />
+        </f:then>
+        <f:else>
+            <f:if condition="<rkwShop:ProductStock product='{product}' preOrder='1' />">
+                <f:then>
+                    <p class="order-list__status order-list__status--warn">
+                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStockPreOrder" />
+                    </p>
+                    <f:render section="FieldOnly" arguments="{_all}" />
+                </f:then>
+                <f:else>
+                    <p class="order-list__status order-list__status--warn">
+                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStock" />
+                    </p>
+                </f:else>
+            </f:if>
+        </f:else>
+    </f:if>
 
-<f:if condition="<rkwShop:ProductStock product='{product}' />">
-    <f:then>
-        <p class="order-list__status">
-            <f:comment>
-                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.stockLeft" arguments="{0: '{rkwShop:ProductStock(product: product)}'}"/>
-            </f:comment>
-            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.inStock" />
-        </p>
-        <f:render section="FieldOnly" arguments="{_all}" />
-    </f:then>
-    <f:else>
-        <f:if condition="<rkwShop:ProductStock product='{product}' preOrder='1' />">
-            <f:then>
-                <p class="order-list__status order-list__status--warn">
-                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStockPreOrder" />
-                </p>
-                <f:render section="FieldOnly" arguments="{_all}" />
-            </f:then>
-            <f:else>
-                <p class="order-list__status order-list__status--warn">
-                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.outOfStock" />
-                </p>
-            </f:else>
-        </f:if>
-    </f:else>
-</f:if>
 
+    <!-- separate section -->
+    <f:section name="FieldOnly">
 
-<!-- separate section -->
-<f:section name="FieldOnly">
+        <div class="order-list__order">
+            <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" property="orderItem.{product.uid}.amount" value="<rkwShop:OrderItemAmount orderItemList='{orderItem}' product='{product}' />" />
 
-    <div class="order-list__order">
-        <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" property="orderItem.{product.uid}.amount" value="<rkwShop:OrderItemAmount orderItemList='{orderItem}' product='{product}' />" class="feedback-field"/>
+            <f:if condition="{product.productBundle.recordType} == 0">
+                <f:then>
+                    <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+                        <f:then>
+                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
+                        </f:then>
+                        <f:else>
+                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountSingle" />
+                        </f:else>
+                    </f:if>
+                </f:then>
+                <f:else>
+                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
+                </f:else>
+            </f:if>
 
-        <f:if condition="{product.productBundle.recordType} == 0">
-            <f:then>
-                <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
-                    <f:then>
-                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
-                    </f:then>
-                    <f:else>
-                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountSingle" />
-                    </f:else>
-                </f:if>
-            </f:then>
-            <f:else>
-                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
-            </f:else>
-        </f:if>
-
-        <!-- add hidden field with product -->
-        <f:form.hidden property="orderItem.{product.uid}.product" value="{product}" />
-    </div>
-</f:section>
+            <!-- add hidden field with product -->
+            <f:form.hidden property="orderItem.{product.uid}.product" value="{product}" />
+        </div>
+    </f:section>
+</html>

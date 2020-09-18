@@ -1,41 +1,43 @@
-{namespace rkwShop=RKW\RkwShop\ViewHelpers}
-{namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:rkwRegistration="http://typo3.org/ns/RKW/RkwRegistration/ViewHelpers"
+	data-namespace-typo3-fluid="true">
 
-<!-- remark -->
-<f:comment>
-	<div class="v320-1">
-		<label for="tx-rkwshop-remark" class="form-label">
-			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.remark" />
-		</label>
-		<f:form.textarea id="tx-rkwshop-remark" property="remark" />
-	</div>
-</f:comment>
-
-<p class="v320-1">
-
-	<f:security.ifAuthenticated>
-		<f:else>
-		<span class="checkbox">
-			<label>
-				<f:form.checkbox name="terms" value="1" checked="{terms}"/>
-				<span class="text-smaller">
-					<f:link.page pageUid="{termsPid}" target="_blank">
-						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.terms" />
-					</f:link.page>
-				</span>
+	<f:comment>
+		<div class="form__field">
+			<label for="tx-rkwshop-remark">
+				<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.remark" />
 			</label>
-		</span>
-		</f:else>
-	</f:security.ifAuthenticated>
-	<span class="checkbox">
-		<label>
-			<f:form.checkbox name="privacy" value="1" checked="{privacy}" />
-			<rkwRegistration:privacyText textVersion="order" />
-		</label>
-	</span>
-</p>
-<p class="v320-1">
-	<button class="button" type="submit">
-		<span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.orderButton" /></span>
-	</button>
-</p>
+			<f:form.textarea id="tx-rkwshop-remark" property="remark" />
+		</div>
+	</f:comment>
+
+	<div class="form__approval">
+
+		<f:security.ifAuthenticated>
+			<f:else>
+				<div class="form__field">
+					<f:form.checkbox name="terms" id="tx-rkwshop-terms" value="1" checked="{terms}" class="checkbox"/>
+					<label for="tx-rkwshop-terms" class="checkbox-label">
+						<f:link.page pageUid="{termsPid}" target="_blank">
+							<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.terms" />
+						</f:link.page>
+					</label>
+				</div>
+			</f:else>
+		</f:security.ifAuthenticated>
+
+		<div class="form__field">
+			<f:form.checkbox name="privacy" id="tx-rkwshop-privacy" value="1" checked="{privacy}" class="checkbox"/>
+			<label for="tx-rkwshop-privacy" class="checkbox-label">
+				<rkwRegistration:privacyText textVersion="order" />
+			</label>
+		</div>
+
+		<div class="form__field flex space-start full-width-narrow">
+			<button class="btn btn--primary full-width-narrow" type="submit">
+				<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.orderButton" />
+			</button>
+		</div>
+	</div>
+
+</html>

@@ -145,6 +145,11 @@
 				<source>(Optional)</source>
 				<target>(Optional)</target>
 			</trans-unit>
+			<trans-unit id="partials.order.form.labelRequired">
+				<source>(Required)</source>
+				<target>(Pflichtfeld)</target>
+			</trans-unit>
+
 
 
             <!-- Partials/Order/Form/ProductList.html -->

@@ -1,58 +1,60 @@
-{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 
-<ul class="order-list">
+    <div class="order-list">
 
-	<f:for each="{products}" as="product" iteration="productIterator">
+        <f:for each="{products}" as="product" iteration="productIterator">
 
-		<li class="order-list__item">
+            <div class="order-list__item">
 
-            <f:if condition="{product.page}">
-                <f:then>
-                    <f:link.page pageUid="{product.page.uid}">
-                        <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product, orderItem: order.orderItem}" />
-                    </f:link.page>
-                </f:then>
-                <f:else>
-                    <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product, orderItem: order.orderItem}" />
-                </f:else>
-            </f:if>
-
-			<div class="order-list__details">
-				<h4 class="order-list__title">{product.title}</h4>
-				<f:if condition="{product.subtitle}">
-					<p class="order-list__subtitle">{product.subtitle}</p>
-				</f:if>
-
-                <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
-
-                    <!-- is bundle itself? -->
+                <f:if condition="{product.page}">
                     <f:then>
-                        <f:render partial="Order/Form/ProductList/BundleOptions" section="isBundle" arguments="{product: product, orderItem: order.orderItem}" />
+                        <f:link.page pageUid="{product.page.uid}">
+                            <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product, orderItem: order.orderItem}" />
+                        </f:link.page>
                     </f:then>
-
-                    <!-- belongs to bundle? -->
                     <f:else>
-
-                        <f:if condition="{product.productBundle.uid} > 0">
-                            <f:then>
-
-                                <!-- is single order allowed? -->
-                                <f:if condition="{product.productBundle.allowSingleOrder}">
-                                    <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
-                                </f:if>
-
-                                <f:render partial="Order/Form/ProductList/BundleOptions" section="belongsToBundle" arguments="{product: product, orderItem: order.orderItem}" />
-                            </f:then>
-
-                            <!-- without bundle -->
-                            <f:else>
-                                <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
-                            </f:else>
-                        </f:if>
-
+                        <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product, orderItem: order.orderItem}" />
                     </f:else>
                 </f:if>
-			</div>
-		</li>
-	</f:for>
-</ul>
+
+                <div class="order-list__details">
+                    <h4 class="order-list__title">{product.title}</h4>
+                    <f:if condition="{product.subtitle}">
+                        <p class="order-list__subtitle">{product.subtitle}</p>
+                    </f:if>
+
+                    <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+
+                        <!-- is bundle itself? -->
+                        <f:then>
+                            <f:render partial="Order/Form/ProductList/BundleOptions" section="isBundle" arguments="{product: product, orderItem: order.orderItem}" />
+                        </f:then>
+
+                        <!-- belongs to bundle? -->
+                        <f:else>
+
+                            <f:if condition="{product.productBundle.uid} > 0">
+                                <f:then>
+
+                                    <!-- is single order allowed? -->
+                                    <f:if condition="{product.productBundle.allowSingleOrder}">
+                                        <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                                    </f:if>
+
+                                    <f:render partial="Order/Form/ProductList/BundleOptions" section="belongsToBundle" arguments="{product: product, orderItem: order.orderItem}" />
+                                </f:then>
+
+                                <!-- without bundle -->
+                                <f:else>
+                                    <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                                </f:else>
+                            </f:if>
+
+                        </f:else>
+                    </f:if>
+                </div>
+            </div>
+        </f:for>
+    </div>
+</html>

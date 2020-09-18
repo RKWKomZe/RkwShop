@@ -1,13 +1,20 @@
-{namespace vh=RKW\RkwShop\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<f:render partial="Order/Form/ProductList" arguments="{_all}" />
+    <f:render partial="Order/Form/ProductList" arguments="{_all}" />
 
-<div class="order-form">
-    <h5 class="order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress" /></h5>
-    <f:render partial="Order/Form/UserData" arguments="{_all}" />
-</div>
+    <div class="order-form">
+        <h5 class="h4 order-form__header"><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress" /></h5>
 
-<f:render partial="Order/Form/Terms" arguments="{_all}" />
+        <div class="flex-container">
+            <div class="flex-basis-8 full-width-medium">
+                <div class="form flex space-between">
+                    <f:render partial="Order/Form/UserData" arguments="{_all}" />
+                    <f:render partial="Order/Form/Terms" arguments="{_all}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
 
 
 
