@@ -115,6 +115,10 @@
 			<trans-unit id="partials.order.form.labelOptional">
 				<source>(Optional)</source>
 			</trans-unit>
+			<trans-unit id="partials.order.form.labelRequired">
+				<source>(Required)</source>
+			</trans-unit>
+
 
 
             <!-- Partials/Order/Form/ProductList.html -->

@@ -1,26 +1,29 @@
-{namespace rkwShop=RKW\RkwShop\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:rkwShop="http://typo3.org/ns/RKW/RkwShop/ViewHelpers"
+    data-namespace-typo3-fluid="true">
 
-<f:if condition="<rkwShop:bundleContent product='{product}' />">
+    <f:if condition="<rkwShop:bundleContent product='{product}' />">
 
-    <div class="order-list__contents">
-        <f:if condition="{product.recordType} != '\RKW\RkwShop\Domain\Model\ProductBundle'">
-            <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleContents.contents" /></span>
-        </f:if>
-        <ol>
-            <f:for each="<rkwShop:bundleContent product='{product}' />" as="bundleItem" >
-                <li>
-                    <f:if condition="{bundleItem.page}">
-                        <f:then>
-                            <f:link.page pageUid="{bundleItem.page.uid}">
+        <div class="order-list__contents">
+            <f:if condition="{product.recordType} != '\RKW\RkwShop\Domain\Model\ProductBundle'">
+                <span><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleContents.contents" /></span>
+            </f:if>
+            <ol>
+                <f:for each="<rkwShop:bundleContent product='{product}' />" as="bundleItem" >
+                    <li>
+                        <f:if condition="{bundleItem.page}">
+                            <f:then>
+                                <f:link.page pageUid="{bundleItem.page.uid}">
+                                    {bundleItem.title}. {bundleItem.subtitle}
+                                </f:link.page>
+                            </f:then>
+                            <f:else>
                                 {bundleItem.title}. {bundleItem.subtitle}
-                            </f:link.page>
-                        </f:then>
-                        <f:else>
-                            {bundleItem.title}. {bundleItem.subtitle}
-                        </f:else>
-                    </f:if>
-                </li>
-            </f:for>
-        </ol>
-    </div>
-</f:if>
+                            </f:else>
+                        </f:if>
+                    </li>
+                </f:for>
+            </ol>
+        </div>
+    </f:if>
+</html>
