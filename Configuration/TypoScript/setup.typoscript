@@ -181,7 +181,7 @@ plugin.tx_rkwshop {
 
 # Add jquery if not disabled
 [globalVar = LIT:1 = {$plugin.tx_rkwshop.settings.includeJQuery}]
-    page.includeJSFooterlibs.jquery = EXT:rkw_shop/Resources/Public/Scripts/jquery-1.11.1.min.js
+    page.includeJSFooterlibs.jquery = EXT:rkw_shop/Resources/Public/Scripts/jquery-3.4.1.min.js
 [global]
 
 page.includeJSFooter.txRkwShop = EXT:rkw_shop/Resources/Public/Scripts/RkwShop.js
