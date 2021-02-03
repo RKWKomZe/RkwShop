@@ -66,6 +66,7 @@ return [
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_stock.deliveryStart',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 30,
                 'eval' => 'datetime',
             ],
