@@ -29,9 +29,11 @@
 
     <f:section name="isBundle">
         <div class="order-list__item order-list__item--sub">
-            <p class="order-list__belongs">
-                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleOptions.bundleContains" />
-            </p>
+            <f:if condition="<rkwShop:bundleContent product='{product}' />">
+                <p class="order-list__belongs">
+                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.bundleOptions.bundleContains" />
+                </p>
+            </f:if>
             <div class="order-list__details order-list__details--sub">
 
                 <f:render partial="Order/Form/ProductList/BundleContents" arguments="{product: product}" />

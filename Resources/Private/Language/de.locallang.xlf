@@ -23,7 +23,7 @@
             <!-- tx_rkwshop_domain_model_shippingaddress -->
             <trans-unit id="tx_rkwshop_domain_model_shippingaddress">
 				<source>Shipping Address</source>
-				<target>Lieferadresse</target>
+				<target>Ihre Daten</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender">
 				<source>Gender</source>
@@ -161,6 +161,10 @@
 				<source>Order now</source>
 				<target>Jetzt bestellen</target>
 			</trans-unit>
+            <trans-unit id="partials.order.form.productList.subscriptionButton">
+                <source>Subscribe now</source>
+                <target>Jetzt abonnieren</target>
+            </trans-unit>
 
 
 

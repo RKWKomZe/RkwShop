@@ -17,14 +17,13 @@
                         <f:render partial="Order/Form/ProductList/ProductImage" arguments="{product: product, orderItem: order.orderItem}" />
                     </f:else>
                 </f:if>
-
                 <div class="order-list__details">
                     <h4 class="order-list__title">{product.title}</h4>
                     <f:if condition="{product.subtitle}">
                         <p class="order-list__subtitle">{product.subtitle}</p>
                     </f:if>
 
-                    <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+                    <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle' || {product.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
 
                         <!-- is bundle itself? -->
                         <f:then>
