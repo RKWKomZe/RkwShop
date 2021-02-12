@@ -35,12 +35,12 @@
 
 		<div class="form__field flex space-start full-width-narrow">
 			<button class="btn btn--primary full-width-narrow" type="submit">
-				<f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
+				<f:if condition="{f:count(subject: products)} == 1 && {products.0.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
 					<f:then>
-						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.orderButton" />
+						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.subscriptionButton" />
 					</f:then>
 					<f:else>
-						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.subscriptionButton" />
+						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.orderButton" />
 					</f:else>
 				</f:if>
 			</button>
