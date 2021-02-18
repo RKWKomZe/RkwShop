@@ -62,7 +62,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * email
      *
      * @var string
-     * @validate EmailAddress, NotEmpty
      */
     protected $email;
 
