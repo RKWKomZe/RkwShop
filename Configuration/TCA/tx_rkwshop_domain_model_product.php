@@ -171,8 +171,19 @@ return [
             'exclude' => false,
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_product.page',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputLink',
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'pages',
+                'maxitems' => 1,
+                'minitems' => 0,
+                'size' => 1,
+                'default' => 0,
+                'suggestOptions' => [
+                    'default' => [
+                        'additionalSearchFields' => 'nav_title, alias, url',
+                        'addWhere' => 'AND pages.doktype = 1'
+                    ]
+                ]
             ],
         ],
         'download' => [
