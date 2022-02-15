@@ -108,7 +108,7 @@
             </trans-unit>
             <trans-unit id="orderManager.error.frontendUserNotPersisted">
                 <source><![CDATA[Oops, that shouldn't have happened. The user account you submitted does not seem to exist. Please contact our <a href="mailto:service@rkw.de">Support</a>. ]]></source>
-                <target><![CDATA[Upps, das hätte nicht passieren dürfen. Das übergebene Nutzerkonto scheint nicht zu existieren. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
+                <target><![CDATA[Upps, das hätte nicht passieren dürfen. Das übergebene Nutzendenkonto scheint nicht zu existieren. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
             </trans-unit>
 			<trans-unit id="orderManager.message.created">
 				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
@@ -241,7 +241,7 @@
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.textOptIn">
 				<source>Please click here to confirm your order. To make future orders easier for you, a free account will automatically be created if you are not already registered as a user. You will receive your password in another e-mail.</source>
-				<target>Bitte klicken Sie hier, um die Bestellung zu bestätigen. Um Ihnen zukünftige Bestellungen zu erleichtern, wird automatisch ein kostenloser Account erstellt, falls Sie nicht schon als Nutzer registriert sind. Das Passwort erhalten Sie in einer weiteren E-Mail.</target>
+				<target>Bitte klicken Sie hier, um die Bestellung zu bestätigen. Um Ihnen zukünftige Bestellungen zu erleichtern, wird automatisch ein kostenloser Account erstellt, falls Sie nicht schon ein Nutzendenkonto haben. Das Passwort erhalten Sie in einer weiteren E-Mail.</target>
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.textOptOut">
 				<source>Have you changed your mind or have you not requested the order yourself? Simply click here to delete all data:</source>
