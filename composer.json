@@ -17,13 +17,13 @@
         }
     ],
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.4",
         "ext-simplexml" : "*",
-        "typo3/cms-core": "~7.6.0 || ~8.7.0",
-        "rkw/rkw-basics": "~8.7.7",
-        "rkw/rkw-mailer": "~8.7.20 || ~9.5.0",
-        "rkw/rkw-registration": "~8.7.5",
-        "rkw/rkw-ajax": "~8.7.6"
+        "typo3/cms-core": "~9.5.0",
+        "rkw/rkw-basics": "~9.5.0 || dev-feature/upgrade9.5",
+        "rkw/rkw-mailer": "~9.5.0",
+        "rkw/rkw-registration": "~9.5.0 || dev-feature/upgrade9.5",
+        "rkw/rkw-ajax": "~9.5.0 || dev-feature/upgrade9.5"
     },
     "conflict": {
         "rkw/rkw-authors" : "<7.6.14",
