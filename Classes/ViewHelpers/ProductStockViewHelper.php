@@ -15,6 +15,9 @@ namespace RKW\RkwShop\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use RKW\RkwShop\Domain\Model\Product;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /**
  * ProductStockViewHelper
  *
@@ -23,18 +26,36 @@ namespace RKW\RkwShop\ViewHelpers;
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class ProductStockViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class ProductStockViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+
+    /**
+     * Initialize arguments.
+     *
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('product', Product::class, 'Product-object to get current stock for', true);
+        $this->registerArgument('preOrder', 'bool', 'Return pre-orders instead of current stock', false, false);
+
+    }
+
+
     /**
      * Returns current stock or current pre-order stock
      *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @param bool $preOrder
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function render(\RKW\RkwShop\Domain\Model\Product $product, $preOrder = false)
+    public function render(): int
     {
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->arguments['product'];
+
+        /** @var bool $preOrder */
+        $preOrder = $this->arguments['preOrder'];
 
         $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 

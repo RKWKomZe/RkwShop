@@ -119,7 +119,7 @@ class OrderManagerTest extends FunctionalTestCase
      * Setup
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -611,7 +611,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         $this->subject->createOrder($order, $request, $frontendUser, true, true);
 
-    }    
+    }
 
 
     /**
@@ -1278,7 +1278,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);
-        static::assertInternalType('array', $result);
+        static::assertIsArray( $result);
 
         self::assertCount(3, $result);
         self::assertInstanceOf('\RKW\RkwShop\Domain\Model\BackendUser', $result[0]);
@@ -1314,7 +1314,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);
-        static::assertInternalType('array', $result);
+        static::assertIsArray( $result);
 
         self::assertCount(1, $result);
         self::assertInstanceOf('\RKW\RkwShop\Domain\Model\BackendUser', $result[0]);
@@ -1347,7 +1347,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);
-        static::assertInternalType('array', $result);
+        static::assertIsArray( $result);
 
         self::assertCount(1, $result);
 
@@ -1380,7 +1380,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);
-        static::assertInternalType('array', $result);
+        static::assertIsArray( $result);
 
         self::assertCount(3, $result);
         self::assertInstanceOf('\RKW\RkwShop\Domain\Model\BackendUser', $result[0]);
@@ -1400,7 +1400,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

@@ -15,6 +15,8 @@ namespace RKW\RkwShop\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use RKW\RkwShop\Domain\Model\Product;
+
 /**
  * GetListOfAdminsForProductViewHelper
  *
@@ -23,17 +25,34 @@ namespace RKW\RkwShop\ViewHelpers;
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class GetListOfAdminsForProductViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class GetListOfAdminsForProductViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+
+
+    /**
+     * Initialize arguments.
+     *
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('product', Product::class, 'Product-object for which the backend-users are to be fetched', true);
+        $this->registerArgument('backendUserForProductMap', 'array', 'Array of BackendUser-objects to select from', true);
+    }
+
+
     /**
      * Returns admins for given product
      *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
-     * @param array $backendUserForProductMap
      * @return string
      */
-    public function render(\RKW\RkwShop\Domain\Model\Product $product, $backendUserForProductMap)
+    public function render(): string
     {
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->arguments['product'];
+        $backendUserForProductMap = $this->arguments['backendUserForProductMap'];
+
         if (! empty($backendUserForProductMap)) {
             if (isset($backendUserForProductMap[$product->getUid()])) {
                return $backendUserForProductMap[$product->getUid()];

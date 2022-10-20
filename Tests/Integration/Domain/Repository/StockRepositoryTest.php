@@ -70,7 +70,7 @@ class StockRepositoryTest extends FunctionalTestCase
      * Setup
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/StockRepositoryTest/Fixtures/Database/Global.xml');
@@ -181,7 +181,7 @@ class StockRepositoryTest extends FunctionalTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

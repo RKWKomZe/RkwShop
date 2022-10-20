@@ -44,22 +44,15 @@ call_user_func(
          */
         $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher');
         $signalSlotDispatcher->connect(
-            'RKW\\RkwRegistration\\Tools\\Registration',
-            \RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_CREATING_OPTIN_EXISTING_USER  . 'RkwShop',
+            \RKW\RkwRegistration\Registration\FrontendUser\AbstractRegistration::class,
+            \RKW\RkwRegistration\Registration\FrontendUser\AbstractRegistration::SIGNAL_AFTER_CREATING_OPTIN  . 'RkwShop',
             'RKW\\RkwShop\\Service\\RkwMailService',
             'handleOptInRequestEvent'
         );
 
         $signalSlotDispatcher->connect(
-            'RKW\\RkwRegistration\\Tools\\Registration',
-            \RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_CREATING_OPTIN_USER  . 'RkwShop',
-            'RKW\\RkwShop\\Service\\RkwMailService',
-            'handleOptInRequestEvent'
-        );
-
-        $signalSlotDispatcher->connect(
-            'RKW\\RkwRegistration\\Tools\\Registration',
-            \RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_USER_REGISTER_GRANT . 'RkwShop',
+            \RKW\RkwRegistration\Registration\FrontendUser\AbstractRegistration::class,
+            \RKW\RkwRegistration\Registration\FrontendUser\AbstractRegistration::SIGNAL_AFTER_REGISTRATION_COMPLETED . 'RkwShop',
             'RKW\RkwShop\Orders\OrderManager',
             'saveOrderSignalSlot'
         );
@@ -79,8 +72,8 @@ call_user_func(
         );
 
         $signalSlotDispatcher->connect(
-            'RKW\\RkwRegistration\\Tools\\Registration',
-            \RKW\RkwRegistration\Tools\Registration::SIGNAL_AFTER_DELETING_USER,
+            \RKW\RkwRegistration\Registration\FrontendUser\AbstractRegistration::class,
+            \RKW\RkwRegistration\Registration\FrontendUser\AbstractRegistration::SIGNAL_AFTER_REGISTRATION_ENDED,
             'RKW\RkwShop\Orders\OrderManager',
             'removeAllOrdersOfFrontendUserSignalSlot'
         );

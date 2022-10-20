@@ -88,12 +88,12 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $shippingAddress = null;
 
-    
+
     /**
      * orderItem
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\OrderItem>
-     * @cascade remove
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $orderItem = null;
 
@@ -217,7 +217,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         //===
     }
 
-    
+
     /**
      * Returns the email
      *

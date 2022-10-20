@@ -36,6 +36,10 @@ config.tx_extbase.persistence {
         }
 
         RKW\RkwShop\Domain\Model\FrontendUser {
+
+            // storage for new records in cross-extension-context
+            newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
+
             mapping {
                 tableName = fe_users
                 recordType =
@@ -71,7 +75,7 @@ config.tx_extbase.persistence {
 
         RKW\RkwShop\Domain\Model\ShippingAddress {
 
-            # very important to set the storagePid explicit - otherwise it will add to the pid of related objects
+            // storage for new records in cross-extension-context
             newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
 
             mapping {

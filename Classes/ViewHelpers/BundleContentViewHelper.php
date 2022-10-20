@@ -15,6 +15,8 @@ namespace RKW\RkwShop\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use RKW\RkwShop\Domain\Model\Product;
+
 /**
  * BundleContentViewHelper
  *
@@ -23,21 +25,36 @@ namespace RKW\RkwShop\ViewHelpers;
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class BundleContentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class BundleContentViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    /**
+     * Initialize arguments.
+     *
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('product', Product::class, 'Product-object of which the bundle-content is to be returned', true);
+    }
+
+
     /**
      * Returns content of productBundle of one product
      *
-     * @param \RKW\RkwShop\Domain\Model\Product $product
      * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function render(\RKW\RkwShop\Domain\Model\Product $product)
+    public function render()
     {
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        $product = $this->arguments['product'];
+
         $productForList = $product->getProductBundle();
+
         if ($product->getRecordType() == '\RKW\RkwShop\Domain\Model\ProductBundle') {
             $productForList = $product;
         }
-        
+
         if (
             ($productForList)
             && ($productForList->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductSubscription')

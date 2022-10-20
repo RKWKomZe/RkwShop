@@ -70,7 +70,7 @@ class OrderRepositoryTest extends FunctionalTestCase
      * Setup
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Global.xml');
@@ -262,7 +262,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $result = $this->subject->findByTimestampSoap(4000);
 
         static::assertEquals(1, count($result));
-        static::assertContains($this->subject->findByUid(1), $result);
+        static::assertStringContainsString($this->subject->findByUid(1), $result);
 
     }
 
@@ -409,7 +409,7 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

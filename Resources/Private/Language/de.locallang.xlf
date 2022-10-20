@@ -72,8 +72,8 @@
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.city">
 				<source>City</source>
 				<target>Stadt</target>
-			</trans-unit>			
-			
+			</trans-unit>
+
 
 			<!-- ================================================================================== -->
 
@@ -111,8 +111,8 @@
                 <target><![CDATA[Upps, das hätte nicht passieren dürfen. Das übergebene Nutzerkonto scheint nicht zu existieren. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
             </trans-unit>
 			<trans-unit id="orderManager.message.created">
-				<source>Wohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
-				<target>Wohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
+				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
+				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
 			</trans-unit>
 			<trans-unit id="orderManager.message.createdOptIn">
 				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href="mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
@@ -123,8 +123,8 @@
 
             <!-- OrderController -->
 			<trans-unit id="orderController.message.orderCreated">
-				<source>Wohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
-				<target>Wohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
+				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
+				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
 			</trans-unit>
 			<trans-unit id="orderController.message.orderCanceled">
 				<source>The order process was aborted as desired. However, you can place another order at any time..</source>
@@ -331,8 +331,8 @@
 			<trans-unit id="templates.email.deleteOrderAdmin.text1">
 				<source>an order has just been cancelled. Please DO NOT send the order below and delete the subscriptions listed below if necessary. If you have any questions, you can reply directly to this e-mail.</source>
 				<target>eine Bestellung wurde soeben storniert. Bitte senden Sie die untenstehende Bestellung NICHT  zu und löschen Sie ggf. auch die unten genannten Abonnements. Sie können bei etwaigen Rückfragen direkt auf diese E-Mail antworten.</target>
-			</trans-unit>			
-			
+			</trans-unit>
+
 
 			<!-- Partials/Email/ProductList.html -->
             <trans-unit id="partials.email.productList.orderDetails">

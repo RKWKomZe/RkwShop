@@ -70,7 +70,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $subtitle;
 
-    
+
     /**
      * publishingDate
      *
@@ -78,15 +78,15 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $publishingDate;
 
-    
+
     /**
      * author
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Author>
      */
     protected $author = null;
-    
-    
+
+
     /**
      * page
      *
@@ -94,14 +94,14 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $page;
 
-    
+
     /**
      * image
      *
      * @var \RKW\RkwBasics\Domain\Model\FileReference
      */
     protected $image = null;
-    
+
 
     /**
      * download
@@ -130,7 +130,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * stock
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Stock>
-     * @cascade remove
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $stock;
 
@@ -158,7 +158,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $adminEmail;
 
 
-    
+
     /**
      * __construct
      */
@@ -377,7 +377,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->author = $author;
     }
-    
+
 
     /**
      * Returns the publishingDate value
@@ -502,7 +502,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setDownload(\RKW\RkwBasics\Domain\Model\FileReference $download)
     {
         $this->download = $download;
-    }    
+    }
 
 
     /**

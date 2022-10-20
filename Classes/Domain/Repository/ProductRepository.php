@@ -68,7 +68,7 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
 
         /**
-         * @toDo not working with TYPO3 8.7 and above
+         * @todo not working with TYPO3 8.7 and above
          * @see https://stackoverflow.com/questions/56148787/typo3-9-5-custom-flexform-ordering-wrong-backquotes-in-sql
          */
         $currentVersion = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version);

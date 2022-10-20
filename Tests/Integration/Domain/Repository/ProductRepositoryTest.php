@@ -64,7 +64,7 @@ class ProductRepositoryTest extends FunctionalTestCase
      * Setup
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Global.xml');
@@ -237,7 +237,7 @@ class ProductRepositoryTest extends FunctionalTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

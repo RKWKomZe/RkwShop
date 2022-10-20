@@ -1,10 +1,5 @@
 <?php
-
 namespace RKW\RkwShop\ViewHelpers;
-
-use \RKW\RkwBasics\Helper\Common;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -19,6 +14,9 @@ use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+
 /**
  * IsRequiredFieldViewHelper
  *
@@ -27,19 +25,31 @@ use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class IsRequiredFieldViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class IsRequiredFieldViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+
+    /**
+     * Initialize arguments.
+     *
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('field', 'string', 'Field-name to check whether mandatory', true);
+    }
+
+
     /**
      * Checks if field is required
      *
-     * @param string $field
      * @return bool
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function render($field)
+    public function render(): bool
     {
-
         $settings = $this->getSettings();
+        $field = $this->arguments['field'];
 
         if ($requiredFields = GeneralUtility::trimExplode(',', $settings['requiredFields'])) {
             return in_array($field, $requiredFields);
@@ -57,6 +67,6 @@ class IsRequiredFieldViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstrac
      */
     protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
     {
-        return Common::getTyposcriptConfiguration('Rkwshop', $which);
+        return \RKW\RkwBasics\Utility\GeneralUtility::getTyposcriptConfiguration('Rkwshop', $which);
     }
 }

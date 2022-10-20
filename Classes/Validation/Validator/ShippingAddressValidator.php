@@ -2,7 +2,7 @@
 
 namespace RKW\RkwShop\Validation\Validator;
 
-use \RKW\RkwBasics\Helper\Common;
+use RKW\RkwBasics\Utility\GeneralUtility as Common;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -86,7 +86,7 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
             }
 
             // check validity of e-mail
-            if (! \RKW\RkwRegistration\Tools\Registration::validEmail($order->getEmail())) {
+            if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::validateEmail($order->getEmail())) {
 
                 $this->result->forProperty($requiredField)->addError(
                     new \TYPO3\CMS\Extbase\Error\Error(
