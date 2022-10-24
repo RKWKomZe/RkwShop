@@ -37,6 +37,10 @@
 				<source>Mrs.</source>
 				<target>Frau</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.mx">
+				<source>Mx</source>
+				<target>Divers</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect">
 				<source>Please Select</source>
 				<target>Bitte wählen</target>
@@ -72,8 +76,8 @@
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.city">
 				<source>City</source>
 				<target>Stadt</target>
-			</trans-unit>			
-			
+			</trans-unit>
+
 
 			<!-- ================================================================================== -->
 
@@ -331,8 +335,8 @@
 			<trans-unit id="templates.email.deleteOrderAdmin.text1">
 				<source>an order has just been cancelled. Please DO NOT send the order below and delete the subscriptions listed below if necessary. If you have any questions, you can reply directly to this e-mail.</source>
 				<target>eine Bestellung wurde soeben storniert. Bitte senden Sie die untenstehende Bestellung NICHT  zu und löschen Sie ggf. auch die unten genannten Abonnements. Sie können bei etwaigen Rückfragen direkt auf diese E-Mail antworten.</target>
-			</trans-unit>			
-			
+			</trans-unit>
+
 
 			<!-- Partials/Email/ProductList.html -->
             <trans-unit id="partials.email.productList.orderDetails">

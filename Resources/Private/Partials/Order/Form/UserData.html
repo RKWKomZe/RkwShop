@@ -1,4 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" 
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 	xmlns:rkwRegistration="http://typo3.org/ns/RKW/RkwRegistration/ViewHelpers"
 	xmlns:rkwShop="http://typo3.org/ns/RKW/RkwShop/ViewHelpers"
 	data-namespace-typo3-fluid="true">
@@ -25,7 +25,7 @@
 			id="txrkwshop-gender"
 			property="shippingAddress.gender"
 			value="{f:if(condition:'{newOrder.shippingAddress.gender} != 99',then:'{newOrder.shippingAddress.gender}',else:'{frontendUser.txRkwregistrationGender}')}"
-			options="{99: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect\")}', 0: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.man\")}', 1: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.woman\")}'}"
+			options="{99: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect\")}', 0: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.man\")}', 1: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.woman\")}', 2: '{f:translate(key:\"LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender.I.mx\")}'}"
 			optionValueField="uid"
 			optionLabelField="name" />
 	</div>
