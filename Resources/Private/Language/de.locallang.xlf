@@ -37,6 +37,10 @@
 				<source>Mrs.</source>
 				<target>Frau</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.mx">
+				<source>Mx</source>
+				<target>Divers</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.gender.I.pleaseSelect">
 				<source>Please Select</source>
 				<target>Bitte wählen</target>
