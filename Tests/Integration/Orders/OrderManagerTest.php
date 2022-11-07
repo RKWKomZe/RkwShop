@@ -667,7 +667,7 @@ class OrderManagerTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
         $request = $this->objectManager->get(Request::class);
 
-        static::assertEquals(
+        self::assertEquals(
             'orderManager.message.createdOptIn',
             $this->subject->createOrder($order, $request, null, true, true)
         );
@@ -728,7 +728,7 @@ class OrderManagerTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
         $request = $this->objectManager->get(Request::class);
 
-        static::assertEquals(
+        self::assertEquals(
             'orderManager.message.createdOptIn',
             $this->subject->createOrder($order, $request, null, true, true)
         );
@@ -801,7 +801,7 @@ class OrderManagerTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
         $request = $this->objectManager->get(Request::class);
 
-        static::assertEquals(
+        self::assertEquals(
             'orderManager.message.created',
             $this->subject->createOrder($order, $request, $frontendUser, false, true)
         );
@@ -812,28 +812,28 @@ class OrderManagerTest extends FunctionalTestCase
         $orderDb->getOrderItem()->rewind();
         $order->getOrderItem()->rewind();
 
-        static::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
-        static::assertEquals($order->getEmail(), $orderDb->getEmail());
-        static::assertEquals($order->getRemark(), $orderDb->getRemark());
+        self::assertInstanceOf('\RKW\RkwShop\Domain\Model\Order', $orderDb);
+        self::assertEquals($order->getEmail(), $orderDb->getEmail());
+        self::assertEquals($order->getRemark(), $orderDb->getRemark());
 
-        static::assertEquals($frontendUser->getUid(), $orderDb->getFrontendUser()->getUid());
-        static::assertEquals($frontendUser->getUid(), $orderDb->getShippingAddress()->getFrontendUser()->getUid());
+        self::assertEquals($frontendUser->getUid(), $orderDb->getFrontendUser()->getUid());
+        self::assertEquals($frontendUser->getUid(), $orderDb->getShippingAddress()->getFrontendUser()->getUid());
 
         /** ToDo: Check for title object!!!! */
-        static::assertEquals($order->getShippingAddress()->getFirstName(), $orderDb->getShippingAddress()->getFirstName());
-        static::assertEquals($order->getShippingAddress()->getLastName(), $orderDb->getShippingAddress()->getLastName());
-        static::assertEquals($order->getShippingAddress()->getCompany(), $orderDb->getShippingAddress()->getCompany());
-        static::assertEquals($order->getShippingAddress()->getAddress(), $orderDb->getShippingAddress()->getAddress());
-        static::assertEquals($order->getShippingAddress()->getZip(), $orderDb->getShippingAddress()->getZip());
-        static::assertEquals($order->getShippingAddress()->getCity(), $orderDb->getShippingAddress()->getCity());
+        self::assertEquals($order->getShippingAddress()->getFirstName(), $orderDb->getShippingAddress()->getFirstName());
+        self::assertEquals($order->getShippingAddress()->getLastName(), $orderDb->getShippingAddress()->getLastName());
+        self::assertEquals($order->getShippingAddress()->getCompany(), $orderDb->getShippingAddress()->getCompany());
+        self::assertEquals($order->getShippingAddress()->getAddress(), $orderDb->getShippingAddress()->getAddress());
+        self::assertEquals($order->getShippingAddress()->getZip(), $orderDb->getShippingAddress()->getZip());
+        self::assertEquals($order->getShippingAddress()->getCity(), $orderDb->getShippingAddress()->getCity());
 
-        static::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
-        static::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
+        self::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
+        self::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
 
         /** @var \RKW\RkwRegistration\Domain\Model\Privacy $privacyDb */
         $privacyDb = $this->privacyRepository->findByUid(1);
-        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacyDb);
-        static::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
+        self::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacyDb);
+        self::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
 
     }
 
@@ -891,16 +891,16 @@ class OrderManagerTest extends FunctionalTestCase
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
         $request = $this->objectManager->get(Request::class);
 
-        static::assertEquals(
+        self::assertEquals(
             'orderManager.message.createdOptIn',
             $this->subject->createOrder($order, $request, null, true, true)
         );
 
         /** @var \RKW\RkwRegistration\Domain\Model\Registration $registration */
         $registration = $this->registrationRepository->findByUid(1);
-        static::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Registration', $registration);
-        static::assertEquals(1, $registration->getUser());
-        static::assertEquals('rkwShop', $registration->getCategory());
+        self::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Registration', $registration);
+        self::assertEquals(1, $registration->getUser());
+        self::assertEquals('rkwShop', $registration->getCategory());
 
     }
 
@@ -1278,7 +1278,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);
-        static::assertIsArray( $result);
+        self::assertIsArray( $result);
 
         self::assertCount(3, $result);
         self::assertInstanceOf('\RKW\RkwShop\Domain\Model\BackendUser', $result[0]);
@@ -1314,7 +1314,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);
-        static::assertIsArray( $result);
+        self::assertIsArray( $result);
 
         self::assertCount(1, $result);
         self::assertInstanceOf('\RKW\RkwShop\Domain\Model\BackendUser', $result[0]);
@@ -1347,7 +1347,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);
-        static::assertIsArray( $result);
+        self::assertIsArray( $result);
 
         self::assertCount(1, $result);
 
@@ -1380,7 +1380,7 @@ class OrderManagerTest extends FunctionalTestCase
 
         /** @var \RKW\RkwShop\Domain\Model\BackendUser $result[] */
         $result = $this->subject->getBackendUsersForAdminMails($product);
-        static::assertIsArray( $result);
+        self::assertIsArray( $result);
 
         self::assertCount(3, $result);
         self::assertInstanceOf('\RKW\RkwShop\Domain\Model\BackendUser', $result[0]);

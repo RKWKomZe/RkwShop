@@ -300,7 +300,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderItemRepositoryTest/Fixtures/Database/Check50.xml');
 
         $result = $this->subject->findByUidSoap(1);
-        static::assertInstanceOf(\RKW\RkwShop\Domain\Model\OrderItem::class, $result);
+        self::assertInstanceOf(\RKW\RkwShop\Domain\Model\OrderItem::class, $result);
 
     }
 
@@ -324,7 +324,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderItemRepositoryTest/Fixtures/Database/Check60.xml');
 
         $result = $this->subject->findByUidSoap(1);
-        static::assertNull($result);
+        self::assertNull($result);
 
     }
     /**

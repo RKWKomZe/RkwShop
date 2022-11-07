@@ -179,7 +179,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         // check given e-mail
-        if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::validateEmail($order->getEmail())) {
+        if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
             throw new Exception('orderManager.error.invalidEmail');
         }
 

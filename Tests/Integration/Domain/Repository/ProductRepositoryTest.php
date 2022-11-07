@@ -107,7 +107,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check10.xml');
 
         $result = $this->subject->findByUidList('1,2,3,4');
-        static::assertEquals(2, count($result));
+        self::assertEquals(2, count($result));
         self::assertEquals('1', $result[0]->getUid());
         self::assertEquals('2', $result[1]->getUid());
 
@@ -131,7 +131,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check20.xml');
 
         $result = $this->subject->findByUidList('1,2');
-        static::assertEquals(1, count($result));
+        self::assertEquals(1, count($result));
         self::assertEquals('1', $result[0]->getUid());
 
     }
@@ -153,7 +153,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check30.xml');
 
         $result = $this->subject->findByUidList('1,2,3,4,1,2');
-        static::assertEquals(4, count($result));
+        self::assertEquals(4, count($result));
         self::assertEquals('1', $result[0]->getUid());
         self::assertEquals('2', $result[1]->getUid());
         self::assertEquals('3', $result[2]->getUid());
@@ -179,7 +179,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check30.xml');
 
         $result = $this->subject->findByUidList('4,3,2,1');
-        static::assertEquals(4, count($result));
+        self::assertEquals(4, count($result));
         self::assertEquals('4', $result[0]->getUid());
         self::assertEquals('3', $result[1]->getUid());
         self::assertEquals('2', $result[2]->getUid());
@@ -208,7 +208,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check10.xml');
 
         $result = $this->subject->findAllSoap();
-        static::assertEquals(4, count($result));
+        self::assertEquals(4, count($result));
 
     }
 
@@ -229,7 +229,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check20.xml');
 
         $result = $this->subject->findAllSoap();
-        static::assertEquals(1, count($result));
+        self::assertEquals(1, count($result));
 
     }
 
