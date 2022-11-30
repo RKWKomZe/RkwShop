@@ -15,23 +15,12 @@
 
 		<f:security.ifAuthenticated>
 			<f:else>
-				<div class="form__field">
-					<f:form.checkbox name="terms" id="tx-rkwshop-terms" value="1" checked="{terms}" class="checkbox"/>
-					<label for="tx-rkwshop-terms" class="checkbox-label">
-						<f:link.page pageUid="{termsPid}" target="_blank">
-							<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.terms" />
-						</f:link.page>
-					</label>
-				</div>
+                <rkwRegistration:consent type="terms" />
 			</f:else>
 		</f:security.ifAuthenticated>
 
-		<div class="form__field">
-			<f:form.checkbox name="privacy" id="tx-rkwshop-privacy" value="1" checked="{privacy}" class="checkbox"/>
-			<label for="tx-rkwshop-privacy" class="checkbox-label">
-				<rkwRegistration:privacyText textVersion="order" />
-			</label>
-		</div>
+        <rkwRegistration:consent type="privacy" key="order" />
+        <rkwRegistration:consent type="marketing" />
 
 		<div class="form__field flex space-start full-width-narrow">
 			<button class="btn btn--primary full-width-narrow" type="submit">

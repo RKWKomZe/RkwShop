@@ -82,14 +82,6 @@
 			<!-- ================================================================================== -->
 
 			<!-- OrderManager -->
-            <trans-unit id="orderManager.error.acceptTerms">
-                <source>Please accept our terms of use in order to place an order.</source>
-                <target>Das muss leider sein: Bitte akzeptieren Sie unsere Nutzungsbedingungen, um bestellen zu können.</target>
-            </trans-unit>
-            <trans-unit id="orderManager.error.acceptPrivacy">
-                <source>The protection of your data is important to us. Therefore we ask you to agree to the storage of your personal data.</source>
-                <target>Der Schutz Ihrer Daten ist uns wichtig. Daher bitten wir Sie, der Speicherung Ihrer persönlichen Daten zuzustimmen.</target>
-            </trans-unit>
 			<trans-unit id="orderManager.error.invalidEmail">
 				<source>Oops, something went wrong. Please enter a valid e-mail address.</source>
 				<target>Upps, da ist etwas schief gelaufen. Bitte geben Sie eine gültige E-Mailadresse ein.</target>

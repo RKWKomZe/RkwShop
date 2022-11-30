@@ -9,8 +9,8 @@
 	<rkwMailer:email.translate key="templates.email.optInRequest.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"  />\n
 	<rkwMailer:email.translate key="templates.email.optInRequest.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"  />\n
 	\n
-	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: registration.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>\n
-	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: registration.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
+	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: optIn.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>\n
+	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: optIn.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
 	\n
 	=============================================================\n
 	<rkwMailer:email.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/>:\n
@@ -32,8 +32,8 @@
 		<strong><rkwMailer:email.translate key="templates.email.optInRequest.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" /></strong>
 	</p>
 
-	<f:render partial="Email/ProductList" section="Html" arguments="{order: registration.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
-	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: registration.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
+	<f:render partial="Email/ProductList" section="Html" arguments="{order: optIn.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
+	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: optIn.data, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
 
 	<h2><rkwMailer:email.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop"/></h2>
 	<p>

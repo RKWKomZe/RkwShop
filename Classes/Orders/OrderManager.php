@@ -3,7 +3,7 @@
 namespace RKW\RkwShop\Orders;
 
 use RKW\RkwRegistration\Domain\Model\FrontendUser;
-use RKW\RkwRegistration\Registration\FrontendUser\FrontendUserRegistration;
+use RKW\RkwRegistration\Registration\FrontendUserRegistration;
 use \RKW\RkwShop\Exception;
 
 /*
@@ -144,8 +144,6 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param \TYPO3\CMS\Extbase\Mvc\Request|null $request
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser|null $frontendUser
-     * @param bool $terms
-     * @param bool $privacy
      * @return string
      * @throws Exception
      * @throws \RKW\RkwRegistration\Exception
@@ -158,25 +156,13 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception\NotImplementedException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      */
-    public function createOrder (\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null, $terms = false, $privacy = false)
-    {
-
-        // check terms if user is not logged in
-        if (
-            (! $terms)
-            && (
-                (! $frontendUser)
-                || ($frontendUser->_isNew())
-            )
-        ) {
-            throw new Exception('orderManager.error.acceptTerms');
-        }
-
-        // check privacy flag
-        if (! $privacy) {
-            throw new Exception('orderManager.error.acceptPrivacy');
-        }
+    public function createOrder (
+        \RKW\RkwShop\Domain\Model\Order $order,
+        \TYPO3\CMS\Extbase\Mvc\Request $request = null,
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null
+   ) {
 
         // check given e-mail
         if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
@@ -226,7 +212,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             $this->saveOrder($order, $frontendUser);
 
             // add privacy info
-            \RKW\RkwRegistration\DataProtection\PrivacyHandler::addPrivacyData($request, $frontendUser, $order, 'new order');
+            \RKW\RkwRegistration\DataProtection\ConsentHandler::add($request, $frontendUser, $order, 'new order');
 
             return 'orderManager.message.created';
         }
@@ -238,7 +224,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         $frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(FrontendUser::class);
         $frontendUser->setEmail($order->getEmail());
 
-        /** @var \RKW\RkwRegistration\Registration\FrontendUser\FrontendUserRegistration $registration */
+        /** @var \RKW\RkwRegistration\Registration\FrontendUserRegistration $registration */
         $registration = $this->objectManager->get(FrontendUserRegistration::class);
         $registration->setFrontendUser($frontendUser)
             ->setData($order)
@@ -317,18 +303,18 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * Intermediate function for saving of orders - used by SignalSlot
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwRegistration\Domain\Model\Registration $registration
+     * @param \RKW\RkwRegistration\Domain\Model\OptIn $optIn
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\Registration $registration)
+    public function saveOrderSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\OptIn $optIn)
     {
         // get order from registration
         if (
-            ($order = $registration->getData())
+            ($order = $optIn->getData())
             && ($order instanceof \RKW\RkwShop\Domain\Model\Order)
         ) {
 

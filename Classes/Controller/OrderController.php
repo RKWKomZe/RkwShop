@@ -3,7 +3,7 @@
 namespace RKW\RkwShop\Controller;
 
 use RKW\RkwBasics\Utility\GeneralUtility as Common;
-use RKW\RkwRegistration\Registration\FrontendUser\FrontendUserRegistration;
+use RKW\RkwRegistration\Registration\FrontendUserRegistration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -25,7 +25,7 @@ use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  *
  * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -141,7 +141,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 array(
                     'frontendUser'    => null,
                     'order'           => $order,
-                    'termsPid'        => intval($this->settings['termsPid']),
                     'products'        => $products,
                     'contentUid'      => $this->configurationManager->getContentObject()->data['uid']
                 )
@@ -174,7 +173,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $replacements = [
                 'frontendUser'    => null,
                 'order'           => \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwShop\\Domain\\Model\\Order'),
-                'termsPid'        => intval($this->settings['termsPid']),
                 'products'        => $products,
                 'pageUid'         => $this->ajaxPid
             ];
@@ -197,11 +195,9 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action new
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @param integer $terms
-     * @param integer $privacy
      * @return void
      */
-    public function newAction(\RKW\RkwShop\Domain\Model\Order $order = null, int $terms = 0, int $privacy = 0)
+    public function newAction(\RKW\RkwShop\Domain\Model\Order $order = null)
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -213,9 +209,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'frontendUser'    => null,
                     'order'           => $order,
                     'termsPid'        => intval($this->settings['termsPid']),
-                    'products'        => $products,
-                    'terms'           => $terms,
-                    'privacy'         => $privacy
+                    'products'        => $products
                 )
             );
         }
@@ -226,8 +220,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action create
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @param integer $terms
-     * @param integer $privacy
      * @return void
      * @throws \RKW\RkwRegistration\Exception
      * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
@@ -242,13 +234,16 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      * @TYPO3\CMS\Extbase\Annotation\Validate("\RKW\RkwShop\Validation\Validator\ShippingAddressValidator", param="order")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\RKW\RkwRegistration\Validation\Consent\TermsValidator", param="order")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\RKW\RkwRegistration\Validation\Consent\PrivacyValidator", param="order")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("\RKW\RkwRegistration\Validation\Consent\MarketingValidator", param="order")
      */
-    public function createAction(\RKW\RkwShop\Domain\Model\Order $order, int $terms = 0, int $privacy = 0)
+    public function createAction(\RKW\RkwShop\Domain\Model\Order $order)
     {
 
         try {
 
-            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
+            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser());
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     $message, 'rkw_shop'
@@ -267,8 +262,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->forward('new', null, null,
                 [
                     'order' => $order,
-                    'terms' => $terms,
-                    'privacy' => $privacy
                 ]
             );
         }
@@ -296,7 +289,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function optInAction(string $tokenUser, string $token): void
     {
 
-        /** @var \RKW\RkwRegistration\Registration\FrontendUser\FrontendUserRegistration $registration */
+        /** @var \RKW\RkwRegistration\Registration\FrontendUserRegistration $registration */
         $registration = $this->objectManager->get(FrontendUserRegistration::class);
         $result = $registration->setFrontendUserToken($tokenUser)
             ->setCategory('rkwShop')
@@ -345,7 +338,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         if (!$this->frontendUser) {
 
-            $frontendUser = $this->frontendUserRepository->findByUidNoAnonymous($this->getFrontendUserId());
+            $frontendUser = $this->frontendUserRepository->findByUid($this->getFrontendUserId());
             if ($frontendUser instanceof \RKW\RkwRegistration\Domain\Model\FrontendUser) {
                 $this->frontendUser = $frontendUser;
             }
