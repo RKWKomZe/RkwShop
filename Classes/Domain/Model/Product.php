@@ -98,7 +98,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * image
      *
-     * @var \RKW\RkwBasics\Domain\Model\FileReference
+     * @var \Madj2k\CoreExtended\Domain\Model\FileReference
      */
     protected $image = null;
 
@@ -106,7 +106,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * download
      *
-     * @var \RKW\RkwBasics\Domain\Model\FileReference
+     * @var \Madj2k\CoreExtended\Domain\Model\FileReference
      */
     protected $download = null;
 
@@ -464,7 +464,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the image
      *
-     * @return \RKW\RkwBasics\Domain\Model\FileReference $image
+     * @return \Madj2k\CoreExtended\Domain\Model\FileReference $image
      */
     public function getImage()
     {
@@ -474,10 +474,10 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the image
      *
-     * @param \RKW\RkwBasics\Domain\Model\FileReference $image
+     * @param \Madj2k\CoreExtended\Domain\Model\FileReference $image
      * @return void
      */
-    public function setImage(\RKW\RkwBasics\Domain\Model\FileReference $image)
+    public function setImage(\Madj2k\CoreExtended\Domain\Model\FileReference $image)
     {
         $this->image = $image;
     }
@@ -486,7 +486,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the download
      *
-     * @return \RKW\RkwBasics\Domain\Model\FileReference $download
+     * @return \Madj2k\CoreExtended\Domain\Model\FileReference $download
      */
     public function getDownload()
     {
@@ -496,10 +496,10 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the download
      *
-     * @param \RKW\RkwBasics\Domain\Model\FileReference $download
+     * @param \Madj2k\CoreExtended\Domain\Model\FileReference $download
      * @return void
      */
-    public function setDownload(\RKW\RkwBasics\Domain\Model\FileReference $download)
+    public function setDownload(\Madj2k\CoreExtended\Domain\Model\FileReference $download)
     {
         $this->download = $download;
     }

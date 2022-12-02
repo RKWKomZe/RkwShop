@@ -246,25 +246,25 @@ plugin.tx_rkwshop.libs {
 		# Inherit configuration from tt_content
 		layout < tt_content.image.20.1.layout
 		layoutKey = picture
-		sourceCollection < plugin.tx_rkwbasics.libs.responsiveImages.sourceCollection
+		sourceCollection < plugin.tx_accelerator.libs.responsiveImages.sourceCollection
 
 		# set configuration for sourceCollection
 		sourceCollection {
 
 			mobile.maxW.override = 90
 			mobile.maxW.override.if {
-				value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.mobile}
+				value = {$plugin.tx_accelerator.settings.responsiveImages.breakpoints.mobile}
 				isLessThan = 90
 			}
 			mobileRetina2.maxW.override < .mobile.maxW.override
 
 			tablet.maxW.override < .mobile.maxW.override
-			tablet.maxW.override.if.value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.tablet}
+			tablet.maxW.override.if.value = {$plugin.tx_accelerator.settings.responsiveImages.breakpoints.tablet}
 			tabletRetina2.maxW.override < .tablet.maxW.override
 			tabletRetina3.maxW.override < .tablet.maxW.override
 
 			desktop.maxW.override < .mobile.maxW.override
-			desktop.maxW.override.if.value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.desktop}
+			desktop.maxW.override.if.value = {$plugin.tx_accelerator.settings.responsiveImages.breakpoints.desktop}
             desktopRetina2.maxW.override < .desktop.maxW.override
 		}
 	}

@@ -67,6 +67,6 @@ class IsRequiredFieldViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstra
      */
     protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
     {
-        return \RKW\RkwBasics\Utility\GeneralUtility::getTyposcriptConfiguration('Rkwshop', $which);
+        return \Madj2k\CoreExtended\Utility\GeneralUtility::getTypoScriptConfiguration('Rkwshop', $which);
     }
 }

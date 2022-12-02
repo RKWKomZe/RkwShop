@@ -2,7 +2,7 @@
 
 namespace RKW\RkwShop\Service;
 
-use RKW\RkwBasics\Utility\GeneralUtility;
+use Madj2k\CoreExtended\Utility\GeneralUtility;
 use RKW\RkwMailer\Service\MailService;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -382,6 +382,6 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function getSettings(string $which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS): array
     {
-        return GeneralUtility::getTyposcriptConfiguration('Rkwshop', $which);
+        return GeneralUtility::getTypoScriptConfiguration('Rkwshop', $which);
     }
 }

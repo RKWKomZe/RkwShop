@@ -1,7 +1,7 @@
 <?php
 
 namespace RKW\RkwShop\Domain\Repository;
-use RKW\RkwBasics\Helper\QueryTypo3;
+use Madj2k\CoreExtended\Utility\QueryUtility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -47,12 +47,12 @@ class StockRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $query = $this->createQuery();
         $query->statement('
-            SELECT SUM(amount) as sum FROM tx_rkwshop_domain_model_stock 
+            SELECT SUM(amount) as sum FROM tx_rkwshop_domain_model_stock
             WHERE tx_rkwshop_domain_model_stock.product = ' . intval($product->getUid()) .
             $whereAddition .
-            QueryTypo3::getWhereClauseForVersioning('tx_rkwshop_domain_model_stock') .
-            QueryTypo3::getWhereClauseForEnableFields('tx_rkwshop_domain_model_stock') . '
-        
+            QueryTypo3::getWhereClauseVersioning('tx_rkwshop_domain_model_stock') .
+            QueryTypo3::getWhereClauseEnabled('tx_rkwshop_domain_model_stock') . '
+
         ');
 
         $result = $query->execute(true);

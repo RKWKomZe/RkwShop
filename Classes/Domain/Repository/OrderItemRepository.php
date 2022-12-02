@@ -2,7 +2,7 @@
 
 namespace RKW\RkwShop\Domain\Repository;
 
-use RKW\RkwBasics\Helper\QueryTypo3;
+use Madj2k\CoreExtended\Utility\QueryUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /*
@@ -47,12 +47,12 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $query = $this->createQuery();
         $query->statement('
-            SELECT SUM(amount) as sum FROM tx_rkwshop_domain_model_orderitem 
+            SELECT SUM(amount) as sum FROM tx_rkwshop_domain_model_orderitem
             WHERE tx_rkwshop_domain_model_orderitem.product = ' . intval($product->getUid()) .
             $whereAddition .
-            QueryTypo3::getWhereClauseForVersioning('tx_rkwshop_domain_model_orderitem') .
-            QueryTypo3::getWhereClauseForEnableFields('tx_rkwshop_domain_model_orderitem') . '
-        
+            QueryTypo3::getWhereClauseVersioning('tx_rkwshop_domain_model_orderitem') .
+            QueryTypo3::getWhereClauseEnabled('tx_rkwshop_domain_model_orderitem') . '
+
         ');
 
         $result = $query->execute(true);

@@ -2,7 +2,7 @@
 
 namespace RKW\RkwShop\Controller;
 
-use RKW\RkwBasics\Utility\GeneralUtility as Common;
+use Madj2k\CoreExtended\Utility\GeneralUtility as Common;
 use RKW\RkwRegistration\Registration\FrontendUserRegistration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -388,7 +388,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
     {
-        return Common::getTyposcriptConfiguration('Rkwshop', $which);
+        return Common::getTypoScriptConfiguration('Rkwshop', $which);
     }
 
 
