@@ -26,7 +26,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * OrderItemRepositoryTest
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwMailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -71,7 +71,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
      * Setup
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/OrderItemRepositoryTest/Fixtures/Database/Global.xml');
@@ -300,7 +300,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderItemRepositoryTest/Fixtures/Database/Check50.xml');
 
         $result = $this->subject->findByUidSoap(1);
-        static::assertInstanceOf(\RKW\RkwShop\Domain\Model\OrderItem::class, $result);
+        self::assertInstanceOf(\RKW\RkwShop\Domain\Model\OrderItem::class, $result);
 
     }
 
@@ -324,13 +324,13 @@ class OrderItemRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderItemRepositoryTest/Fixtures/Database/Check60.xml');
 
         $result = $this->subject->findByUidSoap(1);
-        static::assertNull($result);
+        self::assertNull($result);
 
     }
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

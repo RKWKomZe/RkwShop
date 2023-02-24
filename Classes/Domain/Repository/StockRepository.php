@@ -1,7 +1,8 @@
 <?php
 
 namespace RKW\RkwShop\Domain\Repository;
-use RKW\RkwBasics\Helper\QueryTypo3;
+use Madj2k\CoreExtended\Utility\QueryUtility;
+use RKW\RkwShop\Domain\Model\Product;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -37,7 +38,7 @@ class StockRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getStockSumByProductAndPreOrder(\RKW\RkwShop\Domain\Model\Product $product, $preOrder = false)
+    public function getStockSumByProductAndPreOrder(Product $product, bool $preOrder = false): int
     {
 
         $whereAddition = ' AND tx_rkwshop_domain_model_stock.delivery_start < ' . time();
@@ -47,12 +48,12 @@ class StockRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $query = $this->createQuery();
         $query->statement('
-            SELECT SUM(amount) as sum FROM tx_rkwshop_domain_model_stock 
+            SELECT SUM(amount) as sum FROM tx_rkwshop_domain_model_stock
             WHERE tx_rkwshop_domain_model_stock.product = ' . intval($product->getUid()) .
             $whereAddition .
-            QueryTypo3::getWhereClauseForVersioning('tx_rkwshop_domain_model_stock') .
-            QueryTypo3::getWhereClauseForEnableFields('tx_rkwshop_domain_model_stock') . '
-        
+            QueryUtility::getWhereClauseVersioning('tx_rkwshop_domain_model_stock') .
+            QueryUtility::getWhereClauseEnabled('tx_rkwshop_domain_model_stock') . '
+
         ');
 
         $result = $query->execute(true);

@@ -2,7 +2,10 @@
 
 namespace RKW\RkwShop\Domain\Repository;
 
+use RKW\RkwRegistration\Domain\Model\FrontendUser;
+use RKW\RkwShop\Domain\Model\Order;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -21,7 +24,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  * Class OrderRepository
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -36,7 +39,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByFrontendUser($frontendUser)
+    public function findByFrontendUser(FrontendUser $frontendUser): QueryResultInterface
     {
 
         $query = $this->createQuery();
@@ -49,19 +52,18 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         );
 
         return $query->execute();
-        //===
     }
 
 
     /**
      * Find all orders that have been updated recently
      *
-     * @param integer $timestamp
+     * @param int $timestamp
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @api used by RKW Soap
      */
-    public function findByTimestampSoap($timestamp)
+    public function findByTimestampSoap(int $timestamp): QueryResultInterface
     {
 
         $query = $this->createQuery();
@@ -89,7 +91,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @return \RKW\RkwShop\Domain\Model\Order The matching object if found, otherwise NULL
      * @api used by RKW Soap
      */
-    public function findByUidSoap($uid)
+    public function findByUidSoap(int $uid): Order
     {
         $query = $this->createQuery();
 

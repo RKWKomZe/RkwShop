@@ -23,7 +23,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Exception\UnexpectedTypeException;
  * Class DataMapper
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -39,7 +39,7 @@ class DataMapper extends \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMappe
     /**
      * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
      */
-    public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager)
+    public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager): void
     {
         $this->configurationManager = $configurationManager;
     }
@@ -54,7 +54,7 @@ class DataMapper extends \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMappe
      * @return Persistence\QueryInterface
      * @throws UnexpectedTypeException
      */
-    protected function getPreparedQuery(DomainObjectInterface $parentObject, $propertyName, $fieldValue = '')
+    protected function getPreparedQuery(DomainObjectInterface $parentObject, $propertyName, $fieldValue = ''): Persistence\QueryInterface
     {
 
         // do parent-stuff
@@ -80,7 +80,7 @@ class DataMapper extends \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMappe
      * @param string $propertyName
      * @return bool
      */
-    protected function isPermanentProperty($classNameParent, $propertyName)
+    protected function isPermanentProperty($classNameParent, $propertyName): bool
     {
         if (
             ($list = $this->getPermanentProperties())

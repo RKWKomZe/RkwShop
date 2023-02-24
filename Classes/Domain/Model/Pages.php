@@ -21,11 +21,11 @@ namespace RKW\RkwShop\Domain\Model;
  *
  * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Pages extends \RKW\RkwBasics\Domain\Model\Pages
+class Pages extends \Madj2k\CoreExtended\Domain\Model\Pages
 {
 
 

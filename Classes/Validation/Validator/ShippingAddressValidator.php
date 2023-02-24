@@ -2,7 +2,7 @@
 
 namespace RKW\RkwShop\Validation\Validator;
 
-use \RKW\RkwBasics\Helper\Common;
+use Madj2k\CoreExtended\Utility\GeneralUtility as Common;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -24,7 +24,7 @@ use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
  *
  * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -34,10 +34,10 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
      * Validator
      *
      * @var \RKW\RkwShop\Domain\Model\Order $order
-     * @return boolean|string
+     * @return boolean
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function isValid($order)
+    public function isValid($order): bool
     {
         $isValid = true;
         $settings = $this->getSettings();
@@ -86,7 +86,7 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
             }
 
             // check validity of e-mail
-            if (! \RKW\RkwRegistration\Tools\Registration::validEmail($order->getEmail())) {
+            if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
 
                 $this->result->forProperty($requiredField)->addError(
                     new \TYPO3\CMS\Extbase\Error\Error(
@@ -112,9 +112,9 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
      * @return array
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
+    protected function getSettings(string $which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS): array
     {
-        return Common::getTyposcriptConfiguration('Rkwshop', $which);
+        return Common::getTypoScriptConfiguration('Rkwshop', $which);
     }
 }
 

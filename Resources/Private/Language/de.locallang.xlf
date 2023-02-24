@@ -82,14 +82,6 @@
 			<!-- ================================================================================== -->
 
 			<!-- OrderManager -->
-            <trans-unit id="orderManager.error.acceptTerms">
-                <source>Please accept our terms of use in order to place an order.</source>
-                <target>Das muss leider sein: Bitte akzeptieren Sie unsere Nutzungsbedingungen, um bestellen zu können.</target>
-            </trans-unit>
-            <trans-unit id="orderManager.error.acceptPrivacy">
-                <source>The protection of your data is important to us. Therefore we ask you to agree to the storage of your personal data.</source>
-                <target>Der Schutz Ihrer Daten ist uns wichtig. Daher bitten wir Sie, der Speicherung Ihrer persönlichen Daten zuzustimmen.</target>
-            </trans-unit>
 			<trans-unit id="orderManager.error.invalidEmail">
 				<source>Oops, something went wrong. Please enter a valid e-mail address.</source>
 				<target>Upps, da ist etwas schief gelaufen. Bitte geben Sie eine gültige E-Mailadresse ein.</target>
@@ -115,8 +107,8 @@
                 <target><![CDATA[Upps, das hätte nicht passieren dürfen. Das übergebene Nutzerkonto scheint nicht zu existieren. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
             </trans-unit>
 			<trans-unit id="orderManager.message.created">
-				<source>Wohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
-				<target>Wohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
+				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
+				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
 			</trans-unit>
 			<trans-unit id="orderManager.message.createdOptIn">
 				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href="mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
@@ -127,8 +119,8 @@
 
             <!-- OrderController -->
 			<trans-unit id="orderController.message.orderCreated">
-				<source>Wohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
-				<target>Wohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
+				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
+				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
 			</trans-unit>
 			<trans-unit id="orderController.message.orderCanceled">
 				<source>The order process was aborted as desired. However, you can place another order at any time..</source>

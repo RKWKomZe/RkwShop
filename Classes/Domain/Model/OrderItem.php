@@ -19,7 +19,7 @@ namespace RKW\RkwShop\Domain\Model;
  * Class OrderItem
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -85,7 +85,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the crdate value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getCrdate()
@@ -97,7 +97,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the tstamp value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getTstamp()
@@ -109,10 +109,10 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the deleted value
      *
-     * @param integer $deleted
+     * @param int $deleted
      * @api
      */
-    public function setDeleted($deleted)
+    public function setDeleted($deleted): void
     {
         $this->deleted = $deleted;
     }
@@ -121,7 +121,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the deleted value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getDeleted()
@@ -147,7 +147,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @return void
      */
-    public function setOrder(\RKW\RkwShop\Domain\Model\Order $order)
+    public function setOrder(\RKW\RkwShop\Domain\Model\Order $order): void
     {
         $this->order = $order;
     }
@@ -169,7 +169,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @return void
      */
-    public function setProduct(\RKW\RkwShop\Domain\Model\Product $product)
+    public function setProduct(\RKW\RkwShop\Domain\Model\Product $product): void
     {
         $this->product = $product;
     }
@@ -191,7 +191,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param int $amount
      * @return void
      */
-    public function setAmount($amount)
+    public function setAmount($amount): void
     {
         $this->amount = $amount;
     }
@@ -213,7 +213,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param bool $isPreOrder
      * @return void
      */
-    public function setIsPreOrder($isPreOrder)
+    public function setIsPreOrder($isPreOrder): void
     {
         $this->isPreOrder = $isPreOrder;
     }
@@ -221,10 +221,10 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the status value
      *
-     * @param integer $status
+     * @param int $status
      * @api
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
@@ -233,7 +233,7 @@ class OrderItem extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the status value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getStatus()

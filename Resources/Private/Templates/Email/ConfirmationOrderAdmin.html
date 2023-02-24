@@ -3,19 +3,19 @@
 
 
 <!-- PLAINTEXT -->
-<f:section name="Plaintext"><rkwMailer:plaintextLineBreaks>
-	<rkwMailer:frontend.translate key="templates.email.confirmationOrderAdmin.headline" languageKey="{backendUser.lang}" extensionName="rkwShop" arguments="{0 : backendUser.realName}" />\n
+<f:section name="Plaintext"><rkwMailer:email.plaintextLineBreaks>
+	<rkwMailer:email.translate key="templates.email.confirmationOrderAdmin.headline" languageKey="{backendUser.lang}" extensionName="rkwShop" arguments="{0 : backendUser.realName}" />\n
 	\n
-	<rkwMailer:frontend.translate key="templates.email.confirmationOrderAdmin.text1" languageKey="{backendUser.lang}" extensionName="rkwShop" />\n
+	<rkwMailer:email.translate key="templates.email.confirmationOrderAdmin.text1" languageKey="{backendUser.lang}" extensionName="rkwShop" />\n
 	\n
 	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: backendUser.lang, backendUserForProductMap: backendUserForProductMap}"/>\n
 	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: backendUser.lang}"/>
-</rkwMailer:plaintextLineBreaks></f:section>
+</rkwMailer:email.plaintextLineBreaks></f:section>
 
 <!-- HTML -->
 <f:section name="Html">
-	<h1><rkwMailer:frontend.translate key="templates.email.confirmationOrderAdmin.headline" languageKey="{backendUser.lang}" extensionName="rkwShop" arguments="{0 : backendUser.realName}" /></h1>
-	<p><rkwMailer:frontend.translate key="templates.email.confirmationOrderAdmin.text1" languageKey="{backendUser.lang}" extensionName="rkwShop" /></p>
+	<h1><rkwMailer:email.translate key="templates.email.confirmationOrderAdmin.headline" languageKey="{backendUser.lang}" extensionName="rkwShop" arguments="{0 : backendUser.realName}" /></h1>
+	<p><rkwMailer:email.translate key="templates.email.confirmationOrderAdmin.text1" languageKey="{backendUser.lang}" extensionName="rkwShop" /></p>
 
 	<f:render partial="Email/ProductList" section="Html" arguments="{order: order, frontendUser: order.frontendUser, language: backendUser.lang, backendUserForProductMap: backendUserForProductMap}"/>
 	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: order, frontendUser: order.frontendUser, language: backendUser.lang}"/>

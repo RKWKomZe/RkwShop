@@ -70,7 +70,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $subtitle;
 
-    
+
     /**
      * publishingDate
      *
@@ -78,15 +78,15 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $publishingDate;
 
-    
+
     /**
      * author
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Author>
      */
     protected $author = null;
-    
-    
+
+
     /**
      * page
      *
@@ -94,19 +94,19 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $page;
 
-    
+
     /**
      * image
      *
-     * @var \RKW\RkwBasics\Domain\Model\FileReference
+     * @var \Madj2k\CoreExtended\Domain\Model\FileReference
      */
     protected $image = null;
-    
+
 
     /**
      * download
      *
-     * @var \RKW\RkwBasics\Domain\Model\FileReference
+     * @var \Madj2k\CoreExtended\Domain\Model\FileReference
      */
     protected $download = null;
 
@@ -130,7 +130,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * stock
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Stock>
-     * @cascade remove
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
      */
     protected $stock;
 
@@ -158,7 +158,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $adminEmail;
 
 
-    
+
     /**
      * __construct
      */
@@ -199,19 +199,19 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the recordType value
      *
      * @param $recordType
-     * @return string
+     * @return void
      * @api
      */
-    public function setRecordType($recordType)
+    public function setRecordType($recordType): void
     {
-        return $this->recordType = $recordType;
+        $this->recordType = $recordType;
     }
 
 
     /**
      * Returns the crdate value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getCrdate()
@@ -224,7 +224,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the tstamp value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getTstamp()
@@ -235,10 +235,11 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the hidden value
      *
-     * @param integer $hidden
+     * @param int $hidden
+     * @return void
      * @api
      */
-    public function setHidden($hidden)
+    public function setHidden($hidden): void
     {
         $this->hidden = $hidden;
     }
@@ -247,7 +248,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the hidden value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getHidden()
@@ -258,10 +259,11 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the deleted value
      *
-     * @param integer $deleted
+     * @param int $deleted
+     * @return void
      * @api
      */
-    public function setDeleted($deleted)
+    public function setDeleted($deleted): void
     {
         $this->deleted = $deleted;
     }
@@ -270,7 +272,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the deleted value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getDeleted()
@@ -295,7 +297,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $title
      * @return void
      */
-    public function setTitle($title)
+    public function setTitle($title): void
     {
         $this->title = $title;
     }
@@ -316,7 +318,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $subtitle
      * @return void
      */
-    public function setSubtitle($subtitle)
+    public function setSubtitle($subtitle): void
     {
         $this->subtitle = $subtitle;
     }
@@ -325,10 +327,11 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the publishingDate value
      *
-     * @param integer $publishingDate
+     * @param int $publishingDate
+     * @return void
      * @api
      */
-    public function setPublishingDate($publishingDate)
+    public function setPublishingDate($publishingDate): void
     {
         $this->publishingDate = $publishingDate;
     }
@@ -341,7 +344,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\Author $author
      * @return void
      */
-    public function addAuthor(\RKW\RkwShop\Domain\Model\Author $author)
+    public function addAuthor(\RKW\RkwShop\Domain\Model\Author $author): void
     {
         $this->author->attach($author);
     }
@@ -352,7 +355,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\Author $author
      * @return void
      */
-    public function removeAuthor(\RKW\RkwShop\Domain\Model\Author $author)
+    public function removeAuthor(\RKW\RkwShop\Domain\Model\Author $author): void
     {
         $this->author->detach($author);
     }
@@ -373,16 +376,16 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Author> $author
      * @return void
      */
-    public function setAuthor(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $author)
+    public function setAuthor(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $author): void
     {
         $this->author = $author;
     }
-    
+
 
     /**
      * Returns the publishingDate value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getPublishingDate()
@@ -406,7 +409,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
      * @return void
      */
-    public function setProductBundle(\RKW\RkwShop\Domain\Model\ProductBundle $productBundle)
+    public function setProductBundle(\RKW\RkwShop\Domain\Model\ProductBundle $productBundle): void
     {
         $this->productBundle = $productBundle;
     }
@@ -433,7 +436,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param boolean $allowSingleOrder
      * @return void
      */
-    public function setAllowSingleOrder($allowSingleOrder)
+    public function setAllowSingleOrder($allowSingleOrder): void
     {
         $this->allowSingleOrder = $allowSingleOrder;
     }
@@ -455,7 +458,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\Pages $page
      * @return void
      */
-    public function setPage(\RKW\RkwShop\Domain\Model\Pages $page)
+    public function setPage(\RKW\RkwShop\Domain\Model\Pages $page): void
     {
         $this->page = $page;
     }
@@ -464,7 +467,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the image
      *
-     * @return \RKW\RkwBasics\Domain\Model\FileReference $image
+     * @return \Madj2k\CoreExtended\Domain\Model\FileReference $image
      */
     public function getImage()
     {
@@ -474,10 +477,10 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the image
      *
-     * @param \RKW\RkwBasics\Domain\Model\FileReference $image
+     * @param \Madj2k\CoreExtended\Domain\Model\FileReference $image
      * @return void
      */
-    public function setImage(\RKW\RkwBasics\Domain\Model\FileReference $image)
+    public function setImage(\Madj2k\CoreExtended\Domain\Model\FileReference $image): void
     {
         $this->image = $image;
     }
@@ -486,7 +489,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the download
      *
-     * @return \RKW\RkwBasics\Domain\Model\FileReference $download
+     * @return \Madj2k\CoreExtended\Domain\Model\FileReference $download
      */
     public function getDownload()
     {
@@ -496,13 +499,13 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the download
      *
-     * @param \RKW\RkwBasics\Domain\Model\FileReference $download
+     * @param \Madj2k\CoreExtended\Domain\Model\FileReference $download
      * @return void
      */
-    public function setDownload(\RKW\RkwBasics\Domain\Model\FileReference $download)
+    public function setDownload(\Madj2k\CoreExtended\Domain\Model\FileReference $download): void
     {
         $this->download = $download;
-    }    
+    }
 
 
     /**
@@ -511,7 +514,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\Stock $stock
      * @return void
      */
-    public function addStock(\RKW\RkwShop\Domain\Model\Stock $stock)
+    public function addStock(\RKW\RkwShop\Domain\Model\Stock $stock): void
     {
         $this->stock->attach($stock);
     }
@@ -522,7 +525,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\Stock $stock
      * @return void
      */
-    public function removeStock(\RKW\RkwShop\Domain\Model\Stock $stock)
+    public function removeStock(\RKW\RkwShop\Domain\Model\Stock $stock): void
     {
         $this->stock->detach($stock);
     }
@@ -543,7 +546,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\Stock> $stock
      * @return void
      */
-    public function setStock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $stock)
+    public function setStock(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $stock): void
     {
         $this->stock = $stock;
     }
@@ -566,7 +569,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param int $orderedExternal
      * @return void
      */
-    public function setOrderedExternal($orderedExternal)
+    public function setOrderedExternal($orderedExternal): void
     {
         $this->orderedExternal = $orderedExternal;
     }
@@ -578,7 +581,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\BackendUser $backendUser
      * @return void
      */
-    public function addBackendUser(\RKW\RkwShop\Domain\Model\BackendUser $backendUser)
+    public function addBackendUser(\RKW\RkwShop\Domain\Model\BackendUser $backendUser): void
     {
         $this->backendUser->attach($backendUser);
     }
@@ -589,7 +592,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\BackendUser $backendUser
      * @return void
      */
-    public function removeBackendUser(\RKW\RkwShop\Domain\Model\BackendUser $backendUser)
+    public function removeBackendUser(\RKW\RkwShop\Domain\Model\BackendUser $backendUser): void
     {
         $this->backendUser->detach($backendUser);
     }
@@ -610,7 +613,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\BackendUser> $backendUser
      * @return void
      */
-    public function setBackendUser(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $backendUser)
+    public function setBackendUser(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $backendUser): void
     {
         $this->backendUser = $backendUser;
     }
@@ -631,7 +634,7 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $adminEmail
      * @return void
      */
-    public function setAdminEmail($adminEmail)
+    public function setAdminEmail($adminEmail): void
     {
         $this->adminEmail = $adminEmail;
     }
