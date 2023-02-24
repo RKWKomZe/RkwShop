@@ -48,19 +48,19 @@ RkwShop.handle = (function ($) {
 												if (method === 'append') {
 													var newContent = jQuery(htmlObject[parent][method]).appendTo(targetObject);
                                                     // jQuery(document).trigger('ajax-api-content-changed', newContent);
-													jQuery(document).trigger('rkw-ajax-api-content-changed', newContent);
+													jQuery(document).trigger('tx-ajax-api-content-changed', newContent);
 
                                                 } else
 												if (method === 'prepend') {
                                                     var newContent = jQuery(htmlObject[parent][method]).prependTo(targetObject);
                                                     // jQuery(document).trigger('ajax-api-content-changed', newContent);
-													jQuery(document).trigger('rkw-ajax-api-content-changed', newContent);
+													jQuery(document).trigger('tx-ajax-api-content-changed', newContent);
 												} else
 												if (method === 'replace') {
 													targetObject.empty();
                                                     var newContent = jQuery(htmlObject[parent][method]).prependTo(targetObject);
                                                     // jQuery(document).trigger('ajax-api-content-changed', newContent);
-													jQuery(document).trigger('rkw-ajax-api-content-changed', newContent);
+													jQuery(document).trigger('tx-ajax-api-content-changed', newContent);
 												}
 											}
 										}

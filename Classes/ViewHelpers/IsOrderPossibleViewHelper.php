@@ -16,6 +16,8 @@ namespace RKW\RkwShop\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use RKW\RkwShop\Domain\Model\Product;
+
 /**
  * IsOrderPossibleViewHelper
  *
@@ -24,18 +26,32 @@ namespace RKW\RkwShop\ViewHelpers;
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class IsOrderPossibleViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class IsOrderPossibleViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+
+    /**
+     * Initialize arguments.
+     *
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('products', 'array', 'Array of product-objects to check for', true);
+    }
+
+
     /**
      * Returns current stock or current pre-order stock
      *
      * @param array $products</\RKW\RkwShop\Domain\Model\Product> Array of \RKW\RkwShop\Domain\Model\Product
      * @return bool
-     *  @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function render(array $products)
+    public function render(array $products): bool
     {
 
+        $products = $this->arguments['products'];
         foreach ($products as $product){
 
             if ($product instanceof \RKW\RkwShop\Domain\Model\Product) {

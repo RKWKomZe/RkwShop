@@ -5,7 +5,7 @@ config.tx_extbase.persistence {
         // dependeny to rkw_authors is optional - see configuration in rkw_authors
         #===============================================
 
-        RKW\RkwBasics\Domain\Model\Pages {
+        Madj2k\CoreExtended\Domain\Model\Pages {
             subclasses {
                 Tx_RkwShop_Pages = RKW\RkwShop\Domain\Model\Pages
             }
@@ -35,6 +35,10 @@ config.tx_extbase.persistence {
         }
 
         RKW\RkwShop\Domain\Model\FrontendUser {
+
+            // storage for new records in cross-extension-context
+            newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
+
             mapping {
                 tableName = fe_users
                 recordType =
@@ -70,7 +74,7 @@ config.tx_extbase.persistence {
 
         RKW\RkwShop\Domain\Model\ShippingAddress {
 
-            # very important to set the storagePid explicit - otherwise it will add to the pid of related objects
+            // storage for new records in cross-extension-context
             newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
 
             mapping {

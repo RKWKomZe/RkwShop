@@ -25,7 +25,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * ProductRepositoryTest
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwMailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -64,7 +64,7 @@ class ProductRepositoryTest extends FunctionalTestCase
      * Setup
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Global.xml');
@@ -107,7 +107,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check10.xml');
 
         $result = $this->subject->findByUidList('1,2,3,4');
-        static::assertEquals(2, count($result));
+        self::assertEquals(2, count($result));
         self::assertEquals('1', $result[0]->getUid());
         self::assertEquals('2', $result[1]->getUid());
 
@@ -131,7 +131,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check20.xml');
 
         $result = $this->subject->findByUidList('1,2');
-        static::assertEquals(1, count($result));
+        self::assertEquals(1, count($result));
         self::assertEquals('1', $result[0]->getUid());
 
     }
@@ -153,7 +153,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check30.xml');
 
         $result = $this->subject->findByUidList('1,2,3,4,1,2');
-        static::assertEquals(4, count($result));
+        self::assertEquals(4, count($result));
         self::assertEquals('1', $result[0]->getUid());
         self::assertEquals('2', $result[1]->getUid());
         self::assertEquals('3', $result[2]->getUid());
@@ -179,7 +179,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check30.xml');
 
         $result = $this->subject->findByUidList('4,3,2,1');
-        static::assertEquals(4, count($result));
+        self::assertEquals(4, count($result));
         self::assertEquals('4', $result[0]->getUid());
         self::assertEquals('3', $result[1]->getUid());
         self::assertEquals('2', $result[2]->getUid());
@@ -208,7 +208,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check10.xml');
 
         $result = $this->subject->findAllSoap();
-        static::assertEquals(4, count($result));
+        self::assertEquals(4, count($result));
 
     }
 
@@ -229,7 +229,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/ProductRepositoryTest/Fixtures/Database/Check20.xml');
 
         $result = $this->subject->findAllSoap();
-        static::assertEquals(1, count($result));
+        self::assertEquals(1, count($result));
 
     }
 
@@ -237,7 +237,7 @@ class ProductRepositoryTest extends FunctionalTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

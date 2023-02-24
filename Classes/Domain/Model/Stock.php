@@ -74,11 +74,11 @@ class Stock extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param int $amount
      * @return void
      */
-    public function setAmount($amount)
+    public function setAmount($amount): void
     {
         $this->amount = $amount;
     }
-    
+
 
     /**
      * Returns the deliveryStart
@@ -97,7 +97,7 @@ class Stock extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param int $deliveryStart
      * @return void
      */
-    public function setDeliveryStart($deliveryStart)
+    public function setDeliveryStart($deliveryStart): void
     {
         $this->deliveryStart = $deliveryStart;
     }
@@ -120,7 +120,7 @@ class Stock extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $comment
      * @return void
      */
-    public function setComment($comment)
+    public function setComment($comment): void
     {
         $this->comment = $comment;
     }
@@ -142,7 +142,7 @@ class Stock extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param bool $isExternal
      * @return void
      */
-    public function setIsExternal($isExternal)
+    public function setIsExternal($isExternal): void
     {
         $this->isExternal = $isExternal;
     }

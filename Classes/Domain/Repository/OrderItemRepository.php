@@ -2,8 +2,11 @@
 
 namespace RKW\RkwShop\Domain\Repository;
 
-use RKW\RkwBasics\Helper\QueryTypo3;
+use Madj2k\CoreExtended\Utility\QueryUtility;
+use RKW\RkwShop\Domain\Model\OrderItem;
+use RKW\RkwShop\Domain\Model\Product;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -36,8 +39,9 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param bool $preOrder
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
-    public function getOrderedSumByProductAndPreOrder(\RKW\RkwShop\Domain\Model\Product $product, $preOrder = false)
+    public function getOrderedSumByProductAndPreOrder(Product $product, bool $preOrder = false): int
     {
 
         $whereAddition = ' AND tx_rkwshop_domain_model_orderitem.is_pre_order = 0';
@@ -47,12 +51,12 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $query = $this->createQuery();
         $query->statement('
-            SELECT SUM(amount) as sum FROM tx_rkwshop_domain_model_orderitem 
+            SELECT SUM(amount) as sum FROM tx_rkwshop_domain_model_orderitem
             WHERE tx_rkwshop_domain_model_orderitem.product = ' . intval($product->getUid()) .
             $whereAddition .
-            QueryTypo3::getWhereClauseForVersioning('tx_rkwshop_domain_model_orderitem') .
-            QueryTypo3::getWhereClauseForEnableFields('tx_rkwshop_domain_model_orderitem') . '
-        
+            QueryUtility::getWhereClauseVersioning('tx_rkwshop_domain_model_orderitem') .
+            QueryUtility::getWhereClauseEnabled('tx_rkwshop_domain_model_orderitem') . '
+
         ');
 
         $result = $query->execute(true);
@@ -65,10 +69,10 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * Find all order items by order uid
      *
      * @api used by RKW Soap
-     * @param integer $orderUid
+     * @param int $orderUid
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByOrderUidSoap($orderUid)
+    public function findByOrderUidSoap(int $orderUid): QueryResultInterface
     {
 
         $query = $this->createQuery();
@@ -92,7 +96,7 @@ class OrderItemRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @return \RKW\RkwShop\Domain\Model\OrderItem The matching object if found, otherwise NULL
      * @api used by RKW Soap
      */
-    public function findByUidSoap($uid)
+    public function findByUidSoap(int $uid):? OrderItem
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIncludeDeleted(true);

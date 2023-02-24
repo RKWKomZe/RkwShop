@@ -6,7 +6,7 @@ config.tx_extbase.persistence {
         // dependeny to rkw_authors is optional - see configuration in rkw_authors
         #===============================================
 
-        RKW\RkwBasics\Domain\Model\Pages {
+        Madj2k\CoreExtended\Domain\Model\Pages {
             subclasses {
                 Tx_RkwShop_Pages = RKW\RkwShop\Domain\Model\Pages
             }
@@ -36,6 +36,10 @@ config.tx_extbase.persistence {
         }
 
         RKW\RkwShop\Domain\Model\FrontendUser {
+
+            // storage for new records in cross-extension-context
+            newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
+
             mapping {
                 tableName = fe_users
                 recordType =
@@ -71,7 +75,7 @@ config.tx_extbase.persistence {
 
         RKW\RkwShop\Domain\Model\ShippingAddress {
 
-            # very important to set the storagePid explicit - otherwise it will add to the pid of related objects
+            // storage for new records in cross-extension-context
             newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
 
             mapping {
@@ -167,7 +171,6 @@ plugin.tx_rkwshop {
 	}
 
 	settings {
-		termsPid = {$plugin.tx_rkwshop.settings.termsPid}
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
 		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
@@ -243,25 +246,25 @@ plugin.tx_rkwshop.libs {
 		# Inherit configuration from tt_content
 		layout < tt_content.image.20.1.layout
 		layoutKey = picture
-		sourceCollection < plugin.tx_rkwbasics.libs.responsiveImages.sourceCollection
+		sourceCollection < plugin.tx_accelerator.libs.responsiveImages.sourceCollection
 
 		# set configuration for sourceCollection
 		sourceCollection {
 
 			mobile.maxW.override = 90
 			mobile.maxW.override.if {
-				value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.mobile}
+				value = {$plugin.tx_accelerator.settings.responsiveImages.breakpoints.mobile}
 				isLessThan = 90
 			}
 			mobileRetina2.maxW.override < .mobile.maxW.override
 
 			tablet.maxW.override < .mobile.maxW.override
-			tablet.maxW.override.if.value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.tablet}
+			tablet.maxW.override.if.value = {$plugin.tx_accelerator.settings.responsiveImages.breakpoints.tablet}
 			tabletRetina2.maxW.override < .tablet.maxW.override
 			tabletRetina3.maxW.override < .tablet.maxW.override
 
 			desktop.maxW.override < .mobile.maxW.override
-			desktop.maxW.override.if.value = {$plugin.tx_rkwbasics.settings.responsiveImages.breakpoints.desktop}
+			desktop.maxW.override.if.value = {$plugin.tx_accelerator.settings.responsiveImages.breakpoints.desktop}
             desktopRetina2.maxW.override < .desktop.maxW.override
 		}
 	}
@@ -269,5 +272,5 @@ plugin.tx_rkwshop.libs {
 }
 
 
-# needed for CommandController (otherwise PID 1 would be the storagePid)
+# needed for backend modules (otherwise PID 1 would be the storagePid)
 module.tx_rkwshop.persistence.storagePid < plugin.tx_rkwshop.persistence.storagePid

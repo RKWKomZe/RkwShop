@@ -7,7 +7,7 @@
 <!-- PLAINTEXT -->
 <f:section name="Plaintext">
 	=============================================================\n
-	<rkwMailer:frontend.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" />\n
+	<rkwMailer:email.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" />\n
 	=============================================================\n
     {order.email}\n
 	<f:if condition="{order.shippingAddress.company}">{order.shippingAddress.company}\n</f:if>
@@ -17,7 +17,7 @@
 	<f:if condition="{order.remark}">
 		\n
 		=============================================================\n
-		<rkwMailer:frontend.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" />\n
+		<rkwMailer:email.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" />\n
 		=============================================================\n
 		{order.remark}\n
 	</f:if>
@@ -25,7 +25,7 @@
 
 <!-- HTML -->
 <f:section name="Html">
-	<h2><rkwMailer:frontend.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" /></h2>
+	<h2><rkwMailer:email.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" /></h2>
 	<p>
         {order.email}<br/>
 		<f:if condition="{order.shippingAddress.company}">{order.shippingAddress.company}<br/></f:if>
@@ -35,7 +35,7 @@
 	</p>
 
 	<f:if condition="{order.remark}">
-		<h2><rkwMailer:frontend.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" /></h2>
+		<h2><rkwMailer:email.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" /></h2>
 		<p>
 			{order.remark}
 		</p>

@@ -20,7 +20,7 @@ namespace RKW\RkwShop\Domain\Repository;
  * Class PagesRepository
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  */
 class PagesRepository extends \TYPO3\CMS\Extbase\Persistence\Repository

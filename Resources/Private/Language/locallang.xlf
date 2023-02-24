@@ -65,12 +65,6 @@
 			<!-- ================================================================================== -->
 
 			<!-- OrderManager -->
-            <trans-unit id="orderManager.error.acceptTerms">
-                <source>Please accept our terms of use in order to place an order.</source>
-            </trans-unit>
-            <trans-unit id="orderManager.error.acceptPrivacy">
-                <source>The protection of your data is important to us. Therefore we ask you to agree to the storage of your personal data.</source>
-            </trans-unit>
 			<trans-unit id="orderManager.error.invalidEmail">
 				<source>Oops, something went wrong. Please enter a valid e-mail address.</source>
 			</trans-unit>
@@ -90,7 +84,7 @@
                 <source><![CDATA[Oops, that shouldn't have happened. The user account you submitted does not seem to exist. Please contact our <a href="mailto:service@rkw.de">Support</a>. ]]></source>
             </trans-unit>
 			<trans-unit id="orderManager.message.created">
-				<source>Wohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
+				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
 			</trans-unit>
 			<trans-unit id="orderManager.message.createdOptIn">
 				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href=mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
@@ -100,7 +94,7 @@
 
             <!-- OrderController -->
 			<trans-unit id="orderController.message.orderCreated">
-				<source>Wohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
+				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
 			</trans-unit>
 			<trans-unit id="orderController.message.orderCanceled">
 				<source>The order process was aborted as desired. However, you can place another order at any time..</source>

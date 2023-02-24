@@ -21,23 +21,18 @@ $EM_CONF[$_EXTKEY] = [
 	'uploadfolder' => '0',
 	'createDirs' => '',
 	'clearCacheOnLoad' => 0,
-	'version' => '8.7.15',
+	'version' => '9.5.0',
 	'constraints' => [
 		'depends' => [
-            'typo3' => '7.6.0-8.7.99',
-            'rkw_basics' => '8.7.7-8.7.99',
-            'rkw_mailer' => '8.7.20-8.7.99',
-            'rkw_registration' => '8.7.5-8.7.99',
-            'rkw_ajax' => '8.7.6-8.7.99',
+            'typo3' => '9.5.0-9.5.99',
+            'accelerator' => '9.5.2-9.5.99',
+            'core_extended' => '9.5.4-9.5.99',
+            'ajax_api' => '9.5.0-9.5.99',
+            'rkw_basics' => '9.5.0-9.5.99',
+            'rkw_mailer' => '9.5.0-9.5.99',
+            'rkw_registration' => '9.5.0-9.5.99',
 		],
-		'conflicts' => [
-            'rkw_authors' => '0.0.0-7.6.13',
-            'rkw_basics' => '0.0.0-8.7.6',
-            'rkw_order' => '',
-            'rkw_soap' => '0.0.0-7.6.5',
-            'rkw_registration' => '0.0.0-8.7.4'
-		],
-		'suggests' => [
-		],
+		'conflicts' => [],
+		'suggests' => [],
 	],
 ];

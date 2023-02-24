@@ -2,6 +2,8 @@
 
 namespace RKW\RkwShop\Orders;
 
+use RKW\RkwRegistration\Domain\Model\FrontendUser;
+use RKW\RkwRegistration\Registration\FrontendUserRegistration;
 use \RKW\RkwShop\Exception;
 
 /*
@@ -62,7 +64,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * orderRepository
      *
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $orderRepository;
 
@@ -71,7 +73,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * orderItemRepository
      *
      * @var \RKW\RkwShop\Domain\Repository\OrderItemRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $orderItemRepository;
 
@@ -79,7 +81,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * productRepository
      *
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $productRepository;
 
@@ -87,7 +89,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * stockRepository
      *
      * @var \RKW\RkwShop\Domain\Repository\StockRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $stockRepository;
 
@@ -95,14 +97,14 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * BackendUserRepository
      *
      * @var \RKW\RkwShop\Domain\Repository\BackendUserRepository
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $backendUserRepository;
 
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $signalSlotDispatcher;
 
@@ -110,7 +112,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * Persistence Manager
      *
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $persistenceManager;
 
@@ -119,14 +121,14 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * configurationManager
      *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $configurationManager;
 
 
     /**
      * @var  \TYPO3\CMS\Extbase\Object\ObjectManager
-     * @inject
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $objectManager;
 
@@ -136,47 +138,34 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     protected $logger;
 
 
-
     /**
      * Create Order
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param \TYPO3\CMS\Extbase\Mvc\Request|null $request
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser|null $frontendUser
-     * @param bool $terms
-     * @param bool $privacy
      * @return string
-     * @throws \RKW\RkwShop\Exception
+     * @throws Exception
      * @throws \RKW\RkwRegistration\Exception
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception\NotImplementedException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      */
-    public function createOrder (\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null, $terms = false, $privacy = false)
-    {
-
-        // check terms if user is not logged in
-        if (
-            (! $terms)
-            && (
-                (! $frontendUser)
-                || ($frontendUser->_isNew())
-            )
-        ) {
-            throw new Exception('orderManager.error.acceptTerms');
-        }
-
-        // check privacy flag
-        if (! $privacy) {
-            throw new Exception('orderManager.error.acceptPrivacy');
-        }
+    public function createOrder (
+        \RKW\RkwShop\Domain\Model\Order $order,
+        \TYPO3\CMS\Extbase\Mvc\Request $request = null,
+        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null
+   ): string {
 
         // check given e-mail
-        if (! \RKW\RkwRegistration\Tools\Registration::validEmail($order->getEmail())) {
+        if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
             throw new Exception('orderManager.error.invalidEmail');
         }
 
@@ -223,7 +212,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             $this->saveOrder($order, $frontendUser);
 
             // add privacy info
-            \RKW\RkwRegistration\Tools\Privacy::addPrivacyData($request, $frontendUser, $order, 'new order');
+            \RKW\RkwRegistration\DataProtection\ConsentHandler::add($request, $frontendUser, $order, 'new order');
 
             return 'orderManager.message.created';
         }
@@ -231,17 +220,17 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
         // handling for new users
         // register new user or simply send opt-in to existing user
-        /** @var \RKW\RkwRegistration\Tools\Registration $registration */
-        $registration = $this->objectManager->get('RKW\\RkwRegistration\\Tools\\Registration');
-        $registration->register(
-            array(
-                'email' => $order->getEmail(),
-            ),
-            false,
-            $order,
-            'rkwShop',
-            $request
-        );
+        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        $frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(FrontendUser::class);
+        $frontendUser->setEmail($order->getEmail());
+
+        /** @var \RKW\RkwRegistration\Registration\FrontendUserRegistration $registration */
+        $registration = $this->objectManager->get(FrontendUserRegistration::class);
+        $registration->setFrontendUser($frontendUser)
+            ->setData($order)
+            ->setCategory('rkwShop')
+            ->setRequest($request)
+            ->startRegistration();
 
         return 'orderManager.message.createdOptIn';
 
@@ -260,7 +249,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
+    protected function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser): bool
     {
 
         // check order
@@ -314,18 +303,18 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * Intermediate function for saving of orders - used by SignalSlot
      *
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwRegistration\Domain\Model\Registration $registration
+     * @param \RKW\RkwRegistration\Domain\Model\OptIn $optIn
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\Registration $registration)
+    public function saveOrderSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\OptIn $optIn): void
     {
         // get order from registration
         if (
-            ($order = $registration->getData())
+            ($order = $optIn->getData())
             && ($order instanceof \RKW\RkwShop\Domain\Model\Order)
         ) {
 
@@ -350,7 +339,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function removeAllOrdersOfFrontendUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
+    public function removeAllOrdersOfFrontendUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser): void
     {
 
         $orders = $this->orderRepository->findByFrontendUser($frontendUser);
@@ -400,7 +389,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
+    public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product): int
     {
         if (
             ($product->getProductBundle())
@@ -424,7 +413,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getPreOrderStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
+    public function getPreOrderStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product): int
     {
         if (
             ($product->getProductBundle())
@@ -448,7 +437,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @return void
      */
-    public function cleanUpOrderItemList (\RKW\RkwShop\Domain\Model\Order $order)
+    public function cleanUpOrderItemList (\RKW\RkwShop\Domain\Model\Order $order): void
     {
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
@@ -466,7 +455,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @return array <\RKW\RkwShop\Domain\Model\BackendUser> $backendUsers
      */
-    public function getBackendUsersForAdminMails (\RKW\RkwShop\Domain\Model\Product $product)
+    public function getBackendUsersForAdminMails (\RKW\RkwShop\Domain\Model\Product $product): array
     {
 
         $backendUsers = [];

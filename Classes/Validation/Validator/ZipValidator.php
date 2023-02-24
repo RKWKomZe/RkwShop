@@ -20,7 +20,7 @@ namespace RKW\RkwShop\Validation\Validator;
  *
  * @author Maximilian Fäßler <maximilian@faesslerweb.de>
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwShop
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -37,10 +37,10 @@ class ZipValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValid
     /**
      * Checks if the given property ($propertyValue) has 5 digits, is integer and not null.
      *
-     * @param integer $value
+     * @param int $value
      * @return void
      */
-    public function isValid($value)
+    public function isValid($value): void
     {
         if (!$value
             || strlen(trim($value)) != 5

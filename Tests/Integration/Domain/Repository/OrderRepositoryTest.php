@@ -26,7 +26,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * OrderRepositoryTest
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
- * @copyright Rkw Kompetenzzentrum
+ * @copyright RKW Kompetenzzentrum
  * @package RKW_RkwMailer
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -70,7 +70,7 @@ class OrderRepositoryTest extends FunctionalTestCase
      * Setup
      * @throws \Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Global.xml');
@@ -116,7 +116,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
         $result = $this->subject->findByFrontendUser($frontendUser)->toArray();
-        static::assertEquals(2, count($result));
+        self::assertEquals(2, count($result));
         self::assertEquals('1', $result[0]->getUid());
         self::assertEquals('2', $result[1]->getUid());
 
@@ -143,7 +143,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
         $result = $this->subject->findByFrontendUser($frontendUser)->toArray();
-        static::assertEquals(1, count($result));
+        self::assertEquals(1, count($result));
         self::assertEquals('1', $result[0]->getUid());
     }
 
@@ -170,7 +170,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check30.xml');
 
         $result = $this->subject->findByTimestampSoap(0);
-        static::assertEquals(2, count($result));
+        self::assertEquals(2, count($result));
 
     }
 
@@ -193,7 +193,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check40.xml');
 
         $result = $this->subject->findByTimestampSoap(0);
-        static::assertEquals(2, count($result));
+        self::assertEquals(2, count($result));
 
     }
 
@@ -216,7 +216,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check50.xml');
 
         $result = $this->subject->findByTimestampSoap(0);
-        static::assertEquals(1, count($result));
+        self::assertEquals(1, count($result));
 
     }
 
@@ -237,7 +237,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check60.xml');
 
         $result = $this->subject->findByTimestampSoap(4000);
-        static::assertEquals(2, count($result));
+        self::assertEquals(2, count($result));
 
     }
 
@@ -261,8 +261,8 @@ class OrderRepositoryTest extends FunctionalTestCase
 
         $result = $this->subject->findByTimestampSoap(4000);
 
-        static::assertEquals(1, count($result));
-        static::assertContains($this->subject->findByUid(1), $result);
+        self::assertEquals(1, count($result));
+        self::assertStringContainsString($this->subject->findByUid(1), $result);
 
     }
 
@@ -289,11 +289,11 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check70.xml');
 
         $result = $this->subject->findByTimestampSoap(0)->toArray();
-        static::assertEquals(3, count($result));
+        self::assertEquals(3, count($result));
 
-        static::assertGreaterThan(0, $result[0]->getFrontendUser());
-        static::assertGreaterThan(0, $result[1]->getFrontendUser());
-        static::assertGreaterThan(0, $result[2]->getFrontendUser());
+        self::assertGreaterThan(0, $result[0]->getFrontendUser());
+        self::assertGreaterThan(0, $result[1]->getFrontendUser());
+        self::assertGreaterThan(0, $result[2]->getFrontendUser());
 
 
     }
@@ -323,11 +323,11 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check80.xml');
 
         $result = $this->subject->findByTimestampSoap(0)->toArray();
-        static::assertEquals(3, count($result));
+        self::assertEquals(3, count($result));
 
-        static::assertGreaterThan(0, $result[0]->getShippingAddress());
-        static::assertGreaterThan(0, $result[1]->getShippingAddress());
-        static::assertGreaterThan(0, $result[2]->getShippingAddress());
+        self::assertGreaterThan(0, $result[0]->getShippingAddress());
+        self::assertGreaterThan(0, $result[1]->getShippingAddress());
+        self::assertGreaterThan(0, $result[2]->getShippingAddress());
 
 
     }
@@ -355,7 +355,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check90.xml');
 
         $result = $this->subject->findByUidSoap(1);
-        static::assertInstanceOf(\RKW\RkwShop\Domain\Model\Order::class, $result);
+        self::assertInstanceOf(\RKW\RkwShop\Domain\Model\Order::class, $result);
 
     }
 
@@ -378,7 +378,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check100.xml');
 
         $result = $this->subject->findByUidSoap(1);
-        static::assertInstanceOf(\RKW\RkwShop\Domain\Model\Order::class, $result);
+        self::assertInstanceOf(\RKW\RkwShop\Domain\Model\Order::class, $result);
 
     }
 
@@ -401,7 +401,7 @@ class OrderRepositoryTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/OrderRepositoryTest/Fixtures/Database/Check110.xml');
 
         $result = $this->subject->findByUidSoap(1);
-        static::assertNull($result);
+        self::assertNull($result);
 
     }
 
@@ -409,7 +409,7 @@ class OrderRepositoryTest extends FunctionalTestCase
     /**
      * TearDown
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
