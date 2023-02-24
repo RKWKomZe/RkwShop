@@ -34,10 +34,10 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
      * Validator
      *
      * @var \RKW\RkwShop\Domain\Model\Order $order
-     * @return boolean|string
+     * @return boolean
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    public function isValid($order)
+    public function isValid($order): bool
     {
         $isValid = true;
         $settings = $this->getSettings();
@@ -112,7 +112,7 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
      * @return array
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
+    protected function getSettings(string $which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS): array
     {
         return Common::getTypoScriptConfiguration('Rkwshop', $which);
     }

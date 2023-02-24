@@ -48,7 +48,7 @@ class IsOrderPossibleViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstra
      * @return bool
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function render(array $products)
+    public function render(array $products): bool
     {
 
         $products = $this->arguments['products'];

@@ -6,7 +6,7 @@ config.tx_extbase.persistence {
         // dependeny to rkw_authors is optional - see configuration in rkw_authors
         #===============================================
 
-        RKW\RkwBasics\Domain\Model\Pages {
+        Madj2k\CoreExtended\Domain\Model\Pages {
             subclasses {
                 Tx_RkwShop_Pages = RKW\RkwShop\Domain\Model\Pages
             }
@@ -272,5 +272,5 @@ plugin.tx_rkwshop.libs {
 }
 
 
-# needed for CommandController (otherwise PID 1 would be the storagePid)
+# needed for backend modules (otherwise PID 1 would be the storagePid)
 module.tx_rkwshop.persistence.storagePid < plugin.tx_rkwshop.persistence.storagePid

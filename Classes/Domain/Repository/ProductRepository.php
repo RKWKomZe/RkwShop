@@ -2,8 +2,11 @@
 
 namespace RKW\RkwShop\Domain\Repository;
 
+use RKW\RkwShop\Domain\Model\Product;
+use RKW\RkwShop\Domain\Model\ProductBundle;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -34,9 +37,9 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * Get all products including hidden and deleted
      *
      * @param \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
-     * @return array|null|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findByProductBundleOrderedByPublishingDate (\RKW\RkwShop\Domain\Model\ProductBundle $productBundle)
+    public function findByProductBundleOrderedByPublishingDate (ProductBundle $productBundle): QueryResultInterface
     {
 
         $query = $this->createQuery();
@@ -54,7 +57,7 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param string $uidList
      * @return array
      */
-    public function findByUidList($uidList)
+    public function findByUidList(string $uidList): array
     {
 
         $query = $this->createQuery();
@@ -157,7 +160,7 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @return object The matching object if found, otherwise NULL
      * @api used by RKW Soap
      */
-    public function findByUidSoap($uid)
+    public function findByUidSoap(int $uid):? Product
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIncludeDeleted(true);
@@ -178,7 +181,7 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @param array $uidArray
      * @return array
      */
-    protected function orderByKey($key, $uidArray)
+    protected function orderByKey($key, $uidArray): array
     {
         $order = array();
         foreach ($uidArray as $uid) {

@@ -65,7 +65,7 @@ class IsRequiredFieldViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstra
      * @return array
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
+    protected function getSettings(string $which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS): array
     {
         return \Madj2k\CoreExtended\Utility\GeneralUtility::getTypoScriptConfiguration('Rkwshop', $which);
     }

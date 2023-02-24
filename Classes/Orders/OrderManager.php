@@ -162,7 +162,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         \RKW\RkwShop\Domain\Model\Order $order,
         \TYPO3\CMS\Extbase\Mvc\Request $request = null,
         \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null
-   ) {
+   ): string {
 
         // check given e-mail
         if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
@@ -249,7 +249,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
+    protected function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser): bool
     {
 
         // check order
@@ -310,7 +310,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\OptIn $optIn)
+    public function saveOrderSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\OptIn $optIn): void
     {
         // get order from registration
         if (
@@ -339,7 +339,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function removeAllOrdersOfFrontendUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
+    public function removeAllOrdersOfFrontendUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser): void
     {
 
         $orders = $this->orderRepository->findByFrontendUser($frontendUser);
@@ -389,7 +389,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
+    public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product): int
     {
         if (
             ($product->getProductBundle())
@@ -413,7 +413,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function getPreOrderStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product)
+    public function getPreOrderStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product): int
     {
         if (
             ($product->getProductBundle())
@@ -437,7 +437,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @return void
      */
-    public function cleanUpOrderItemList (\RKW\RkwShop\Domain\Model\Order $order)
+    public function cleanUpOrderItemList (\RKW\RkwShop\Domain\Model\Order $order): void
     {
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
@@ -455,7 +455,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @return array <\RKW\RkwShop\Domain\Model\BackendUser> $backendUsers
      */
-    public function getBackendUsersForAdminMails (\RKW\RkwShop\Domain\Model\Product $product)
+    public function getBackendUsersForAdminMails (\RKW\RkwShop\Domain\Model\Product $product): array
     {
 
         $backendUsers = [];

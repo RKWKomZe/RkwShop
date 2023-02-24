@@ -124,7 +124,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the crdate value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getCrdate()
@@ -136,7 +136,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the tstamp value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getTstamp()
@@ -147,10 +147,10 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the hidden value
      *
-     * @param integer $hidden
+     * @param int $hidden
      * @api
      */
-    public function setHidden($hidden)
+    public function setHidden($hidden): void
     {
         $this->hidden = $hidden;
     }
@@ -159,7 +159,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the hidden value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getHidden()
@@ -171,10 +171,10 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the deleted value
      *
-     * @param integer $deleted
+     * @param int $deleted
      * @api
      */
-    public function setDeleted($deleted)
+    public function setDeleted($deleted): void
     {
         $this->deleted = $deleted;
     }
@@ -183,7 +183,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the deleted value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getDeleted()
@@ -196,10 +196,10 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the status value
      *
-     * @param integer $status
+     * @param int $status
      * @api
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
@@ -208,7 +208,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the status value
      *
-     * @return integer
+     * @return int
      * @api
      */
     public function getStatus()
@@ -234,7 +234,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $email
      * @return void
      */
-    public function setEmail($email)
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
@@ -256,7 +256,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param string $remark
      * @return void
      */
-    public function setRemark($remark)
+    public function setRemark($remark): void
     {
         $this->remark = $remark;
     }
@@ -277,7 +277,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
      * @return void
      */
-    public function setFrontendUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
+    public function setFrontendUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser): void
     {
         $this->frontendUser = $frontendUser;
     }
@@ -298,7 +298,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress
      * @return void
      */
-    public function setShippingAddress(\RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress)
+    public function setShippingAddress(\RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress): void
     {
         $this->shippingAddress = $shippingAddress;
     }
@@ -310,7 +310,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\OrderItem $orderItem
      * @return void
      */
-    public function addOrderItem(\RKW\RkwShop\Domain\Model\OrderItem $orderItem)
+    public function addOrderItem(\RKW\RkwShop\Domain\Model\OrderItem $orderItem): void
     {
         $this->orderItem->attach($orderItem);
     }
@@ -321,7 +321,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \RKW\RkwShop\Domain\Model\OrderItem $orderItem
      * @return void
      */
-    public function removeOrderItem(\RKW\RkwShop\Domain\Model\OrderItem $orderItem)
+    public function removeOrderItem(\RKW\RkwShop\Domain\Model\OrderItem $orderItem): void
     {
         $this->orderItem->detach($orderItem);
     }
@@ -342,7 +342,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\RKW\RkwShop\Domain\Model\OrderItem> $orderItem
      * @return void
      */
-    public function setOrderItem(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderItem)
+    public function setOrderItem(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderItem): void
     {
         $this->orderItem = $orderItem;
     }

@@ -4,6 +4,7 @@ namespace RKW\RkwShop\Controller;
 
 use Madj2k\CoreExtended\Utility\GeneralUtility as Common;
 use RKW\RkwRegistration\Registration\FrontendUserRegistration;
+use RKW\RkwShop\Domain\Model\Order;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -130,7 +131,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("order")
      * @return void
      */
-    public function newInitAction(\RKW\RkwShop\Domain\Model\Order $order = null)
+    public function newInitAction(\RKW\RkwShop\Domain\Model\Order $order = null): void
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -194,10 +195,10 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * action new
      *
-     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param \RKW\RkwShop\Domain\Model\Order|null $order
      * @return void
      */
-    public function newAction(\RKW\RkwShop\Domain\Model\Order $order = null)
+    public function newAction(Order $order = null): void
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -225,6 +226,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
@@ -238,7 +240,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @TYPO3\CMS\Extbase\Annotation\Validate("\RKW\RkwRegistration\Validation\Consent\PrivacyValidator", param="order")
      * @TYPO3\CMS\Extbase\Annotation\Validate("\RKW\RkwRegistration\Validation\Consent\MarketingValidator", param="order")
      */
-    public function createAction(\RKW\RkwShop\Domain\Model\Order $order)
+    public function createAction(Order $order): void
     {
 
         try {
@@ -351,7 +353,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Uid of logged-in user
      *
-     * @return integer
+     * @return int
      * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
     protected function getFrontendUserId(): int
@@ -386,7 +388,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @return array
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      */
-    protected function getSettings($which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS)
+    protected function getSettings(string $which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS): array
     {
         return Common::getTypoScriptConfiguration('Rkwshop', $which);
     }
