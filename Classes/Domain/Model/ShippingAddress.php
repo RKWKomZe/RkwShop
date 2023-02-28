@@ -24,7 +24,7 @@ namespace RKW\RkwShop\Domain\Model;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ShippingAddress extends \RKW\RkwRegistration\Domain\Model\ShippingAddress
+class ShippingAddress extends \Madj2k\FeRegister\Domain\Model\ShippingAddress
 {
 
 

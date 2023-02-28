@@ -3,7 +3,7 @@ namespace RKW\RkwShop\Tests\Integration\Orders;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
-use RKW\RkwRegistration\Domain\Model\OptIn;
+use Madj2k\FeRegister\Domain\Model\OptIn;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
 use RKW\RkwShop\Domain\Model\ShippingAddress;
@@ -15,9 +15,9 @@ use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use RKW\RkwShop\Domain\Repository\ShippingAddressRepository;
 
 
-use RKW\RkwRegistration\Domain\Model\FrontendUser;
-use RKW\RkwRegistration\Domain\Repository\PrivacyRepository;
-use RKW\RkwRegistration\Domain\Repository\OptInRepository;
+use Madj2k\FeRegister\Domain\Model\FrontendUser;
+use Madj2k\FeRegister\Domain\Repository\PrivacyRepository;
+use Madj2k\FeRegister\Domain\Repository\OptInRepository;
 
 
 use TYPO3\CMS\Extbase\Mvc\Request;
@@ -54,9 +54,9 @@ class OrderManagerTest extends FunctionalTestCase
      * @var string[]
      */
     protected $testExtensionsToLoad = [
+        'typo3conf/ext/postmaster',
         'typo3conf/ext/rkw_basics',
-        'typo3conf/ext/rkw_registration',
-        'typo3conf/ext/rkw_mailer',
+        'typo3conf/ext/fe_register',
         'typo3conf/ext/rkw_shop',
     ];
 
@@ -96,12 +96,12 @@ class OrderManagerTest extends FunctionalTestCase
     private $productRepository;
 
     /**
-     * @var \RKW\RkwRegistration\Domain\Repository\PrivacyRepository
+     * @var \Madj2k\FeRegister\Domain\Repository\PrivacyRepository
      */
     private $privacyRepository;
 
     /**
-     * @var \RKW\RkwRegistration\Domain\Repository\OptInRepository
+     * @var \Madj2k\FeRegister\Domain\Repository\OptInRepository
      */
     private $optInRepository;
 
@@ -139,8 +139,8 @@ class OrderManagerTest extends FunctionalTestCase
             1,
             [
                 'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_mailer/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
+                'EXT:postmaster/Configuration/TypoScript/setup.txt',
+                'EXT:fe_register/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_shop/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_shop/Tests/Functional/Orders/Fixtures/Frontend/Configuration/Rootpage.typoscript',
             ]
@@ -169,7 +169,7 @@ class OrderManagerTest extends FunctionalTestCase
      /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -205,7 +205,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -249,7 +249,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -294,7 +294,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -351,7 +351,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -408,7 +408,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -435,7 +435,7 @@ class OrderManagerTest extends FunctionalTestCase
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
         $order = $this->orderRepository->findByUid(1);
 
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        /** @var \Madj2k\FeRegister\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
         /** @var \TYPO3\CMS\Extbase\Mvc\Request $request */
@@ -452,7 +452,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -511,7 +511,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -571,7 +571,7 @@ class OrderManagerTest extends FunctionalTestCase
      /**
       * @test
       * @throws \RKW\RkwShop\Exception
-      * @throws \RKW\RkwRegistration\Exception
+      * @throws \Madj2k\FeRegister\Exception
       * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
       * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
       * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -601,7 +601,7 @@ class OrderManagerTest extends FunctionalTestCase
          */
         $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check30.xml');
 
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        /** @var \Madj2k\FeRegister\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
         /** @var \RKW\RkwShop\Domain\Model\Order $order */
@@ -660,9 +660,9 @@ class OrderManagerTest extends FunctionalTestCase
         self::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
         self::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
 
-        /** @var \RKW\RkwRegistration\Domain\Model\Privacy $privacyDb */
+        /** @var \Madj2k\FeRegister\Domain\Model\Privacy $privacyDb */
         $privacyDb = $this->privacyRepository->findByUid(1);
-        self::assertInstanceOf('RKW\RkwRegistration\Domain\Model\Privacy', $privacyDb);
+        self::assertInstanceOf('Madj2k\FeRegister\Domain\Model\Privacy', $privacyDb);
         self::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
 
     }
@@ -672,7 +672,7 @@ class OrderManagerTest extends FunctionalTestCase
     /**
      * @test
      * @throws \RKW\RkwShop\Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -724,7 +724,7 @@ class OrderManagerTest extends FunctionalTestCase
             $this->subject->createOrder($order, $request, null)
         );
 
-        /** @var \RKW\RkwRegistration\Domain\Model\OptIn $optIn */
+        /** @var \Madj2k\FeRegister\Domain\Model\OptIn $optIn */
         $optIn = $this->optInRepository->findByUid(1);
         self::assertInstanceOf(OptIn::class, $optIn);
         self::assertEquals(1, $optIn->getFrontendUserUid());
@@ -760,7 +760,7 @@ class OrderManagerTest extends FunctionalTestCase
          */
         $this->importDataSet(__DIR__ . '/OrderManagerTest/Fixtures/Database/Check90.xml');
 
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser  $frontendUser */
+        /** @var \Madj2k\FeRegister\Domain\Model\FrontendUser  $frontendUser */
         $frontendUser = $this->frontendUserRepository->findByUid(1);
 
         $this->subject->removeAllOrdersOfFrontendUserSignalSlot($frontendUser);

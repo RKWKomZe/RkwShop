@@ -3,7 +3,7 @@
 namespace RKW\RkwShop\Service;
 
 use Madj2k\CoreExtended\Utility\GeneralUtility;
-use RKW\RkwMailer\Service\MailService;
+use Madj2k\Postmaster\Service\MailService;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
@@ -33,10 +33,10 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Handles opt-in event
      *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwRegistration\Domain\Model\OptIn $optIn
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\OptIn $optIn
      * @return void
-     * @throws \RKW\RkwMailer\Exception
+     * @throws \Madj2k\Postmaster\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
@@ -47,8 +47,8 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function optInRequest
     (
-        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
-        \RKW\RkwRegistration\Domain\Model\OptIn $optIn
+        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser,
+        \Madj2k\FeRegister\Domain\Model\OptIn $optIn
     )
     {
         // get settings
@@ -58,7 +58,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         if ($frontendUser->getEmail()) {
             if ($settings['view']['templateRootPaths'][0]) {
 
-                /** @var \RKW\RkwMailer\Service\MailService $mailService */
+                /** @var \Madj2k\Postmaster\Service\MailService $mailService */
                 $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailService::class);
 
                 // send new user an email with token
@@ -74,11 +74,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                 ));
 
                 $mailService->getQueueMail()->setSubject(
-                    \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
+                    \Madj2k\Postmaster\Utility\FrontendLocalizationUtility::translate(
                         'rkwMailService.optInRequestEvent.subject',
                         'rkw_shop',
                         null,
-                        $frontendUser->getTxRkwregistrationLanguageKey()
+                        $frontendUser->getTxFeregisterLanguageKey()
                     )
                 );
 
@@ -98,12 +98,12 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Handles confirm order mail for user
      *
-     * Works with RkwRegistration-FrontendUser -> this is correct! (data comes from TxRkwRegistration)
+     * Works with FeRegister-FrontendUser -> this is correct! (data comes from TxFeRegister)
      *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @return void
-     * @throws \RKW\RkwMailer\Exception
+     * @throws \Madj2k\Postmaster\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
@@ -114,7 +114,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function confirmationOrderUser
     (
-        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser,
         \RKW\RkwShop\Domain\Model\Order $order
     )
     {
@@ -129,7 +129,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Order  $order
      * @param array $backendUserForProductMap
      * @return void
-     * @throws \RKW\RkwMailer\Exception
+     * @throws \Madj2k\Postmaster\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
@@ -152,12 +152,12 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Handles delete order mail for user
      *
-     * Works with RkwRegistration-FrontendUser -> this is correct! (data comes from TxRkwRegistration)
+     * Works with FeRegister-FrontendUser -> this is correct! (data comes from TxFeRegister)
      *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @return void
-     * @throws \RKW\RkwMailer\Exception
+     * @throws \Madj2k\Postmaster\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
@@ -168,7 +168,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function deleteOrderUser
     (
-        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser,
         \RKW\RkwShop\Domain\Model\Order $order
     )
     {
@@ -180,11 +180,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * Handles delete order mail for admin
      *
      * @param \RKW\RkwShop\Domain\Model\BackendUser|array   $backendUser
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @param \RKW\RkwShop\Domain\Model\Order  $order
      * @param array $backendUserForProductMap
      * @return void
-     * @throws \RKW\RkwMailer\Exception
+     * @throws \Madj2k\Postmaster\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
@@ -196,7 +196,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     public function deleteOrderAdmin
     (
         $backendUser,
-        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser,
         \RKW\RkwShop\Domain\Model\Order $order,
         array $backendUserForProductMap
     )
@@ -208,11 +208,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Sends an E-Mail to a Frontend-User
      *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param string $action
      * @param bool $renderTemplates
-     * @throws \RKW\RkwMailer\Exception
+     * @throws \Madj2k\Postmaster\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
@@ -223,7 +223,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected function userMail
     (
-        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser,
+        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser,
         \RKW\RkwShop\Domain\Model\Order $order,
         string $action = 'confirmation',
         bool $renderTemplates = false
@@ -236,7 +236,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         if ($frontendUser->getEmail()) {
             if ($settings['view']['templateRootPaths'][0]) {
 
-                /** @var \RKW\RkwMailer\Service\MailService $mailService */
+                /** @var \Madj2k\Postmaster\Service\MailService $mailService */
                 $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailService::class);
 
                 // send new user an email with token
@@ -251,11 +251,11 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                 ));
 
                 $mailService->getQueueMail()->setSubject(
-                    \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
+                    \Madj2k\Postmaster\Utility\FrontendLocalizationUtility::translate(
                         'rkwMailService.' . strtolower($action) . 'User.subject',
                         'rkw_shop',
                         null,
-                        $frontendUser->getTxRkwregistrationLanguageKey()
+                        $frontendUser->getTxFeregisterLanguageKey()
                     )
                 );
 
@@ -279,9 +279,9 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param array $backendUserForProductMap
      * @param string $action
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @param bool $renderTemplates
-     * @throws \RKW\RkwMailer\Exception
+     * @throws \Madj2k\Postmaster\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
@@ -296,7 +296,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         \RKW\RkwShop\Domain\Model\Order $order,
         array $backendUserForProductMap,
         string $action = 'confirmation',
-        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null,
+        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser = null,
         bool $renderTemplates = false
     )
     {
@@ -313,7 +313,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
 
         if ($settings['view']['templateRootPaths'][0]) {
 
-            /** @var \RKW\RkwMailer\Service\MailService $mailService */
+            /** @var \Madj2k\Postmaster\Service\MailService $mailService */
             $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailService::class);
 
             foreach ($recipients as $recipient) {
@@ -332,7 +332,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                             'pageUid'      => intval($GLOBALS['TSFE']->id),
                             'loginPid'     => intval($settingsDefault['loginPid']),
                         ),
-                        'subject' => \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
+                        'subject' => \Madj2k\Postmaster\Utility\FrontendLocalizationUtility::translate(
                             'rkwMailService.' . strtolower($action) . 'Admin.subject',
                             'rkw_shop',
                             null,
@@ -351,7 +351,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
             }
 
             $mailService->getQueueMail()->setSubject(
-                \RKW\RkwMailer\Utility\FrontendLocalizationUtility::translate(
+                \Madj2k\Postmaster\Utility\FrontendLocalizationUtility::translate(
                     'rkwMailService.' . strtolower($action) . 'Admin.subject',
                     'rkw_shop',
                     null,

@@ -11,9 +11,9 @@
         <address />
         <zip>10969</zip>
         <city>Hamburg</city>
-        <tx_rkwregistration_gender>0</tx_rkwregistration_gender>
-        <tx_rkwregistration_title>0</tx_rkwregistration_title>
-        <tx_rkwregistration_language_key>fr</tx_rkwregistration_language_key>
+        <tx_feregister_gender>0</tx_feregister_gender>
+        <tx_feregister_title>0</tx_feregister_title>
+        <tx_feregister_language_key>fr</tx_feregister_language_key>
     </fe_users>
     <tx_rkwshop_domain_model_order>
         <uid>1</uid>
@@ -23,7 +23,7 @@
         <remark>Toller Hinweis!!!</remark>
         <shipping_address>1</shipping_address>
     </tx_rkwshop_domain_model_order>
-    <tx_rkwregistration_domain_model_shippingaddress>
+    <tx_feregister_domain_model_shippingaddress>
         <uid>1</uid>
         <pid>0</pid>
         <gender>1</gender>
@@ -34,7 +34,7 @@
         <address>Wilhelmstraße 141</address>
         <zip>10963</zip>
         <city>Berlin</city>
-    </tx_rkwregistration_domain_model_shippingaddress>
+    </tx_feregister_domain_model_shippingaddress>
     <tx_rkwshop_domain_model_orderitem>
         <uid>1</uid>
         <pid>1</pid>

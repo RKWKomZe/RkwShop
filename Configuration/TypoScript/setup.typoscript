@@ -29,7 +29,7 @@ config.tx_extbase.persistence {
 
         #===============================================
 
-        RKW\RkwRegistration\Domain\Model\FrontendUser {
+        Madj2k\FeRegister\Domain\Model\FrontendUser {
             subclasses {
                 Tx_RkwShop_FrontendUser = RKW\RkwShop\Domain\Model\FrontendUser
             }
@@ -38,7 +38,7 @@ config.tx_extbase.persistence {
         RKW\RkwShop\Domain\Model\FrontendUser {
 
             // storage for new records in cross-extension-context
-            newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
+            newRecordStoragePid = {$plugin.tx_feregister.persistence.storagePid}
 
             mapping {
                 tableName = fe_users
@@ -67,7 +67,7 @@ config.tx_extbase.persistence {
 
         #===============================================
 
-        RKW\RkwRegistration\Domain\Model\ShippingAddress {
+        Madj2k\FeRegister\Domain\Model\ShippingAddress {
             subclasses {
                 Tx_RkwShop_ShippingAddress = RKW\RkwShop\Domain\Model\ShippingAddress
             }
@@ -76,12 +76,12 @@ config.tx_extbase.persistence {
         RKW\RkwShop\Domain\Model\ShippingAddress {
 
             // storage for new records in cross-extension-context
-            newRecordStoragePid = {$plugin.tx_rkwregistration.persistence.storagePid}
+            newRecordStoragePid = {$plugin.tx_feregister.persistence.storagePid}
 
             mapping {
 
                 # tablename
-                tableName = tx_rkwregistration_domain_model_shippingaddress
+                tableName = tx_feregister_domain_model_shippingaddress
             }
         }
 

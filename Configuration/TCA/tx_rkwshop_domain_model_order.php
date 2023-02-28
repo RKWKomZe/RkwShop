@@ -112,8 +112,8 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'foreign_table' => 'tx_rkwregistration_domain_model_shippingaddress',
-                'foreign_table_where' => 'AND tx_rkwregistration_domain_model_shippingaddress.deleted = 0 AND tx_rkwregistration_domain_model_shippingaddress.hidden = 0 ORDER BY tx_rkwregistration_domain_model_shippingaddress.address ASC',
+                'foreign_table' => 'tx_feregister_domain_model_shippingaddress',
+                'foreign_table_where' => 'AND tx_feregister_domain_model_shippingaddress.deleted = 0 AND tx_feregister_domain_model_shippingaddress.hidden = 0 ORDER BY tx_feregister_domain_model_shippingaddress.address ASC',
                 'minitems' => 1,
                 'maxitems' => 1,
                 'readOnly' => true

@@ -37,7 +37,7 @@ class StockRepositoryTest extends FunctionalTestCase
      */
     protected $testExtensionsToLoad = [
         'typo3conf/ext/rkw_basics',
-        'typo3conf/ext/rkw_registration',
+        'typo3conf/ext/fe_register',
         'typo3conf/ext/rkw_shop',
 
     ];
@@ -79,7 +79,7 @@ class StockRepositoryTest extends FunctionalTestCase
             1,
             [
                 'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
-                'EXT:rkw_registration/Configuration/TypoScript/setup.txt',
+                'EXT:fe_register/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_shop/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_shop/Tests/Functional/Domain/Repository/Fixtures/Frontend/Configuration/Rootpage.typoscript',
             ]

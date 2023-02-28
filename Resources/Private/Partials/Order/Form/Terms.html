@@ -1,5 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:rkwRegistration="http://typo3.org/ns/RKW/RkwRegistration/ViewHelpers"
+	xmlns:feRegister="http://typo3.org/ns/Madj2k/FeRegister/ViewHelpers"
 	data-namespace-typo3-fluid="true">
 
 	<f:comment>
@@ -15,12 +15,12 @@
 
 		<f:security.ifAuthenticated>
 			<f:else>
-                <rkwRegistration:consent type="terms" />
+                <feRegister:consent type="terms" />
 			</f:else>
 		</f:security.ifAuthenticated>
 
-        <rkwRegistration:consent type="privacy" key="order" />
-        <rkwRegistration:consent type="marketing" />
+        <feRegister:consent type="privacy" key="order" />
+        <feRegister:consent type="marketing" />
 
 		<div class="form__field flex space-start full-width-narrow">
 			<button class="btn btn--primary full-width-narrow" type="submit">
