@@ -1,5 +1,5 @@
-{namespace rkwMailer=RKW\RkwMailer\ViewHelpers}
-{namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
+{namespace postmaster=Madj2k\Postmaster\ViewHelpers}
+{namespace feRegister=Madj2k\FeRegister\ViewHelpers}
 {namespace rkwShop=RKW\RkwShop\ViewHelpers}
 
 
@@ -9,40 +9,40 @@
 <!-- PLAINTEXT -->
 <f:section name="Plaintext">
 	=============================================================\n
-	<rkwMailer:email.translate key="partials.email.productList.orderDetails" languageKey="{language}" extensionName="rkwShop"/>\n
+	<postmaster:email.translate key="partials.email.productList.orderDetails" languageKey="{language}" extensionName="rkwShop"/>\n
 	=============================================================\n
 	<f:for each="{order.orderItem}" as="orderItem" iteration="iterator">
 		{orderItem.amount} x {orderItem.product.title} (
 		<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
 			<f:then>
-				<rkwMailer:email.translate key="partials.email.productList.isBundle" languageKey="{language}" extensionName="rkwShop"/>
+				<postmaster:email.translate key="partials.email.productList.isBundle" languageKey="{language}" extensionName="rkwShop"/>
 			</f:then>
 			<f:else>
 				<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
 					<f:then>
-						<rkwMailer:email.translate key="partials.email.productList.isSubscription" languageKey="{language}" extensionName="rkwShop"/>
+						<postmaster:email.translate key="partials.email.productList.isSubscription" languageKey="{language}" extensionName="rkwShop"/>
 					</f:then>
 					<f:else>
-						<rkwMailer:email.translate key="partials.email.productList.isSingle" languageKey="{language}" extensionName="rkwShop"/>
+						<postmaster:email.translate key="partials.email.productList.isSingle" languageKey="{language}" extensionName="rkwShop"/>
 					</f:else>
 				</f:if>
 			</f:else>
 		</f:if>)
         <f:if condition="{backendUserForProductMap}">
-            \n<rkwMailer:email.translate key="partials.email.productList.responsible" languageKey="{language}" extensionName="rkwShop"/>: <rkwShop:GetListOfAdminsForProduct product="{orderItem.product}" backendUserForProductMap="{backendUserForProductMap}" />
+            \n<postmaster:email.translate key="partials.email.productList.responsible" languageKey="{language}" extensionName="rkwShop"/>: <rkwShop:GetListOfAdminsForProduct product="{orderItem.product}" backendUserForProductMap="{backendUserForProductMap}" />
         </f:if>\n
 	</f:for>
 </f:section>
 
 <!-- HTML -->
 <f:section name="Html">
-	<h2><rkwMailer:email.translate key="partials.email.productList.orderDetails" languageKey="{language}" extensionName="rkwShop"/></h2>
+	<h2><postmaster:email.translate key="partials.email.productList.orderDetails" languageKey="{language}" extensionName="rkwShop"/></h2>
 
 	<table class="colored-table">
 		<tr>
-			<th><rkwMailer:email.translate key="partials.email.productList.headlineProduct" languageKey="{language}" extensionName="rkwShop"/></th>
-			<th><rkwMailer:email.translate key="partials.email.productList.headlineAmount" languageKey="{language}" extensionName="rkwShop"/></th>
-			<th><rkwMailer:email.translate key="partials.email.productList.headlineType" languageKey="{language}" extensionName="rkwShop"/></th>
+			<th><postmaster:email.translate key="partials.email.productList.headlineProduct" languageKey="{language}" extensionName="rkwShop"/></th>
+			<th><postmaster:email.translate key="partials.email.productList.headlineAmount" languageKey="{language}" extensionName="rkwShop"/></th>
+			<th><postmaster:email.translate key="partials.email.productList.headlineType" languageKey="{language}" extensionName="rkwShop"/></th>
 		</tr>
 		<f:for each="{order.orderItem}" as="orderItem" iteration="iterator">
 			<tr class="{f:if(condition: iterator.isEven, then: 'even')}">
@@ -52,7 +52,7 @@
                             <!-- set link only for admins -->
                             <f:if condition="{backendUserForProductMap}">
                                 <f:then>
-                                    <strong><a href="<rkwMailer:email.uri.action absolute='true' pageUid='{orderItem.product.page.uid}' noCacheHash='true' />">{orderItem.product.title}</a></strong>
+                                    <strong><a href="<postmaster:email.uri.action absolute='true' pageUid='{orderItem.product.page.uid}' noCacheHash='true' />">{orderItem.product.title}</a></strong>
                                 </f:then>
                                 <f:else>
                                     <strong>{orderItem.product.title}</strong>
@@ -67,7 +67,7 @@
                         <br>{orderItem.product.subtitle}
                     </f:if>
                     <f:if condition="{backendUserForProductMap}">
-                        <br/><em><rkwMailer:email.translate key="partials.email.productList.responsible" languageKey="{language}" extensionName="rkwShop"/>: <rkwShop:GetListOfAdminsForProduct product="{orderItem.product}" backendUserForProductMap="{backendUserForProductMap}" /></em>
+                        <br/><em><postmaster:email.translate key="partials.email.productList.responsible" languageKey="{language}" extensionName="rkwShop"/>: <rkwShop:GetListOfAdminsForProduct product="{orderItem.product}" backendUserForProductMap="{backendUserForProductMap}" /></em>
                     </f:if>
 				</td>
 				<td class="align-center">
@@ -76,15 +76,15 @@
 				<td class="align-center">
 					<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
 						<f:then>
-							<rkwMailer:email.translate key="partials.email.productList.isBundle" languageKey="{language}" extensionName="rkwShop"/>
+							<postmaster:email.translate key="partials.email.productList.isBundle" languageKey="{language}" extensionName="rkwShop"/>
 						</f:then>
 						<f:else>
 							<f:if condition="{orderItem.product.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
 								<f:then>
-									<rkwMailer:email.translate key="partials.email.productList.isSubscription" languageKey="{language}" extensionName="rkwShop"/>
+									<postmaster:email.translate key="partials.email.productList.isSubscription" languageKey="{language}" extensionName="rkwShop"/>
 								</f:then>
 								<f:else>
-									<rkwMailer:email.translate key="partials.email.productList.isSingle" languageKey="{language}" extensionName="rkwShop"/>
+									<postmaster:email.translate key="partials.email.productList.isSingle" languageKey="{language}" extensionName="rkwShop"/>
 								</f:else>
 							</f:if>
 						</f:else>

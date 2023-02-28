@@ -13,9 +13,9 @@
         <address />
         <zip>10969</zip>
         <city>Hamburg</city>
-        <tx_rkwregistration_gender>0</tx_rkwregistration_gender>
-        <tx_rkwregistration_title>0</tx_rkwregistration_title>
-        <tx_rkwregistration_language_key>fr</tx_rkwregistration_language_key>
+        <tx_feregister_gender>0</tx_feregister_gender>
+        <tx_feregister_title>0</tx_feregister_title>
+        <tx_feregister_language_key>fr</tx_feregister_language_key>
     </fe_users>
 
     <!-- orders -->

@@ -86,7 +86,7 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
             }
 
             // check validity of e-mail
-            if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
+            if (! \Madj2k\FeRegister\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
 
                 $this->result->forProperty($requiredField)->addError(
                     new \TYPO3\CMS\Extbase\Error\Error(

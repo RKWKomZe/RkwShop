@@ -274,10 +274,10 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the frontendUser
      *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @return void
      */
-    public function setFrontendUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser): void
+    public function setFrontendUser(\Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser): void
     {
         $this->frontendUser = $frontendUser;
     }

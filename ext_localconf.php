@@ -38,15 +38,15 @@ call_user_func(
          */
         $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
         $signalSlotDispatcher->connect(
-            RKW\RkwRegistration\Registration\AbstractRegistration::class,
-            \RKW\RkwRegistration\Registration\AbstractRegistration::SIGNAL_AFTER_CREATING_OPTIN  . 'RkwShop',
+            Madj2k\FeRegister\Registration\AbstractRegistration::class,
+            \Madj2k\FeRegister\Registration\AbstractRegistration::SIGNAL_AFTER_CREATING_OPTIN  . 'RkwShop',
             RKW\RkwShop\Service\RkwMailService::class,
             'optInRequest'
         );
 
         $signalSlotDispatcher->connect(
-            RKW\RkwRegistration\Registration\AbstractRegistration::class,
-            \RKW\RkwRegistration\Registration\AbstractRegistration::SIGNAL_AFTER_REGISTRATION_COMPLETED . 'RkwShop',
+            Madj2k\FeRegister\Registration\AbstractRegistration::class,
+            \Madj2k\FeRegister\Registration\AbstractRegistration::SIGNAL_AFTER_REGISTRATION_COMPLETED . 'RkwShop',
             RKW\RkwShop\Orders\OrderManager::class,
             'saveOrderSignalSlot'
         );
@@ -66,8 +66,8 @@ call_user_func(
         );
 
         $signalSlotDispatcher->connect(
-            RKW\RkwRegistration\Registration\AbstractRegistration::class,
-            \RKW\RkwRegistration\Registration\AbstractRegistration::SIGNAL_AFTER_REGISTRATION_ENDED,
+            Madj2k\FeRegister\Registration\AbstractRegistration::class,
+            \Madj2k\FeRegister\Registration\AbstractRegistration::SIGNAL_AFTER_REGISTRATION_ENDED,
             RKW\RkwShop\Orders\OrderManager::class,
             'removeAllOrdersOfFrontendUserSignalSlot'
         );

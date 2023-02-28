@@ -1,25 +1,25 @@
-{namespace rkwMailer=RKW\RkwMailer\ViewHelpers}
+{namespace postmaster=Madj2k\Postmaster\ViewHelpers}
 <f:layout name="Email/{mailType}" />
 
 
 <!-- PLAINTEXT -->
-<f:section name="Plaintext"><rkwMailer:email.plaintextLineBreaks>
-	<rkwMailer:email.recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:email.translate key='templates.email.deleteOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/>\n
+<f:section name="Plaintext"><postmaster:email.plaintextLineBreaks>
+	<postmaster:email.recipientSalutation queueRecipient="{queueRecipient}" prependText="<postmaster:email.translate key='templates.email.deleteOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/>\n
 	\n
-	<rkwMailer:email.translate key="templates.email.deleteOrderUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" />\n
-	<rkwMailer:email.translate key="templates.email.deleteOrderUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" />\n
+	<postmaster:email.translate key="templates.email.deleteOrderUser.text1" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" />\n
+	<postmaster:email.translate key="templates.email.deleteOrderUser.text2" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" />\n
 	\n
-	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>\n
-	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
-</rkwMailer:email.plaintextLineBreaks></f:section>
+	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>\n
+	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
+</postmaster:email.plaintextLineBreaks></f:section>
 
 <!-- HTML -->
 <f:section name="Html">
-    <h1><rkwMailer:email.recipientSalutation queueRecipient="{queueRecipient}" prependText="<rkwMailer:email.translate key='templates.email.deleteOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/></h1>
+    <h1><postmaster:email.recipientSalutation queueRecipient="{queueRecipient}" prependText="<postmaster:email.translate key='templates.email.deleteOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/></h1>
 	<p>
-		<rkwMailer:email.translate key="templates.email.deleteOrderUser.text1" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" /><br>
-		<rkwMailer:email.translate key="templates.email.deleteOrderUser.text2" languageKey="{frontendUser.txRkwregistrationLanguageKey}" extensionName="rkwShop" />
+		<postmaster:email.translate key="templates.email.deleteOrderUser.text1" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" /><br>
+		<postmaster:email.translate key="templates.email.deleteOrderUser.text2" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" />
 	</p>
-	<f:render partial="Email/ProductList" section="Html" arguments="{order: order, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
-	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: order, frontendUser: frontendUser, language: frontendUser.txRkwregistrationLanguageKey}"/>
+	<f:render partial="Email/ProductList" section="Html" arguments="{order: order, frontendUser: frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
+	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: order, frontendUser: frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
 </f:section>

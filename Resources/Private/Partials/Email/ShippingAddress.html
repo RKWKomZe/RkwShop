@@ -1,5 +1,5 @@
-{namespace rkwMailer=RKW\RkwMailer\ViewHelpers}
-{namespace rkwRegistration=RKW\RkwRegistration\ViewHelpers}
+{namespace postmaster=Madj2k\Postmaster\ViewHelpers}
+{namespace feRegister=Madj2k\FeRegister\ViewHelpers}
 
 <f:layout name="Email/{mailType}" />
 
@@ -7,17 +7,17 @@
 <!-- PLAINTEXT -->
 <f:section name="Plaintext">
 	=============================================================\n
-	<rkwMailer:email.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" />\n
+	<postmaster:email.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" />\n
 	=============================================================\n
     {order.email}\n
 	<f:if condition="{order.shippingAddress.company}">{order.shippingAddress.company}\n</f:if>
-	<f:if condition="{order.shippingAddress.title}"><rkwRegistration:title title="{order.shippingAddress.title}" /> </f:if>{order.shippingAddress.firstName} {order.shippingAddress.lastName}\n
+	<f:if condition="{order.shippingAddress.title}"><feRegister:title title="{order.shippingAddress.title}" /> </f:if>{order.shippingAddress.firstName} {order.shippingAddress.lastName}\n
 	{order.shippingAddress.address}\n
 	{order.shippingAddress.zip} {order.shippingAddress.city}\n
 	<f:if condition="{order.remark}">
 		\n
 		=============================================================\n
-		<rkwMailer:email.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" />\n
+		<postmaster:email.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" />\n
 		=============================================================\n
 		{order.remark}\n
 	</f:if>
@@ -25,17 +25,17 @@
 
 <!-- HTML -->
 <f:section name="Html">
-	<h2><rkwMailer:email.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" /></h2>
+	<h2><postmaster:email.translate key="partials.email.shippingAddress.shippingAddress" languageKey="{language}" extensionName="rkwShop" /></h2>
 	<p>
         {order.email}<br/>
 		<f:if condition="{order.shippingAddress.company}">{order.shippingAddress.company}<br/></f:if>
-        <f:if condition="{order.shippingAddress.title}"><rkwRegistration:title title="{order.shippingAddress.title}" /> </f:if>{order.shippingAddress.firstName} {order.shippingAddress.lastName}<br/>
+        <f:if condition="{order.shippingAddress.title}"><feRegister:title title="{order.shippingAddress.title}" /> </f:if>{order.shippingAddress.firstName} {order.shippingAddress.lastName}<br/>
 		{order.shippingAddress.address}<br/>
 		{order.shippingAddress.zip} {order.shippingAddress.city}
 	</p>
 
 	<f:if condition="{order.remark}">
-		<h2><rkwMailer:email.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" /></h2>
+		<h2><postmaster:email.translate key="partials.email.shippingAddress.remark" languageKey="{language}" extensionName="rkwShop" /></h2>
 		<p>
 			{order.remark}
 		</p>

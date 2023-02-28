@@ -31,7 +31,7 @@
     </tx_rkwshop_domain_model_order>
 
     <!-- Shipping address -->
-    <tx_rkwregistration_domain_model_shippingaddress>
+    <tx_feregister_domain_model_shippingaddress>
         <uid>1</uid>
         <pid>0</pid>
         <gender>1</gender>
@@ -42,8 +42,8 @@
         <address>Wilhelmstraße 141</address>
         <zip>10963</zip>
         <city>Berlin</city>
-    </tx_rkwregistration_domain_model_shippingaddress>
-    <tx_rkwregistration_domain_model_shippingaddress>
+    </tx_feregister_domain_model_shippingaddress>
+    <tx_feregister_domain_model_shippingaddress>
         <uid>2</uid>
         <pid>0</pid>
         <gender>2</gender>
@@ -55,8 +55,8 @@
         <zip>10785</zip>
         <city>Berlin</city>
         <hidden>1</hidden>
-    </tx_rkwregistration_domain_model_shippingaddress>
-    <tx_rkwregistration_domain_model_shippingaddress>
+    </tx_feregister_domain_model_shippingaddress>
+    <tx_feregister_domain_model_shippingaddress>
         <uid>3</uid>
         <pid>0</pid>
         <gender>2</gender>
@@ -68,6 +68,6 @@
         <zip>10117</zip>
         <city>Berlin</city>
         <deleted>1</deleted>
-    </tx_rkwregistration_domain_model_shippingaddress>
+    </tx_feregister_domain_model_shippingaddress>
 
 </dataset>

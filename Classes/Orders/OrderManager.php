@@ -2,8 +2,8 @@
 
 namespace RKW\RkwShop\Orders;
 
-use RKW\RkwRegistration\Domain\Model\FrontendUser;
-use RKW\RkwRegistration\Registration\FrontendUserRegistration;
+use Madj2k\FeRegister\Domain\Model\FrontendUser;
+use Madj2k\FeRegister\Registration\FrontendUserRegistration;
 use \RKW\RkwShop\Exception;
 
 /*
@@ -143,10 +143,10 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param \TYPO3\CMS\Extbase\Mvc\Request|null $request
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser|null $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser|null $frontendUser
      * @return string
      * @throws Exception
-     * @throws \RKW\RkwRegistration\Exception
+     * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
@@ -161,11 +161,11 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     public function createOrder (
         \RKW\RkwShop\Domain\Model\Order $order,
         \TYPO3\CMS\Extbase\Mvc\Request $request = null,
-        \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null
+        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser = null
    ): string {
 
         // check given e-mail
-        if (! \RKW\RkwRegistration\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
+        if (! \Madj2k\FeRegister\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
             throw new Exception('orderManager.error.invalidEmail');
         }
 
@@ -212,7 +212,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             $this->saveOrder($order, $frontendUser);
 
             // add privacy info
-            \RKW\RkwRegistration\DataProtection\ConsentHandler::add($request, $frontendUser, $order, 'new order');
+            \Madj2k\FeRegister\DataProtection\ConsentHandler::add($request, $frontendUser, $order, 'new order');
 
             return 'orderManager.message.created';
         }
@@ -220,11 +220,11 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
         // handling for new users
         // register new user or simply send opt-in to existing user
-        /** @var \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser */
+        /** @var \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser */
         $frontendUser = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(FrontendUser::class);
         $frontendUser->setEmail($order->getEmail());
 
-        /** @var \RKW\RkwRegistration\Registration\FrontendUserRegistration $registration */
+        /** @var \Madj2k\FeRegister\Registration\FrontendUserRegistration $registration */
         $registration = $this->objectManager->get(FrontendUserRegistration::class);
         $registration->setFrontendUser($frontendUser)
             ->setData($order)
@@ -241,7 +241,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * saveOrder
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @return bool
      * @throws \RKW\RkwShop\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
@@ -249,7 +249,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    protected function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser): bool
+    protected function saveOrder (\RKW\RkwShop\Domain\Model\Order $order, \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser): bool
     {
 
         // check order
@@ -302,15 +302,15 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Intermediate function for saving of orders - used by SignalSlot
      *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
-     * @param \RKW\RkwRegistration\Domain\Model\OptIn $optIn
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\OptIn $optIn
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function saveOrderSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser, \RKW\RkwRegistration\Domain\Model\OptIn $optIn): void
+    public function saveOrderSignalSlot(\Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser, \Madj2k\FeRegister\Domain\Model\OptIn $optIn): void
     {
         // get order from registration
         if (
@@ -332,14 +332,14 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Removes all open orders of a FE-User - used by SignalSlot
      *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
-    public function removeAllOrdersOfFrontendUserSignalSlot(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser): void
+    public function removeAllOrdersOfFrontendUserSignalSlot(\Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser): void
     {
 
         $orders = $this->orderRepository->findByFrontendUser($frontendUser);

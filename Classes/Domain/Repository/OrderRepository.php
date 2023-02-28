@@ -2,7 +2,7 @@
 
 namespace RKW\RkwShop\Domain\Repository;
 
-use RKW\RkwRegistration\Domain\Model\FrontendUser;
+use Madj2k\FeRegister\Domain\Model\FrontendUser;
 use RKW\RkwShop\Domain\Model\Order;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
@@ -36,7 +36,7 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * Find all orders of a frontendUser
      *
-     * @param \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser
+     * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     public function findByFrontendUser(FrontendUser $frontendUser): QueryResultInterface
