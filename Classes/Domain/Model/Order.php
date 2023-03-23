@@ -80,6 +80,12 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $frontendUser = null;
 
+    /**
+     * targetGroup
+     *
+     * @var \RKW\RkwBasics\Domain\Model\TargetGroup
+     */
+    protected $targetGroup;
 
     /**
      * shippingAddress
@@ -88,7 +94,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $shippingAddress = null;
 
-    
+
     /**
      * orderItem
      *
@@ -96,6 +102,13 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @cascade remove
      */
     protected $orderItem = null;
+
+    /**
+     * shippedTstamp
+     *
+     * @var integer
+     */
+    protected $shippedTstamp;
 
 
     /**
@@ -217,7 +230,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         //===
     }
 
-    
+
     /**
      * Returns the email
      *
@@ -283,6 +296,27 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
+     * Returns the targetGroup
+     *
+     * @return \RKW\RkwBasics\Domain\Model\TargetGroup
+     */
+    public function getTargetGroup()
+    {
+        return $this->targetGroup;
+    }
+
+    /**
+     * Sets the targetGroup
+     *
+     * @param \RKW\RkwBasics\Domain\Model\TargetGroup $targetGroup
+     * @return void
+     */
+    public function setTargetGroup(\RKW\RkwBasics\Domain\Model\TargetGroup $targetGroup)
+    {
+        $this->targetGroup = $targetGroup;
+    }
+
+    /**
      * Returns the frontendUser
      *
      * @return \RKW\RkwShop\Domain\Model\ShippingAddress $shippingAddress
@@ -345,5 +379,25 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setOrderItem(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderItem)
     {
         $this->orderItem = $orderItem;
+    }
+
+    /**
+     * Returns the shippedTstamp
+     *
+     * @return int
+     */
+    public function getShippedTstamp(): int
+    {
+        return $this->shippedTstamp;
+    }
+
+    /**
+     * Sets the shippedTstamp
+     *
+     * @param int $shippedTstamp
+     */
+    public function setShippedTstamp(int $shippedTstamp): void
+    {
+        $this->shippedTstamp = $shippedTstamp;
     }
 }

@@ -155,7 +155,34 @@
 		</f:if>
 	</div>
 
-	<!-- address -->
+    <!-- targetGroup -->
+    <div class="form__field width50">
+        <label for="txrkwshop-targetgroup">
+            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetgroup" />Target
+            <span class="is-required">
+				<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelRequired" />
+			</span>
+        </label>
+        <f:if condition="{frontendUser}">
+            <f:then>
+                <f:form.textfield
+                    id="txrkwshop-email"
+                    property="email"
+                    type="email"
+                    value="{frontendUser.email}"
+                    additionalAttributes="{autocomplete: 'email'}"  />
+            </f:then>
+            <f:else>
+                <f:form.textfield
+                    id="txrkwshop-targetgroup"
+                    property="targetGroup"
+                    type="number"
+                />
+            </f:else>
+        </f:if>
+    </div>
+
+    <!-- address -->
 	<div class="form__field width50">
 		<label for="txrkwshop-address">
 			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.address" />

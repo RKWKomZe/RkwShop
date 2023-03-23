@@ -18,10 +18,10 @@ return [
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_order.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'hidden, status, email, frontend_user, shipping_address, order_item, remark',
+		'showRecordFieldList' => 'hidden, status, email, target_group, frontend_user, shipping_address, order_item, remark',
 	],
 	'types' => [
-		'1' => ['showitem' => 'hidden,--palette--;;1, status, email, frontend_user, shipping_address, order_item, remark'],
+		'1' => ['showitem' => 'hidden,--palette--;;1, status, email, target_group, frontend_user, shipping_address, order_item, remark'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],
@@ -64,6 +64,19 @@ return [
                 'readOnly' => true
 			],
 		],
+        'target_group' => [
+            'exclude' => 0,
+            'label' => 'LLL:EXT:rkw_events/Resources/Private/Language/locallang_db.xlf:tx_rkwevents_domain_model_event.target_group',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_rkwbasics_domain_model_targetgroup',
+                'foreign_table_where' => 'AND tx_rkwbasics_domain_model_targetgroup.deleted = 0 ORDER BY name ASC',
+                'minitems' => 1,
+                'maxitems' => 1,
+                'readOnly' => true
+            ],
+        ],
         'email' => [
             'exclude' => 0,
             'label' => 'LLL:EXT:rkw_shop/Resources/Private/Language/locallang_db.xlf:tx_rkwshop_domain_model_order.email',
@@ -130,5 +143,15 @@ return [
                 'readOnly' => true
 			]
 		],
+        'shipped_tstamp' => [
+            'exclude'     => 0,
+            'label'       => 'LLL:EXT:rkw_newsletter/Resources/Private/Language/locallang_db.xlf:pages.tx_rkwnewsletter_include_tstamp',
+            'config'      => [
+                'type'       => 'input',
+                'renderType' => 'inputDateTime',
+                'eval'       => 'datetime,int',
+                'default'    => 0,
+            ],
+        ],
 	],
 ];

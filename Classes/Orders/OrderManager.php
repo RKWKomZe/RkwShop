@@ -274,8 +274,11 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         // add frontendUser to order and shippingAddress
+        //  @todo: FrontendUser has no firstname or last name etc., when added through order optInRequest?!
         $order->setFrontendUser($frontendUser);
         $order->getShippingAddress()->setFrontendUser($frontendUser);
+        //  @todo: Temporary, until rkw_soap delivers shippedTstamp from AVS
+        $order->setShippedTstamp(time());
 
         // save it
         $this->orderRepository->add($order);

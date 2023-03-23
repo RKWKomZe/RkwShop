@@ -12,6 +12,9 @@ CREATE TABLE tx_rkwshop_domain_model_order (
 	shipping_address int(11) DEFAULT '0' NOT NULL,
 	remark text NOT NULL,
 
+	shipped_tstamp int(11) unsigned DEFAULT '0' NOT NULL,
+	target_group int(11) unsigned DEFAULT '0',
+
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
 	cruser_id int(11) unsigned DEFAULT '0' NOT NULL,

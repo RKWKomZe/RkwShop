@@ -2,8 +2,8 @@
 
 namespace RKW\RkwShop\Controller;
 
-use \RKW\RkwBasics\Helper\Common;
-use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use RKW\RkwBasics\Helper\Common;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -132,7 +132,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         if ($this->settings['products']) {
-
             $products = $this->productRepository->findByUidList($this->settings['products']);
             $this->view->assignMultiple(
                 array(
