@@ -88,10 +88,10 @@ class OrderRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * Finds an object matching the given identifier.
      *
      * @param int $uid The identifier of the object to find
-     * @return \RKW\RkwShop\Domain\Model\Order The matching object if found, otherwise NULL
+     * @return \RKW\RkwShop\Domain\Model\Order|null
      * @api used by RKW Soap
      */
-    public function findByUidSoap(int $uid): Order
+    public function findByUidSoap(int $uid):? Order
     {
         $query = $this->createQuery();
 

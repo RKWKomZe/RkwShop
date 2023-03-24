@@ -6,21 +6,21 @@
 <f:section name="Plaintext"><postmaster:email.plaintextLineBreaks>
 	<postmaster:email.recipientSalutation queueRecipient="{queueRecipient}" prependText="<postmaster:email.translate key='templates.email.optInRequest.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/>\n
 	\n
-	<postmaster:email.translate key="templates.email.optInRequest.text1" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop"  />\n
-	<postmaster:email.translate key="templates.email.optInRequest.text2" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop"  />\n
+	<postmaster:email.translate key="templates.email.optInRequest.text1" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop"  />\n
+	<postmaster:email.translate key="templates.email.optInRequest.text2" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop"  />\n
 	\n
 	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: optIn.data, frontendUser: frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>\n
 	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: optIn.data, frontendUser: frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
 	\n
 	=============================================================\n
-	<postmaster:email.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop"/>:\n
+	<postmaster:email.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop"/>:\n
 	=============================================================\n
 	\n
-	<postmaster:email.translate key="templates.email.optInRequest.textOptIn" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" />\n
-	<postmaster:email.uri.action action="optIn" controller="Order" extensionName="rkwShop" pluginName="ItemList" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_itemlist: {token_yes: tokenYes, user: userSha1}}" section="rkw-order" />\n
+	<postmaster:email.translate key="templates.email.optInRequest.textOptIn" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" />\n
+	<postmaster:email.uri.action action="optIn" controller="Order" extensionName="rkwShop" pluginName="ItemList" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_itemlist: {token: optIn.tokenYes, tokenUser: optIn.tokenUser}}" section="rkw-order" />\n
 	\n
-	<postmaster:email.translate key="templates.email.optInRequest.textOptOut" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" />\n
-	<postmaster:email.uri.action action="optIn" controller="Order" extensionName="rkwShop" pluginName="ItemList" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_itemlist: {token_no: tokenNo, user: userSha1}}" section="rkw-order" />
+	<postmaster:email.translate key="templates.email.optInRequest.textOptOut" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" />\n
+	<postmaster:email.uri.action action="optIn" controller="Order" extensionName="rkwShop" pluginName="ItemList" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_itemlist: {token: optIn.tokenNo, tokenUser: optIn.tokenUser}}" section="rkw-order" />
 </postmaster:email.plaintextLineBreaks></f:section>
 
 
@@ -28,21 +28,21 @@
 <f:section name="Html">
     <h1><postmaster:email.recipientSalutation queueRecipient="{queueRecipient}" prependText="<postmaster:email.translate key='templates.email.optInRequest.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/></h1>
     <p>
-		<postmaster:email.translate key="templates.email.optInRequest.text1" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" /><br>
-		<strong><postmaster:email.translate key="templates.email.optInRequest.text2" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" /></strong>
+		<postmaster:email.translate key="templates.email.optInRequest.text1" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" /><br>
+		<strong><postmaster:email.translate key="templates.email.optInRequest.text2" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" /></strong>
 	</p>
 
 	<f:render partial="Email/ProductList" section="Html" arguments="{order: optIn.data, frontendUser: frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
 	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: optIn.data, frontendUser: frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
 
-	<h2><postmaster:email.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop"/></h2>
+	<h2><postmaster:email.translate key="templates.email.optInRequest.confirmHeadline" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop"/></h2>
 	<p>
-		<postmaster:email.translate key="templates.email.optInRequest.textOptIn" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop"/><br>
-		<a href="<postmaster:email.uri.action action='optIn' controller='Order' extensionName='rkwShop' pluginName='ItemList' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_itemlist: {token_yes: tokenYes, user: userSha1}}' section='rkw-order' />"><postmaster:email.translate key="templates.email.optInRequest.textOptInLinkLabel" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop"/></a>
+		<postmaster:email.translate key="templates.email.optInRequest.textOptIn" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop"/><br>
+		<a href="<postmaster:email.uri.action action='optIn' controller='Order' extensionName='rkwShop' pluginName='ItemList' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_itemlist: {token: optIn.tokenYes, tokenUser: optIn.tokenUser}}' section='rkw-order' />"><postmaster:email.translate key="templates.email.optInRequest.textOptInLinkLabel" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop"/></a>
 	</p>
 	<p>
-		<postmaster:email.translate key="templates.email.optInRequest.textOptOut" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" /><br>
-		<a href="<postmaster:email.uri.action action='optIn' controller='Order' extensionName='rkwShop' pluginName='ItemList' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_itemlist: {token_no: tokenNo, user: userSha1}}' section='rkw-order' />"><postmaster:email.translate key="templates.email.optInRequest.textOptOutLinkLabel" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop"/></a>
+		<postmaster:email.translate key="templates.email.optInRequest.textOptOut" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" /><br>
+		<a href="<postmaster:email.uri.action action='optIn' controller='Order' extensionName='rkwShop' pluginName='ItemList' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_itemlist: {token: optIn.tokenNo, tokenUser: optIn.tokenUser}}' section='rkw-order' />"><postmaster:email.translate key="templates.email.optInRequest.textOptOutLinkLabel" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop"/></a>
 	</p>
 </f:section>
 

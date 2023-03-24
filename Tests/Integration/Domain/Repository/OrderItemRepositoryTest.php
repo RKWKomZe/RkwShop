@@ -36,6 +36,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
      * @var string[]
      */
     protected $testExtensionsToLoad = [
+        'typo3conf/ext/core_extended',
         'typo3conf/ext/rkw_basics',
         'typo3conf/ext/fe_register',
         'typo3conf/ext/rkw_shop',
@@ -57,15 +58,18 @@ class OrderItemRepositoryTest extends FunctionalTestCase
      */
     private $productRepository;
 
+
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      */
     private $persistenceManager = null;
 
+
     /**
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
      */
     private $objectManager = null;
+
 
     /**
      * Setup
@@ -79,6 +83,7 @@ class OrderItemRepositoryTest extends FunctionalTestCase
         $this->setUpFrontendRootPage(
             1,
             [
+                'EXT:core_extended/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
                 'EXT:fe_register/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_shop/Configuration/TypoScript/setup.txt',

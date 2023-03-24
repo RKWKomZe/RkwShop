@@ -3,7 +3,8 @@
 namespace RKW\RkwShop\Service;
 
 use Madj2k\CoreExtended\Utility\GeneralUtility;
-use Madj2k\Postmaster\Service\MailService;
+use Madj2k\Postmaster\Mail\MailMassage;
+use Madj2k\Postmaster\Mail\MailMessage;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
@@ -58,8 +59,8 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         if ($frontendUser->getEmail()) {
             if ($settings['view']['templateRootPaths'][0]) {
 
-                /** @var \Madj2k\Postmaster\Service\MailService $mailService */
-                $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailService::class);
+                /** @var \Madj2k\Postmaster\Mail\MailMessage $mailService */
+                $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailMessage::class);
 
                 // send new user an email with token
                 $mailService->setTo($frontendUser, array(
@@ -70,6 +71,7 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
                         'optIn'        => $optIn,
                         'pageUid'      => intval($GLOBALS['TSFE']->id),
                         'loginPid'     => intval($settingsDefault['loginPid']),
+                        'frontendUser' => $frontendUser
                     ),
                 ));
 
@@ -236,8 +238,8 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
         if ($frontendUser->getEmail()) {
             if ($settings['view']['templateRootPaths'][0]) {
 
-                /** @var \Madj2k\Postmaster\Service\MailService $mailService */
-                $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailService::class);
+                /** @var \Madj2k\Postmaster\Mail\MailMessage $mailService */
+                $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailMessage::class);
 
                 // send new user an email with token
                 $mailService->setTo($frontendUser, array(
@@ -313,8 +315,8 @@ class RkwMailService implements \TYPO3\CMS\Core\SingletonInterface
 
         if ($settings['view']['templateRootPaths'][0]) {
 
-            /** @var \Madj2k\Postmaster\Service\MailService $mailService */
-            $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailService::class);
+            /** @var \Madj2k\Postmaster\Mail\MailMessage $mailService */
+            $mailService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(MailMessage::class);
 
             foreach ($recipients as $recipient) {
 

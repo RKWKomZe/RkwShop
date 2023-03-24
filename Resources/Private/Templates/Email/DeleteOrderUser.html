@@ -6,8 +6,8 @@
 <f:section name="Plaintext"><postmaster:email.plaintextLineBreaks>
 	<postmaster:email.recipientSalutation queueRecipient="{queueRecipient}" prependText="<postmaster:email.translate key='templates.email.deleteOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/>\n
 	\n
-	<postmaster:email.translate key="templates.email.deleteOrderUser.text1" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" />\n
-	<postmaster:email.translate key="templates.email.deleteOrderUser.text2" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" />\n
+	<postmaster:email.translate key="templates.email.deleteOrderUser.text1" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" />\n
+	<postmaster:email.translate key="templates.email.deleteOrderUser.text2" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" />\n
 	\n
 	<f:render partial="Email/ProductList" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>\n
 	<f:render partial="Email/ShippingAddress" section="Plaintext" arguments="{order: order, frontendUser: order.frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
@@ -17,8 +17,8 @@
 <f:section name="Html">
     <h1><postmaster:email.recipientSalutation queueRecipient="{queueRecipient}" prependText="<postmaster:email.translate key='templates.email.deleteOrderUser.headline' languageKey='{queueRecipient.languageCode}' extensionName='rkwShop' /> " appendText=","/></h1>
 	<p>
-		<postmaster:email.translate key="templates.email.deleteOrderUser.text1" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" /><br>
-		<postmaster:email.translate key="templates.email.deleteOrderUser.text2" languageKey="{frontendUser.txFeregisterLanguageKey}" extensionName="rkwShop" />
+		<postmaster:email.translate key="templates.email.deleteOrderUser.text1" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" /><br>
+		<postmaster:email.translate key="templates.email.deleteOrderUser.text2" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" />
 	</p>
 	<f:render partial="Email/ProductList" section="Html" arguments="{order: order, frontendUser: frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
 	<f:render partial="Email/ShippingAddress" section="Html" arguments="{order: order, frontendUser: frontendUser, language: frontendUser.txFeregisterLanguageKey}"/>
