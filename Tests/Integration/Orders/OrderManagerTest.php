@@ -1,8 +1,8 @@
 <?php
 namespace RKW\RkwShop\Tests\Integration\Orders;
 
+use Madj2k\FeRegister\Domain\Repository\ConsentRepository;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-
 use Madj2k\FeRegister\Domain\Model\OptIn;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Model\OrderItem;
@@ -13,10 +13,6 @@ use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
 use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use RKW\RkwShop\Domain\Repository\ShippingAddressRepository;
-
-
-use Madj2k\FeRegister\Domain\Model\FrontendUser;
-use Madj2k\FeRegister\Domain\Repository\PrivacyRepository;
 use Madj2k\FeRegister\Domain\Repository\OptInRepository;
 
 
@@ -54,6 +50,7 @@ class OrderManagerTest extends FunctionalTestCase
      * @var string[]
      */
     protected $testExtensionsToLoad = [
+        'typo3conf/ext/core_extended',
         'typo3conf/ext/postmaster',
         'typo3conf/ext/rkw_basics',
         'typo3conf/ext/fe_register',
@@ -96,9 +93,9 @@ class OrderManagerTest extends FunctionalTestCase
     private $productRepository;
 
     /**
-     * @var \Madj2k\FeRegister\Domain\Repository\PrivacyRepository
+     * @var \Madj2k\FeRegister\Domain\Repository\ConsentRepository
      */
-    private $privacyRepository;
+    private $consentRepository;
 
     /**
      * @var \Madj2k\FeRegister\Domain\Repository\OptInRepository
@@ -138,6 +135,7 @@ class OrderManagerTest extends FunctionalTestCase
         $this->setUpFrontendRootPage(
             1,
             [
+                'EXT:core_extended/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
                 'EXT:postmaster/Configuration/TypoScript/setup.txt',
                 'EXT:fe_register/Configuration/TypoScript/setup.txt',
@@ -158,7 +156,7 @@ class OrderManagerTest extends FunctionalTestCase
         $this->orderRepository = $this->objectManager->get(OrderRepository::class);
         $this->orderItemRepository = $this->objectManager->get(OrderItemRepository::class);
         $this->productRepository = $this->objectManager->get(ProductRepository::class);
-        $this->privacyRepository = $this->objectManager->get(PrivacyRepository::class);
+        $this->consentRepository = $this->objectManager->get(ConsentRepository::class);
         $this->optInRepository = $this->objectManager->get(OptInRepository::class);
 
 
@@ -660,9 +658,9 @@ class OrderManagerTest extends FunctionalTestCase
         self::assertEquals($order->getOrderItem()->current()->getProduct()->getUid(), $orderDb->getOrderItem()->current()->getProduct()->getUid());
         self::assertEquals($order->getOrderItem()->current()->getAmount(), $orderDb->getOrderItem()->current()->getAmount());
 
-        /** @var \Madj2k\FeRegister\Domain\Model\Privacy $privacyDb */
-        $privacyDb = $this->privacyRepository->findByUid(1);
-        self::assertInstanceOf('Madj2k\FeRegister\Domain\Model\Privacy', $privacyDb);
+        /** @var \Madj2k\FeRegister\Domain\Model\Consent $privacyDb */
+        $privacyDb = $this->consentRepository->findByUid(1);
+        self::assertInstanceOf(\Madj2k\FeRegister\Domain\Model\Consent::class, $privacyDb);
         self::assertEquals($frontendUser->getUid(), $privacyDb->getFrontendUser()->getUid());
 
     }

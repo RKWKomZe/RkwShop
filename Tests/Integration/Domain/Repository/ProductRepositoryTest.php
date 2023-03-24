@@ -35,6 +35,7 @@ class ProductRepositoryTest extends FunctionalTestCase
      * @var string[]
      */
     protected $testExtensionsToLoad = [
+        'typo3conf/ext/core_extended',
         'typo3conf/ext/rkw_basics',
         'typo3conf/ext/fe_register',
         'typo3conf/ext/rkw_shop',
@@ -72,6 +73,7 @@ class ProductRepositoryTest extends FunctionalTestCase
         $this->setUpFrontendRootPage(
             1,
             [
+                'EXT:core_extended/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_basics/Configuration/TypoScript/setup.txt',
                 'EXT:fe_register/Configuration/TypoScript/setup.txt',
                 'EXT:rkw_shop/Configuration/TypoScript/setup.txt',
