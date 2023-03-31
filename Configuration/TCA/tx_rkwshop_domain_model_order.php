@@ -18,10 +18,10 @@ return [
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_order.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'hidden, status, email, target_group, frontend_user, shipping_address, order_item, remark',
+		'showRecordFieldList' => 'hidden, status, email, target_group, frontend_user, shipping_address, order_item, remark, target_category',
 	],
 	'types' => [
-		'1' => ['showitem' => 'hidden,--palette--;;1, status, email, target_group, frontend_user, shipping_address, order_item, remark'],
+		'1' => ['showitem' => 'hidden,--palette--;;1, status, email, target_group, frontend_user, shipping_address, order_item, remark, target_category'],
 	],
 	'palettes' => [
 		'1' => ['showitem' => ''],

@@ -112,6 +112,14 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
+     * TargetCategory
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     */
+    protected $targetCategory;
+
+
+    /**
      * __construct
      */
     public function __construct()
@@ -131,6 +139,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->orderItem = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->targetCategory = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
 
@@ -314,6 +323,28 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setTargetGroup(\RKW\RkwBasics\Domain\Model\TargetGroup $targetGroup)
     {
         $this->targetGroup = $targetGroup;
+    }
+
+
+    /**
+     * Returns the targetCategory
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $targetCategory
+     */
+    public function getTargetCategory()
+    {
+        return $this->targetCategory;
+    }
+
+    /**
+     * Sets the targetCategory
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $targetCategory
+     * @return void
+     */
+    public function setTargetCategory(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $targetCategory)
+    {
+        $this->targetCategory = $targetCategory;
     }
 
     /**
