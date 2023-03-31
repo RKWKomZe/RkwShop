@@ -4,7 +4,7 @@
 	data-namespace-typo3-fluid="true">
 
 	<!-- Gender -->
-	<div class="form__field width25 break-after">
+	<div class="form__field width25">
 		<label for="txrkwshop-gender">
 			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.gender" />
 			<f:if condition="<rkwShop:isRequiredField field='gender' />">
@@ -29,6 +29,36 @@
 			optionValueField="uid"
 			optionLabelField="name" />
 	</div>
+
+    <!-- targetGroup -->
+    <div class="form__field width50">
+        <label for="txrkwshop-targetGroup">
+            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetGroup" />
+            <f:if condition="<rkwShop:isRequiredField field='targetGroup' />">
+                <f:then>
+					<span class="is-required">
+						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelRequired" />
+					</span>
+                </f:then>
+                <f:else>
+					<span class="is-optional">
+						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" />
+					</span>
+                </f:else>
+            </f:if>
+        </label>
+        <f:form.select
+            class="select-field"
+            id="txrkwshop-targetGroup"
+            name="targetGroup"
+            value="{targetGroup}"
+            options="{targetGroupList}"
+            optionValueField="uid"
+            optionLabelField="title"
+            prependOptionLabel="<f:translate key='tx_rkwshop_domain_model_order.targetGroup.pleaseSelect' />"
+            prependOptionValue="0"
+        />
+    </div>
 
 	<f:comment>
 		<!-- title -->
@@ -154,33 +184,6 @@
 			</f:else>
 		</f:if>
 	</div>
-
-    <!-- targetGroup -->
-    <div class="form__field width50">
-        <label for="txrkwshop-targetgroup">
-            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetgroup" />Target
-            <span class="is-required">
-				<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelRequired" />
-			</span>
-        </label>
-        <f:if condition="{frontendUser}">
-            <f:then>
-                <f:form.textfield
-                    id="txrkwshop-email"
-                    property="email"
-                    type="email"
-                    value="{frontendUser.email}"
-                    additionalAttributes="{autocomplete: 'email'}"  />
-            </f:then>
-            <f:else>
-                <f:form.textfield
-                    id="txrkwshop-targetgroup"
-                    property="targetGroup"
-                    type="number"
-                />
-            </f:else>
-        </f:if>
-    </div>
 
     <!-- address -->
 	<div class="form__field width50">

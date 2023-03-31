@@ -80,12 +80,6 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $frontendUser = null;
 
-    /**
-     * targetGroup
-     *
-     * @var \RKW\RkwBasics\Domain\Model\TargetGroup
-     */
-    protected $targetGroup;
 
     /**
      * shippingAddress
@@ -112,11 +106,11 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * TargetCategory
+     * TargetGroup
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      */
-    protected $targetCategory;
+    protected $targetGroup;
 
 
     /**
@@ -139,7 +133,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->orderItem = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->targetCategory = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->targetGroup = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
 
@@ -304,10 +298,11 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->frontendUser = $frontendUser;
     }
 
+
     /**
      * Returns the targetGroup
      *
-     * @return \RKW\RkwBasics\Domain\Model\TargetGroup
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $targetGroup
      */
     public function getTargetGroup()
     {
@@ -317,34 +312,34 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the targetGroup
      *
-     * @param \RKW\RkwBasics\Domain\Model\TargetGroup $targetGroup
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $targetGroup
      * @return void
      */
-    public function setTargetGroup(\RKW\RkwBasics\Domain\Model\TargetGroup $targetGroup)
+    public function setTargetGroup(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $targetGroup)
     {
         $this->targetGroup = $targetGroup;
     }
 
-
     /**
-     * Returns the targetCategory
+     * Adds a Category
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $targetCategory
+     * @param \RKW\RkwShop\Domain\Model\Category $targetGroup
+     * @return void
      */
-    public function getTargetCategory()
+    public function addTargetGroup(\RKW\RkwShop\Domain\Model\Category $targetGroup): void
     {
-        return $this->targetCategory;
+        $this->targetGroup->attach($targetGroup);
     }
 
     /**
-     * Sets the targetCategory
+     * Removes a Category
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $targetCategory
+     * @param \RKW\RkwShop\Domain\Model\Category $targetGroupToRemove
      * @return void
      */
-    public function setTargetCategory(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $targetCategory)
+    public function removeTargetGroup(\RKW\RkwShop\Domain\Model\Category $targetGroupToRemove)
     {
-        $this->targetCategory = $targetCategory;
+        $this->targetGroup->detach($targetGroupToRemove);
     }
 
     /**

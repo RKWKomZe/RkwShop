@@ -50,6 +50,15 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
+     * categoryRepository
+     *
+     * @var \RKW\RkwShop\Domain\Repository\CategoryRepository
+     * @inject
+     */
+    protected $categoryRepository = null;
+
+
+    /**
      * logged in FrontendUser
      *
      * @var \RKW\RkwShop\Domain\Model\FrontendUser
@@ -139,7 +148,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'order'           => $order,
                     'termsPid'        => intval($this->settings['termsPid']),
                     'products'        => $products,
-                    'contentUid'      => $this->configurationManager->getContentObject()->data['uid']
+                    'contentUid'      => $this->configurationManager->getContentObject()->data['uid'],
+                    'targetGroupList'    => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid'])
                 )
             );
         }
@@ -172,7 +182,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 'order'           => \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwShop\\Domain\\Model\\Order'),
                 'termsPid'        => intval($this->settings['termsPid']),
                 'products'        => $products,
-                'pageUid'         => $this->ajaxPid
+                'pageUid'         => $this->ajaxPid,
+                'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid'])
             ];
 
             $jsonHelper->setRequest($this->request);
@@ -195,9 +206,10 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param integer $terms
      * @param integer $privacy
+     * @param integer $targetGroup
      * @return void
      */
-    public function newAction(\RKW\RkwShop\Domain\Model\Order $order = null, $terms = null, $privacy = null)
+    public function newAction(\RKW\RkwShop\Domain\Model\Order $order = null, $terms = null, $privacy = null, int $targetGroup = 0)
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -211,7 +223,9 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'termsPid'        => intval($this->settings['termsPid']),
                     'products'        => $products,
                     'terms'           => $terms,
-                    'privacy'         => $privacy
+                    'privacy'         => $privacy,
+                    'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
+                    'targetGroup'     => $targetGroup
                 )
             );
         }
@@ -225,6 +239,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param integer $terms
      * @param integer $privacy
+     * @param integer $targetGroup
      * @return void
      * @validate $order \RKW\RkwShop\Validation\Validator\ShippingAddressValidator
      * @throws \RKW\RkwRegistration\Exception
@@ -238,12 +253,11 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */
-    public function createAction(\RKW\RkwShop\Domain\Model\Order $order, $terms = null, $privacy = null)
+    public function createAction(\RKW\RkwShop\Domain\Model\Order $order, $terms = null, $privacy = null, int $targetGroup = 0)
     {
 
         try {
-
-            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy);
+            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $terms, $privacy, $targetGroup);
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     $message, 'rkw_shop'
@@ -263,7 +277,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 [
                     'order' => $order,
                     'terms' => $terms,
-                    'privacy' => $privacy
+                    'privacy' => $privacy,
+                    'targetGroup' => $targetGroup
                 ]
             );
         }

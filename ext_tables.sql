@@ -13,7 +13,7 @@ CREATE TABLE tx_rkwshop_domain_model_order (
 	remark text NOT NULL,
 
 	shipped_tstamp int(11) unsigned DEFAULT '0' NOT NULL,
-	target_group int(11) unsigned DEFAULT '0',
+  target_group varchar(255) DEFAULT '' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,

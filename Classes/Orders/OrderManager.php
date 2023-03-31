@@ -2,7 +2,7 @@
 
 namespace RKW\RkwShop\Orders;
 
-use \RKW\RkwShop\Exception;
+use RKW\RkwShop\Exception;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -91,6 +91,16 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $stockRepository;
 
+
+    /**
+     * categoryRepository
+     *
+     * @var \RKW\RkwShop\Domain\Repository\CategoryRepository
+     * @inject
+     */
+    protected $categoryRepository = null;
+
+
     /**
      * BackendUserRepository
      *
@@ -145,6 +155,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwRegistration\Domain\Model\FrontendUser|null $frontendUser
      * @param bool $terms
      * @param bool $privacy
+     * @param integer $targetGroup
      * @return string
      * @throws \RKW\RkwShop\Exception
      * @throws \RKW\RkwRegistration\Exception
@@ -156,7 +167,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
      */
-    public function createOrder (\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null, $terms = false, $privacy = false)
+    public function createOrder (\RKW\RkwShop\Domain\Model\Order $order, \TYPO3\CMS\Extbase\Mvc\Request $request = null, \RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser = null, $terms = false, $privacy = false, $targetGroup = 0)
     {
 
         // check terms if user is not logged in
@@ -180,6 +191,15 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             throw new Exception('orderManager.error.invalidEmail');
         }
 
+        // check targetGroup
+        if (
+            (! $targetGroup)
+        ) {
+            throw new Exception('orderManager.error.targetGroup');
+        } else {
+            $order->addTargetGroup($this->categoryRepository->findByUid($targetGroup));
+        }
+
         // check for shippingAddress
         if (
             (! $order->getShippingAddress())
@@ -189,7 +209,6 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         ){
             throw new Exception('orderManager.error.noShippingAddress');
         }
-
 
         // cleanup & check orderItem
         $this->cleanUpOrderItemList($order);
