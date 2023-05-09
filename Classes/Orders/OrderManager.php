@@ -192,11 +192,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         // check targetGroup
-        if (
-            (! $targetGroup)
-        ) {
-            throw new Exception('orderManager.error.targetGroup');
-        } else {
+        if ($targetGroup) {
             $order->addTargetGroup($this->categoryRepository->findByUid($targetGroup));
         }
 

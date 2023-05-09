@@ -291,34 +291,36 @@
 	</div>
 
     <!-- targetGroup -->
-    <div class="form__field width50">
-        <label for="txrkwshop-targetGroup">
-            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetGroup" />
-            <f:if condition="<rkwShop:isRequiredField field='targetGroup' />">
-                <f:then>
-					<span class="is-required">
-						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelRequired" />
-					</span>
-                </f:then>
-                <f:else>
-					<span class="is-optional">
-						<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" />
-					</span>
-                </f:else>
-            </f:if>
-        </label>
-        <f:form.select
-            class="select-field"
-            id="txrkwshop-targetGroup"
-            name="targetGroup"
-            value="{targetGroup}"
-            options="{targetGroupList}"
-            optionValueField="uid"
-            optionLabelField="title"
-            prependOptionLabel="<f:translate key='tx_rkwshop_domain_model_order.targetGroup.pleaseSelect' />"
-            prependOptionValue="0"
-        />
-    </div>
+    <f:if condition="{targetGroupList}">
+        <div class="form__field width50">
+            <label for="txrkwshop-targetGroup">
+                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetGroup" />
+                <f:if condition="<rkwShop:isRequiredField field='targetGroup' />">
+                    <f:then>
+                        <span class="is-required">
+                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelRequired" />
+                        </span>
+                    </f:then>
+                    <f:else>
+                        <span class="is-optional">
+                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.labelOptional" />
+                        </span>
+                    </f:else>
+                </f:if>
+            </label>
+            <f:form.select
+                class="select-field"
+                id="txrkwshop-targetGroup"
+                name="targetGroup"
+                value="{targetGroup}"
+                options="{targetGroupList}"
+                optionValueField="uid"
+                optionLabelField="title"
+                prependOptionLabel="<f:translate key='tx_rkwshop_domain_model_order.targetGroup.pleaseSelect' />"
+                prependOptionValue="0"
+            />
+        </div>
+    </f:if>
 
 </html>
 

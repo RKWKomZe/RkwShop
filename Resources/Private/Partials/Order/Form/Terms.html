@@ -13,6 +13,14 @@
 
 	<div class="form__approval">
 
+        <f:if condition="{targetGroupList}">
+            <p class="text-small">
+                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetGroup.marketingHint.firstPart" />
+                <a href="mailto:{revocationEmail}" target="_blank">{revocationEmail}</a>
+                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetGroup.marketingHint.thirdPart" />
+            </p>
+        </f:if>
+
 		<f:security.ifAuthenticated>
 			<f:else>
 				<div class="form__field">

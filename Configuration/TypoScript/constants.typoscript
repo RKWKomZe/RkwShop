@@ -32,10 +32,18 @@ plugin.tx_rkwshop {
 		maxOrderItemAmount = 100
 
 		# cat=plugin.tx_rkwshop//a; type=string; label=List of required fields for shipping address
-		requiredFields = gender, firstName, lastName, address, zip, city, targetGroup
+		requiredFields = gender, firstName, lastName, address, zip, city
 
     # cat=plugin.tx_rkwshop//a; type=integer; label=Pid of target groups
     targetGroupsPid =
+
+    marketing {
+
+      # cat=plugin.tx_rkwshop//a; type=integer; label=Email to send revoke to marketing confirmation to
+      revocationEmail =
+
+    }
+
 	}
 
 }

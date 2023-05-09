@@ -20,8 +20,12 @@
 			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup.pleaseSelect">
 				<source>Please Select</source>
 			</trans-unit>
-
-
+			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup.marketingHint.firstPart">
+				<source>Important hint: By setting the field targetGroup you agree to receive a survey regarding this product some time after your order. This agreement can be revoked by email to </source>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup.marketingHint.thirdPart">
+				<source>taking effect for the future.</source>
+			</trans-unit>
 
             <!-- tx_rkwshop_domain_model_shippingaddress -->
             <trans-unit id="tx_rkwshop_domain_model_shippingaddress">

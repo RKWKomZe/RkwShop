@@ -225,7 +225,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'terms'           => $terms,
                     'privacy'         => $privacy,
                     'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
-                    'targetGroup'     => $targetGroup
+                    'targetGroup'     => $targetGroup,
+                    'revocationEmail' => $this->settings['marketing']['revocationEmail']
                 )
             );
         }

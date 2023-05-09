@@ -187,7 +187,9 @@ plugin.tx_rkwshop {
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
 		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
     targetGroupsPid = {$plugin.tx_rkwshop.settings.targetGroupsPid}
-
+    marketing {
+      revocationEmail = {$plugin.tx_rkwshop.settings.marketing.revocationEmail}
+    }
 	}
 
 }
