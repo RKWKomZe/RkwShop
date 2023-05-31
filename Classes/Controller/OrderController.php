@@ -149,7 +149,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'termsPid'        => intval($this->settings['termsPid']),
                     'products'        => $products,
                     'contentUid'      => $this->configurationManager->getContentObject()->data['uid'],
-                    'targetGroupList'    => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid'])
+                    'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
+                    'revocationEmail' => $this->settings['marketing']['revocationEmail']
                 )
             );
         }
@@ -183,7 +184,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 'termsPid'        => intval($this->settings['termsPid']),
                 'products'        => $products,
                 'pageUid'         => $this->ajaxPid,
-                'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid'])
+                'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
+                'revocationEmail' => $this->settings['marketing']['revocationEmail']
             ];
 
             $jsonHelper->setRequest($this->request);
