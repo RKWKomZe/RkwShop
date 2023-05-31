@@ -5,7 +5,6 @@ namespace RKW\RkwShop\Service;
 use RKW\RkwBasics\Helper\Common;
 use Symfony\Component\Debug\Debug;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of the TYPO3 CMS project.

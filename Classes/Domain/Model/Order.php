@@ -88,7 +88,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $shippingAddress = null;
 
-    
+
     /**
      * orderItem
      *
@@ -96,6 +96,21 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @cascade remove
      */
     protected $orderItem = null;
+
+    /**
+     * shippedTstamp
+     *
+     * @var integer
+     */
+    protected $shippedTstamp;
+
+
+    /**
+     * TargetGroup
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     */
+    protected $targetGroup;
 
 
     /**
@@ -118,6 +133,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->orderItem = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->targetGroup = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
 
@@ -217,7 +233,7 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         //===
     }
 
-    
+
     /**
      * Returns the email
      *
@@ -280,6 +296,50 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setFrontendUser(\RKW\RkwRegistration\Domain\Model\FrontendUser $frontendUser)
     {
         $this->frontendUser = $frontendUser;
+    }
+
+
+    /**
+     * Returns the targetGroup
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $targetGroup
+     */
+    public function getTargetGroup()
+    {
+        return $this->targetGroup;
+    }
+
+    /**
+     * Sets the targetGroup
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category> $targetGroup
+     * @return void
+     */
+    public function setTargetGroup(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $targetGroup)
+    {
+        $this->targetGroup = $targetGroup;
+    }
+
+    /**
+     * Adds a Category
+     *
+     * @param \RKW\RkwShop\Domain\Model\Category $targetGroup
+     * @return void
+     */
+    public function addTargetGroup(\RKW\RkwShop\Domain\Model\Category $targetGroup): void
+    {
+        $this->targetGroup->attach($targetGroup);
+    }
+
+    /**
+     * Removes a Category
+     *
+     * @param \RKW\RkwShop\Domain\Model\Category $targetGroupToRemove
+     * @return void
+     */
+    public function removeTargetGroup(\RKW\RkwShop\Domain\Model\Category $targetGroupToRemove)
+    {
+        $this->targetGroup->detach($targetGroupToRemove);
     }
 
     /**
@@ -345,5 +405,25 @@ class Order extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setOrderItem(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $orderItem)
     {
         $this->orderItem = $orderItem;
+    }
+
+    /**
+     * Returns the shippedTstamp
+     *
+     * @return int
+     */
+    public function getShippedTstamp(): int
+    {
+        return $this->shippedTstamp;
+    }
+
+    /**
+     * Sets the shippedTstamp
+     *
+     * @param int $shippedTstamp
+     */
+    public function setShippedTstamp(int $shippedTstamp): void
+    {
+        $this->shippedTstamp = $shippedTstamp;
     }
 }

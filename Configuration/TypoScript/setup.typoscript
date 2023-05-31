@@ -144,6 +144,21 @@ config.tx_extbase.persistence {
                 tableName = tx_rkwshop_domain_model_product
             }
         }
+
+        #===============================================
+
+        RKW\RkwShop\Domain\Model\Category {
+          mapping {
+            tableName = sys_category
+          }
+        }
+
+#      TYPO3\CMS\Extbase\Domain\Model\Category {
+#        subclasses {
+#          Tx_RkwEvents_Category = RKW\RkwEvents\Domain\Model\Category
+#        }
+#      }
+
     }
 }
 
@@ -171,7 +186,10 @@ plugin.tx_rkwshop {
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
 		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
-
+    targetGroupsPid = {$plugin.tx_rkwshop.settings.targetGroupsPid}
+    marketing {
+      revocationEmail = {$plugin.tx_rkwshop.settings.marketing.revocationEmail}
+    }
 	}
 
 }

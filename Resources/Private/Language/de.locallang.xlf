@@ -17,10 +17,26 @@
 				<source>Remark</source>
 				<target>Anmerkung</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup">
+				<source>Target group</source>
+				<target>Zielgruppe</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup.pleaseSelect">
+				<source>Please Select</source>
+				<target>Bitte wählen</target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup.marketingHint.firstPart">
+				<source>Important hint: By setting the field targetGroup you agree to receive a survey regarding this product some time after your order. This agreement can be revoked by email to </source>
+				<target>Wichtiger Hinweis: Das RKW Kompetenzzentrum ist bestrebt, seine Produkte weiterzuentwickeln. Mit Ausfüllen des Feldes 'Zielgruppe' willige ich ausdrücklich ein, vom RKW Kompetenzzentrum nach Erhalt der Bestellung Zufriedenheitsanfragen bezüglich seiner Produkte per E-Mail zu erhalten. Meine Einwilligung ist freiwillig und kann jederzeit mit Wirkung für die Zukunft per E-Mail an </target>
+			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup.marketingHint.thirdPart">
+				<source>taking effect for the future.</source>
+				<target>widerrufen werden.</target>
+			</trans-unit>
 
 
 
-            <!-- tx_rkwshop_domain_model_shippingaddress -->
+			<!-- tx_rkwshop_domain_model_shippingaddress -->
             <trans-unit id="tx_rkwshop_domain_model_shippingaddress">
 				<source>Shipping Address</source>
 				<target>Ihre Daten</target>
@@ -93,6 +109,10 @@
 			<trans-unit id="orderManager.error.invalidEmail">
 				<source>Oops, something went wrong. Please enter a valid e-mail address.</source>
 				<target>Upps, da ist etwas schief gelaufen. Bitte geben Sie eine gültige E-Mailadresse ein.</target>
+			</trans-unit>
+			<trans-unit id="orderManager.error.targetGroup">
+				<source>Oops, something went wrong. Please enter a target group.</source>
+				<target>Upps, da ist etwas schief gelaufen. Bitte wählen Sie eine Zielgruppe an, der Sie angehören.</target>
 			</trans-unit>
 			<trans-unit id="orderManager.error.noShippingAddress">
 				<source>Oops, something went wrong. Please enter a delivery address.</source>
