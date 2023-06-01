@@ -19,7 +19,7 @@
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup">
 				<source>Target group</source>
-				<target>Zielgruppe</target>
+				<target>Bestellen als</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_order.targetGroup.pleaseSelect">
 				<source>Please Select</source>
