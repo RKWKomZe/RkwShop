@@ -149,6 +149,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'termsPid'        => intval($this->settings['termsPid']),
                     'products'        => $products,
                     'contentUid'      => $this->configurationManager->getContentObject()->data['uid'],
+                    'activateRkwOutcomeFeatures' => intval($this->settings['activateRkwOutcomeFeatures']),
                     'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
                     'revocationEmail' => $this->settings['marketing']['revocationEmail']
                 )
@@ -184,6 +185,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 'termsPid'        => intval($this->settings['termsPid']),
                 'products'        => $products,
                 'pageUid'         => $this->ajaxPid,
+                'activateRkwOutcomeFeatures' => intval($this->settings['activateRkwOutcomeFeatures']),
                 'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
                 'revocationEmail' => $this->settings['marketing']['revocationEmail']
             ];
@@ -226,6 +228,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'products'        => $products,
                     'terms'           => $terms,
                     'privacy'         => $privacy,
+                    'activateRkwOutcomeFeatures' => intval($this->settings['activateRkwOutcomeFeatures']),
                     'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
                     'targetGroup'     => $targetGroup,
                     'revocationEmail' => $this->settings['marketing']['revocationEmail']
