@@ -13,7 +13,7 @@
 
 	<div class="form__approval">
 
-        <f:if condition="{targetGroupList}">
+        <f:if condition="{activateRkwOutcomeFeatures} == 1">
             <p class="text-small">
                 <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetGroup.marketingHint.firstPart" />
                 <a href="mailto:{revocationEmail}" target="_blank">{revocationEmail}</a>

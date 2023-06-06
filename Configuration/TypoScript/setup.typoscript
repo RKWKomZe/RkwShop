@@ -186,6 +186,7 @@ plugin.tx_rkwshop {
 		fallbackBackendUserForAdminMails = {$plugin.tx_rkwshop.settings.fallbackBackendUserForAdminMails}
 		maxOrderItemAmount = {$plugin.tx_rkwshop.settings.maxOrderItemAmount}
 		requiredFields = {$plugin.tx_rkwshop.settings.requiredFields}
+    activateRkwOutcomeFeatures = {$plugin.tx_rkwshop.settings.activateRkwOutcomeFeatures}
     targetGroupsPid = {$plugin.tx_rkwshop.settings.targetGroupsPid}
     marketing {
       revocationEmail = {$plugin.tx_rkwshop.settings.marketing.revocationEmail}
