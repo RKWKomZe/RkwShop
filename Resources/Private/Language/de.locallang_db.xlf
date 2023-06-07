@@ -47,8 +47,10 @@
 				<source>Remark</source>
 				<target>Anmerkung</target>
 			</trans-unit>
-
-
+			<trans-unit id="tx_rkwshop_domain_model_order.targetGroups" approved="yes">
+				<source>Target groups</source>
+				<target>Zielgruppen</target>
+			</trans-unit>
 
             <trans-unit id="tx_rkwshop_domain_model_orderitem">
 				<source>RKW Shop: OrderItem</source>
@@ -85,7 +87,7 @@
             <trans-unit id="tx_rkwshop_domain_model_orderitem.status.closed">
                 <source>closed</source>
                 <target>abgeschlossen</target>
-            </trans-unit>            
+            </trans-unit>
 
 
 

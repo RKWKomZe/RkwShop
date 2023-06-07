@@ -40,7 +40,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $productRepository = null;
+    protected $productRepository;
 
 
     /**
@@ -50,6 +50,15 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $frontendUserRepository;
+
+
+    /**
+     * categoryRepository
+     *
+     * @var \RKW\RkwShop\Domain\Repository\CategoryRepository
+     * @TYPO3\CMS\Extbase\Annotation\Inject
+     */
+    protected $categoryRepository;
 
 
     /**
@@ -130,6 +139,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param \RKW\RkwShop\Domain\Model\Order|null $order
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("order")
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function newInitAction(\RKW\RkwShop\Domain\Model\Order $order = null): void
     {
@@ -143,7 +153,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'frontendUser'    => null,
                     'order'           => $order,
                     'products'        => $products,
-                    'contentUid'      => $this->configurationManager->getContentObject()->data['uid']
+                    'contentUid'      => $this->configurationManager->getContentObject()->data['uid'],
+                    'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid'])
                 )
             );
         }
@@ -158,6 +169,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidControllerNameException if the controller name is not valid
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidActionNameException if the action name is not valid
      * @throws \TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function newAjaxAction()
     {
@@ -175,7 +187,9 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 'frontendUser'    => null,
                 'order'           => \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwShop\\Domain\\Model\\Order'),
                 'products'        => $products,
-                'pageUid'         => $this->ajaxPid
+                'pageUid'         => $this->ajaxPid,
+                'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
+                'settings'        => $this->settings // should not be needed
             ];
 
             $jsonHelper->setRequest($this->request);
@@ -196,9 +210,11 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action new
      *
      * @param \RKW\RkwShop\Domain\Model\Order|null $order
+     * @param int $targetGroup
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function newAction(Order $order = null): void
+    public function newAction(Order $order = null, int $targetGroup = 0): void
     {
 
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
@@ -209,8 +225,10 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 array(
                     'frontendUser'    => null,
                     'order'           => $order,
-                    'termsPid'        => intval($this->settings['termsPid']),
-                    'products'        => $products
+                    'products'        => $products,
+                    'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
+                    'targetGroup'     => $targetGroup,
+                    'settings'        => $this->settings // should not be needed
                 )
             );
         }
@@ -221,6 +239,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * action create
      *
      * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param int $targetGroup
      * @return void
      * @throws \Madj2k\FeRegister\Exception
      * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
@@ -240,7 +259,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @TYPO3\CMS\Extbase\Annotation\Validate("Madj2k\FeRegister\Validation\Consent\PrivacyValidator", param="order")
      * @TYPO3\CMS\Extbase\Annotation\Validate("Madj2k\FeRegister\Validation\Consent\MarketingValidator", param="order")
      */
-    public function createAction(Order $order): void
+    public function createAction(Order $order, int $targetGroup = 0): void
     {
 
         try {
@@ -264,6 +283,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->forward('new', null, null,
                 [
                     'order' => $order,
+                    'targetGroup' => $targetGroup
                 ]
             );
         }
@@ -279,9 +299,13 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param string $token
      * @return void
      * @throws \Madj2k\FeRegister\Exception
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     * @throws \TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException
      * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception\NotImplementedException
@@ -329,11 +353,11 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
 
-
     /**
      * Returns current logged in user object
      *
      * @return \Madj2k\FeRegister\Domain\Model\FrontendUser|null
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
     protected function getFrontendUser()
     {
@@ -407,7 +431,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         return $this->logger;
-        //===
     }
 
 

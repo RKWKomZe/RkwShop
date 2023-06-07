@@ -155,7 +155,7 @@
 		</f:if>
 	</div>
 
-	<!-- address -->
+    <!-- address -->
 	<div class="form__field width50">
 		<label for="txrkwshop-address">
 			<f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.address" />
@@ -289,6 +289,25 @@
 			</f:else>
 		</f:if>
 	</div>
+
+    <!-- targetGroup -->
+    <f:if condition="{settings.targetGroupsPid}">
+        <div class="form__field width50">
+            <label for="txrkwshop-targetGroup">
+                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_order.targetGroup" />
+            </label>
+            <f:form.select
+                class="select-field"
+                id="txrkwshop-targetGroup"
+                name="targetGroup"
+                value="{targetGroup}"
+                options="{targetGroupList}"
+                optionValueField="uid"
+                optionLabelField="title"
+            />
+        </div>
+    </f:if>
+
 </html>
 
 
