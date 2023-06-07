@@ -5,6 +5,7 @@ namespace RKW\RkwShop\Orders;
 use Madj2k\FeRegister\Domain\Model\FrontendUser;
 use Madj2k\FeRegister\Registration\FrontendUserRegistration;
 use \RKW\RkwShop\Exception;
+use TYPO3\CMS\Core\Log\Logger;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -93,6 +94,16 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      */
     protected $stockRepository;
 
+
+    /**
+     * categoryRepository
+     *
+     * @var \RKW\RkwShop\Domain\Repository\CategoryRepository
+     * @TYPO3\CMS\Extbase\Annotation\Inject
+     */
+    protected $categoryRepository;
+
+
     /**
      * BackendUserRepository
      *
@@ -144,6 +155,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Order $order
      * @param \TYPO3\CMS\Extbase\Mvc\Request|null $request
      * @param \Madj2k\FeRegister\Domain\Model\FrontendUser|null $frontendUser
+     * @param int $targetGroup
      * @return string
      * @throws Exception
      * @throws \Madj2k\FeRegister\Exception
@@ -161,12 +173,18 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     public function createOrder (
         \RKW\RkwShop\Domain\Model\Order $order,
         \TYPO3\CMS\Extbase\Mvc\Request $request = null,
-        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser = null
+        \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser = null,
+        int $targetGroup = 0
    ): string {
 
         // check given e-mail
         if (! \Madj2k\FeRegister\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
             throw new Exception('orderManager.error.invalidEmail');
+        }
+
+        // check targetGroup
+        if ($targetGroup) {
+            $order->addTargetGroup($this->categoryRepository->findByUid($targetGroup));
         }
 
         // check for shippingAddress
@@ -244,7 +262,6 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @return bool
      * @throws \RKW\RkwShop\Exception
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
@@ -263,8 +280,12 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         // add frontendUser to order and shippingAddress
+        //  @todo: FrontendUser has no firstname or last name etc., when added through order optInRequest?!
         $order->setFrontendUser($frontendUser);
         $order->getShippingAddress()->setFrontendUser($frontendUser);
+
+        //  @todo: Temporary, until rkw_soap delivers shippedTstamp from AVS
+        $order->setShippedTstamp(time());
 
         // save it
         $this->orderRepository->add($order);
@@ -305,7 +326,6 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @param \Madj2k\FeRegister\Domain\Model\OptIn $optIn
      * @return void
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
@@ -335,7 +355,6 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotException
      * @throws \TYPO3\CMS\Extbase\SignalSlot\Exception\InvalidSlotReturnException
      */
@@ -388,6 +407,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
     public function getRemainingStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product): int
     {
@@ -412,6 +432,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \RKW\RkwShop\Domain\Model\Product $product
      * @return int
      * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
     public function getPreOrderStockOfProduct (\RKW\RkwShop\Domain\Model\Product $product): int
     {
@@ -514,7 +535,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return array
      */
-    protected function getSettings()
+    protected function getSettings(): array
     {
         $settings = $this->configurationManager->getConfiguration(
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT,
@@ -531,7 +552,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return \TYPO3\CMS\Core\Log\Logger
      */
-    protected function getLogger()
+    protected function getLogger(): Logger
     {
 
         if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {

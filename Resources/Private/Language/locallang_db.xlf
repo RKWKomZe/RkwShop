@@ -30,9 +30,10 @@
 			<trans-unit id="tx_rkwshop_domain_model_order.remark" approved="yes">
 				<source>Remark</source>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_order.targetGroups" approved="yes">
+				<source>Target groups</source>
+			</trans-unit>
 
-
-            
             <trans-unit id="tx_rkwshop_domain_model_orderitem">
 				<source>RKW Shop: OrderItem</source>
 			</trans-unit>
