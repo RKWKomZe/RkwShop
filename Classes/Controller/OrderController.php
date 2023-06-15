@@ -213,6 +213,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param int $targetGroup
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("order")
      */
     public function newAction(Order $order = null, int $targetGroup = 0): void
     {
