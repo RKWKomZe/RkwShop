@@ -4,6 +4,8 @@ namespace RKW\RkwShop\Controller;
 
 use Madj2k\CoreExtended\Utility\GeneralUtility as Common;
 use Madj2k\FeRegister\Registration\FrontendUserRegistration;
+use Madj2k\FeRegister\Utility\FrontendUserSessionUtility;
+use Madj2k\FeRegister\Utility\FrontendUserUtility;
 use RKW\RkwShop\Domain\Model\Order;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -372,7 +374,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         return $this->frontendUser;
-        //===
     }
 
     /**
@@ -383,17 +384,16 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function getFrontendUserId(): int
     {
-        // is user logged in
-        $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         if (
-            ($context->getPropertyFromAspect('frontend.user', 'isLoggedIn'))
-            && ($frontendUserId = $context->getPropertyFromAspect('frontend.user', 'id'))
+            ($frontendUser = FrontendUserSessionUtility::getLoggedInUser())
+            && (! FrontendUserUtility::isGuestUser($frontendUser))
         ){
-            return intval($frontendUserId);
+            return $frontendUser->getUid();
         }
 
         return 0;
     }
+
 
     /**
      * Remove ErrorFlashMessage
