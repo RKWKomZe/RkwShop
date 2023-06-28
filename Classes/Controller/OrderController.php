@@ -172,6 +172,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\InvalidActionNameException if the action name is not valid
      * @throws \TYPO3Fluid\Fluid\View\Exception\InvalidTemplateResourceException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
     public function newAjaxAction()
     {
@@ -186,7 +187,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
             $products = $this->productRepository->findByUidList($this->settings['products']);
             $replacements = [
-                'frontendUser'    => null,
+                'frontendUser'    => $this->getFrontendUser(),
                 'order'           => \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('RKW\\RkwShop\\Domain\\Model\\Order'),
                 'products'        => $products,
                 'pageUid'         => $this->ajaxPid,
@@ -215,18 +216,18 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param int $targetGroup
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("order")
      */
     public function newAction(Order $order = null, int $targetGroup = 0): void
     {
-
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         if ($this->settings['products']) {
 
             $products = $this->productRepository->findByUidList($this->settings['products']);
             $this->view->assignMultiple(
                 array(
-                    'frontendUser'    => null,
+                    'frontendUser'    => $this->getFrontendUser(),
                     'order'           => $order,
                     'products'        => $products,
                     'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
@@ -424,7 +425,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      *
      * @return \TYPO3\CMS\Core\Log\Logger
      */
-    protected function getLogger()
+    protected function getLogger(): \TYPO3\CMS\Core\Log\Logger
     {
 
         if (!$this->logger instanceof \TYPO3\CMS\Core\Log\Logger) {
