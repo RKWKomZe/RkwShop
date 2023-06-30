@@ -10,8 +10,15 @@
         <f:if condition="{products}">
 
             <!-- form -->
-            <f:form action="create" name="order" object="{order}">
+            <f:form action="create" name="order" object="{order}" id="tx-rkw-order-form">
                 <f:render partial="Order/Form" arguments="{_all}" />
+
+                <!-- temporary fix because of special ajax-solution here -->
+                <script>
+                    $("#tx-rkw-order-form").on('submit', function(e) {
+                        $(this).find("button:not(.ajax)").prop('disabled',true).addClass('is-disabled');
+                    });
+                </script>
             </f:form>
 
         </f:if>
