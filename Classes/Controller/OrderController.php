@@ -262,10 +262,9 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function createAction(Order $order, int $targetGroup = 0): void
     {
-
         try {
 
-            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser());
+            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $targetGroup);
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     $message, 'rkw_shop'
