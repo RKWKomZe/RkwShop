@@ -117,6 +117,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
                 // Get flexform data by content-uid
                 /** @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $frontendController */
+                // @extensionScannerIgnoreLine
                 if ($content = $frontendController->sys_page->checkRecord('tt_content', $uid, true)) {
 
                     /** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
@@ -155,6 +156,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'frontendUser'    => null,
                     'order'           => $order,
                     'products'        => $products,
+
+                    // @extensionScannerIgnoreLine
                     'contentUid'      => $this->configurationManager->getContentObject()->data['uid'],
                     'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid'])
                 )
@@ -265,10 +268,9 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function createAction(Order $order, int $targetGroup = 0): void
     {
-
         try {
 
-            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser());
+            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $targetGroup);
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     $message, 'rkw_shop'
