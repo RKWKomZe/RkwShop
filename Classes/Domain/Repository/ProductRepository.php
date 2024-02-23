@@ -2,10 +2,11 @@
 
 namespace RKW\RkwShop\Domain\Repository;
 
+use Madj2k\CoreExtended\Utility\GeneralUtility;
 use RKW\RkwShop\Domain\Model\Product;
 use RKW\RkwShop\Domain\Model\ProductBundle;
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /*
@@ -61,7 +62,7 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
 
         $query = $this->createQuery();
-        $uidArray = explode(',', $uidList);
+        $uidArray = GeneralUtility::intExplode(',', $uidList, true);
         $result = [];
 
         // 1. Get all products by uid
@@ -76,7 +77,6 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
          */
         $currentVersion = VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version);
         if ($currentVersion < 8000000) {
-
             // we have to keep the order given by the comma-list
             $query->setOrderings($this->orderByKey('uid', $uidArray));
         }
@@ -129,6 +129,14 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 }
             }
         }
+
+        // 3. Order by flex form order
+        //  https://www.npostnik.de/typo3/typo3-order-by-uid-list-in-repository/
+        usort($result, function($a, $b) use ($uidArray) {
+            $aIndex = array_search($a->getUid(), $uidArray);
+            $bIndex = array_search($b->getUid(), $uidArray);
+            return ($aIndex < $bIndex) ? -1 : 1;
+        });
 
         return $result;
         //===
