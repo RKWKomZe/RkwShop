@@ -30,6 +30,6 @@ call_user_func(
         //$GLOBALS['TCA']['tx_rkwshop_domain_model_order']['columns']['target_group']['config']['treeConfig']['rootUid'] = 147;
 
     },
-    $_EXTKEY
+    'rkw_shop'
 );
 

@@ -4,8 +4,18 @@ namespace RKW\RkwShop\Orders;
 
 use Madj2k\FeRegister\Domain\Model\FrontendUser;
 use Madj2k\FeRegister\Registration\FrontendUserRegistration;
+use RKW\RkwShop\Domain\Repository\BackendUserRepository;
+use RKW\RkwShop\Domain\Repository\CategoryRepository;
+use RKW\RkwShop\Domain\Repository\OrderItemRepository;
+use RKW\RkwShop\Domain\Repository\OrderRepository;
+use RKW\RkwShop\Domain\Repository\ProductRepository;
+use RKW\RkwShop\Domain\Repository\StockRepository;
 use \RKW\RkwShop\Exception;
 use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -31,13 +41,13 @@ use TYPO3\CMS\Core\Log\Logger;
 class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 {
 
-
     /**
      * Signal name for use in ext_localconf.php
      *
      * @const string
      */
     const SIGNAL_AFTER_ORDER_CREATED_ADMIN = 'afterOrderCreatedAdmin';
+
 
     /**
      * Signal name for use in ext_localconf.php
@@ -46,12 +56,14 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      */
     const SIGNAL_AFTER_ORDER_CREATED_USER = 'afterOrderCreatedUser';
 
+
     /**
      * Signal name for use in ext_localconf.php
      *
      * @const string
      */
     const SIGNAL_AFTER_ORDER_DELETED_ADMIN = 'afterOrderDeletedAdmin';
+
 
     /**
      * Signal name for use in ext_localconf.php
@@ -62,91 +74,168 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
-     * orderRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\OrderRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $orderRepository;
+    protected ?OrderRepository $orderRepository = null;
 
 
     /**
-     * orderItemRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\OrderItemRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $orderItemRepository;
+    protected ?OrderItemRepository $orderItemRepository = null;
+
 
     /**
-     * productRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $productRepository;
+    protected ?ProductRepository $productRepository = null;
+
 
     /**
-     * stockRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\StockRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $stockRepository;
+    protected ?StockRepository $stockRepository = null;
 
 
     /**
-     * categoryRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\CategoryRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $categoryRepository;
+    protected ?CategoryRepository $categoryRepository;
 
 
     /**
-     * BackendUserRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\BackendUserRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $backendUserRepository;
+    protected ?BackendUserRepository $backendUserRepository = null;
 
 
     /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $signalSlotDispatcher;
+    protected ?Dispatcher $signalSlotDispatcher = null;
+
 
     /**
-     * Persistence Manager
-     *
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $persistenceManager;
+    protected ?PersistenceManager $persistenceManager = null;
 
 
     /**
-     * configurationManager
-     *
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $configurationManager;
+    protected ?ConfigurationManagerInterface $configurationManager = null;
 
 
     /**
      * @var  \TYPO3\CMS\Extbase\Object\ObjectManager
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $objectManager;
+    protected ?ObjectManager $objectManager = null;
+
 
     /**
      * @var \TYPO3\CMS\Core\Log\Logger
      */
-    protected $logger;
+    protected ?Logger $logger = null;
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\OrderRepository $orderRepository
+     */
+    public function injectOrderRepository(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\OrderItemRepository $orderItemRepository
+     */
+    public function injectMailRepository(OrderItemRepository $orderItemRepository)
+    {
+        $this->orderItemRepository = $orderItemRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\ProductRepository $productRepository
+     */
+    public function injectProductRepository(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\StockRepository $stockRepository
+     */
+    public function injectStockRepository(StockRepository $stockRepository)
+    {
+        $this->stockRepository = $stockRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\CategoryRepository $categoryRepository
+     */
+    public function injectCategoryRepository(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\BackendUserRepository $backendUserRepository
+     */
+    public function injectBackendUserRepository(BackendUserRepository $backendUserRepository)
+    {
+        $this->backendUserRepository = $backendUserRepository;
+    }
+
+
+    /**
+     * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
+     */
+    public function injectDispatcher(Dispatcher $signalSlotDispatcher)
+    {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
+    }
+
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
+     */
+    public function injectPersistenceManager(PersistenceManager $persistenceManager)
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
+
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+     */
+    public function injectConfigurationManagerInterface(ConfigurationManagerInterface $configurationManager)
+    {
+        $this->configurationManager = $configurationManager;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
+     */
+    public function injectObjectManager(ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
 
 
     /**

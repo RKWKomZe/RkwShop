@@ -23,11 +23,12 @@ return [
 	],
 	'columns' => [
 
-        'order' => [
+        'ext_order' => [
             'config' => [
                 'type' => 'passthrough',
             ],
         ],
+
         'status' => [
             'exclude' => 0,
             //'displayCond' => 'EXT:rkw_soap:LOADED:FALSE',
