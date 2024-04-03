@@ -6,7 +6,13 @@ use Madj2k\CoreExtended\Utility\GeneralUtility as Common;
 use Madj2k\FeRegister\Registration\FrontendUserRegistration;
 use Madj2k\FeRegister\Utility\FrontendUserSessionUtility;
 use Madj2k\FeRegister\Utility\FrontendUserUtility;
+use RKW\RkwShop\Domain\Model\FrontendUser;
 use RKW\RkwShop\Domain\Model\Order;
+use RKW\RkwShop\Domain\Repository\CategoryRepository;
+use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
+use RKW\RkwShop\Domain\Repository\ProductRepository;
+use RKW\RkwShop\Orders\OrderManager;
+use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
@@ -37,60 +43,85 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
-     * productRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\ProductRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $productRepository;
+    protected ?ProductRepository $productRepository = null;
 
 
     /**
-     * FrontendUserRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $frontendUserRepository;
+    protected ?FrontendUserRepository $frontendUserRepository = null;
 
 
     /**
-     * categoryRepository
-     *
      * @var \RKW\RkwShop\Domain\Repository\CategoryRepository
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $categoryRepository;
+    protected ?CategoryRepository $categoryRepository = null;
 
 
     /**
-     * logged in FrontendUser
-     *
-     * @var \RKW\RkwShop\Domain\Model\FrontendUser
-     */
-    protected $frontendUser = null;
-
-
-    /**
-     * OrderManager
-     *
      * @var \RKW\RkwShop\Orders\OrderManager
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
-    protected $orderManager;
+    protected ?OrderManager $orderManager = null;
+
+
+    /**
+     * @var \RKW\RkwShop\Domain\Model\FrontendUser
+     */
+    protected ?FrontendUser $frontendUser = null;
 
 
     /**
      * @var \TYPO3\CMS\Core\Log\Logger
      */
-    protected $logger;
+    protected ?Logger $logger = null;
 
 
     /**
      * @var int
      */
-    protected $ajaxPid;
+    protected int $ajaxPid = 0;
 
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\ProductRepository $productRepository
+     */
+    public function injectProductRepository(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\FrontendUserRepository $frontendUserRepository
+     */
+    public function injectFrontendUserRepository(FrontendUserRepository $frontendUserRepository)
+    {
+        $this->frontendUserRepository = $frontendUserRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\CategoryRepository $categoryRepository
+     */
+    public function injectCategoryRepository(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Orders\OrderManager $orderManager
+     */
+    public function injectOrderManager(OrderManager $orderManager)
+    {
+        $this->orderManager = $orderManager;
+    }
 
 
     /**
