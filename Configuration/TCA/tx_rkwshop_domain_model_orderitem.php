@@ -12,9 +12,6 @@ return [
         'searchFields' => 'uid, order, product, amount, is_pre_order',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_orderitem.gif'
 	],
-	'interface' => [
-		'showRecordFieldList' => 'order, status, product, amount, is_pre_order',
-	],
 	'types' => [
 		'1' => ['showitem' => 'order, status, product, amount, is_pre_order'],
 	],

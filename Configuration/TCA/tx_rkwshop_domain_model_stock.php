@@ -18,9 +18,6 @@ return [
 		'searchFields' => 'is_external,product,amount,delivery_start,comment,',
 		'iconfile' => 'EXT:rkw_shop/Resources/Public/Icons/tx_rkwshop_domain_model_stock.gif',
 	],
-	'interface' => [
-		'showRecordFieldList' => 'product,is_external,amount,comment,delivery_start',
-	],
 	'types' => [
 		'0' => ['showitem' => 'product,is_external,amount,comment,delivery_start'],
     ],
