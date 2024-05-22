@@ -155,7 +155,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     $objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 
                     /** @var \TYPO3\CMS\Core\Service\FlexFormService $flexFormService */
-                    $flexFormService = $objectManager->get('TYPO3\\CMS\\Extbase\\Service\\FlexFormService');
+                    $flexFormService = $objectManager->get('TYPO3\\CMS\\Core\\Service\\FlexFormService');
                     $settings = $flexFormService->convertFlexFormContentToArray($content['pi_flexform']);
 
                     $this->settings = array_merge($this->getSettings(), $settings['settings']);
