@@ -29,5 +29,11 @@ namespace RKW\RkwShop\Domain\Model;
 class Category extends \TYPO3\CMS\Extbase\Domain\Model\Category
 {
 
+    /**
+     * ! Important ! -> Remove lazy from property through override (issue with serialize of FeRegister)
+     *
+     * @var \TYPO3\CMS\Extbase\Domain\Model\Category|null
+     */
+    protected $parent;
 
 }

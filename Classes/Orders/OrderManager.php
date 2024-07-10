@@ -10,7 +10,7 @@ use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
 use RKW\RkwShop\Domain\Repository\StockRepository;
-use \RKW\RkwShop\Exception;
+use RKW\RkwShop\Exception;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
