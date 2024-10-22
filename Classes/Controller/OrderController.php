@@ -12,9 +12,12 @@ use RKW\RkwShop\Domain\Repository\CategoryRepository;
 use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
 use RKW\RkwShop\Orders\OrderManager;
+use Solarium\Component\Debug;
 use TYPO3\CMS\Core\Log\Logger;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -316,6 +319,13 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 '',
                 \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
             );
+
+            /**
+             * Fixing "Serialization of 'Closure' is not allowed" in /var/www/html/public/typo3/sysext/fluid/Classes/ViewHelpers/FormViewHelper.php line 291
+             * We simply remove the non-persisted object here. Not ideal, but working so far
+             * @see https://forge.typo3.org/issues/91364
+             */
+            $order->setTargetGroup(new \TYPO3\CMS\Extbase\Persistence\ObjectStorage());
 
             $this->forward('new', null, null,
                 [
