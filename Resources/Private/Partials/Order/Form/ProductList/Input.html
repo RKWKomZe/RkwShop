@@ -33,23 +33,31 @@
     <f:section name="FieldOnly">
 
         <div class="order-list__order">
-            <f:form.textfield type="number" id="txrkwshop-amount-{product.uid}" property="orderItem.{product.uid}.amount" value="<rkwShop:OrderItemAmount orderItemList='{orderItem}' product='{product}' />" />
+            <f:form.textfield
+                type="number"
+                id="txrkwshop-amount-{product.uid}"
+                property="orderItem.{product.uid}.amount"
+                value="<rkwShop:OrderItemAmount orderItemList='{orderItem}' product='{product}' />"
+                additionalAttributes="{'aria-labelledBy': 'txrkwshop-amount-{product.uid}-label'}"
+            />
 
-            <f:if condition="{product.productBundle.recordType} == 0">
-                <f:then>
-                    <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
-                        <f:then>
-                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
-                        </f:then>
-                        <f:else>
-                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountSingle" />
-                        </f:else>
-                    </f:if>
-                </f:then>
-                <f:else>
-                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
-                </f:else>
-            </f:if>
+            <span id="txrkwshop-amount-{product.uid}-label">
+                <f:if condition="{product.productBundle.recordType} == 0">
+                    <f:then>
+                        <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductBundle'">
+                            <f:then>
+                                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
+                            </f:then>
+                            <f:else>
+                                <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountSingle" />
+                            </f:else>
+                        </f:if>
+                    </f:then>
+                    <f:else>
+                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.amountBundle" />
+                    </f:else>
+                </f:if>
+            </span>
 
             <!-- add hidden field with product -->
             <f:form.hidden property="orderItem.{product.uid}.product" value="{product}" />
