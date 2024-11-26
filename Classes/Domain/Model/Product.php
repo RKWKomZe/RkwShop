@@ -112,9 +112,9 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 
     /**
-     * productBundle
+     * productBundle or productSubscription
      *
-     * @var \RKW\RkwShop\Domain\Model\ProductBundle
+     * @var \RKW\RkwShop\Domain\Model\Product
      */
     protected $productBundle;
 
@@ -394,9 +394,9 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Returns the productBundle
+     * Returns the productBundle or productSubscription
      *
-     * @return \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
+     * @return \RKW\RkwShop\Domain\Model\Product $productBundle
      */
     public function getProductBundle()
     {
@@ -404,12 +404,12 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Sets the productBundle
+     * Sets the productBundle or productSubscription
      *
-     * @param \RKW\RkwShop\Domain\Model\ProductBundle $productBundle
+     * @param \RKW\RkwShop\Domain\Model\Product $productBundle
      * @return void
      */
-    public function setProductBundle(\RKW\RkwShop\Domain\Model\ProductBundle $productBundle): void
+    public function setProductBundle(\RKW\RkwShop\Domain\Model\Product $productBundle): void
     {
         $this->productBundle = $productBundle;
     }
