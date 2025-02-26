@@ -158,6 +158,13 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $adminEmail;
 
 
+    /**
+     * digitalOnly
+     *
+     * @var boolean
+     */
+    protected $digitalOnly = false;
+
 
     /**
      * __construct
@@ -572,6 +579,29 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setOrderedExternal($orderedExternal): void
     {
         $this->orderedExternal = $orderedExternal;
+    }
+
+
+    /**
+     * Get the value of digitalOnly
+     *
+     * @return boolean $digitalOnly
+    */
+    public function isDigitalOnly(): bool
+    {
+        return $this->digitalOnly;
+    }
+
+
+    /**
+     * Sets the digitalOnly
+     *
+     * @param boolean $digitalOnly
+     * @return void
+     */
+    public function setDigitalOnly($digitalOnly): void
+    {
+        $this->digitalOnly = $digitalOnly;
     }
 
 

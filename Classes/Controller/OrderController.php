@@ -12,12 +12,8 @@ use RKW\RkwShop\Domain\Repository\CategoryRepository;
 use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
 use RKW\RkwShop\Orders\OrderManager;
-use Solarium\Component\Debug;
 use TYPO3\CMS\Core\Log\Logger;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -167,6 +163,8 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         }
 
+        $this->settings['digitalOnly'] = $this->containsOnlyDigitalProducts($this->settings['products']);
+
     }
 
 
@@ -193,7 +191,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
                     // @extensionScannerIgnoreLine
                     'contentUid'      => $this->configurationManager->getContentObject()->data['uid'],
-                    'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid'])
+                    'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
                 )
             );
         }
@@ -229,7 +227,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 'products'        => $products,
                 'pageUid'         => $this->ajaxPid,
                 'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
-                'settings'        => $this->settings // should not be needed
+                'settings'        => $this->settings, // should not be needed
             ];
 
             $jsonHelper->setRequest($this->request);
@@ -269,7 +267,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                     'products'        => $products,
                     'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
                     'targetGroup'     => $targetGroup,
-                    'settings'        => $this->settings // should not be needed
+                    'settings'        => $this->settings, // should not be needed
                 )
             );
         }
@@ -304,7 +302,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         try {
 
-            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $targetGroup);
+            $message = $this->orderManager->createOrder($order, $this->request, $this->getFrontendUser(), $targetGroup, $this->settings['digitalOnly']);
             $this->addFlashMessage(
                 \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                     $message, 'rkw_shop'
@@ -330,7 +328,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->forward('new', null, null,
                 [
                     'order' => $order,
-                    'targetGroup' => $targetGroup
+                    'targetGroup' => $targetGroup,
                 ]
             );
         }
@@ -478,5 +476,20 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         return $this->logger;
     }
 
+    protected function containsOnlyDigitalProducts(string $productUids): bool
+    {
+        $containsOnlyDigitalProducts = true;
+
+        $products = $this->productRepository->findByUidList($productUids);
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        foreach ($products as $product) {
+            if (! $product->isDigitalOnly()) {
+                $containsOnlyDigitalProducts = false;
+            }
+        }
+
+        return $containsOnlyDigitalProducts;
+
+    }
 
 }
