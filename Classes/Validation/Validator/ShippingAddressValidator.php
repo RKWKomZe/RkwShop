@@ -4,7 +4,7 @@ namespace RKW\RkwShop\Validation\Validator;
 
 use Madj2k\CoreExtended\Utility\GeneralUtility as Common;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -42,63 +42,67 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
         $isValid = true;
         $settings = $this->getSettings();
 
-        if (
-            ($order instanceof \RKW\RkwShop\Domain\Model\Order)
-            && ($shippingAddress = $order->getShippingAddress())
-            && ($requiredFields = GeneralUtility::trimExplode(',', $settings['requiredFields']))
-            && ($methods = get_class_methods($shippingAddress))
-        ){
+        if (! $this->containsOnlyDigitalProducts($order)) {
 
-            foreach ($requiredFields as $requiredField) {
+            if (
+                ($order instanceof \RKW\RkwShop\Domain\Model\Order)
+                && ($shippingAddress = $order->getShippingAddress())
+                && ($requiredFields = GeneralUtility::trimExplode(',', $settings['requiredFields']))
+                && ($methods = get_class_methods($shippingAddress))
+            ) {
 
-                $getter = 'get' . ucfirst($requiredField);
-                if (in_array($getter, $methods)) {
+                foreach ($requiredFields as $requiredField) {
 
-                    // check if given fields have been filled out
-                    if (
-                        (
-                            ($requiredField == 'gender')
-                            && ($shippingAddress->$getter() == 99)
-                        )
-                        || (
-                            ($requiredField != 'gender')
-                            && (empty($shippingAddress->$getter()))
-                        )
-                    ) {
+                    $getter = 'get' . ucfirst($requiredField);
+                    if (in_array($getter, $methods)) {
 
-                        $this->result->forProperty($requiredField)->addError(
-                            new \TYPO3\CMS\Extbase\Error\Error(
-                                \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                                    'shippingAddressValidator.notFilled',
-                                    'rkw_shop',
-                                    [
-                                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                                            'shippingAddressValidator.field.' . $requiredField,
-                                            'rkw_shop'
-                                        )
-                                    ]
-                                ), 1541170767
+                        // check if given fields have been filled out
+                        if (
+                            (
+                                ($requiredField == 'gender')
+                                && ($shippingAddress->$getter() == 99)
                             )
-                        );
-                        $isValid = false;
+                            || (
+                                ($requiredField != 'gender')
+                                && (empty($shippingAddress->$getter()))
+                            )
+                        ) {
+
+                            $this->result->forProperty($requiredField)->addError(
+                                new \TYPO3\CMS\Extbase\Error\Error(
+                                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                                        'shippingAddressValidator.notFilled',
+                                        'rkw_shop',
+                                        [
+                                            \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                                                'shippingAddressValidator.field.' . $requiredField,
+                                                'rkw_shop'
+                                            )
+                                        ]
+                                    ), 1541170767
+                                )
+                            );
+                            $isValid = false;
+                        }
                     }
                 }
+
             }
 
-            // check validity of e-mail
-            if (! \Madj2k\FeRegister\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
+        }
 
-                $this->result->forProperty($requiredField)->addError(
-                    new \TYPO3\CMS\Extbase\Error\Error(
-                        \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
-                            'shippingAddressValidator.invalidEmail',
-                            'rkw_shop'
-                        ), 1541170768
-                    )
-                );
-                $isValid = false;
-            }
+        // check validity of e-mail
+        if (! \Madj2k\FeRegister\Utility\FrontendUserUtility::isEmailValid($order->getEmail())) {
 
+            $this->result->forProperty('email')->addError(
+                new \TYPO3\CMS\Extbase\Error\Error(
+                    \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
+                        'shippingAddressValidator.invalidEmail',
+                        'rkw_shop'
+                    ), 1541170768
+                )
+            );
+            $isValid = false;
         }
 
         return $isValid;
@@ -115,6 +119,22 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
     protected function getSettings(string $which = ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS): array
     {
         return Common::getTypoScriptConfiguration('Rkwshop', $which);
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @return bool
+     */
+    protected function containsOnlyDigitalProducts(\RKW\RkwShop\Domain\Model\Order $order): bool
+    {
+        $containsOnlyDigitalProducts = false;
+        foreach ($order->getOrderItem() as $orderItem) {
+            if ($orderItem->getProduct()->isDigitalOnly()) {
+                $containsOnlyDigitalProducts = true;
+            }
+        }
+
+        return $containsOnlyDigitalProducts;
     }
 }
 
