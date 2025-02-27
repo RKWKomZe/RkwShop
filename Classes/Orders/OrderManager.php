@@ -245,6 +245,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      * @param \TYPO3\CMS\Extbase\Mvc\Request|null $request
      * @param \Madj2k\FeRegister\Domain\Model\FrontendUser|null $frontendUser
      * @param int $targetGroup
+     * @param bool $digitalOnly
      * @return string
      * @throws Exception
      * @throws \Madj2k\FeRegister\Exception
@@ -263,7 +264,8 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         \RKW\RkwShop\Domain\Model\Order $order,
         \TYPO3\CMS\Extbase\Mvc\Request $request = null,
         \Madj2k\FeRegister\Domain\Model\FrontendUser $frontendUser = null,
-        int $targetGroup = 0
+        int $targetGroup = 0,
+        bool $digitalOnly = false
    ): string {
 
         // check given e-mail
@@ -276,14 +278,16 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             $order->addTargetGroup($this->categoryRepository->findByUid($targetGroup));
         }
 
-        // check for shippingAddress
-        if (
-            (! $order->getShippingAddress())
-            || (! $order->getShippingAddress()->getAddress())
-            || (! $order->getShippingAddress()->getZip())
-            || (! $order->getShippingAddress()->getCity())
-        ){
-            throw new Exception('orderManager.error.noShippingAddress');
+        if (! $digitalOnly) {
+            // check for shippingAddress
+            if (
+                (!$order->getShippingAddress())
+                || (!$order->getShippingAddress()->getAddress())
+                || (!$order->getShippingAddress()->getZip())
+                || (!$order->getShippingAddress()->getCity())
+            ) {
+                throw new Exception('orderManager.error.noShippingAddress');
+            }
         }
 
 
@@ -371,7 +375,10 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         // add frontendUser to order and shippingAddress
         //  @todo: FrontendUser has no firstname or last name etc., when added through order optInRequest?!
         $order->setFrontendUser($frontendUser);
-        $order->getShippingAddress()->setFrontendUser($frontendUser);
+
+        if ($order->getShippingAddress()) {
+            $order->getShippingAddress()->setFrontendUser($frontendUser);
+        }
 
         //  @todo: Temporary, until rkw_soap delivers shippedTstamp from AVS
         $order->setShippedTstamp(time());
