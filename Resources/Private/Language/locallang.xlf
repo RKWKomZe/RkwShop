@@ -62,6 +62,9 @@
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.zip">
 				<source>Zip</source>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.zip.accessible">
+				<source>Postal code</source>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.city">
 				<source>City</source>
 			</trans-unit>
