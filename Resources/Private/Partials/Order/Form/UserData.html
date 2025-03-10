@@ -219,14 +219,14 @@
                             id="txrkwshop-zip"
                             property="shippingAddress.zip"
                             value="{shippingAddress.zip}"
-                            additionalAttributes="{autocomplete: 'zip'}" />
+                            additionalAttributes="{aria-label: '{f:translate(key:\'LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.zip.accessible\')}', autocomplete: 'zip'}" />
                     </f:then>
                     <f:else>
                         <f:form.textfield
                             id="txrkwshop-zip"
                             property="shippingAddress.zip"
                             value="{frontendUser.zip}"
-                            additionalAttributes="{autocomplete: 'zip'}" />
+                            additionalAttributes="{aria-label: '{f:translate(key:\'LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:tx_rkwshop_domain_model_shippingaddress.zip.accessible\')}', autocomplete: 'postal-code'}" />
                     </f:else>
                 </f:if>
             </div>

@@ -80,6 +80,10 @@
 				<source>Zip</source>
 				<target>PLZ</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.zip.accessible">
+				<source>Postal code</source>
+				<target>Postleitzahl</target>
+			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_shippingaddress.city">
 				<source>City</source>
 				<target>Stadt</target>

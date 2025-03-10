@@ -92,10 +92,10 @@
 				<source>Authors</source>
 			</trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.adminEmail">
-                <source>Additional Admin-E-Mail for Order- Mails</source>
+                <source>Additional Admin-E-Mail for Order-Mails</source>
             </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.backendUser">
-                <source>Backend Users for Order- Mails</source>
+                <source>Backend Users for Order-Mails</source>
             </trans-unit>
             <trans-unit id="tx_rkwshop_domain_model_product.stock">
                 <source>Stock</source>
