@@ -132,12 +132,12 @@
 				<target>Autoren/Ansprechpartner</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.adminEmail">
-				<source>Additional Admin-E-Mail for Order- Mails</source>
-				<target>Zusätzliche Admin-E-Mail für Bestell- E-Mails</target>
+				<source>Additional Admin-E-Mail for Order-Mails</source>
+				<target>Zusätzliche Admin-E-Mail für Bestell-E-Mails</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.backendUser">
-				<source>Backend Users for Order- Mails</source>
-				<target>Backend User für Bestell- E-Mails</target>
+				<source>Backend Users for Order-Mails</source>
+				<target>Backend User für Bestell-E-Mails</target>
 			</trans-unit>
 			<trans-unit id="tx_rkwshop_domain_model_product.stock">
 				<source>Stock</source>
