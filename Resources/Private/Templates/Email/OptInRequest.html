@@ -20,7 +20,6 @@
 	<postmaster:email.uri.action action="optIn" controller="Order" extensionName="rkwShop" pluginName="ItemList" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_itemlist: {token: optIn.tokenYes, tokenUser: optIn.tokenUser}}" section="rkw-order" />\n
 	\n
 	<postmaster:email.translate key="templates.email.optInRequest.textOptOut" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" />\n
-	<postmaster:email.uri.action action="optIn" controller="Order" extensionName="rkwShop" pluginName="ItemList" absolute="true" noCacheHash="true" pageUid="{pageUid}" additionalParams="{tx_rkwshop_itemlist: {token: optIn.tokenNo, tokenUser: optIn.tokenUser}}" section="rkw-order" />
 </postmaster:email.plaintextLineBreaks></f:section>
 
 
@@ -42,7 +41,6 @@
 	</p>
 	<p>
 		<postmaster:email.translate key="templates.email.optInRequest.textOptOut" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop" /><br>
-		<a href="<postmaster:email.uri.action action='optIn' controller='Order' extensionName='rkwShop' pluginName='ItemList' absolute='true' noCacheHash='true' pageUid='{pageUid}' additionalParams='{tx_rkwshop_itemlist: {token: optIn.tokenNo, tokenUser: optIn.tokenUser}}' section='rkw-order' />"><postmaster:email.translate key="templates.email.optInRequest.textOptOutLinkLabel" languageKey="{queueRecipient.languageCode}" extensionName="rkwShop"/></a>
 	</p>
 </f:section>
 
