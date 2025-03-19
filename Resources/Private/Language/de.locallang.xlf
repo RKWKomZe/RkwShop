@@ -277,7 +277,7 @@
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.textOptOut">
 				<source>Have you changed your mind or have you not requested the order yourself? Simply click here to delete all data:</source>
-				<target>Sie haben es sich anders überlegt oder haben die Bestellung gar nicht selbst angefragt? Klicken Sie einfach hier, um alle Daten zu löschen:</target>
+				<target>Sie haben es sich anders überlegt oder haben die Bestellung gar nicht selbst angefragt? In Kürze werden die Daten Ihrer Anfrage automatisch gelöscht. Sie brauchen nichts weiter zu tun.</target>
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.textOptInLinkLabel">
 				<source>Yes, I would like to receive this order</source>
