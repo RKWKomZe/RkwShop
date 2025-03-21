@@ -172,6 +172,9 @@
             <trans-unit id="partials.order.form.productList.input.outOfStockPreOrder">
                 <source>Unfortunately currently out of stock, but can be pre-ordered.</source>
             </trans-unit>
+			<trans-unit id="partials.order.form.productList.input.noMoreDeliverable">
+				<source>Unfortunately the current product is no more deliverable.</source>
+			</trans-unit>
             <trans-unit id="partials.order.form.productList.input.outOfStock">
                 <source>Unfortunately currently out of stock.</source>
             </trans-unit>
