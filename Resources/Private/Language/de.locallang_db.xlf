@@ -171,6 +171,10 @@
 				<source>Is digital only</source>
 				<target>Nur digital erhältlich</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_product.deliveryEnd">
+				<source>Available until</source>
+				<target>Lieferbar bis</target>
+			</trans-unit>
 
 
             <!-- tx_rkwshop_domain_model_stock -->

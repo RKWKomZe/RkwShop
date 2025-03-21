@@ -523,6 +523,24 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
+     * Check, if the product is still deliverable
+     *
+     * @param \RKW\RkwShop\Domain\Model\Product $product
+     * @return bool
+     * @throws \TYPO3\CMS\Core\Type\Exception\InvalidEnumerationValueException
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     */
+    public function isProductDeliverable (\RKW\RkwShop\Domain\Model\Product $product): bool
+    {
+        if ($product->getProductBundle()) {
+            $product = $product->getProductBundle();
+        }
+
+        return ($product->getDeliveryEnd() > 0 && $product->getDeliveryEnd() < time()) ? false : true;
+    }
+
+
+    /**
      * Get pre-order stock of product
      *
      * @param \RKW\RkwShop\Domain\Model\Product $product

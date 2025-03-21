@@ -15,7 +15,16 @@
                 <!-- check which kind of bundle we have here -->
                 <f:if condition="{product.productBundle.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
                     <f:then>
-                        <f:render partial="Order/Form/ProductList/Checkbox" arguments="{product: product.productBundle, orderItem: orderItem}" />
+                        <f:if condition="<rkwShop:IsProductDeliverable product='{product}' />">
+                            <f:then>
+                                <f:render partial="Order/Form/ProductList/Checkbox" arguments="{product: product.productBundle, orderItem: orderItem}" />
+                            </f:then>
+                            <f:else>
+                                <span class="order-list__status order-list__status--warn">
+                                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.noMoreDeliverable" />
+                                </span>
+                            </f:else>
+                        </f:if>
                     </f:then>
 
                     <f:else>
@@ -41,9 +50,17 @@
                 <!-- check which kind of bundle we have here -->
                 <f:if condition="{product.recordType} == '\RKW\RkwShop\Domain\Model\ProductSubscription'">
                     <f:then>
-                        <f:render partial="Order/Form/ProductList/Checkbox" arguments="{product: product, orderItem: orderItem}" />
+                        <f:if condition="<rkwShop:IsProductDeliverable product='{product}' />">
+                            <f:then>
+                                <f:render partial="Order/Form/ProductList/Checkbox" arguments="{product: product, orderItem: orderItem}" />
+                            </f:then>
+                            <f:else>
+                                <span class="order-list__status order-list__status--warn">
+                                    <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.input.noMoreDeliverable" />
+                                </span>
+                            </f:else>
+                        </f:if>
                     </f:then>
-
                     <f:else>
                         <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: orderItem}" />
                     </f:else>

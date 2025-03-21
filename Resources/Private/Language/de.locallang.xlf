@@ -217,6 +217,10 @@
                 <source>Unfortunately currently out of stock, but can be pre-ordered.</source>
                 <target>Leider derzeit nicht lieferbar, kann aber vorbestellt werden.</target>
             </trans-unit>
+			<trans-unit id="partials.order.form.productList.input.noMoreDeliverable">
+				<source>Unfortunately the current product is no more deliverable.</source>
+				<target>Leider ist das Produkt nicht mehr lieferbar.</target>
+			</trans-unit>
             <trans-unit id="partials.order.form.productList.input.outOfStock">
                 <source>Unfortunately currently out of stock.</source>
                 <target>Leider derzeit vergriffen.</target>
