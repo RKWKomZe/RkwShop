@@ -165,6 +165,10 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $digitalOnly = false;
 
+    /**
+     * @var integer
+     */
+    protected $deliveryEnd;
 
     /**
      * __construct
@@ -602,6 +606,22 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setDigitalOnly($digitalOnly): void
     {
         $this->digitalOnly = $digitalOnly;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeliveryEnd(): int
+    {
+        return $this->deliveryEnd;
+    }
+
+    /**
+     * @param int $deliveryEnd
+     */
+    public function setDeliveryEnd(int $deliveryEnd): void
+    {
+        $this->deliveryEnd = $deliveryEnd;
     }
 
 
