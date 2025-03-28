@@ -175,6 +175,9 @@
 			<trans-unit id="partials.order.form.productList.input.noMoreDeliverable">
 				<source>Unfortunately the current product is no more deliverable.</source>
 			</trans-unit>
+			<trans-unit id="partials.order.form.productList.input.noMoreSubscribable">
+				<source>Unfortunately this product can no longer be subscribed.</source>
+			</trans-unit>
             <trans-unit id="partials.order.form.productList.input.outOfStock">
                 <source>Unfortunately currently out of stock.</source>
             </trans-unit>
