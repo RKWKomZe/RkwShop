@@ -218,8 +218,12 @@
                 <target>Leider derzeit nicht lieferbar, kann aber vorbestellt werden.</target>
             </trans-unit>
 			<trans-unit id="partials.order.form.productList.input.noMoreDeliverable">
-				<source>Unfortunately the current product is no more deliverable.</source>
+				<source>Unfortunately this product is no more deliverable.</source>
 				<target>Leider ist das Produkt nicht mehr lieferbar.</target>
+			</trans-unit>
+			<trans-unit id="partials.order.form.productList.input.noMoreSubscribable">
+				<source>Unfortunately this product can no longer be subscribed.</source>
+				<target>Leider kann dieses Produkt nicht mehr abonniert werden.</target>
 			</trans-unit>
             <trans-unit id="partials.order.form.productList.input.outOfStock">
                 <source>Unfortunately currently out of stock.</source>
