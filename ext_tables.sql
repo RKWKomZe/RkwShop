@@ -76,6 +76,7 @@ CREATE TABLE tx_rkwshop_domain_model_product (
 	stock varchar(255) DEFAULT '' NOT NULL,
   ordered_external int(11) unsigned DEFAULT '0' NOT NULL,
 	delivery_end int(11) unsigned DEFAULT '0' NOT NULL,
+	delivery_end_text text,
 
 	backend_user varchar(255) DEFAULT '' NOT NULL,
 	admin_email varchar(255) DEFAULT '' NOT NULL,
