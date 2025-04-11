@@ -171,6 +171,11 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $deliveryEnd;
 
     /**
+     * @var string
+     */
+    protected $deliveryEndText;
+
+    /**
      * __construct
      */
     public function __construct()
@@ -624,6 +629,23 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->deliveryEnd = $deliveryEnd;
     }
 
+
+    /**
+     * @return string
+     */
+    public function getDeliveryEndText(): string
+    {
+        return $this->deliveryEndText;
+    }
+
+
+    /**
+     * @param string $deliveryEndText
+     */
+    public function setDeliveryEndText(int $deliveryEndText): void
+    {
+        $this->deliveryEndText = $deliveryEndText;
+    }
 
     /**
      * Adds a backendUser

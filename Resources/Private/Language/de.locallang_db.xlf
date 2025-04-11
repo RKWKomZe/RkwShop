@@ -175,6 +175,10 @@
 				<source>Available until</source>
 				<target>Lieferbar bis</target>
 			</trans-unit>
+			<trans-unit id="tx_rkwshop_domain_model_product.deliveryEndText">
+				<source>Optional text to be displayed after reaching delivery end date</source>
+				<target>Info zur Anzeige bei Erreichung des Lieferenddatums (optional)</target>
+			</trans-unit>
 
 
             <!-- tx_rkwshop_domain_model_stock -->
