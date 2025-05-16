@@ -68,7 +68,7 @@ class ShippingAddressValidator extends \TYPO3\CMS\Extbase\Validation\Validator\A
                             )
                         ) {
 
-                            $this->result->forProperty($requiredField)->addError(
+                            $this->result->forProperty('shippingAddress.' . $requiredField)->addError(
                                 new \TYPO3\CMS\Extbase\Error\Error(
                                     \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(
                                         'shippingAddressValidator.notFilled',

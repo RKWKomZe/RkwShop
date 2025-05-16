@@ -613,13 +613,15 @@ class Product extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->digitalOnly = $digitalOnly;
     }
 
+
     /**
      * @return int
      */
     public function getDeliveryEnd(): int
     {
-        return $this->deliveryEnd;
+        return $this->deliveryEnd ?? 0;
     }
+
 
     /**
      * @param int $deliveryEnd
