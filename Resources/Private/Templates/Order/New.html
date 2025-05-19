@@ -4,25 +4,27 @@
 
     <f:section name="main">
 
-        <f:render partial="FlashMessages" arguments="{_all}" />
-        <f:render partial="FormErrors" arguments="{object:Order}" />
+        <div class="flex-container">
+            <f:render partial="FlashMessages" arguments="{_all}" />
+            <f:render partial="FormErrors" arguments="{object:Order}" />
 
-        <f:if condition="{products}">
+            <f:if condition="{products}">
 
-            <!-- form -->
-            <f:form action="create" name="order" object="{order}" id="tx-rkw-order-form">
-                <f:render partial="Order/Form" arguments="{_all}" />
+                <!-- form -->
+                <f:form action="create" name="order" object="{order}" id="tx-rkw-order-form">
+                    <f:render partial="Order/Form" arguments="{_all}" />
 
-                <!-- temporary fix because of special ajax-solution here -->
-                <script>
-                    $("#tx-rkw-order-form").on('submit', function(e) {
-                        $(this).find("button:not(.ajax)").prop('disabled',true).addClass('is-disabled');
-                    });
+                    <!-- temporary fix because of special ajax-solution here -->
+                    <script>
+                        $("#tx-rkw-order-form").on('submit', function(e) {
+                            $(this).find("button:not(.ajax)").prop('disabled',true).addClass('is-disabled');
+                        });
 
-                    $("#tx-rkw-order-form .js-open-mdl").modal();
-                </script>
-            </f:form>
+                        $("#tx-rkw-order-form .js-open-mdl").modal();
+                    </script>
+                </f:form>
 
-        </f:if>
+            </f:if>
+        </div>
     </f:section>
 </html>
