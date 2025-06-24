@@ -8,7 +8,14 @@
             <f:render partial="FlashMessages"  arguments="{_all}" />
 
             <f:if condition="{products}">
-                <div id="tx-rkw-shop">
+                <f:if condition="{products.0.recordType} === '\RKW\RkwShop\Domain\Model\ProductDownload'">
+                    <f:then>
+                        <div id="tx-rkw-shop" style="display: none;">
+                    </f:then>
+                    <f:else>
+                        <div id="tx-rkw-shop">
+                    </f:else>
+                </f:if>
                     <div id="rkw-order-container" data-url="{f:uri.page(pageUid:'{pageUid}', additionalParams: '{type: \'1510210402\', tx_rkwshop_itemlist: {uid: \'{contentUid}\'}}')}">
                         <p class="rkw-order__loading"><f:image alt="Loading..." src="EXT:rkw_shop/Resources/Public/Images/ajax-loader.gif" /></p>
                     </div>

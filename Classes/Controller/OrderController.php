@@ -178,7 +178,6 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function newInitAction(\RKW\RkwShop\Domain\Model\Order $order = null): void
     {
-
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         if ($this->settings['products']) {
 
@@ -483,7 +482,10 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $products = $this->productRepository->findByUidList($productUids);
         /** @var \RKW\RkwShop\Domain\Model\Product $product */
         foreach ($products as $product) {
-            if (! $product->isDigitalOnly()) {
+            if (
+                !($product instanceof \RKW\RkwShop\Domain\Model\ProductDownload)
+                && ! $product->isDigitalOnly()
+            ) {
                 $containsOnlyDigitalProducts = false;
             }
         }

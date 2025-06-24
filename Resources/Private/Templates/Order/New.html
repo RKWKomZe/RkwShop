@@ -21,6 +21,52 @@
                         });
 
                         $("#tx-rkw-order-form .js-open-mdl").modal();
+
+                        $('.js-outcome')
+                            .on('click', function (e) {
+                                e.preventDefault();
+                                if (confirm('Möchten Sie an unserer Zufriedenheitsumfrage teilnehmen?')) {
+
+                                    /* @todo: Wird der eTracker hier ohnehin ausgelöst? */
+                                    function triggerDownload (target) {
+                                        const link = document.createElement('a');
+                                        link.href = target.href;
+                                        link.download = '';
+                                        link.style.display = 'none';
+                                        document.body.appendChild(link);
+                                        link.click();
+                                        document.body.removeChild(link);
+                                    }
+
+                                    triggerDownload(e.target);
+
+                                    const orderForm = $('#tx-rkw-shop');
+                                    const offset = orderForm.offset().top;
+                                    orderForm.show();
+                                    $("html, body")
+                                        .animate({
+                                                     'scrollTop': offset - 100
+                                                 },
+                                                 1000,
+                                                 'easeOutQuart',
+                                                 function () {
+                                                     const firstModal = $('.js-open-mdl').first();
+                                                     const targetInputId = firstModal.attr('for');
+
+                                                     firstModal.trigger('click')
+                                                         .parent()
+                                                         .find(`input[id="${targetInputId}"]`)
+                                                         .prop('checked', true);
+                                                 }
+                                        );
+
+                                } else {
+                                    /*
+                                        @todo: Wie triggere ich den eTracker-Link erneut? Oder wird das Event bereits ohnehin ausgelöst?
+                                     */
+                                    window.open(e.target.href, '_blank');
+                                }
+                            });
                     </script>
                 </f:form>
 

@@ -46,7 +46,11 @@
 
                                 <!-- without bundle -->
                                 <f:else>
-                                    <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                                    <f:if condition="{product.recordType} !== '\RKW\RkwShop\Domain\Model\ProductDownload'">
+                                        <f:then>
+                                            <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                                        </f:then>
+                                    </f:if>
                                 </f:else>
                             </f:if>
 

@@ -577,7 +577,10 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
         foreach ($order->getOrderItem()->toArray() as $orderItem) {
-            if (! $orderItem->getAmount()) {
+            if (
+                ! $orderItem->getAmount()
+                && ($orderItem->getProduct()->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductDownload')
+            ) {
                 $order->removeOrderItem($orderItem);
             }
         }
