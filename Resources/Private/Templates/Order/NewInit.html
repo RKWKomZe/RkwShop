@@ -1,4 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+ <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
     <f:layout name="Default" />
 
@@ -8,7 +8,42 @@
             <f:render partial="FlashMessages"  arguments="{_all}" />
 
             <f:if condition="{products}">
-                <div id="tx-rkw-shop">
+                <f:if condition="{showOutcomeModal}">
+                    <f:then>
+                        <div id="outcome-modal" class="mdl">
+                            <div class="mdl__inner">
+                                <header class="mdl__header">
+                                    <span class="h4 mdl__headline">
+                                        <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.outcome.modal.header" />
+                                        <p></p>
+                                    </span>
+                                </header>
+                                <div class="mdl__content contentbox">
+                                    <f:format.raw><f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.outcome.modal.text" /></f:format.raw>
+                                    <div class="btn-list btn-list--footer mt-1">
+                                        <button class="btn btn--secondary js-close-mdl js-outcome-cancel">
+                                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.outcome.modal.button.cancel" />
+                                        </button>
+                                        <button class="btn btn--primary js-close-mdl js-outcome-confirm">
+                                            <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.outcome.modal.button.confirm" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="mdl-close js-close-mdl">
+                                <svg class="icon icon--48">
+                                    <use xlink:href="#ic-mobile-menu-close" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mdl-layer js-mdl-layer"></div>
+
+                        <div id="tx-rkw-shop" style="display: none;">
+                    </f:then>
+                    <f:else>
+                        <div id="tx-rkw-shop">
+                    </f:else>
+                </f:if>
                     <div id="rkw-order-container" data-url="{f:uri.page(pageUid:'{pageUid}', additionalParams: '{type: \'1510210402\', tx_rkwshop_itemlist: {uid: \'{contentUid}\'}}')}">
                         <p class="rkw-order__loading"><f:image alt="Loading..." src="EXT:rkw_shop/Resources/Public/Images/ajax-loader.gif" /></p>
                     </div>

@@ -139,6 +139,20 @@
             <trans-unit id="partials.order.form.productList.subscriptionButton">
                 <source>Subscribe now</source>
             </trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.header">
+				<source>Participate in customer survey</source>
+				<target>Teilnahme an Umfragen zur Zufriedenheit mit diesem Produkt</target>
+			</trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.text">
+				<source>Explanation for participating in customer survey</source>
+			</trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.button.cancel">
+				<source>No</source>
+			</trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.button.confirm">
+				<source>Yes</source>
+			</trans-unit>
+
 
 
 

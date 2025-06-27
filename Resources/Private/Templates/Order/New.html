@@ -21,6 +21,59 @@
                         });
 
                         $("#tx-rkw-order-form .js-open-mdl").modal();
+
+                        $('.js-outcome')
+                            .on('click', function (e) {
+                                e.preventDefault();
+
+                                $("#outcome-modal").addClass("is-active")
+                                    .next(".js-mdl-layer")
+                                    .addClass("is-active");
+                                $("body").addClass("lock-scroll");
+
+                                $("#outcome-modal .js-outcome-cancel").on('click', function () {
+                                    window.open(e.target.href, '_blank');
+                                });
+
+                                $("#outcome-modal .js-outcome-confirm").on('click', function () {
+                                    /* @todo: Wird der eTracker hier ohnehin ausgelöst? */
+                                    function triggerDownload (target) {
+                                        const link = document.createElement('a');
+                                        link.href = target.href;
+                                        link.download = '';
+                                        link.style.display = 'none';
+                                        document.body.appendChild(link);
+                                        link.click();
+                                        document.body.removeChild(link);
+                                    }
+
+                                    triggerDownload(e.target);
+
+                                    const orderForm = $('#tx-rkw-shop');
+                                    orderForm.find('#txrkwshop-amount-' +  $(e.target).data('product-uid')).val(1);
+                                    orderForm.show();
+                                    const offset = orderForm.offset().top;
+
+                                    $("html, body")
+                                        .animate({
+                                                     'scrollTop': offset - 100
+                                                 },
+                                                 1000,
+                                                 'easeOutQuart',
+                                                 function () {
+                                                     const modalTrigger = $('#tx-rkw-shop .js-open-mdl').first();
+                                                     const targetInputId = modalTrigger.attr('for');
+
+                                                     modalTrigger.trigger('click')
+                                                         .parent()
+                                                         .find(`input[id="${targetInputId}"]`)
+                                                         .prop('checked', true);
+                                                 }
+                                        );
+
+                                });
+
+                            });
                     </script>
                 </f:form>
 
