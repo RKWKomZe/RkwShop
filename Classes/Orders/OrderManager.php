@@ -62,6 +62,14 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @const string
      */
+    const SIGNAL_AFTER_ORDER_CREATED_USER_OUTCOME = 'afterOrderCreatedUserOutcome';
+
+
+    /**
+     * Signal name for use in ext_localconf.php
+     *
+     * @const string
+     */
     const SIGNAL_AFTER_ORDER_DELETED_ADMIN = 'afterOrderDeletedAdmin';
 
 
@@ -387,31 +395,49 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         $this->orderRepository->add($order);
         $this->persistenceManager->persistAll();
 
-        // send final confirmation mail to user
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
+        // send signal to create possible survey request
+        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER_OUTCOME, array($frontendUser, $order));
 
-        // send mail to admins
-        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
-        $backendUsersList = [];
-        $backendUsersForProductMap = [];
+        //  @todo: If ProductDownload, the following mails are not necessary. How could I omit them?
+        $isDownloadOnly = true;
         foreach ($order->getOrderItem() as $orderItem) {
-
-            $backendUsersForProduct = $this->getBackendUsersForAdminMails($orderItem->getProduct());
-            $backendUsersList = array_merge($backendUsersList, $backendUsersForProduct);
-            $tempBackendUserForProductMap = [];
-            /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
-            foreach ($backendUsersForProduct as $backendUser) {
-                if ($backendUser->getRealName()) {
-                    $tempBackendUserForProductMap[] = $backendUser->getRealName();
-                } else if ($backendUser->getEmail()) {
-                    $tempBackendUserForProductMap[] = $backendUser->getEmail();
-                }
+            if (! $orderItem->getProduct() instanceof \RKW\RkwShop\Domain\Model\ProductDownload) {
+                $isDownloadOnly = false;
+                break;
             }
-            $backendUsersForProductMap[$orderItem->getProduct()->getUid()] = implode(', ', $tempBackendUserForProductMap);
         }
-        $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
+
+        if (! $isDownloadOnly) {
+
+            // send final confirmation mail to user
+            $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_USER, array($frontendUser, $order));
+
+            // send mail to admins
+            /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+            $backendUsersList = [];
+            $backendUsersForProductMap = [];
+            foreach ($order->getOrderItem() as $orderItem) {
+
+                $backendUsersForProduct = $this->getBackendUsersForAdminMails($orderItem->getProduct());
+                $backendUsersList = array_merge($backendUsersList, $backendUsersForProduct);
+                $tempBackendUserForProductMap = [];
+                /** @var \RKW\RkwShop\Domain\Model\BackendUser $backendUser */
+                foreach ($backendUsersForProduct as $backendUser) {
+                    if ($backendUser->getRealName()) {
+                        $tempBackendUserForProductMap[] = $backendUser->getRealName();
+                    } else {
+                        if ($backendUser->getEmail()) {
+                            $tempBackendUserForProductMap[] = $backendUser->getEmail();
+                        }
+                    }
+                }
+                $backendUsersForProductMap[$orderItem->getProduct()->getUid()] = implode(', ', $tempBackendUserForProductMap);
+            }
+            $this->signalSlotDispatcher->dispatch(__CLASS__, self::SIGNAL_AFTER_ORDER_CREATED_ADMIN, array(array_unique($backendUsersList), $order, $backendUsersForProductMap));
+        }
 
         $this->getLogger()->log(\TYPO3\CMS\Core\Log\LogLevel::INFO, sprintf('Saved order with uid %s of user with uid %s via signal-slot.', $order->getUid(), $frontendUser->getUid()));
+
         return true;
     }
 
@@ -577,10 +603,7 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
         /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
         foreach ($order->getOrderItem()->toArray() as $orderItem) {
-            if (
-                ! $orderItem->getAmount()
-                && ($orderItem->getProduct()->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductDownload')
-            ) {
+            if (! $orderItem->getAmount()) {
                 $order->removeOrderItem($orderItem);
             }
         }

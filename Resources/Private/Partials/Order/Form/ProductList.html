@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:rkwShop="http://typo3.org/ns/RKW/RkwShop/ViewHelpers"
     data-namespace-typo3-fluid="true">
 
     <div class="order-list">
@@ -46,10 +47,15 @@
 
                                 <!-- without bundle -->
                                 <f:else>
-                                    <f:if condition="{product.recordType} !== '\RKW\RkwShop\Domain\Model\ProductDownload'">
+                                    <f:if condition="{product.recordType} === '\RKW\RkwShop\Domain\Model\ProductDownload'">
                                         <f:then>
-                                            <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                                            <div style="display: none;" aria-hidden="true">
+                                                <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                                            </div>
                                         </f:then>
+                                        <f:else>
+                                            <f:render partial="Order/Form/ProductList/Input" arguments="{product: product, orderItem: order.orderItem}" />
+                                        </f:else>
                                     </f:if>
                                 </f:else>
                             </f:if>
