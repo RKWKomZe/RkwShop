@@ -176,6 +176,23 @@
                 <source>Subscribe now</source>
                 <target>Jetzt abonnieren</target>
             </trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.header">
+				<source>Participate in customer survey</source>
+				<target>Teilnahme an Umfragen zur Zufriedenheit mit diesem Produkt</target>
+			</trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.text">
+				<source>Explanation for participating in customer survey</source>
+				<target>Für dieses Produkt möchten wir Sie gerne zu einem späteren Zeitpunkt befragen, wie zufrieden Sie damit waren. Dazu benötigen wir im nächsten Schritt weitere Daten von Ihnen und Ihr Einverständnis zur Erstellung eines Nutzendenkontos. Der Download des Produkts erfolgt davon unabhängig im Hintergrund. <![CDATA[<br><br><strong>Sind Sie damit einverstanden?</strong> Das entsprechende Häkchen wird bereits automatisch gesetzt.]]></target>
+			</trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.button.cancel">
+				<source>No</source>
+				<target>Nein</target>
+			</trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.button.confirm">
+				<source>Yes</source>
+				<target>Ja, ich bin einverstanden</target>
+			</trans-unit>
+
 
 
 

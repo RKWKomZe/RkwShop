@@ -89,7 +89,8 @@ return [
         'recordType' => '0',
         'subclasses' => [
             '\RKW\RkwShop\Domain\Model\ProductBundle' => \RKW\RkwShop\Domain\Model\ProductBundle::class,
-            '\RKW\RkwShop\Domain\Model\ProductSubscription' => \RKW\RkwShop\Domain\Model\ProductSubscription::class
+            '\RKW\RkwShop\Domain\Model\ProductSubscription' => \RKW\RkwShop\Domain\Model\ProductSubscription::class,
+            '\RKW\RkwShop\Domain\Model\ProductDownload' => \RKW\RkwShop\Domain\Model\ProductDownload::class
         ]
     ],
     \RKW\RkwShop\Domain\Model\ProductBundle::class => [
@@ -99,6 +100,10 @@ return [
     \RKW\RkwShop\Domain\Model\ProductSubscription::class => [
         'tableName' => 'tx_rkwshop_domain_model_product',
         'recordType' => '\RKW\RkwShop\Domain\Model\ProductSubscription'
+    ],
+    \RKW\RkwShop\Domain\Model\ProductDownload::class => [
+        'tableName' => 'tx_rkwshop_domain_model_product',
+        'recordType' => '\RKW\RkwShop\Domain\Model\ProductDownload'
     ],
     \RKW\RkwShop\Domain\Model\Category::class => [
         'tableName' => 'sys_category',

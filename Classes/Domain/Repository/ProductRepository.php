@@ -122,11 +122,11 @@ class ProductRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             */
 
             if (! in_array($product->getUid(), $uidList)) {
-
-                if ($product->getRecordType() != '\RKW\RkwShop\Domain\Model\ProductDownload') {
+                //  Hier Check, ob Teil einer SurveyConfiguration?
+//                if ($product->getRecordType() !== '\RKW\RkwShop\Domain\Model\ProductDownload') {
                     $result[] = $product;
                     $uidList[] = $product->getUid();
-                }
+//                }
             }
         }
 
