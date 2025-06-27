@@ -8,7 +8,7 @@
             <f:render partial="FlashMessages"  arguments="{_all}" />
 
             <f:if condition="{products}">
-                <f:if condition="{products.0.recordType} === '\RKW\RkwShop\Domain\Model\ProductDownload'">
+                <f:if condition="{showOutcomeModal}">
                     <f:then>
                         <div id="outcome-modal" class="mdl">
                             <div class="mdl__inner">

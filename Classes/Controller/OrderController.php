@@ -6,6 +6,7 @@ use Madj2k\CoreExtended\Utility\GeneralUtility as Common;
 use Madj2k\FeRegister\Registration\FrontendUserRegistration;
 use Madj2k\FeRegister\Utility\FrontendUserSessionUtility;
 use Madj2k\FeRegister\Utility\FrontendUserUtility;
+use RKW\RkwOutcome\Domain\Repository\SurveyConfigurationRepository;
 use RKW\RkwShop\Domain\Model\FrontendUser;
 use RKW\RkwShop\Domain\Model\Order;
 use RKW\RkwShop\Domain\Repository\CategoryRepository;
@@ -63,6 +64,13 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
 
     /**
+     * @var \RKW\RkwOutcome\Domain\Repository\SurveyConfigurationRepository
+     * @TYPO3\CMS\Extbase\Annotation\Inject
+     */
+    protected ?SurveyConfigurationRepository $surveyConfigurationRepository = null;
+
+
+    /**
      * @var \RKW\RkwShop\Orders\OrderManager
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
@@ -111,6 +119,15 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function injectCategoryRepository(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\SurveyConfigurationRepository $surveyConfigurationRepository
+     */
+    public function injectSurveyConfigurationRepository (SurveyConfigurationRepository $surveyConfigurationRepository)
+    {
+        $this->surveyConfigurationRepository = $surveyConfigurationRepository;
     }
 
 
@@ -164,6 +181,7 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         $this->settings['digitalOnly'] = $this->containsOnlyDigitalProducts($this->settings['products']);
+        $this->settings['showOutcomeModal'] = $this->containsOnlyOutcomeProductDownload($this->settings['products']);
 
     }
 
@@ -182,13 +200,14 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if ($this->settings['products']) {
 
             $products = $this->productRepository->findByUidList($this->settings['products']);
+
             $this->view->assignMultiple(
                 array(
                     'frontendUser'    => null,
                     'order'           => $order,
                     'products'        => $products,
-
                     // @extensionScannerIgnoreLine
+                    'showOutcomeModal' => $this->settings['showOutcomeModal'],
                     'contentUid'      => $this->configurationManager->getContentObject()->data['uid'],
                     'targetGroupList' => $this->categoryRepository->findChildrenByParent($this->settings['targetGroupsPid']),
                 )
@@ -491,6 +510,29 @@ class OrderController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         return $containsOnlyDigitalProducts;
+
+    }
+
+    protected function containsOnlyOutcomeProductDownload(string $productUids): bool
+    {
+        $containsOnlyOutcomeProductDownload = true;
+
+        $products = $this->productRepository->findByUidList($productUids);
+        /** @var \RKW\RkwShop\Domain\Model\Product $product */
+        foreach ($products as $product) {
+            if (
+                ! ($product instanceof \RKW\RkwShop\Domain\Model\ProductDownload)
+                ||
+                (
+                    ! ($product instanceof \RKW\RkwShop\Domain\Model\ProductDownload)
+                    && count($this->surveyConfigurationRepository->findByProduct($product)) === 0
+                )
+            ) {
+                $containsOnlyOutcomeProductDownload = false;
+            }
+        }
+
+        return $containsOnlyOutcomeProductDownload;
 
     }
 
