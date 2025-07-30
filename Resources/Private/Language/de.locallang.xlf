@@ -192,11 +192,15 @@
 				<source>Yes</source>
 				<target>Ja, ich bin einverstanden</target>
 			</trans-unit>
+			<trans-unit id="partials.order.form.productList.outcome.modal.button.close.ariaLabel">
+				<source>Close dialog</source>
+				<target>Dialog schließen</target>
+			</trans-unit>
 
 
 
 
-            <!-- Partials/Order/Form/ProductList/BundleContents.html -->
+			<!-- Partials/Order/Form/ProductList/BundleContents.html -->
             <trans-unit id="partials.order.form.productList.bundleOptions.belongsToBundle">
                 <source>Belongs to this series/folder:</source>
                 <target>Gehört zu dieser Reihe/Mappe:</target>

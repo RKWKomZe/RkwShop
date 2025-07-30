@@ -10,12 +10,19 @@
             <f:if condition="{products}">
                 <f:if condition="{showOutcomeModal}">
                     <f:then>
-                        <div id="outcome-modal" class="mdl">
+                        <div
+                            id="outcome-modal"
+                            class="mdl"
+                            tabindex="-1"
+                            aria-labelledby="outcome-modal-header-id"
+                        >
                             <div class="mdl__inner">
                                 <header class="mdl__header">
-                                    <span class="h4 mdl__headline">
+                                    <span
+                                        class="h4 mdl__headline"
+                                        id="outcome-modal-header-id"
+                                    >
                                         <f:translate key="LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.outcome.modal.header" />
-                                        <p></p>
                                     </span>
                                 </header>
                                 <div class="mdl__content contentbox">
@@ -30,7 +37,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="mdl-close js-close-mdl">
+                            <button
+                                class="mdl-close js-close-mdl"
+                                aria-label="{f:translate(key:'LLL:EXT:rkw_shop/Resources/Private/Language/locallang.xlf:partials.order.form.productList.outcome.modal.button.close.ariaLabel')}"
+                            >
                                 <svg class="icon icon--48">
                                     <use xlink:href="#ic-mobile-menu-close" />
                                 </svg>
