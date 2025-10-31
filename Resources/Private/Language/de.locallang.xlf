@@ -113,7 +113,11 @@
 				<source><![CDATA[Hm, unfortunately you were not fast enough - at least one of the desired products is no longer available in the desired quantity. Please adjust your order if necessary or contact us by <a href="mailto:service@rkw.de">E-Mail</a>.]]></source>
                 <target><![CDATA[Hm, da waren Sie wohl leider nicht schnell genug – mindestens eines der gewünschten Produkte ist nicht mehr in der gewünschten Menge verfügbar. Bitte passen Sie Ihre Bestellung gegebenenfalls an oder wenden Sie sich per <a href="mailto:service@rkw.de">E-Mail</a> an uns.]]></target>
 			</trans-unit>
-            <trans-unit id="orderManager.error.orderAlreadyPersisted">
+			<trans-unit id="orderManager.error.alreadySubscribed">
+				<source><![CDATA[You already subscribed to one of these products. In case you think this is an error, of course you may contact us by <a href="mailto:service@rkw.de">E-Mail</a>.]]></source>
+				<target><![CDATA[Sie haben eines der Produkte bereits abonniert. Bitte entfernen Sie das entsprechende Produkt aus Ihrer Bestellung oder brechen Sie die Bestellung komplett ab. Sollte es sich hierbei Ihrer Meinung nach um einen Fehler handeln oder Sie haben Fragen zu diesem Vorgang, dann wenden Sie sich gerne an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
+			</trans-unit>
+			<trans-unit id="orderManager.error.orderAlreadyPersisted">
                 <source><![CDATA[Oops, that shouldn't have happened. Apparently the order has already been saved.  Please contact our <a href="mailto:service@rkw.de">Support</a>.]]></source>
                 <target><![CDATA[Upps, das hätte nicht passieren dürfen. Offenbar wurde die Bestellung schon gespeichert. Bitte wenden Sie sich an unseren <a href="mailto:service@rkw.de">Support</a>.]]></target>
             </trans-unit>

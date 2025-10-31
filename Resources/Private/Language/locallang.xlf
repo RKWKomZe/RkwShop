@@ -88,6 +88,9 @@
 			<trans-unit id="orderManager.error.outOfStock">
 				<source><![CDATA[Hm, unfortunately you were not fast enough - at least one of the desired products is no longer available in the desired quantity. Please adjust your order if necessary or contact us by <a href="mailto:service@rkw.de">E-Mail</a>.]]></source>
 			</trans-unit>
+			<trans-unit id="orderManager.error.alreadySubscribed">
+				<source><![CDATA[You already subscribed to one of these products. In case you think this is an error, of course you may contact us by <a href="mailto:service@rkw.de">E-Mail</a>.]]></source>
+			</trans-unit>
             <trans-unit id="orderManager.error.orderAlreadyPersisted">
                 <source><![CDATA[Oops, that shouldn't have happened. Apparently the order has already been saved.  Please contact our <a href="mailto:service@rkw.de">Support</a>.]]></source>
             </trans-unit>
