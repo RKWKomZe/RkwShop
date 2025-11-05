@@ -6,6 +6,7 @@ use Madj2k\FeRegister\Domain\Model\FrontendUser;
 use Madj2k\FeRegister\Registration\FrontendUserRegistration;
 use RKW\RkwShop\Domain\Repository\BackendUserRepository;
 use RKW\RkwShop\Domain\Repository\CategoryRepository;
+use RKW\RkwShop\Domain\Repository\FrontendUserRepository;
 use RKW\RkwShop\Domain\Repository\OrderItemRepository;
 use RKW\RkwShop\Domain\Repository\OrderRepository;
 use RKW\RkwShop\Domain\Repository\ProductRepository;
@@ -124,6 +125,13 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
 
 
     /**
+     * @var \RKW\RkwShop\Domain\Repository\FrontendUserRepository
+     * @TYPO3\CMS\Extbase\Annotation\Inject
+     */
+    protected ?FrontendUserRepository $frontendUserRepository = null;
+
+
+    /**
      * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
      * @TYPO3\CMS\Extbase\Annotation\Inject
      */
@@ -208,6 +216,15 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
     public function injectBackendUserRepository(BackendUserRepository $backendUserRepository)
     {
         $this->backendUserRepository = $backendUserRepository;
+    }
+
+
+    /**
+     * @param \RKW\RkwShop\Domain\Repository\FrontendUserRepository $frontendUserRepository
+     */
+    public function injectFrontendUserRepository(FrontendUserRepository $frontendUserRepository)
+    {
+        $this->frontendUserRepository = $frontendUserRepository;
     }
 
 
@@ -327,6 +344,8 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             && (! $frontendUser->_isNew())
         ) {
 
+            $this->checkSubscription($order, $frontendUser);
+
             /// simply save order
             $this->saveOrder($order, $frontendUser);
 
@@ -336,6 +355,14 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
             return 'orderManager.message.created';
         }
 
+        /** @var \Madj2k\FeRegister\Domain\Model\FrontendUser $checkableFrontendUser */
+        $checkableFrontendUser = $this->frontendUserRepository->findOneByEmail($order->getEmail());
+
+        if ($checkableFrontendUser) {
+
+            $this->checkSubscription($order, $checkableFrontendUser);
+
+        }
 
         // handling for new users
         // register new user or simply send opt-in to existing user
@@ -700,6 +727,41 @@ class OrderManager implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         return $this->logger;
+    }
+
+    /**
+     * @param \RKW\RkwShop\Domain\Model\Order $order
+     * @param FrontendUser                    $frontendUser
+     * @return \RKW\RkwShop\Domain\Model\OrderItem|\TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface
+     * @throws Exception
+     */
+    protected function checkSubscription(\RKW\RkwShop\Domain\Model\Order $order, FrontendUser $frontendUser)
+    {
+        $containedSubscribableProductUids = [];
+
+        /** @var \RKW\RkwShop\Domain\Model\OrderItem $orderItem */
+        foreach ($order->getOrderItem() as $orderItem) {
+            if (
+                ($orderItem->getProduct() instanceof \RKW\RkwShop\Domain\Model\ProductSubscription)
+                && ($orderItem->getProduct()->getRecordType() === '\RKW\RkwShop\Domain\Model\ProductSubscription')
+            ) {
+                $containedSubscribableProductUids[] = $orderItem->getProduct()->getUid();
+            }
+        }
+
+        if ($previousOrders = $this->orderRepository->findByFrontendUser($frontendUser)) {
+            foreach ($previousOrders as $previousOrder) {
+                if ($previousOrder->getUid() !== $order->getUid()) {
+                    foreach ($previousOrder->getOrderItem() as $previousOrderItem) {
+                        if (in_array($previousOrderItem->getProduct()->getUid(), $containedSubscribableProductUids, true)) {
+                            throw new Exception('orderManager.error.alreadySubscribed');
+                        }
+                    }
+                }
+            }
+        }
+
+        return $orderItem;
     }
 
 

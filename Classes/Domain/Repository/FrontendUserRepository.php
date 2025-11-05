@@ -15,6 +15,9 @@ namespace RKW\RkwShop\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Madj2k\FeRegister\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * Class FrontendUserRepository
  *
@@ -26,6 +29,25 @@ namespace RKW\RkwShop\Domain\Repository;
  */
 class FrontendUserRepository extends \Madj2k\FeRegister\Domain\Repository\FrontendUserRepository
 {
+    /**
+     * Find frontendUser by email
+     *
+     * @param string $email
+     * @return \Madj2k\FeRegister\Domain\Model\FrontendUser|null
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
+    public function findOneByEmail(string $email = ''): ?FrontendUser
+    {
 
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+        $query->getQuerySettings()->setRespectStoragePage(false);
+
+        $user = $query->matching(
+            $query->equals('email', $email)
+        )->execute();
+
+        return $user->getFirst();
+    }
 
 }
