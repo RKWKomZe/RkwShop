@@ -127,7 +127,7 @@
             </trans-unit>
 			<trans-unit id="orderManager.message.created">
 				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
-				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
+				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet bzw. Ihr Abonnement startet mit der nächsten Ausgabe des gewählten Produkts.</target>
 			</trans-unit>
 			<trans-unit id="orderManager.message.createdOptIn">
 				<source><![CDATA[Almost there! An e-mail with a confirmation link is on its way to you. If you do not receive an e-mail from us within the next 2-3 minutes, check your spam filter. Of course our <a href="mailto:service@rkw.de">Support</a> will be happy to help you with any problems you may have.]]></source>
@@ -139,7 +139,7 @@
             <!-- OrderController -->
 			<trans-unit id="orderController.message.orderCreated">
 				<source>Woohoo! The order process is now complete. You will shortly receive an order confirmation by e-mail. The order will be sent to you as soon as possible.</source>
-				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet.</target>
+				<target>Woohoo! Der Bestellvorgang ist nun abgeschlossen. Sie erhalten in Kürze eine Bestellbestätigung per E-Mail. Die Bestellung wird Ihnen zeitnah zugesendet bzw. das Abonnement startet mit der nächsten Ausgabe des gewählten Produkts.</target>
 			</trans-unit>
 			<trans-unit id="orderController.message.orderCanceled">
 				<source>The order process was aborted as desired. However, you can place another order at any time..</source>
@@ -270,19 +270,19 @@
 			<!-- E-Mail subjects-->
 			<trans-unit id="rkwMailService.optInRequestEvent.subject">
 				<source>Confirm your RKW order</source>
-				<target>Bitte bestätigen Sie Ihre Bestellung</target>
+				<target>Bitte bestätigen Sie Ihre Bestellung bzw. Ihr Abonnement</target>
 			</trans-unit>
 			<trans-unit id="rkwMailService.confirmationUser.subject">
 				<source>Thanks for you order</source>
-				<target>Vielen Dank für Ihre Bestellung</target>
+				<target>Vielen Dank für Ihre Bestellung bzw. Ihr Abonnement</target>
 			</trans-unit>
 			<trans-unit id="rkwMailService.confirmationAdmin.subject">
 				<source>A new order has arrived</source>
-				<target>Eine neue Bestellung wurde aufgegeben</target>
+				<target>Eine neue Bestellung bzw. ein neues Abonnement wurde aufgegeben</target>
 			</trans-unit>
 			<trans-unit id="rkwMailService.deleteUser.subject">
 				<source>Your order has been canceled</source>
-				<target>Ihre Bestellung wurde storniert</target>
+				<target>Ihre Bestellung bzw. Ihr Abonnement wurde storniert</target>
 			</trans-unit>
 			<trans-unit id="rkwMailService.deleteAdmin.subject">
 				<source>An order has been canceled</source>
@@ -298,23 +298,23 @@
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.text1">
 				<source>many thanks for ordering products from the RKW Competence Center.</source>
-				<target>vielen Dank für die Bestellung von Produkten des RKW Kompetenzzentrums.</target>
+				<target>vielen Dank für die Bestellung bzw. das Abonnement von Produkten des RKW Kompetenzzentrums.</target>
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.text2">
 				<source>Please check your order for correctness and confirm it via the link below. The order is of course free of charge.</source>
-				<target>Bitte prüfen Sie Ihre Bestellung auf Richtigkeit und bestätigen Sie sie über den untenstehenden Link. Die Bestellung ist selbstverständlich kostenlos.</target>
+				<target>Bitte prüfen Sie Ihre Bestellung bzw. Ihr Abonnement auf Richtigkeit und bestätigen Sie sie über den untenstehenden Link. Die Bestellung bzw. das Abonnement ist selbstverständlich kostenlos.</target>
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.textOptIn">
 				<source>Please click here to confirm your order. To make future orders easier for you, a free account will automatically be created if you are not already registered as a user. You will receive your password in another e-mail.</source>
-				<target>Bitte klicken Sie hier, um die Bestellung zu bestätigen. Um Ihnen zukünftige Bestellungen zu erleichtern, wird automatisch ein kostenloser Account erstellt, falls Sie nicht schon als Nutzer registriert sind. Das Passwort erhalten Sie in einer weiteren E-Mail.</target>
+				<target>Bitte klicken Sie hier, um die Bestellung bzw. Abonnement zu bestätigen. Um Ihnen zukünftige Bestellungen zu erleichtern, wird automatisch ein kostenloser Account erstellt, falls Sie nicht schon als Nutzer registriert sind. Das Passwort erhalten Sie in einer weiteren E-Mail.</target>
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.textOptOut">
 				<source>Have you changed your mind or have you not requested the order yourself? Simply click here to delete all data:</source>
-				<target>Sie haben es sich anders überlegt oder haben die Bestellung gar nicht selbst angefragt? In Kürze werden die Daten Ihrer Anfrage automatisch gelöscht. Sie brauchen nichts weiter zu tun.</target>
+				<target>Sie haben es sich anders überlegt oder haben diesen Vorgang gar nicht selbst ausgelöst? In Kürze werden die Daten Ihrer Anfrage automatisch gelöscht. Sie brauchen nichts weiter zu tun.</target>
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.textOptInLinkLabel">
 				<source>Yes, I would like to receive this order</source>
-				 <target>Ja, ich möchte diese Bestellung erhalten</target>
+				 <target>Ja, ich möchte diese Bestellung bzw. dieses Abonnement erhalten</target>
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.textOptOutLinkLabel">
 				<source>No, I don't want to place an order</source>
@@ -322,7 +322,7 @@
 			</trans-unit>
 			<trans-unit id="templates.email.optInRequest.confirmHeadline">
 				<source>Please confirm your order</source>
-				<target>Bitte bestätigen Sie Ihre Bestellung</target>
+				<target>Bitte bestätigen Sie Ihre Bestellung bzw. Ihr Abonnement</target>
 			</trans-unit>
 
 
@@ -333,11 +333,11 @@
 			</trans-unit>
 			<trans-unit id="templates.email.confirmationOrderUser.text1">
 				<source>many thanks for ordering products from the RKW Competence Center.</source>
-				<target>vielen Dank für die Bestellung von Produkten des RKW Kompetenzzentrums.</target>
+				<target>vielen Dank für die Bestellung bzw. das Abonnement von Produkten des RKW Kompetenzzentrums.</target>
 			</trans-unit>
 			<trans-unit id="templates.email.confirmationOrderUser.text2">
 				<source>Below you will find the details of your order. We will shortly send you the desired products free of charge.</source>
-				<target>Untenstehend finden Sie die Details Ihrer Bestellung. Wir senden Ihnen die gewünschten Produkte in Kürze kostenlos zu.</target>
+				<target>Untenstehend finden Sie die Details Ihrer Bestellung bzw. Ihres Abonnements. Wir senden Ihnen die gewünschten Produkte in Kürze kostenlos zu. Sofern Sie ein Abonnement abgeschlossen haben, erhalten Sie die nächste Ausabe bei Erscheinen zugeschickt – natürlich ebenfalls kostenfrei.</target>
 			</trans-unit>
 
 
@@ -348,7 +348,7 @@
 			</trans-unit>
 			<trans-unit id="templates.email.confirmationOrderAdmin.text1">
 				<source>something was ordered via the website. Please send the order below by post. You can reply directly to this e-mail if you have any questions.</source>
-				<target>über die Website wurde etwas bestellt. Bitte senden Sie die untenstehende Bestellung per Post zu. Sie können bei etwaigen Rückfragen direkt auf diese E-Mail antworten.</target>
+				<target>über die Website wurde etwas bestellt bzw. abonniert. Bitte senden Sie die untenstehende Bestellung per Post zu oder veranlassen Sie ggfs. die notwendigen Schritte, um den Versand des abonnierten Produkts sicherzustellen. Sie können bei etwaigen Rückfragen direkt auf diese E-Mail antworten.</target>
 			</trans-unit>
 
 
@@ -381,7 +381,7 @@
 			<!-- Partials/Email/ProductList.html -->
             <trans-unit id="partials.email.productList.orderDetails">
                 <source>Order Details</source>
-                <target>Details der Bestellung</target>
+                <target>Details der Bestellung bzw. des Abonnements</target>
             </trans-unit>
             <trans-unit id="partials.email.productList.headlineProduct">
                 <source>Product</source>
